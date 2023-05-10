@@ -1,0 +1,38 @@
+[gd_scene load_steps=4 format=3 uid="uid://ciyxljrmbqv2v"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tyikq"]
+shading_mode = 0
+albedo_color = Color(1, 1, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_lnrfs"]
+material = SubResource("StandardMaterial3D_tyikq")
+
+[sub_resource type="GDScript" id="GDScript_6n8ox"]
+resource_name = "BulletEffect"
+script/source = "extends MeshInstance3D
+
+@export var start: Vector3 = Vector3.ZERO
+@export var end: Vector3 = Vector3(0.0,0.0,-50.0)
+@export_range(0.0, 10.0, 0.1) var lifetime_seconds = 0.1
+var max_lifetime_seconds = lifetime_seconds
+var max_width = 0.1
+var dist = 0.0
+
+func _ready():
+	dist = start.distance_to(end) / 2
+	mesh.size = Vector3(0.0, 0.0, dist)
+	
+	look_at_from_position(start, end)
+	translate_object_local(Vector3.FORWARD * dist)
+
+func _process(delta):
+	lifetime_seconds -= delta
+	var width = -sin((lifetime_seconds / max_lifetime_seconds) * PI) * max_width
+	mesh.size = Vector3(width, width, start.distance_to(end))
+	if lifetime_seconds <= 0.0:
+		queue_free()
+"
+
+[node name="BulletEffect" type="MeshInstance3D"]
+mesh = SubResource("BoxMesh_lnrfs")
+script = SubResource("GDScript_6n8ox")

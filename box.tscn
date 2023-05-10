@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://biir0tlfdnimk"]
+
+[ext_resource type="Script" path="res://scripts/hurtbox.gd" id="1_w4464"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_57lj2"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_x7nuw"]
+
+[node name="Box" type="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -2)
+mesh = SubResource("BoxMesh_57lj2")
+
+[node name="Hurtbox" type="Area3D" parent="." node_paths=PackedStringArray("health") groups=["Hurtbox"]]
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("1_w4464")
+health = NodePath("")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox"]
+shape = SubResource("BoxShape3D_x7nuw")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_x7nuw")

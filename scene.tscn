@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://6g0i5ehfdc2v"]
 
+[ext_resource type="Script" path="res://scripts/world.gd" id="1_h7cyw"]
 [ext_resource type="PackedScene" uid="uid://biir0tlfdnimk" path="res://box.tscn" id="1_x50jp"]
-[ext_resource type="Script" path="res://scripts/World.gd" id="1_xeoil"]
 [ext_resource type="Script" path="res://scripts/effect_manager.gd" id="2_dsm8f"]
 [ext_resource type="PackedScene" uid="uid://dtp6ge4k538q" path="res://health_pickup.tscn" id="4_668tt"]
 
@@ -25,7 +25,7 @@ map_data = PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 [node name="Main" type="Node3D"]
 
 [node name="World" type="Node3D" parent="." node_paths=PackedStringArray("effect_manager")]
-script = ExtResource("1_xeoil")
+script = ExtResource("1_h7cyw")
 effect_manager = NodePath("EffectManager")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="World"]

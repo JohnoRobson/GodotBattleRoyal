@@ -3,8 +3,8 @@ class_name AiActorController extends ActorController
 @export var actor: AiActor
 @export var world_navmesh: NavigationRegion3D
 @export var world: World
-var state_machine: StateMachine
 
+var state_machine: StateMachine
 var aim_position:Vector3 = Vector3.ZERO
 var move_direction:Vector2 = Vector2.ZERO
 var is_shooting_bool:bool = false

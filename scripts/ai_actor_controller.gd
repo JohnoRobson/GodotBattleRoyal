@@ -27,8 +27,8 @@ func get_move_direction() -> Vector2:
 func is_shooting() -> bool:
 	return is_shooting_bool
 
-func set_aim_position(position: Vector3):
-	aim_position = position
+func set_aim_position(new_aim_position: Vector3):
+	aim_position = new_aim_position
 
 func set_move_direction(dir: Vector2):
 	if (dir.is_normalized()):

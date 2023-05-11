@@ -13,7 +13,7 @@ config_version=5
 config/name="Battle_Royal"
 run/main_scene="res://scene.tscn"
 config/features=PackedStringArray("4.0", "C#", "Forward Plus")
-config/icon="res://icon.svg"
+config/icon="res://sprites/icon.svg"
 
 [dotnet]
 

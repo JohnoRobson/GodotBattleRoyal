@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://6g0i5ehfdc2v"]
 
+[ext_resource type="Script" path="res://scripts/world.gd" id="1_h7cyw"]
 [ext_resource type="PackedScene" uid="uid://biir0tlfdnimk" path="res://box.tscn" id="1_x50jp"]
-[ext_resource type="Script" path="res://scripts/World.gd" id="1_xeoil"]
 [ext_resource type="Script" path="res://scripts/effect_manager.gd" id="2_dsm8f"]
 [ext_resource type="PackedScene" uid="uid://dtp6ge4k538q" path="res://health_pickup.tscn" id="4_668tt"]
 
@@ -25,7 +25,7 @@ map_data = PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 [node name="Main" type="Node3D"]
 
 [node name="World" type="Node3D" parent="." node_paths=PackedStringArray("effect_manager")]
-script = ExtResource("1_xeoil")
+script = ExtResource("1_h7cyw")
 effect_manager = NodePath("EffectManager")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="World"]
@@ -49,7 +49,7 @@ skeleton = NodePath("../..")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="World/NavigationRegion3D/Ground/StaticBody3D"]
 shape = SubResource("HeightMapShape3D_0v8pg")
 
-[node name="Box" parent="World/NavigationRegion3D" instance=ExtResource("1_x50jp")]
+[node name="Box1" parent="World/NavigationRegion3D" instance=ExtResource("1_x50jp")]
 skeleton = NodePath("../..")
 
 [node name="Box2" parent="World/NavigationRegion3D" instance=ExtResource("1_x50jp")]
@@ -68,18 +68,18 @@ skeleton = NodePath("../../..")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.5405, 0, 15.823)
 skeleton = NodePath("../../..")
 
-[node name="HealthPickup" parent="World" instance=ExtResource("4_668tt")]
+[node name="HealthPickup1" parent="World" instance=ExtResource("4_668tt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.15893, 0, 3.37882)
 respawn_time_in_seconds = 5.0
 
-[node name="HealthPickup" parent="." instance=ExtResource("4_668tt")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.2326, 0, -26.9565)
-
-[node name="HealthPickup2" parent="." instance=ExtResource("4_668tt")]
+[node name="HealthPickup2" parent="World" instance=ExtResource("4_668tt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.7067, 0, -39.0968)
 
-[node name="HealthPickup3" parent="." instance=ExtResource("4_668tt")]
+[node name="HealthPickup3" parent="World" instance=ExtResource("4_668tt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39.0433, 0, 40.3243)
 
-[node name="HealthPickup4" parent="." instance=ExtResource("4_668tt")]
+[node name="HealthPickup4" parent="World" instance=ExtResource("4_668tt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34.5503, -4.76837e-07, 39.9581)
+
+[node name="HealthPickup5" parent="World" instance=ExtResource("4_668tt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.2326, 0, -26.9565)

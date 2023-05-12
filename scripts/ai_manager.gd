@@ -14,16 +14,16 @@ func _physics_process(_delta):
 		var player_actor = world.player_actors[0]
 		var player_pos = player_actor.global_transform.origin
 		ai_actor.nav_agent.target_position = player_pos
-		
+
 		#move
 		var current_location = ai_actor.global_transform.origin
 		var next_location = ai_actor.nav_agent.get_next_path_position()
 		var dir = (next_location - current_location).normalized()
 		ai_controller.set_move_direction(Vector2(dir.x, dir.z))
-		
+
 		#aim
 		ai_controller.set_aim_position(player_pos + (Vector3.UP * 1.5))
-		
+
 		#shoot
 		var player_distance: float = player_pos.distance_to(ai_actor.global_transform.origin)
 		if player_distance <= 50.0:

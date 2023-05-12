@@ -5,7 +5,7 @@ func enter(_controller: AiActorController):
 
 func execute(_controller: AiActorController):
 	pass
-	
+
 func execute_physics(_controller: AiActorController):
 	pass
 

@@ -32,14 +32,14 @@ signal actor_killed(me: Actor)
 
 func _aim_at(target_position: Vector3):
 	aimpoint = target_position
-	
+
 func _move_direction(input_dir: Vector2):
 	movement_direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 
 func _aim_weapon():
 	# side to side rotation
 	rotator.look_at(controller.get_aim_position(), Vector3.UP)
-	
+
 	#up and down rotation
 	weapon_base.look_at(controller.get_aim_position(), Vector3.UP)
 
@@ -48,7 +48,7 @@ func _shoot():
 		## apply cooldown
 		weapon_cooldown = 1.0 / fire_rate_per_second
 		can_shoot = false
-		
+
 		if weapon_raycast.is_colliding():
 			var start_p = weapon_raycast.global_position
 			var end_p = weapon_raycast.get_collision_point()
@@ -81,7 +81,7 @@ func _physics_process(delta):
 	# velocity from getting shot
 	velocity += velocity_to_add * delta
 	velocity_to_add = Vector3.ZERO
-	
+
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y -= gravity * delta

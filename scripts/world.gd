@@ -29,9 +29,9 @@ func spawn_player(spawn_position: Vector2):
 	controller.name = "PlayerActorController"
 	var controller_script = preload("res://scripts/player_actor_controller.gd")
 	controller.set_script(controller_script)
-	
+
 	actor.controller = controller
-	
+
 	actor.add_child(controller)
 	player_actors.append(actor)
 	actor.global_transform.origin = Vector3(spawn_position.x, 0.0, spawn_position.y)
@@ -46,7 +46,7 @@ func spawn_ai(spawn_position: Vector2):
 	controller.world = self
 	controller.world_navmesh = nav_region
 	controller.state_machine = StateMachine.new(FindEnemyState.new(), controller)
-	
+
 	ai_actors.append(actor)
 	actor.global_transform.origin = Vector3(spawn_position.x, 0.0, spawn_position.y)
 	actor.shoot.connect(effect_manager._on_actor_shoot)
@@ -61,18 +61,18 @@ func get_closest_actor(from_position:Vector3, ignore: Actor = null) -> Actor:
 	var actors = []
 	actors.append_array(player_actors)
 	actors.append_array(ai_actors)
-	
+
 	if ignore != null:
 		actors.erase(ignore)
-	
+
 	actors.sort_custom(func(a, b): return from_position.distance_to(a.global_transform.origin) < from_position.distance_to(b.global_transform.origin))
-	
+
 	return actors.front()
 
 func get_closest_available_health(from_position:Vector3) -> HealthPickup:
 	var pickups = []
 	pickups.append_array(health_pickups)
-	
+
 	pickups.sort_custom(func(a, b): return from_position.distance_to(a.global_transform.origin) < from_position.distance_to(b.global_transform.origin))
 	pickups.filter(func(a): return a.health_is_available)
 	return pickups.front()

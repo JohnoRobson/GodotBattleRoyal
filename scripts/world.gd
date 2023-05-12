@@ -41,7 +41,7 @@ func spawn_player(spawn_position: Vector2):
 
 func spawn_ai(spawn_position: Vector2):
 	var actor: AiActor = preload("res://ai_actor.tscn").instantiate()
-	var controller:AiActorController = actor.controller
+	var controller: AiActorController = actor.controller
 	controller.actor = actor
 	controller.world = self
 	controller.world_navmesh = nav_region
@@ -57,7 +57,7 @@ func _on_actor_killed(actor: Actor):
 	player_actors.erase(actor)
 	ai_actors.erase(actor)
 
-func get_closest_actor(from_position:Vector3, ignore: Actor = null) -> Actor:
+func get_closest_actor(from_position: Vector3, ignore: Actor = null) -> Actor:
 	var actors = []
 	actors.append_array(player_actors)
 	actors.append_array(ai_actors)
@@ -69,7 +69,7 @@ func get_closest_actor(from_position:Vector3, ignore: Actor = null) -> Actor:
 
 	return actors.front()
 
-func get_closest_available_health(from_position:Vector3) -> HealthPickup:
+func get_closest_available_health(from_position: Vector3) -> HealthPickup:
 	var pickups = []
 	pickups.append_array(health_pickups)
 

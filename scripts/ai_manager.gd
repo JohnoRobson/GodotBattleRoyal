@@ -9,7 +9,7 @@ var ai_controller: AiActorController
 func _ready():
 	ai_controller = ai_actor.controller
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if !world.player_actors.is_empty() && ai_actor != null:
 		var player_actor = world.player_actors[0]
 		var player_pos = player_actor.global_transform.origin

@@ -20,7 +20,7 @@ func execute(controller: AiActorController):
 		else:
 			controller.state_machine.change_state(FindEnemyState.new())
 	
-func execute_physics(controller: AiActorController):
+func execute_physics(_controller: AiActorController):
 	pass
 
 func exit(controller: AiActorController):

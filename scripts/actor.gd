@@ -100,5 +100,5 @@ func _on__health_depleted():
 	actor_killed.emit(self)
 	queue_free()
 
-func _on_hurtbox_was_hit(amount, hit_position_global, hit_normalized_direction):
+func _on_hurtbox_was_hit(amount, _hit_position_global, hit_normalized_direction):
 	velocity_to_add += hit_normalized_direction * amount * 100.0

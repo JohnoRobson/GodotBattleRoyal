@@ -4,7 +4,7 @@ class_name FindEnemyState
 
 var current_target: Actor
 
-func enter(controller: AiActorController):
+func enter(_controller: AiActorController):
 	pass
 
 func execute(controller: AiActorController):

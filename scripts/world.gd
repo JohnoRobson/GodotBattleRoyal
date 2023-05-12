@@ -17,10 +17,10 @@ func _ready():
 	spawn_ai(Vector2(30,0))
 	health_pickups.append_array(get_tree().get_nodes_in_group("health_pickups"))
 
-func _process(delta):
+func _process(_delta):
 	pass
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	pass
 
 func spawn_player(spawn_position: Vector2):

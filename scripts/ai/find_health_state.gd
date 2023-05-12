@@ -4,7 +4,7 @@ class_name FindHealthState
 
 var current_target: HealthPickup
 
-func enter(controller: AiActorController):
+func enter(_controller: AiActorController):
 	pass
 
 func execute(controller: AiActorController):

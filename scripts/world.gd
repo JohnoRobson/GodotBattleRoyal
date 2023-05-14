@@ -23,35 +23,40 @@ func _process(_delta):
 func _physics_process(_delta):
 	pass
 
-func spawn_player(spawn_position: Vector2):
-	var actor: Actor = preload("res://player_actor.tscn").instantiate()
-	var controller = Node3D.new()
-	controller.name = "PlayerActorController"
-	var controller_script = preload("res://scripts/player_actor_controller.gd")
-	controller.set_script(controller_script)
-
-	actor.controller = controller
-
-	actor.add_child(controller)
-	player_actors.append(actor)
-	actor.set_global_position(Vector3(spawn_position.x, 0.0, spawn_position.y))
+# Common actor initializations (player and AI)
+func _init_actor(actor: Actor, spawn_position: Vector2):
 	actor.shoot.connect(effect_manager._on_actor_shoot)
 	actor.actor_killed.connect(_on_actor_killed)
+	# add_child before set_global_position fixes !is_inside_tree() error but causes other issues - MW 2023-05-13
+	actor.set_global_position(Vector3(spawn_position.x, 0.0, spawn_position.y))
 	add_child(actor)
 
+# Spawn player actor and create new player controller
+func spawn_player(spawn_position: Vector2):
+	var actor: Actor = preload("res://player_actor.tscn").instantiate()
+	_init_actor(actor, spawn_position)
+	player_actors.append(actor)
+
+	# Add player controller
+	var controller = Node3D.new()
+	var controller_script = preload("res://scripts/player_actor_controller.gd")
+	controller.name = "PlayerActorController"
+	controller.set_script(controller_script)
+	actor.controller = controller
+	actor.add_child(controller)
+
+# Spawn AI actor and configure existing AI controller
 func spawn_ai(spawn_position: Vector2):
 	var actor: AiActor = preload("res://ai_actor.tscn").instantiate()
+	_init_actor(actor, spawn_position)
+	ai_actors.append(actor)
+
+	# Configure AI controller
 	var controller: AiActorController = actor.controller
 	controller.actor = actor
 	controller.world = self
 	controller.world_navmesh = nav_region
 	controller.state_machine = StateMachine.new(FindEnemyState.new(), controller)
-
-	ai_actors.append(actor)
-	actor.set_global_position(Vector3(spawn_position.x, 0.0, spawn_position.y))
-	actor.shoot.connect(effect_manager._on_actor_shoot)
-	actor.actor_killed.connect(_on_actor_killed)
-	add_child(actor)
 
 func _on_actor_killed(actor: Actor):
 	player_actors.erase(actor)

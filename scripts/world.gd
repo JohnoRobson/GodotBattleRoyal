@@ -34,7 +34,7 @@ func spawn_player(spawn_position: Vector2):
 
 	actor.add_child(controller)
 	player_actors.append(actor)
-	actor.global_transform.origin = Vector3(spawn_position.x, 0.0, spawn_position.y)
+	actor.set_global_position(Vector3(spawn_position.x, 0.0, spawn_position.y))
 	actor.shoot.connect(effect_manager._on_actor_shoot)
 	actor.actor_killed.connect(_on_actor_killed)
 	add_child(actor)
@@ -48,7 +48,7 @@ func spawn_ai(spawn_position: Vector2):
 	controller.state_machine = StateMachine.new(FindEnemyState.new(), controller)
 
 	ai_actors.append(actor)
-	actor.global_transform.origin = Vector3(spawn_position.x, 0.0, spawn_position.y)
+	actor.set_global_position(Vector3(spawn_position.x, 0.0, spawn_position.y))
 	actor.shoot.connect(effect_manager._on_actor_shoot)
 	actor.actor_killed.connect(_on_actor_killed)
 	add_child(actor)

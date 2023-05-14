@@ -1,11 +1,11 @@
 [gd_scene load_steps=4 format=3 uid="uid://8d70c6yghhwe"]
 
-[ext_resource type="PackedScene" uid="uid://8ijx2rjjx2jg" path="res://actor.tscn" id="1_7vjvh"]
-[ext_resource type="Script" path="res://scripts/ai_actor.gd" id="2_st2mw"]
-[ext_resource type="Script" path="res://scripts/ai_actor_controller.gd" id="2_vwae4"]
+[ext_resource type="PackedScene" uid="uid://8ijx2rjjx2jg" path="res://scenes/actor.tscn" id="1_jfaud"]
+[ext_resource type="Script" path="res://scripts/ai_actor.gd" id="2_c20nm"]
+[ext_resource type="Script" path="res://scripts/ai_actor_controller.gd" id="3_q60xr"]
 
-[node name="AiActor" node_paths=PackedStringArray("nav_agent", "controller") instance=ExtResource("1_7vjvh")]
-script = ExtResource("2_st2mw")
+[node name="AiActor" node_paths=PackedStringArray("nav_agent", "controller") instance=ExtResource("1_jfaud")]
+script = ExtResource("2_c20nm")
 nav_agent = NodePath("NavigationAgent3D")
 speed = 4.0
 controller = NodePath("AiActorController")
@@ -14,4 +14,4 @@ fire_rate_per_minute = 150.0
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." index="4"]
 
 [node name="AiActorController" type="Node3D" parent="." index="5"]
-script = ExtResource("2_vwae4")
+script = ExtResource("3_q60xr")

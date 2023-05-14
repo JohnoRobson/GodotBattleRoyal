@@ -33,7 +33,7 @@ func _init_actor(actor: Actor, spawn_position: Vector2):
 
 # Spawn player actor and create new player controller
 func spawn_player(spawn_position: Vector2):
-	var actor: Actor = preload("res://player_actor.tscn").instantiate()
+	var actor: Actor = preload("res://scenes/player_actor.tscn").instantiate()
 	_init_actor(actor, spawn_position)
 	player_actors.append(actor)
 
@@ -47,7 +47,7 @@ func spawn_player(spawn_position: Vector2):
 
 # Spawn AI actor and configure existing AI controller
 func spawn_ai(spawn_position: Vector2):
-	var actor: AiActor = preload("res://ai_actor.tscn").instantiate()
+	var actor: AiActor = preload("res://scenes/ai_actor.tscn").instantiate()
 	_init_actor(actor, spawn_position)
 	ai_actors.append(actor)
 

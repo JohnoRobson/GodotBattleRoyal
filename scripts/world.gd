@@ -11,7 +11,7 @@ class_name World
 @export var nav_region: NavigationRegion3D
 
 func _ready():
-	spawn_player(Vector2(0,0))
+	spawn_player(Vector2(0,5))
 	spawn_ai(Vector2(-10,0))
 	spawn_ai(Vector2(-10,5))
 	spawn_ai(Vector2(30,0))
@@ -25,11 +25,11 @@ func _physics_process(_delta):
 
 # Common actor initializations (player and AI)
 func _init_actor(actor: Actor, spawn_position: Vector2):
+	# TODO: fix incorrect spawn location bug when spawning at (0,0)
 	actor.shoot.connect(effect_manager._on_actor_shoot)
 	actor.actor_killed.connect(_on_actor_killed)
-	# add_child before set_global_position fixes !is_inside_tree() error but causes other issues - MW 2023-05-13
-	actor.set_global_position(Vector3(spawn_position.x, 0.0, spawn_position.y))
 	add_child(actor)
+	actor.set_global_position(Vector3(spawn_position.x, 0.0, spawn_position.y))
 
 # Spawn player actor and create new player controller
 func spawn_player(spawn_position: Vector2):

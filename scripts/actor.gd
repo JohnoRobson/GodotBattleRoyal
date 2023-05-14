@@ -16,7 +16,6 @@ var movement_direction: Vector3 = Vector3.ZERO
 
 @onready var rotator: Node3D = get_node("Rotator")
 @onready var weapon_base: Node3D = get_node("Rotator/WeaponBase")
-
 @onready var health: Health = get_node("Health")
 @onready var weapon_raycast: RayCast3D = get_node("Rotator/WeaponBase/PlaceholderWeapon/RayCast3D")
 
@@ -42,12 +41,12 @@ func _aim_weapon():
 		# side to side rotation
 		rotator.look_at(aim_position, Vector3.UP)
 
-		#up and down rotation
+		# up and down rotation
 		weapon_base.look_at(aim_position, Vector3.UP)
 
 func _shoot():
 	if can_shoot:
-		## apply cooldown
+		# apply cooldown
 		weapon_cooldown = 1.0 / fire_rate_per_second
 		can_shoot = false
 

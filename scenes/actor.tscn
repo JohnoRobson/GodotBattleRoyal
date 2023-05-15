@@ -47,5 +47,5 @@ health = NodePath("../Health")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_mj10y")
 
-[connection signal="health_depleted" from="Health" to="." method="_on__health_depleted"]
+[connection signal="health_depleted" from="Health" to="." method="_on_health_depleted"]
 [connection signal="was_hit" from="Hurtbox" to="." method="_on_hurtbox_was_hit"]

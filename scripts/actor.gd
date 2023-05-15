@@ -97,7 +97,8 @@ func _physics_process(delta):
 
 	move_and_slide()
 
-func _on__health_depleted():
+func _on_health_depleted():
+	print(self)
 	actor_killed.emit(self)
 	queue_free()
 

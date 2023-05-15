@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://8ijx2rjjx2jg"]
 
 [ext_resource type="Script" path="res://scripts/actor.gd" id="1_ico6x"]
-[ext_resource type="PackedScene" path="res://scenes/health.tscn" id="2_p7v67"]
+[ext_resource type="PackedScene" uid="uid://bo23y3eikvkx8" path="res://scenes/health.tscn" id="2_p7v67"]
 [ext_resource type="PackedScene" uid="uid://c84gaytdidxmh" path="res://scenes/hurtbox.tscn" id="3_fje2p"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mj10y"]

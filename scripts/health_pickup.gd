@@ -33,3 +33,6 @@ func disable_health_pickup(actor: Actor):
 func _on_area_3d_body_entered(body: Node3D):
 	if (body.is_in_group("actors")):
 		disable_health_pickup(body)
+
+func _on_area_3d_area_entered(_area: Area3D):
+	pass

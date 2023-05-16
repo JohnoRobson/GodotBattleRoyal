@@ -63,16 +63,17 @@ func _on_actor_killed(actor: Actor):
 	ai_actors.erase(actor)
 
 func get_closest_actor(from_position: Vector3, ignore: Actor = null) -> Actor:
-	var actors = []
-	actors.append_array(player_actors)
-	actors.append_array(ai_actors)
+	var actors = player_actors + ai_actors # Apparently you can concatenate arrays like this - MW 2023-05-15
 
 	if ignore != null:
 		actors.erase(ignore)
 
 	actors.sort_custom(func(a, b): return from_position.distance_to(a.global_transform.origin) < from_position.distance_to(b.global_transform.origin))
 
-	return actors.front()
+	var closest_actor = null
+	if !actors.is_empty():
+		closest_actor = actors.front()
+	return closest_actor
 
 func get_closest_available_health(from_position: Vector3) -> HealthPickup:
 	var pickups = []

@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=3 uid="uid://8ijx2rjjx2jg"]
 
-[ext_resource type="Script" path="res://scripts/actor.gd" id="1_lnmka"]
-[ext_resource type="PackedScene" path="res://health.tscn" id="2_o56jd"]
-[ext_resource type="PackedScene" uid="uid://c84gaytdidxmh" path="res://hurtbox.tscn" id="3_a7780"]
+[ext_resource type="Script" path="res://scripts/actor.gd" id="1_ico6x"]
+[ext_resource type="PackedScene" uid="uid://bo23y3eikvkx8" path="res://scenes/health.tscn" id="2_p7v67"]
+[ext_resource type="PackedScene" uid="uid://c84gaytdidxmh" path="res://scenes/hurtbox.tscn" id="3_fje2p"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mj10y"]
 
@@ -11,7 +11,7 @@
 [sub_resource type="BoxMesh" id="BoxMesh_h5ag4"]
 
 [node name="Actor" type="CharacterBody3D" groups=["actors"]]
-script = ExtResource("1_lnmka")
+script = ExtResource("1_ico6x")
 
 [node name="ActorCollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -38,14 +38,14 @@ target_position = Vector3(0, 0, -1000)
 collision_mask = 2
 collide_with_areas = true
 
-[node name="Health" parent="." instance=ExtResource("2_o56jd")]
+[node name="Health" parent="." instance=ExtResource("2_p7v67")]
 
-[node name="Hurtbox" parent="." node_paths=PackedStringArray("health") instance=ExtResource("3_a7780")]
+[node name="Hurtbox" parent="." node_paths=PackedStringArray("health") instance=ExtResource("3_fje2p")]
 health = NodePath("../Health")
 
 [node name="HurtboxCollisionShape3D" type="CollisionShape3D" parent="Hurtbox"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_mj10y")
 
-[connection signal="health_depleted" from="Health" to="." method="_on__health_depleted"]
+[connection signal="health_depleted" from="Health" to="." method="_on_health_depleted"]
 [connection signal="was_hit" from="Hurtbox" to="." method="_on_hurtbox_was_hit"]

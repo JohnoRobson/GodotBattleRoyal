@@ -1,8 +1,8 @@
 [gd_scene load_steps=2 format=3 uid="uid://c1hehj1tb26v4"]
 
-[ext_resource type="PackedScene" uid="uid://8ijx2rjjx2jg" path="res://actor.tscn" id="1_34an4"]
+[ext_resource type="PackedScene" uid="uid://8ijx2rjjx2jg" path="res://scenes/actor.tscn" id="1_5pigh"]
 
-[node name="PlayerActor" instance=ExtResource("1_34an4")]
+[node name="PlayerActor" instance=ExtResource("1_5pigh")]
 fire_rate_per_minute = 300.0
 
 [node name="Camera3D" type="Camera3D" parent="." index="4"]

@@ -16,7 +16,6 @@ var movement_direction: Vector3 = Vector3.ZERO
 
 @onready var rotator: Node3D = get_node("Rotator")
 @onready var weapon_base: Node3D = get_node("Rotator/WeaponBase")
-
 @onready var health: Health = get_node("Health")
 @onready var weapon_raycast: RayCast3D = get_node("Rotator/WeaponBase/PlaceholderWeapon/RayCast3D")
 
@@ -32,23 +31,25 @@ signal actor_killed(me: Actor)
 
 func _aim_at(target_position: Vector3):
 	aimpoint = target_position
-	
+
 func _move_direction(input_dir: Vector2):
 	movement_direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 
 func _aim_weapon():
-	# side to side rotation
-	rotator.look_at(controller.get_aim_position(), Vector3.UP)
-	
-	#up and down rotation
-	weapon_base.look_at(controller.get_aim_position(), Vector3.UP)
+	var aim_position = controller.get_aim_position()
+	if !aim_position.is_equal_approx(Vector3.UP):
+		# side to side rotation
+		rotator.look_at(aim_position, Vector3.UP)
+
+		# up and down rotation
+		weapon_base.look_at(aim_position, Vector3.UP)
 
 func _shoot():
 	if can_shoot:
-		## apply cooldown
+		# apply cooldown
 		weapon_cooldown = 1.0 / fire_rate_per_second
 		can_shoot = false
-		
+
 		if weapon_raycast.is_colliding():
 			var start_p = weapon_raycast.global_position
 			var end_p = weapon_raycast.get_collision_point()
@@ -81,7 +82,7 @@ func _physics_process(delta):
 	# velocity from getting shot
 	velocity += velocity_to_add * delta
 	velocity_to_add = Vector3.ZERO
-	
+
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y -= gravity * delta
@@ -96,9 +97,9 @@ func _physics_process(delta):
 
 	move_and_slide()
 
-func _on__health_depleted():
+func _on_health_depleted():
 	actor_killed.emit(self)
 	queue_free()
 
-func _on_hurtbox_was_hit(amount, hit_position_global, hit_normalized_direction):
+func _on_hurtbox_was_hit(amount, _hit_position_global, hit_normalized_direction):
 	velocity_to_add += hit_normalized_direction * amount * 100.0

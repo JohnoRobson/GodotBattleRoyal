@@ -1,13 +1,13 @@
 class_name State
 
-func enter(controller: AiActorController):
+func enter(_controller: AiActorController):
 	pass
 
-func execute(controller: AiActorController):
-	pass
-	
-func execute_physics(controller: AiActorController):
+func execute(_controller: AiActorController):
 	pass
 
-func exit(controller: AiActorController):
+func execute_physics(_controller: AiActorController):
+	pass
+
+func exit(_controller: AiActorController):
 	pass

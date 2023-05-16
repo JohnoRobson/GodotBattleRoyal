@@ -12,8 +12,8 @@ func change_state(new_state: State):
 	current_state = new_state
 	current_state.enter(owner)
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	current_state.execute_physics(owner)
 
-func _process(delta):
+func _process(_delta):
 	current_state.execute(owner)

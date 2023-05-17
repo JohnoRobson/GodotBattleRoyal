@@ -15,6 +15,7 @@ func _ready():
 	spawn_ai(Vector2(-10,0))
 	spawn_ai(Vector2(-10,5))
 	spawn_ai(Vector2(30,0))
+	spawn_weapon(Vector2(5,5))
 	health_pickups.append_array(get_tree().get_nodes_in_group("health_pickups"))
 
 func _process(_delta):
@@ -26,7 +27,7 @@ func _physics_process(_delta):
 # Common actor initializations (player and AI)
 func _init_actor(actor: Actor, spawn_position: Vector2):
 	# TODO: fix incorrect spawn location bug when spawning at (0,0)
-	actor.shoot.connect(effect_manager._on_actor_shoot)
+	actor.current_weapon.on_firing.connect(effect_manager._on_actor_shoot)
 	actor.actor_killed.connect(_on_actor_killed)
 	add_child(actor)
 	actor.set_global_position(Vector3(spawn_position.x, 0.0, spawn_position.y))
@@ -57,6 +58,12 @@ func spawn_ai(spawn_position: Vector2):
 	controller.world = self
 	controller.world_navmesh = nav_region
 	controller.state_machine = StateMachine.new(FindEnemyState.new(), controller)
+
+func spawn_weapon(spawn_position: Vector2):
+	var weapon: Weapon = preload("res://scenes/smg.tscn").instantiate()
+	weapon.on_firing.connect(effect_manager._on_actor_shoot)
+	add_child(weapon)
+	weapon.set_global_position(Vector3(spawn_position.x, 5.0, spawn_position.y))
 
 func _on_actor_killed(actor: Actor):
 	player_actors.erase(actor)

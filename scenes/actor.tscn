@@ -1,17 +1,19 @@
 [gd_scene load_steps=7 format=3 uid="uid://8ijx2rjjx2jg"]
 
 [ext_resource type="Script" path="res://scripts/actor.gd" id="1_ico6x"]
+[ext_resource type="PackedScene" uid="uid://ugmvx4nxxjn2" path="res://scenes/smg.tscn" id="2_6pqb0"]
 [ext_resource type="PackedScene" uid="uid://bo23y3eikvkx8" path="res://scenes/health.tscn" id="2_p7v67"]
 [ext_resource type="PackedScene" uid="uid://c84gaytdidxmh" path="res://scenes/hurtbox.tscn" id="3_fje2p"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mj10y"]
+radius = 0.50135
+height = 2.00418
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_ie7wx"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_h5ag4"]
-
-[node name="Actor" type="CharacterBody3D" groups=["actors"]]
+[node name="Actor" type="CharacterBody3D" node_paths=PackedStringArray("current_weapon") groups=["actors"]]
 script = ExtResource("1_ico6x")
+current_weapon = NodePath("Rotator/WeaponBase/Smg")
 
 [node name="ActorCollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -27,20 +29,13 @@ skeleton = NodePath("../..")
 [node name="WeaponBase" type="Node3D" parent="Rotator"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.13, -0.803629)
 
-[node name="PlaceholderWeapon" type="MeshInstance3D" parent="Rotator/WeaponBase"]
-transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 1, 0, 0, -0.299)
-mesh = SubResource("BoxMesh_h5ag4")
-skeleton = NodePath("../../..")
-
-[node name="RayCast3D" type="RayCast3D" parent="Rotator/WeaponBase/PlaceholderWeapon"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.56647)
-target_position = Vector3(0, 0, -1000)
-collision_mask = 2
-collide_with_areas = true
+[node name="Smg" parent="Rotator/WeaponBase" instance=ExtResource("2_6pqb0")]
 
 [node name="Health" parent="." instance=ExtResource("2_p7v67")]
 
 [node name="Hurtbox" parent="." node_paths=PackedStringArray("health") instance=ExtResource("3_fje2p")]
+collision_layer = 2
+collision_mask = 2
 health = NodePath("../Health")
 
 [node name="HurtboxCollisionShape3D" type="CollisionShape3D" parent="Hurtbox"]

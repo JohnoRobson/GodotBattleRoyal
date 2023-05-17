@@ -4,7 +4,6 @@ class_name Actor
 
 @export var speed = 5.0
 @export var JUMP_VELOCITY = 4.5
-@export var weapon_damage = 10.0
 @export var controller: ActorController = ActorController.new()
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -17,16 +16,11 @@ var movement_direction: Vector3 = Vector3.ZERO
 @onready var rotator: Node3D = get_node("Rotator")
 @onready var weapon_base: Node3D = get_node("Rotator/WeaponBase")
 @onready var health: Health = get_node("Health")
-@onready var weapon_raycast: RayCast3D = get_node("Rotator/WeaponBase/PlaceholderWeapon/RayCast3D")
 
-@export_range(0.0, 1200.0, 1.0) var fire_rate_per_minute
-@onready var fire_rate_per_second = fire_rate_per_minute / 60
-var weapon_cooldown = 0.0
-var can_shoot: bool = true
+@export var current_weapon: Weapon
 
 var velocity_to_add: Vector3 = Vector3.ZERO
 
-signal shoot(start_position, end_position)
 signal actor_killed(me: Actor)
 
 func _aim_at(target_position: Vector3):
@@ -42,41 +36,17 @@ func _aim_weapon():
 		rotator.look_at(aim_position, Vector3.UP)
 
 		# up and down rotation
-		weapon_base.look_at(aim_position, Vector3.UP)
-
-func _shoot():
-	if can_shoot:
-		# apply cooldown
-		weapon_cooldown = 1.0 / fire_rate_per_second
-		can_shoot = false
-
-		if weapon_raycast.is_colliding():
-			var start_p = weapon_raycast.global_position
-			var end_p = weapon_raycast.get_collision_point()
-			shoot.emit(start_p, end_p)
-			var target = weapon_raycast.get_collider()
-			if target != null:
-				if target.is_in_group("Hurtbox"):
-					target.take_damage(weapon_damage, end_p, (end_p - start_p).normalized())
-		else:
-			var start_p = weapon_raycast.global_position
-			var end_p = weapon_raycast.to_global(weapon_raycast.target_position)
-			shoot.emit(start_p, end_p)
-
-func _apply_weapon_cooldown(delta: float):
-	weapon_cooldown -= delta
-	if weapon_cooldown < 0.0:
-		weapon_cooldown = 0.0
-		can_shoot = true
+		if current_weapon != null:
+			var angle_vector = current_weapon.get_angle_to_aim_at(aim_position)
+			weapon_base.look_at(to_global(angle_vector) + (weapon_base.global_position - global_position), Vector3.UP)
 
 func _ready():
 	pass
 
 func _process(delta):
 	_aim_weapon()
-	_apply_weapon_cooldown(delta)
-	if (controller.is_shooting()):
-		_shoot()
+	if (controller.is_shooting() && current_weapon != null):
+		current_weapon.fire()
 
 func _physics_process(delta):
 	# Add the gravity.

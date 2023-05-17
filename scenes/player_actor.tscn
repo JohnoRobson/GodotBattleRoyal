@@ -3,7 +3,12 @@
 [ext_resource type="PackedScene" uid="uid://8ijx2rjjx2jg" path="res://scenes/actor.tscn" id="1_5pigh"]
 
 [node name="PlayerActor" instance=ExtResource("1_5pigh")]
-fire_rate_per_minute = 300.0
+collision_layer = 3
+collision_mask = 3
+
+[node name="Hurtbox" parent="." index="3"]
+collision_layer = 3
+collision_mask = 3
 
 [node name="Camera3D" type="Camera3D" parent="." index="4"]
 transform = Transform3D(1, 0, 0, 0, 0.559193, 0.829038, 0, -0.829038, 0.559193, 0, 11.4105, 7.52074)

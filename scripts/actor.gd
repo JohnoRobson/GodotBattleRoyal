@@ -79,10 +79,6 @@ func _process(delta):
 		_shoot()
 
 func _physics_process(delta):
-	# velocity from getting shot
-	velocity += velocity_to_add * delta
-	velocity_to_add = Vector3.ZERO
-
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y -= gravity * delta
@@ -92,8 +88,14 @@ func _physics_process(delta):
 		velocity.x = movement_vel.x * speed
 		velocity.z = movement_vel.z * speed
 	else:
+		# friction
 		velocity.x = move_toward(velocity.x, 0, speed)
 		velocity.z = move_toward(velocity.z, 0, speed)
+
+	# velocity from getting shot
+	velocity += velocity_to_add * delta
+	# zero out the velocity_to_add, as it has been added
+	velocity_to_add = Vector3.ZERO
 
 	move_and_slide()
 
@@ -102,4 +104,4 @@ func _on_health_depleted():
 	queue_free()
 
 func _on_hurtbox_was_hit(amount, _hit_position_global, hit_normalized_direction):
-	velocity_to_add += hit_normalized_direction * amount * 100.0
+	velocity_to_add += hit_normalized_direction * amount * 100.0 * Vector3(1,0,1)

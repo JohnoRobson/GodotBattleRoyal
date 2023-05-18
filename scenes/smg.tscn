@@ -39,7 +39,8 @@ collision_layer = 4
 collision_mask = 3
 script = ExtResource("1_2nnhw")
 fire_rate_per_minute = 600.0
-degrees_of_inaccuracy = 4.0
+degrees_of_inaccuracy = 6.0
+weapon_range = 50.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.10401, -0.204375)
@@ -49,12 +50,6 @@ shape = SubResource("BoxShape3D_j006u")
 transform = Transform3D(0, -1, 0, 1, 0, 0, 0, 0, 1, 0.0220523, -0.0990012, -0.198771)
 mesh = SubResource("ArrayMesh_rjkhh")
 skeleton = NodePath("")
-
-[node name="RayCast3D" type="RayCast3D" parent="."]
-transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 1, 0, 0.0494051, -1.29971)
-target_position = Vector3(0, 0, -1000)
-collision_mask = 2
-collide_with_areas = true
 
 [node name="BulletPos" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.041685, -1.31108)

@@ -16,10 +16,11 @@ var movement_direction: Vector3 = Vector3.ZERO
 @onready var rotator: Node3D = get_node("Rotator")
 @onready var weapon_base: Node3D = get_node("Rotator/WeaponBase")
 @onready var health: Health = get_node("Health")
+@onready var item_pickup_area: Area3D = get_node("ItemPickupArea")
 
-@export var current_weapon: Weapon
+@export var held_weapon: Weapon
 
-var velocity_to_add: Vector3 = Vector3.ZERO
+var _velocity_to_add: Vector3 = Vector3.ZERO
 
 signal actor_killed(me: Actor)
 
@@ -36,8 +37,8 @@ func _aim_weapon():
 		rotator.look_at(aim_position, Vector3.UP)
 
 		# up and down rotation
-		if current_weapon != null:
-			var angle_vector = current_weapon.get_angle_to_aim_at(aim_position)
+		if held_weapon != null:
+			var angle_vector = held_weapon.get_angle_to_aim_at(aim_position)
 			weapon_base.look_at(to_global(angle_vector) + (weapon_base.global_position - global_position), Vector3.UP)
 
 func _ready():
@@ -45,8 +46,8 @@ func _ready():
 
 func _process(delta):
 	_aim_weapon()
-	if (controller.is_shooting() && current_weapon != null):
-		current_weapon.fire()
+	if (controller.is_shooting() && held_weapon != null):
+		held_weapon.fire()
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -63,15 +64,29 @@ func _physics_process(delta):
 		velocity.z = move_toward(velocity.z, 0, speed)
 
 	# velocity from getting shot
-	velocity += velocity_to_add * delta
+	velocity += _velocity_to_add * delta
 	# zero out the velocity_to_add, as it has been added
-	velocity_to_add = Vector3.ZERO
+	_velocity_to_add = Vector3.ZERO
 
 	move_and_slide()
+
+	# check for collisions for weapon pickups
+	var bodies_in_pickup_area: Array[Node3D] = item_pickup_area.get_overlapping_bodies()
+	var nearby_weapons = bodies_in_pickup_area.filter(func(a): return a is Weapon && !a.is_held)
+	if !nearby_weapons.is_empty():
+		equip_weapon(nearby_weapons.front())
 
 func _on_health_depleted():
 	actor_killed.emit(self)
 	queue_free()
 
 func _on_hurtbox_was_hit(amount, _hit_position_global, hit_normalized_direction):
-	velocity_to_add += hit_normalized_direction * amount * 100.0 * Vector3(1,0,1)
+	_velocity_to_add += hit_normalized_direction * amount * 100.0 * Vector3(1,0,1)
+
+func equip_weapon(weapon: Weapon):
+	held_weapon = weapon
+	if held_weapon.get_parent() != null:
+		held_weapon.get_parent().remove_child(held_weapon)
+	weapon_base.add_child(held_weapon)
+	held_weapon.position = Vector3.ZERO
+	held_weapon.is_held = true

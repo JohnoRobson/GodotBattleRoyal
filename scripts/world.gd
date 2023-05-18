@@ -66,6 +66,7 @@ func spawn_weapon(spawn_position: Vector2) -> Weapon:
 	weapon.on_firing.connect(effect_manager._on_actor_shoot)
 	add_child(weapon)
 	weapon.set_global_position(Vector3(spawn_position.x, 5.0, spawn_position.y))
+	weapon.set_global_rotation_degrees(Vector3(0, 90, 0))
 	weapons.append(weapon)
 	return weapon
 

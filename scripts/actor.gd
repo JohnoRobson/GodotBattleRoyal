@@ -73,10 +73,20 @@ func _physics_process(delta):
 	# check for collisions for weapon pickups
 	var bodies_in_pickup_area: Array[Node3D] = item_pickup_area.get_overlapping_bodies()
 	var nearby_weapons = bodies_in_pickup_area.filter(func(a): return a is Weapon && !a.is_held)
-	if !nearby_weapons.is_empty():
+	if !nearby_weapons.is_empty() && held_weapon == null:
 		equip_weapon(nearby_weapons.front())
 
 func _on_health_depleted():
+	if held_weapon != null:
+		var weapon_position = held_weapon.global_position
+		var weapon_rotation = held_weapon.global_rotation
+		held_weapon.get_parent().remove_child(held_weapon)
+		# this seems like a bad way to do it
+		get_parent().add_child(held_weapon)
+		held_weapon.is_held = false
+		held_weapon.global_position = weapon_position
+		held_weapon.global_rotation = weapon_rotation
+		
 	actor_killed.emit(self)
 	queue_free()
 
@@ -89,4 +99,5 @@ func equip_weapon(weapon: Weapon):
 		held_weapon.get_parent().remove_child(held_weapon)
 	weapon_base.add_child(held_weapon)
 	held_weapon.position = Vector3.ZERO
+	held_weapon.rotation = Vector3.ZERO
 	held_weapon.is_held = true

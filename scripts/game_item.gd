@@ -22,6 +22,5 @@ func _process(delta):
 
 func _physics_process(delta):
 	freeze = is_held
-	print(is_held)
 
 # inventory stuff goes here later

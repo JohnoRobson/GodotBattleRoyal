@@ -61,6 +61,7 @@ func spawn_ai(spawn_position: Vector2):
 	controller.world_navmesh = nav_region
 	controller.state_machine = StateMachine.new(FindEnemyState.new(), controller)
 
+# Spawn SMG
 func spawn_weapon(spawn_position: Vector2) -> Weapon:
 	var weapon: Weapon = preload("res://scenes/smg.tscn").instantiate()
 	weapon.on_firing.connect(effect_manager._on_actor_shoot)

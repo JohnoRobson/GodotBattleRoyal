@@ -51,6 +51,8 @@ func _process(_delta):
 		held_weapon.fire()
 	if (controller.is_reloading() && held_weapon != null):
 		held_weapon.reload()
+	if held_weapon != null:
+		held_weapon.set_is_moving(!controller.get_move_direction().is_zero_approx())
 
 func _physics_process(delta):
 	# Add the gravity.

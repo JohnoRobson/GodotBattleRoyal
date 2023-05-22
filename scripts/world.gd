@@ -83,10 +83,8 @@ func get_closest_actor(from_position: Vector3, ignore: Actor = null) -> Actor:
 
 	actors.sort_custom(func(a, b): return from_position.distance_to(a.global_transform.origin) < from_position.distance_to(b.global_transform.origin))
 
-	var closest_actor = null
-	if !actors.is_empty():
-		closest_actor = actors.front()
-	return closest_actor
+	# weird ternery
+	return actors.front() if !actors.is_empty() else null
 
 func get_closest_available_health(from_position: Vector3) -> HealthPickup:
 	var pickups = []
@@ -95,7 +93,8 @@ func get_closest_available_health(from_position: Vector3) -> HealthPickup:
 	# Filter returns the filtered array, but sort is in-place
 	pickups.sort_custom(func(a, b): return from_position.distance_to(a.global_transform.origin) < from_position.distance_to(b.global_transform.origin))
 	pickups = pickups.filter(func(a): return a.health_is_available)
-	return pickups.front()
+
+	return pickups.front() if !pickups.is_empty() else null
 
 func get_closest_available_weapon(from_position: Vector3) -> Weapon:
 	var weapon_array = []
@@ -103,4 +102,5 @@ func get_closest_available_weapon(from_position: Vector3) -> Weapon:
 
 	weapon_array.sort_custom(func(a, b): return from_position.distance_to(a.global_transform.origin) < from_position.distance_to(b.global_transform.origin))
 	weapon_array = weapon_array.filter(func(a): return !a.is_held)
-	return weapon_array.front()
+
+	return weapon_array.front() if !weapon_array.is_empty() else null

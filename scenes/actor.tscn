@@ -5,13 +5,17 @@
 [ext_resource type="PackedScene" uid="uid://c84gaytdidxmh" path="res://scenes/hurtbox.tscn" id="3_fje2p"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mj10y"]
+radius = 0.50135
+height = 2.00418
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_ie7wx"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_h5ag4"]
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_cgo17"]
+radius = 1.27991
 
-[node name="Actor" type="CharacterBody3D" groups=["actors"]]
+[node name="Actor" type="CharacterBody3D" node_paths=PackedStringArray("held_weapon") groups=["actors"]]
 script = ExtResource("1_ico6x")
+held_weapon = NodePath("")
 
 [node name="ActorCollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -27,25 +31,24 @@ skeleton = NodePath("../..")
 [node name="WeaponBase" type="Node3D" parent="Rotator"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.13, -0.803629)
 
-[node name="PlaceholderWeapon" type="MeshInstance3D" parent="Rotator/WeaponBase"]
-transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 1, 0, 0, -0.299)
-mesh = SubResource("BoxMesh_h5ag4")
-skeleton = NodePath("../../..")
-
-[node name="RayCast3D" type="RayCast3D" parent="Rotator/WeaponBase/PlaceholderWeapon"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.56647)
-target_position = Vector3(0, 0, -1000)
-collision_mask = 2
-collide_with_areas = true
-
 [node name="Health" parent="." instance=ExtResource("2_p7v67")]
 
 [node name="Hurtbox" parent="." node_paths=PackedStringArray("health") instance=ExtResource("3_fje2p")]
+collision_layer = 2
+collision_mask = 2
 health = NodePath("../Health")
 
 [node name="HurtboxCollisionShape3D" type="CollisionShape3D" parent="Hurtbox"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_mj10y")
+
+[node name="ItemPickupArea" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ItemPickupArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CylinderShape3D_cgo17")
 
 [connection signal="health_depleted" from="Health" to="." method="_on_health_depleted"]
 [connection signal="was_hit" from="Hurtbox" to="." method="_on_hurtbox_was_hit"]

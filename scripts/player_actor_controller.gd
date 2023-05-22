@@ -28,3 +28,6 @@ func get_mouse_position_in_3d() -> Vector3:
 
 func is_shooting() -> bool:
 	return Input.is_action_pressed("fire")
+
+func is_reloading() -> bool:
+	return Input.is_action_pressed("reload")

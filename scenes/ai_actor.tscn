@@ -9,7 +9,6 @@ script = ExtResource("2_c20nm")
 nav_agent = NodePath("NavigationAgent3D")
 speed = 4.0
 controller = NodePath("AiActorController")
-fire_rate_per_minute = 150.0
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." index="4"]
 

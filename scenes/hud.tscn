@@ -1,0 +1,30 @@
+[gd_scene load_steps=2 format=3 uid="uid://pciev3jsxk36"]
+
+[ext_resource type="Script" path="res://scripts/hud.gd" id="1_ondyb"]
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_ondyb")
+
+[node name="AmmoCount" type="Label" parent="."]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -108.0
+offset_top = -41.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Ammo:"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Health" type="Label" parent="."]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -43.0
+offset_right = 143.0
+grow_vertical = 0
+text = "Health: 100"
+vertical_alignment = 1

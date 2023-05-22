@@ -5,6 +5,7 @@ class_name World
 @onready var player_actors: Array[Actor] = []
 @onready var ai_actors: Array[AiActor] = []
 @onready var health_pickups: Array[HealthPickup] = []
+@onready var weapons: Array[Weapon] = []
 
 @export var effect_manager: EffectManager
 
@@ -15,6 +16,9 @@ func _ready():
 	spawn_ai(Vector2(-10,0))
 	spawn_ai(Vector2(-10,5))
 	spawn_ai(Vector2(30,0))
+	spawn_weapon(Vector2(5,5))
+	spawn_weapon(Vector2(-15,5))
+	spawn_weapon(Vector2(25,-5))
 	health_pickups.append_array(get_tree().get_nodes_in_group("health_pickups"))
 
 func _process(_delta):
@@ -26,7 +30,6 @@ func _physics_process(_delta):
 # Common actor initializations (player and AI)
 func _init_actor(actor: Actor, spawn_position: Vector2):
 	# TODO: fix incorrect spawn location bug when spawning at (0,0)
-	actor.shoot.connect(effect_manager._on_actor_shoot)
 	actor.actor_killed.connect(_on_actor_killed)
 	add_child(actor)
 	actor.set_global_position(Vector3(spawn_position.x, 0.0, spawn_position.y))
@@ -58,6 +61,16 @@ func spawn_ai(spawn_position: Vector2):
 	controller.world_navmesh = nav_region
 	controller.state_machine = StateMachine.new(FindEnemyState.new(), controller)
 
+# Spawn SMG
+func spawn_weapon(spawn_position: Vector2) -> Weapon:
+	var weapon: Weapon = preload("res://scenes/smg.tscn").instantiate()
+	weapon.on_firing.connect(effect_manager._on_actor_shoot)
+	add_child(weapon)
+	weapon.set_global_position(Vector3(spawn_position.x, 5.0, spawn_position.y))
+	weapon.set_global_rotation_degrees(Vector3(0, 90, 0))
+	weapons.append(weapon)
+	return weapon
+
 func _on_actor_killed(actor: Actor):
 	player_actors.erase(actor)
 	ai_actors.erase(actor)
@@ -70,15 +83,24 @@ func get_closest_actor(from_position: Vector3, ignore: Actor = null) -> Actor:
 
 	actors.sort_custom(func(a, b): return from_position.distance_to(a.global_transform.origin) < from_position.distance_to(b.global_transform.origin))
 
-	var closest_actor = null
-	if !actors.is_empty():
-		closest_actor = actors.front()
-	return closest_actor
+	# weird ternery
+	return actors.front() if !actors.is_empty() else null
 
 func get_closest_available_health(from_position: Vector3) -> HealthPickup:
 	var pickups = []
 	pickups.append_array(health_pickups)
 
+	# Filter returns the filtered array, but sort is in-place
 	pickups.sort_custom(func(a, b): return from_position.distance_to(a.global_transform.origin) < from_position.distance_to(b.global_transform.origin))
-	pickups.filter(func(a): return a.health_is_available)
-	return pickups.front()
+	pickups = pickups.filter(func(a): return a.health_is_available)
+
+	return pickups.front() if !pickups.is_empty() else null
+
+func get_closest_available_weapon(from_position: Vector3) -> Weapon:
+	var weapon_array = []
+	weapon_array.append_array(weapons)
+
+	weapon_array.sort_custom(func(a, b): return from_position.distance_to(a.global_transform.origin) < from_position.distance_to(b.global_transform.origin))
+	weapon_array = weapon_array.filter(func(a): return !a.is_held)
+
+	return weapon_array.front() if !weapon_array.is_empty() else null

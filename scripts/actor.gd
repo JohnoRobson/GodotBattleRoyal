@@ -4,7 +4,6 @@ class_name Actor
 
 @export var speed = 5.0
 @export var JUMP_VELOCITY = 4.5
-@export var weapon_damage = 10.0
 @export var controller: ActorController = ActorController.new()
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -17,17 +16,14 @@ var movement_direction: Vector3 = Vector3.ZERO
 @onready var rotator: Node3D = get_node("Rotator")
 @onready var weapon_base: Node3D = get_node("Rotator/WeaponBase")
 @onready var health: Health = get_node("Health")
-@onready var weapon_raycast: RayCast3D = get_node("Rotator/WeaponBase/PlaceholderWeapon/RayCast3D")
+@onready var item_pickup_area: Area3D = get_node("ItemPickupArea")
 
-@export_range(0.0, 1200.0, 1.0) var fire_rate_per_minute
-@onready var fire_rate_per_second = fire_rate_per_minute / 60
-var weapon_cooldown = 0.0
-var can_shoot: bool = true
+@export var held_weapon: Weapon
 
-var velocity_to_add: Vector3 = Vector3.ZERO
+var _velocity_to_add: Vector3 = Vector3.ZERO
 
-signal shoot(start_position, end_position)
 signal actor_killed(me: Actor)
+signal weapon_swap(weapon: Weapon)
 
 func _aim_at(target_position: Vector3):
 	aimpoint = target_position
@@ -42,47 +38,21 @@ func _aim_weapon():
 		rotator.look_at(aim_position, Vector3.UP)
 
 		# up and down rotation
-		weapon_base.look_at(aim_position, Vector3.UP)
-
-func _shoot():
-	if can_shoot:
-		# apply cooldown
-		weapon_cooldown = 1.0 / fire_rate_per_second
-		can_shoot = false
-
-		if weapon_raycast.is_colliding():
-			var start_p = weapon_raycast.global_position
-			var end_p = weapon_raycast.get_collision_point()
-			shoot.emit(start_p, end_p)
-			var target = weapon_raycast.get_collider()
-			if target != null:
-				if target.is_in_group("Hurtbox"):
-					target.take_damage(weapon_damage, end_p, (end_p - start_p).normalized())
-		else:
-			var start_p = weapon_raycast.global_position
-			var end_p = weapon_raycast.to_global(weapon_raycast.target_position)
-			shoot.emit(start_p, end_p)
-
-func _apply_weapon_cooldown(delta: float):
-	weapon_cooldown -= delta
-	if weapon_cooldown < 0.0:
-		weapon_cooldown = 0.0
-		can_shoot = true
+		if held_weapon != null:
+			var angle_vector = held_weapon.get_angle_to_aim_at(aim_position)
+			weapon_base.look_at(to_global(angle_vector) + (weapon_base.global_position - global_position), Vector3.UP)
 
 func _ready():
 	pass
 
-func _process(delta):
+func _process(_delta):
 	_aim_weapon()
-	_apply_weapon_cooldown(delta)
-	if (controller.is_shooting()):
-		_shoot()
+	if (controller.is_shooting() && held_weapon != null):
+		held_weapon.fire()
+	if (controller.is_reloading() && held_weapon != null):
+		held_weapon.reload()
 
 func _physics_process(delta):
-	# velocity from getting shot
-	velocity += velocity_to_add * delta
-	velocity_to_add = Vector3.ZERO
-
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y -= gravity * delta
@@ -92,14 +62,46 @@ func _physics_process(delta):
 		velocity.x = movement_vel.x * speed
 		velocity.z = movement_vel.z * speed
 	else:
+		# friction
 		velocity.x = move_toward(velocity.x, 0, speed)
 		velocity.z = move_toward(velocity.z, 0, speed)
 
+	# velocity from getting shot
+	velocity += _velocity_to_add * delta
+	# zero out the velocity_to_add, as it has been added
+	_velocity_to_add = Vector3.ZERO
+
 	move_and_slide()
 
+	# check for collisions for weapon pickups
+	var bodies_in_pickup_area: Array[Node3D] = item_pickup_area.get_overlapping_bodies()
+	var nearby_weapons = bodies_in_pickup_area.filter(func(a): return a is Weapon && !a.is_held)
+	if !nearby_weapons.is_empty() && held_weapon == null:
+		equip_weapon(nearby_weapons.front())
+
 func _on_health_depleted():
+	if held_weapon != null:
+		var weapon_position = held_weapon.global_position
+		var weapon_rotation = held_weapon.global_rotation
+		held_weapon.get_parent().remove_child(held_weapon)
+		# this seems like a bad way to do it
+		get_parent().add_child(held_weapon)
+		held_weapon.is_held = false
+		held_weapon.global_position = weapon_position
+		held_weapon.global_rotation = weapon_rotation
+		
 	actor_killed.emit(self)
 	queue_free()
 
 func _on_hurtbox_was_hit(amount, _hit_position_global, hit_normalized_direction):
-	velocity_to_add += hit_normalized_direction * amount * 100.0
+	_velocity_to_add += hit_normalized_direction * amount * 100.0 * Vector3(1,0,1)
+
+func equip_weapon(weapon: Weapon):
+	held_weapon = weapon
+	if held_weapon.get_parent() != null:
+		held_weapon.get_parent().remove_child(held_weapon)
+	weapon_base.add_child(held_weapon)
+	held_weapon.position = Vector3.ZERO
+	held_weapon.rotation = Vector3.ZERO
+	held_weapon.is_held = true
+	weapon_swap.emit(weapon)

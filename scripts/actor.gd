@@ -23,6 +23,7 @@ var movement_direction: Vector3 = Vector3.ZERO
 var _velocity_to_add: Vector3 = Vector3.ZERO
 
 signal actor_killed(me: Actor)
+signal weapon_swap(weapon: Weapon)
 
 func _aim_at(target_position: Vector3):
 	aimpoint = target_position
@@ -44,10 +45,12 @@ func _aim_weapon():
 func _ready():
 	pass
 
-func _process(delta):
+func _process(_delta):
 	_aim_weapon()
 	if (controller.is_shooting() && held_weapon != null):
 		held_weapon.fire()
+	if (controller.is_reloading() && held_weapon != null):
+		held_weapon.reload()
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -101,3 +104,4 @@ func equip_weapon(weapon: Weapon):
 	held_weapon.position = Vector3.ZERO
 	held_weapon.rotation = Vector3.ZERO
 	held_weapon.is_held = true
+	weapon_swap.emit(weapon)

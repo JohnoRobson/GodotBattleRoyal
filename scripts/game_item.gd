@@ -17,10 +17,10 @@ func _ready():
 	freeze = is_held
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	pass
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	freeze = is_held
 
 # inventory stuff goes here later

@@ -10,3 +10,6 @@ func get_move_direction() -> Vector2:
 
 func is_shooting() -> bool:
 	return false
+
+func is_reloading() -> bool:
+	return false

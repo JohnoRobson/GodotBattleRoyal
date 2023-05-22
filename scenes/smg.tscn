@@ -41,6 +41,9 @@ script = ExtResource("1_2nnhw")
 fire_rate_per_minute = 600.0
 degrees_of_inaccuracy = 6.0
 weapon_range = 50.0
+weapon_reload_time_seconds = 1.0
+_max_ammo = 30
+_current_ammo = 30
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.10401, -0.204375)

@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://smivmtkbm1yv"]
+
+[ext_resource type="Script" path="res://scripts/weapon.gd" id="1_vdfrr"]
+[ext_resource type="Script" path="res://resources/weapon_type.gd" id="2_b577d"]
+[ext_resource type="PackedScene" uid="uid://o0g0axyk2njf" path="res://models/sniper_rifle.blend" id="3_04if4"]
+
+[sub_resource type="Resource" id="Resource_7n53x"]
+script = ExtResource("2_b577d")
+bullet_spawn_position_local = Vector3(0, 0.04, -2.397)
+weapon_damage = 50.0
+fire_rate_per_minute = 12.0
+degrees_of_inaccuracy_stationary = 1.0
+degrees_of_inaccuracy_moving = 60.0
+weapon_range = 2000.0
+weapon_reload_time_seconds = 5.0
+number_of_shots_per_fire = 1
+max_ammo = 2
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_j006u"]
+size = Vector3(0.157325, 0.655788, 3.35328)
+
+[node name="SniperRifle" type="RigidBody3D"]
+collision_layer = 4
+collision_mask = 3
+script = ExtResource("1_vdfrr")
+stats = SubResource("Resource_7n53x")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00614242, -0.740711)
+shape = SubResource("BoxShape3D_j006u")
+
+[node name="sniper_rifle" parent="." instance=ExtResource("3_04if4")]

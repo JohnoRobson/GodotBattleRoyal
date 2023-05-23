@@ -1,6 +1,19 @@
-[gd_scene load_steps=6 format=3 uid="uid://ugmvx4nxxjn2"]
+[gd_scene load_steps=8 format=3 uid="uid://ugmvx4nxxjn2"]
 
 [ext_resource type="Script" path="res://scripts/weapon.gd" id="1_2nnhw"]
+[ext_resource type="Script" path="res://resources/weapon_type.gd" id="2_7qbj6"]
+
+[sub_resource type="Resource" id="Resource_7n53x"]
+script = ExtResource("2_7qbj6")
+bullet_spawn_position_local = Vector3(0, 0.042, -1.311)
+weapon_damage = 10.0
+fire_rate_per_minute = 600.0
+degrees_of_inaccuracy_stationary = 6.0
+degrees_of_inaccuracy_moving = 12.0
+weapon_range = 2000.0
+weapon_reload_time_seconds = 1.0
+number_of_shots_per_fire = 1
+max_ammo = 30
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_j006u"]
 size = Vector3(0.157325, 0.498044, 2.18281)
@@ -38,13 +51,7 @@ shadow_mesh = SubResource("ArrayMesh_1h2b2")
 collision_layer = 4
 collision_mask = 3
 script = ExtResource("1_2nnhw")
-fire_rate_per_minute = 600.0
-degrees_of_inaccuracy_stationary = 6.0
-degrees_of_inaccuracy_moving = 12.0
-weapon_range = 50.0
-weapon_reload_time_seconds = 1.0
-_max_ammo = 30
-_current_ammo = 30
+stats = SubResource("Resource_7n53x")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.10401, -0.204375)
@@ -54,6 +61,3 @@ shape = SubResource("BoxShape3D_j006u")
 transform = Transform3D(0, -1, 0, 1, 0, 0, 0, 0, 1, 0.0220523, -0.0990012, -0.198771)
 mesh = SubResource("ArrayMesh_rjkhh")
 skeleton = NodePath("")
-
-[node name="BulletPos" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.041685, -1.31108)

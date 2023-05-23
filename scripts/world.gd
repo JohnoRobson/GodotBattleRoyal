@@ -11,14 +11,16 @@ class_name World
 
 @export var nav_region: NavigationRegion3D
 
+enum Weapons {SMG, SHOTGUN, SNIPER}
+
 func _ready():
 	spawn_player(Vector2(0,5))
 	spawn_ai(Vector2(-10,0))
 	spawn_ai(Vector2(-10,5))
 	spawn_ai(Vector2(30,0))
-	spawn_weapon(Vector2(5,5))
-	spawn_weapon(Vector2(-15,5))
-	spawn_weapon(Vector2(25,-5))
+	spawn_weapon(Vector2(5,5), Weapons.SMG)
+	spawn_weapon(Vector2(-15,5), Weapons.SHOTGUN)
+	spawn_weapon(Vector2(25,-5), Weapons.SNIPER)
 	health_pickups.append_array(get_tree().get_nodes_in_group("health_pickups"))
 
 func _process(_delta):
@@ -62,8 +64,18 @@ func spawn_ai(spawn_position: Vector2):
 	controller.state_machine = StateMachine.new(FindEnemyState.new(), controller)
 
 # Spawn SMG
-func spawn_weapon(spawn_position: Vector2) -> Weapon:
-	var weapon: Weapon = preload("res://scenes/smg.tscn").instantiate()
+func spawn_weapon(spawn_position: Vector2, weapon_type: Weapons) -> Weapon:
+	var weapon: Weapon
+	match weapon_type:
+		Weapons.SHOTGUN:
+			weapon = preload("res://scenes/shotgun.tscn").instantiate()
+		Weapons.SMG:
+			weapon = preload("res://scenes/smg.tscn").instantiate()
+		Weapons.SNIPER:
+			weapon = preload("res://scenes/sniper_rifle.tscn").instantiate()
+		_:
+			return
+
 	weapon.on_firing.connect(effect_manager._on_actor_shoot)
 	add_child(weapon)
 	weapon.set_global_position(Vector3(spawn_position.x, 5.0, spawn_position.y))
@@ -83,7 +95,7 @@ func get_closest_actor(from_position: Vector3, ignore: Actor = null) -> Actor:
 
 	actors.sort_custom(func(a, b): return from_position.distance_to(a.global_transform.origin) < from_position.distance_to(b.global_transform.origin))
 
-	# weird ternery
+	# weird ternary
 	return actors.front() if !actors.is_empty() else null
 
 func get_closest_available_health(from_position: Vector3) -> HealthPickup:

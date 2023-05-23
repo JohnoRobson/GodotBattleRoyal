@@ -5,6 +5,7 @@ shading_mode = 0
 albedo_color = Color(1, 1, 0, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_lnrfs"]
+resource_local_to_scene = true
 material = SubResource("StandardMaterial3D_tyikq")
 
 [sub_resource type="GDScript" id="GDScript_6n8ox"]
@@ -14,7 +15,7 @@ script/source = "extends MeshInstance3D
 @export var start: Vector3 = Vector3.ZERO
 @export var end: Vector3 = Vector3(0.0,0.0,-50.0)
 @export_range(0.0, 10.0, 0.1) var lifetime_seconds = 0.1
-var max_lifetime_seconds = lifetime_seconds
+@onready var max_lifetime_seconds = lifetime_seconds
 var max_width = 0.1
 var dist = 0.0
 

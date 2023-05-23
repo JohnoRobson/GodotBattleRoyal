@@ -13,17 +13,10 @@ var dist = 0.0
 func _ready():
 	dist = start.distance_to(end) / 2
 	mesh.size = Vector3(starting_width, starting_width, dist)
-	#look_at(end, Vector3.UP)
 
 	var q = (end - start).normalized() / 2
 
-
 	look_at_from_position(start + q, end)
-	#translate(Vector3(0.0, 0.0, -dist / 2))
-	#self.transform.basis.z -= dist
-	#translate_object_local(Vector3.FORWARD * dist)
-	#basis.
-	#translation += spatial.global_transform.basis.z * dist
 
 func _process(delta):
 	lifetime_seconds -= delta

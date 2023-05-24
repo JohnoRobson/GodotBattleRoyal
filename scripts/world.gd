@@ -3,7 +3,7 @@ extends Node3D
 class_name World
 
 @onready var player_actors: Array[Actor] = []
-@onready var ai_actors: Array[AiActor] = []
+@onready var ai_actors: Array[Actor] = []
 @onready var health_pickups: Array[HealthPickup] = []
 @onready var weapons: Array[Weapon] = []
 
@@ -50,7 +50,7 @@ func spawn_player(spawn_position: Vector2):
 
 # Spawn AI actor and configure existing AI controller
 func spawn_ai(spawn_position: Vector2):
-	var actor: AiActor = preload("res://scenes/ai_actor.tscn").instantiate()
+	var actor: Actor = preload("res://scenes/ai_actor.tscn").instantiate()
 	_init_actor(actor, spawn_position)
 	ai_actors.append(actor)
 

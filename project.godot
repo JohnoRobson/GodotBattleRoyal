@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Battle_Royal"
-run/main_scene="res://scenes/scene.tscn"
+run/main_scene="res://scenes/start_screen.tscn"
 config/features=PackedStringArray("4.0", "C#", "Forward Plus")
 config/icon="res://sprites/icon.svg"
 
@@ -57,3 +57,7 @@ reload={
 3d_physics/layer_1="World"
 3d_physics/layer_2="Actors"
 3d_physics/layer_3="Items"
+
+[physics]
+
+common/max_physics_steps_per_frame=16

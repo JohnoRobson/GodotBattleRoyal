@@ -1,6 +1,7 @@
 class_name AiActorController extends ActorController
 
-@export var actor: AiActor
+@export var actor: Actor
+@export var nav_agent: NavigationAgent3D
 @export var world_navmesh: NavigationRegion3D
 @export var world: World
 

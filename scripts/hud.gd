@@ -28,4 +28,4 @@ func _on_weapon_swap(weapon):
 
 	current_weapon = weapon
 	current_weapon.update_ammo_ui.connect(on_update_ammo)
-	on_update_ammo(weapon._current_ammo, weapon._max_ammo)
+	on_update_ammo(weapon._current_ammo, weapon.stats.max_ammo)

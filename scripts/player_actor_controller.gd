@@ -31,3 +31,6 @@ func is_shooting() -> bool:
 
 func is_reloading() -> bool:
 	return Input.is_action_pressed("reload")
+
+func is_dropping_weapon() -> bool:
+	return Input.is_action_pressed("drop_weapon")

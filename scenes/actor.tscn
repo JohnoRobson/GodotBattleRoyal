@@ -11,6 +11,7 @@ height = 2.00418
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_ie7wx"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_cgo17"]
+height = 2.58305
 radius = 1.27991
 
 [node name="Actor" type="CharacterBody3D" node_paths=PackedStringArray("held_weapon") groups=["actors"]]
@@ -47,7 +48,7 @@ collision_layer = 0
 collision_mask = 4
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ItemPickupArea"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.23448, 0)
 shape = SubResource("CylinderShape3D_cgo17")
 
 [connection signal="health_depleted" from="Health" to="." method="_on_health_depleted"]

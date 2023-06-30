@@ -13,6 +13,3 @@ func is_shooting() -> bool:
 
 func is_reloading() -> bool:
 	return false
-
-func is_dropping_weapon() -> bool:
-	return false

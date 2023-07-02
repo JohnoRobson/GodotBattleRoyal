@@ -41,6 +41,7 @@ func spawn_player(spawn_position: Vector2):
 	var actor: Actor = preload("res://scenes/player_actor.tscn").instantiate()
 	_init_actor(actor, spawn_position)
 	player_actors.append(actor)
+	actor.actor_killed.connect(_on_player_killed)
 
 	# Add player controller
 	var controller = Node3D.new()
@@ -86,6 +87,10 @@ func spawn_weapon(spawn_position: Vector2, weapon_type: Weapons) -> Weapon:
 func _on_actor_killed(actor: Actor):
 	player_actors.erase(actor)
 	ai_actors.erase(actor)
+	
+	# check for win condition
+	if player_actors.size() + ai_actors.size() == 1:
+		get_tree().change_scene_to_file("res://scenes/win_screen.tscn")
 
 func get_closest_actor(from_position: Vector3, ignore: Actor = null) -> Actor:
 	var actors = player_actors + ai_actors # Apparently you can concatenate arrays like this - MW 2023-05-15
@@ -116,3 +121,6 @@ func get_closest_available_weapon(from_position: Vector3) -> Weapon:
 	weapon_array = weapon_array.filter(func(a): return !a.is_held)
 
 	return weapon_array.front() if !weapon_array.is_empty() else null
+
+func _on_player_killed(player: Actor):
+	get_tree().change_scene_to_file("res://scenes/death_screen.tscn")

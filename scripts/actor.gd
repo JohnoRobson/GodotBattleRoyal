@@ -61,8 +61,8 @@ func _process(_delta):
 		held_weapon.reload()
 	if held_weapon != null:
 		held_weapon.set_is_moving(!controller.get_move_direction().is_zero_approx())
-	if (controller.is_dropping_weapon() && held_weapon != null):
-		drop_weapon()
+	if (controller.is_exchanging_weapon()):
+		_try_to_exchange_weapon()
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -84,8 +84,6 @@ func _physics_process(delta):
 	_velocity_to_add = Vector3.ZERO
 
 	move_and_slide()
-	
-	_equip_weapon_if_it_was_not_recently_dropped()
 
 # This should be removed once a proper way to pick up items is implemented!
 func _equip_weapon_if_it_was_not_recently_dropped():
@@ -119,6 +117,36 @@ func _on_health_depleted():
 func _on_hurtbox_was_hit(amount, _hit_position_global, hit_normalized_direction):
 	_velocity_to_add += hit_normalized_direction * amount * 100.0 * Vector3(1,0,1)
 
+# this is for picking up, dropping, or swapping weapons
+func _try_to_exchange_weapon():
+	if (_drop_weapon_cooldown_timer > 0.0):
+		return
+
+	var closest_weapon: Weapon = get_closest_weapon_if_exists()
+
+	# pick up
+	if held_weapon == null && closest_weapon != null:
+		equip_weapon(closest_weapon)
+	# drop
+	elif held_weapon != null && closest_weapon == null:
+		drop_weapon()
+	# swap
+	elif held_weapon != null && closest_weapon != null:
+		drop_weapon()
+		equip_weapon(closest_weapon)
+
+	_drop_weapon_cooldown_timer = _drop_weapon_cooldown_time
+	# not holding a weapon and there are no weapons nearby
+	return
+
+func get_closest_weapon_if_exists() -> Weapon:
+	# check pickup area for weapon pickups
+	var bodies_in_pickup_area: Array[Node3D] = item_pickup_area.get_overlapping_bodies()
+	var nearby_weapons: Array[Node3D] = bodies_in_pickup_area.filter(func(a): return a is Weapon && !a.is_held)
+	nearby_weapons.sort_custom(func(a, b): return global_transform.origin.distance_to(a.global_transform.origin) < global_transform.origin.distance_to(b.global_transform.origin))
+	var closest_weapon: Weapon = nearby_weapons.front()
+	return closest_weapon
+
 func equip_weapon(weapon: Weapon):
 	held_weapon = weapon
 	if held_weapon.get_parent() != null:
@@ -139,10 +167,10 @@ func drop_weapon():
 
 	# this is hacky
 	get_parent().add_child(held_weapon)
-	
+
 	_last_held_weapon = held_weapon
 	held_weapon.global_position = position + Vector3.UP * 1
 	held_weapon.set_global_rotation_degrees(Vector3(0, 90, 0))
 	held_weapon.is_held = false
 	held_weapon = null
-	_drop_weapon_cooldown_timer = _drop_weapon_cooldown_time
+

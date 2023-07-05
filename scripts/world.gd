@@ -16,8 +16,8 @@ enum Weapons {SMG, SHOTGUN, SNIPER}
 func _ready():
 	spawn_player(Vector2(0,5))
 	spawn_ai(Vector2(-10,0))
-	spawn_ai(Vector2(-10,5))
-	spawn_ai(Vector2(30,0))
+	#spawn_ai(Vector2(-10,5))
+	#spawn_ai(Vector2(30,0))
 	spawn_weapon(Vector2(5,5), Weapons.SMG)
 	spawn_weapon(Vector2(-15,5), Weapons.SHOTGUN)
 	spawn_weapon(Vector2(25,-5), Weapons.SNIPER)

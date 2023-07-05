@@ -11,6 +11,7 @@ var move_direction: Vector2 = Vector2.ZERO
 var is_shooting_bool: bool = false
 var is_reloading_bool: bool = false
 var current_target: Actor = null
+var is_exchanging_weapon_bool: bool = false
 
 func _process(delta):
 	state_machine._process(delta)
@@ -46,3 +47,9 @@ func is_reloading() -> bool:
 
 func set_is_reloading(reload: bool):
 	is_reloading_bool = reload
+
+func is_exchanging_weapon() -> bool:
+	return is_exchanging_weapon_bool
+
+func set_is_exchanging_weapon(exchange: bool):
+	is_exchanging_weapon_bool = exchange

@@ -144,7 +144,8 @@ func get_closest_weapon_if_exists() -> Weapon:
 	var bodies_in_pickup_area: Array[Node3D] = item_pickup_area.get_overlapping_bodies()
 	var nearby_weapons: Array[Node3D] = bodies_in_pickup_area.filter(func(a): return a is Weapon && !a.is_held)
 	nearby_weapons.sort_custom(func(a, b): return global_transform.origin.distance_to(a.global_transform.origin) < global_transform.origin.distance_to(b.global_transform.origin))
-	var closest_weapon: Weapon = nearby_weapons.front()
+	
+	var closest_weapon: Weapon = null if nearby_weapons.is_empty() else nearby_weapons.front()
 	return closest_weapon
 
 func equip_weapon(weapon: Weapon):

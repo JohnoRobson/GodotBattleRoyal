@@ -84,3 +84,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34.5503, -4.76837e-07, 39.958
 
 [node name="HealthPickup5" parent="World" instance=ExtResource("4_668tt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.2326, 0, -26.9565)
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://scenes/actor.tscn")
+spawn_path = NodePath("../World")

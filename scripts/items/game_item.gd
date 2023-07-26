@@ -3,6 +3,10 @@ extends RigidBody3D
 class_name GameItem
 
 var is_held: bool
+@export var item_name: String = "Example Name"
+
+signal item_updated()
+signal item_used_up()
 
 func _init():
 	is_held = false
@@ -23,4 +27,9 @@ func _process(_delta):
 func _physics_process(_delta):
 	freeze = is_held
 
-# inventory stuff goes here later
+func use_item(_actor: Actor):
+	item_updated.emit()
+
+func dispose_of_item():
+	item_used_up.emit()
+	queue_free()

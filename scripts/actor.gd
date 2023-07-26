@@ -16,7 +16,8 @@ var movement_direction: Vector3 = Vector3.ZERO
 @onready var rotator: Node3D = get_node("Rotator")
 @onready var weapon_base: Node3D = get_node("Rotator/WeaponBase")
 @onready var health: Health = get_node("Health")
-@onready var item_pickup_area: Area3D = get_node("ItemPickupArea")
+@onready var item_pickup_area: ItemPickupArea = get_node("ItemPickupArea")
+@onready var weapon_inventory: Inventory = get_node("WeaponInventory")
 
 @export var held_weapon: Weapon
 
@@ -88,7 +89,7 @@ func _physics_process(delta):
 # This should be removed once a proper way to pick up items is implemented!
 func _equip_weapon_if_it_was_not_recently_dropped():
 	# check for collisions for weapon pickups
-	var bodies_in_pickup_area: Array[Node3D] = item_pickup_area.get_overlapping_bodies()
+	var bodies_in_pickup_area: Array[GameItem] = item_pickup_area.get_items_in_area()
 	
 	# This is bad because it doesn't take the weapon collision box into account
 	if (_last_held_weapon != null):
@@ -96,7 +97,7 @@ func _equip_weapon_if_it_was_not_recently_dropped():
 		if (distance_from_actor_to_last_held_weapon > _last_held_weapon_forget_distance):
 			_last_held_weapon = null
 	
-	var nearby_weapons_excluding_dropped = bodies_in_pickup_area.filter(func(a): return a is Weapon && !a.is_held && a != _last_held_weapon)
+	var nearby_weapons_excluding_dropped = bodies_in_pickup_area.filter(func(a): return a is Weapon && a != _last_held_weapon)
 	if !nearby_weapons_excluding_dropped.is_empty() && held_weapon == null:
 		equip_weapon(nearby_weapons_excluding_dropped.front())
 
@@ -141,8 +142,8 @@ func _try_to_exchange_weapon():
 
 func get_closest_weapon_if_exists() -> Weapon:
 	# check pickup area for weapon pickups
-	var bodies_in_pickup_area: Array[Node3D] = item_pickup_area.get_overlapping_bodies()
-	var nearby_weapons: Array[Node3D] = bodies_in_pickup_area.filter(func(a): return a is Weapon && !a.is_held)
+	var bodies_in_pickup_area: Array[GameItem] = item_pickup_area.get_items_in_area()
+	var nearby_weapons: Array[GameItem] = bodies_in_pickup_area.filter(func(a): return a is Weapon)
 	nearby_weapons.sort_custom(func(a, b): return global_transform.origin.distance_to(a.global_transform.origin) < global_transform.origin.distance_to(b.global_transform.origin))
 	
 	var closest_weapon: Weapon = null if nearby_weapons.is_empty() else nearby_weapons.front()

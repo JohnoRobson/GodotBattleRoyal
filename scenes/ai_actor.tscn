@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://8d70c6yghhwe"]
 
 [ext_resource type="PackedScene" uid="uid://8ijx2rjjx2jg" path="res://scenes/actor.tscn" id="1_jfaud"]
-[ext_resource type="Script" path="res://scripts/ai_actor_controller.gd" id="3_q60xr"]
+[ext_resource type="Script" path="res://scripts/ai/ai_actor_controller.gd" id="3_q60xr"]
 
 [node name="AiActor" node_paths=PackedStringArray("controller") instance=ExtResource("1_jfaud")]
 controller = NodePath("AiActorController")

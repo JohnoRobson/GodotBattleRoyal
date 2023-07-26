@@ -15,9 +15,9 @@ enum Weapons {SMG, SHOTGUN, SNIPER}
 
 func _ready():
 	spawn_player(Vector2(0,5))
-	spawn_ai(Vector2(-10,0))
-	spawn_ai(Vector2(-10,5))
-	spawn_ai(Vector2(30,0))
+	#spawn_ai(Vector2(-10,0))
+	#spawn_ai(Vector2(-10,5))
+	#spawn_ai(Vector2(30,0))
 	spawn_weapon(Vector2(5,5), Weapons.SMG)
 	spawn_weapon(Vector2(-15,5), Weapons.SHOTGUN)
 	spawn_weapon(Vector2(25,-5), Weapons.SNIPER)
@@ -69,11 +69,11 @@ func spawn_weapon(spawn_position: Vector2, weapon_type: Weapons) -> Weapon:
 	var weapon: Weapon
 	match weapon_type:
 		Weapons.SHOTGUN:
-			weapon = preload("res://scenes/shotgun.tscn").instantiate()
+			weapon = preload("res://scenes/weapons/shotgun.tscn").instantiate()
 		Weapons.SMG:
-			weapon = preload("res://scenes/smg.tscn").instantiate()
+			weapon = preload("res://scenes/weapons/smg.tscn").instantiate()
 		Weapons.SNIPER:
-			weapon = preload("res://scenes/sniper_rifle.tscn").instantiate()
+			weapon = preload("res://scenes/weapons/sniper_rifle.tscn").instantiate()
 		_:
 			return
 

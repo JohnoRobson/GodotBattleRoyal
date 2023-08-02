@@ -12,12 +12,8 @@ config_version=5
 
 config/name="Battle_Royal"
 run/main_scene="res://scenes/scene.tscn"
-config/features=PackedStringArray("4.1", "C#", "Forward Plus")
+config/features=PackedStringArray("4.1", "Forward Plus")
 config/icon="res://sprites/icon.svg"
-
-[dotnet]
-
-project/assembly_name="Battle_Royal"
 
 [input]
 

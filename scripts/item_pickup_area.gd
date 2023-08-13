@@ -2,21 +2,30 @@ extends Area3D
 
 class_name ItemPickupArea
 
-# Called when the node enters the scene tree for the first time.
+var items_that_have_labels: Dictionary # GameItem to Label Dict
+
 func _ready():
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
-	pass
+	items_that_have_labels = {}
 
 func _physics_process(_delta):
 	# check for items in area
-
-	# add labels
-
-	# remove labels from items that are now out of the area
+	var items_in_area: Array[GameItem] = get_items_in_area()
+	
+	# remove labels
+	for item in items_that_have_labels.keys():
+		if !items_in_area.has(item):
+			# remove label
+			var label_to_remove = items_that_have_labels.get(item)
+			items_that_have_labels.erase(item)
+			label_to_remove.queue_free()
+	
+	for item in items_in_area:
+		if !items_that_have_labels.has(item):
+			# add a label
+			var itemText: ItemPickupText = preload("res://scenes/effects/item_pickup_text.tscn").instantiate()
+			add_child(itemText)
+			itemText.set_item(item)
+			items_that_have_labels[item] = itemText
 
 	pass
 

@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://d1p70ojk6ugan"]
+
+[ext_resource type="Script" path="res://scripts/effects/item_pickup_text.gd" id="1_t4tx7"]
+
+[node name="ItemPickupText" type="Label3D"]
+transform = Transform3D(1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, 1, 0, 0, 0)
+text = "Example"
+font_size = 128
+script = ExtResource("1_t4tx7")

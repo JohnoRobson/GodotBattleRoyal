@@ -14,7 +14,7 @@ height = 2.00418
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_cgo17"]
 height = 2.58305
-radius = 1.27991
+radius = 1.69468
 
 [node name="Actor" type="CharacterBody3D" groups=["actors"]]
 script = ExtResource("1_ico6x")

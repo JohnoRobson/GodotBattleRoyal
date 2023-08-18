@@ -6,6 +6,7 @@ func use_item(actor: Actor):
 	# get the actor's health component
 	var health_component: Health = actor.get_node("Health")
 	health_component.take_damage(-healing_amount)
+	dispose_of_item()
 
 func dispose_of_item():
 	super()

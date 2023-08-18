@@ -8,6 +8,7 @@ size = Vector3(1.03257, 0.513558, 1.03219)
 
 [node name="Medkit" type="RigidBody3D"]
 script = ExtResource("1_c7euk")
+healing_amount = 50.0
 item_name = "Medkit"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]

@@ -26,9 +26,10 @@ size = Vector2(100, 100)
 
 [node name="Main" type="Node3D"]
 
-[node name="World" type="Node3D" parent="." node_paths=PackedStringArray("effect_manager")]
+[node name="World" type="Node3D" parent="." node_paths=PackedStringArray("effect_manager", "nav_region")]
 script = ExtResource("1_h7cyw")
 effect_manager = NodePath("EffectManager")
+nav_region = NodePath("NavigationRegion3D")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="World"]
 transform = Transform3D(0.648744, -0.49609, -0.577084, 0, -0.758316, 0.651887, -0.761006, -0.422908, -0.491954, 0, 5.96035, -1.18983)

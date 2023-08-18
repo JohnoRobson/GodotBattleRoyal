@@ -1,8 +1,15 @@
-[gd_scene load_steps=2 format=3 uid="uid://vpyf1tvdvu1l"]
+[gd_scene load_steps=2 format=3 uid="uid://bnxbntxcpfjv"]
 
-[ext_resource type="Script" path="res://scripts/effects/item_pickup_text.gd" id="1_ynwir"]
+[ext_resource type="Script" path="res://scripts/effects/item_pickup_text.gd" id="1_sfrn6"]
 
-[node name="ItemPickupText" type="Label3D"]
+[node name="ItemPickupText" type="Node3D"]
+script = ExtResource("1_sfrn6")
+
+[node name="ItemNameText" type="Label3D" parent="."]
 text = "Example"
-font_size = 128
-script = ExtResource("1_ynwir")
+font_size = 64
+
+[node name="ItemInteractText" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.418421, 0)
+text = "Pickup (G)"
+font_size = 64

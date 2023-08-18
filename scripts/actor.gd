@@ -13,16 +13,18 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var aimpoint: Vector3 = Vector3.UP
 var movement_direction: Vector3 = Vector3.ZERO
 
+@onready var cursor: ActorCursor = get_node("ActorCursor")
 @onready var rotator: Node3D = get_node("Rotator")
 @onready var weapon_base: Node3D = get_node("Rotator/WeaponBase")
 @onready var health: Health = get_node("Health")
-@onready var item_pickup_area: ItemPickupArea = get_node("ItemPickupArea")
+@onready var item_pickup_area: ItemInteractionArea = get_node("ItemPickupArea")
+@onready var _item_pickup_manager: ItemPickupManager = get_node("ItemPickupManager")
 @onready var weapon_inventory: Inventory = get_node("WeaponInventory")
 
-@export var held_weapon: Weapon
+@export var held_weapon: GameItem
 
 # Remove these when proper inventory and item pickups are developed
-var _last_held_weapon: Weapon = null
+var _last_held_weapon: GameItem = null
 var _last_held_weapon_forget_distance: float = 5.0 # Terrible
 var _drop_weapon_cooldown_time: float = 0.5
 var _drop_weapon_cooldown_timer: float = 0
@@ -31,6 +33,9 @@ var _velocity_to_add: Vector3 = Vector3.ZERO
 
 signal actor_killed(me: Actor)
 signal weapon_swap(weapon: Weapon)
+
+# change it so that the item pickup text changes when the aimpoint is on it, via raycast or some collider.
+# when the item pickup text changes, the weapon can be picked up
 
 func _aim_at(target_position: Vector3):
 	aimpoint = target_position
@@ -45,22 +50,28 @@ func _aim_weapon():
 		rotator.look_at(aim_position, Vector3.UP)
 
 		# up and down rotation
-		if held_weapon != null:
+		if held_weapon != null && held_weapon is Weapon:
 			var angle_vector = held_weapon.get_angle_to_aim_at(aim_position)
 			weapon_base.look_at(to_global(angle_vector) + (weapon_base.global_position - global_position), Vector3.UP)
 
 func _ready():
+	health.take_damage(50)
 	pass
 
 func _process(_delta):
+	cursor.global_position = controller.get_aim_position()
+	
 	if (_drop_weapon_cooldown_timer > 0.0):
 		_drop_weapon_cooldown_timer -= _delta
 	_aim_weapon()
 	if (controller.is_shooting() && held_weapon != null):
-		held_weapon.fire()
+		if held_weapon is Weapon:
+			held_weapon.fire()
+		else:
+			held_weapon.use_item(self)
 	if (controller.is_reloading() && held_weapon != null):
 		held_weapon.reload()
-	if held_weapon != null:
+	if held_weapon != null && held_weapon is Weapon:
 		held_weapon.set_is_moving(!controller.get_move_direction().is_zero_approx())
 	if (controller.is_exchanging_weapon()):
 		_try_to_exchange_weapon()
@@ -123,7 +134,7 @@ func _try_to_exchange_weapon():
 	if (_drop_weapon_cooldown_timer > 0.0):
 		return
 
-	var closest_weapon: Weapon = get_closest_weapon_if_exists()
+	var closest_weapon: GameItem = _item_pickup_manager.get_item_that_cursor_is_over_and_is_in_interaction_range()
 
 	# pick up
 	if held_weapon == null && closest_weapon != null:
@@ -149,7 +160,7 @@ func get_closest_weapon_if_exists() -> Weapon:
 	var closest_weapon: Weapon = null if nearby_weapons.is_empty() else nearby_weapons.front()
 	return closest_weapon
 
-func equip_weapon(weapon: Weapon):
+func equip_weapon(weapon: GameItem):
 	held_weapon = weapon
 	if held_weapon.get_parent() != null:
 		held_weapon.get_parent().remove_child(held_weapon)
@@ -157,7 +168,8 @@ func equip_weapon(weapon: Weapon):
 	held_weapon.position = Vector3.ZERO
 	held_weapon.rotation = Vector3.ZERO
 	held_weapon.is_held = true
-	weapon_swap.emit(weapon)
+	if weapon is Weapon:
+		weapon_swap.emit(weapon)
 	_last_held_weapon = null
 
 func drop_weapon():
@@ -169,10 +181,8 @@ func drop_weapon():
 
 	# this is hacky
 	get_parent().add_child(held_weapon)
-
 	_last_held_weapon = held_weapon
 	held_weapon.global_position = position + Vector3.UP * 1
 	held_weapon.set_global_rotation_degrees(Vector3(0, 90, 0))
 	held_weapon.is_held = false
 	held_weapon = null
-

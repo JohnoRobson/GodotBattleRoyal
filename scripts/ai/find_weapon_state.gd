@@ -40,4 +40,5 @@ func execute_physics(controller: AiActorController):
 			picked_up_weapon_last_tick = true
 
 func exit(controller: AiActorController):
+	controller.set_is_exchanging_weapon(false)
 	controller.set_move_direction(Vector2.ZERO)

@@ -4,7 +4,7 @@ class_name World
 
 @onready var player_actors: Array[Actor] = []
 @onready var ai_actors: Array[Actor] = []
-@onready var health_pickups: Array[HealthPickup] = []
+@onready var health_pickups: Array[GameItem] = []
 @onready var weapons: Array[Weapon] = []
 
 @export var effect_manager: EffectManager
@@ -103,13 +103,13 @@ func get_closest_actor(from_position: Vector3, ignore: Actor = null) -> Actor:
 	# weird ternary
 	return actors.front() if !actors.is_empty() else null
 
-func get_closest_available_health(from_position: Vector3) -> HealthPickup:
+func get_closest_available_health(from_position: Vector3) -> GameItem:
 	var pickups = []
 	pickups.append_array(health_pickups)
 
 	# Filter returns the filtered array, but sort is in-place
+	pickups = pickups.filter(func(a): return a != null and !a.is_held)
 	pickups.sort_custom(func(a, b): return from_position.distance_to(a.global_transform.origin) < from_position.distance_to(b.global_transform.origin))
-	pickups = pickups.filter(func(a): return a.health_is_available)
 
 	return pickups.front() if !pickups.is_empty() else null
 

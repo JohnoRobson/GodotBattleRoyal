@@ -4,17 +4,9 @@ class_name Hud
 
 @onready var ammo_count: Label = get_node("AmmoCount")
 @onready var health: Label = get_node("Health")
+@onready var inventory: GridContainer = get_node("Inventory")
 
 var current_weapon: Weapon = null
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
-	pass
 
 func on_update_health(_old_value: float, new_value: float):
 	health.text = "Health:" + str(new_value)
@@ -29,3 +21,12 @@ func _on_weapon_swap(weapon):
 	current_weapon = weapon
 	current_weapon.update_ammo_ui.connect(on_update_ammo)
 	on_update_ammo(weapon._current_ammo, weapon.stats.max_ammo)
+
+func _on_inventory_changed(slots: Array[InventorySlot]):
+	print('ui')
+	for child in inventory.get_children():
+		child.queue_free()
+	for slot in slots:
+		var ui_slot = preload("res://scenes/components/slot.tscn").instantiate()
+		ui_slot.set_item(slot)
+		inventory.add_child(ui_slot)

@@ -157,6 +157,7 @@ func get_closest_weapon_if_exists() -> Weapon:
 	return closest_weapon
 
 func equip_weapon(weapon: GameItem):
+	weapon_inventory.add_item_to_inventory_from_world(weapon)
 	held_weapon = weapon
 	if held_weapon.get_parent() != null:
 		held_weapon.get_parent().remove_child(held_weapon)
@@ -169,11 +170,14 @@ func equip_weapon(weapon: GameItem):
 	_last_held_weapon = null
 
 func drop_weapon():
-	if (held_weapon == null || _drop_weapon_cooldown_timer > 0.0):
+	if (held_weapon == null || _drop_weapon_cooldown_timer > 0.0 || weapon_inventory.number_of_filled_slots() == 0):
 		return
 	held_weapon.position = Vector3.ZERO
 	held_weapon.rotation = Vector3.ZERO
+
 	held_weapon.get_parent().remove_child(held_weapon)
+	weapon_inventory.remove_item_from_inventory_to_world(held_weapon)
+	#held_weapon.get_parent().remove_child(held_weapon)
 
 	# this is hacky
 	get_parent().add_child(held_weapon)

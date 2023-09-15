@@ -32,7 +32,6 @@ func execute_physics(controller: AiActorController):
 		controller.set_move_direction(Vector2(dir.x, dir.z))
 		controller.set_aim_position(current_target.global_position)
 
-		#var target_distance: float = target_pos.distance_to(controller.actor.global_transform.origin)
 		var closest_weapon = controller.actor.get_closest_weapon_if_exists()
 		
 		if closest_weapon == current_target:

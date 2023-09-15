@@ -25,7 +25,6 @@ func execute(controller: AiActorController):
 
 func execute_physics(controller: AiActorController):
 	if medkit_pickup_routine_started and medkit_pickup_countdown > 0:
-		print("trying to use medkit")
 		medkit_pickup_countdown -= 1
 		# health has been picked up
 		controller.set_is_shooting(true)

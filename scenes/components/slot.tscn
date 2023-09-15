@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://2p0e1716ui2h"]
+
+[ext_resource type="Script" path="res://scenes/components/slot.gd" id="1_qk1ff"]
+
+[node name="Slot" type="PanelContainer"]
+custom_minimum_size = Vector2(64, 64)
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_qk1ff")
+
+[node name="Panel" type="Panel" parent="."]
+clip_contents = true
+layout_mode = 2
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+text = "Example Label"
+autowrap_mode = 2

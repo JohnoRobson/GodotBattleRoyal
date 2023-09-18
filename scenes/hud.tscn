@@ -1,17 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://pciev3jsxk36"]
 
 [ext_resource type="Script" path="res://scripts/hud.gd" id="1_ondyb"]
-
-[sub_resource type="GDScript" id="GDScript_h6o82"]
-script/source = "extends GridContainer
-class_name InventoryUI
-
-func inventory_changed(items: Array[InventorySlot]):
-	for child in get_children():
-		child.queue_free()
-	for item in items:
-		var slot = preload(\"res://scenes/components/slot.tscn\").instantiate()
-		slot.set_item(item)"
+[ext_resource type="Script" path="res://scripts/components/inventory/inventory_ui.gd" id="2_hfa3h"]
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_ondyb")
@@ -46,11 +36,8 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -202.0
-offset_top = -64.0
-offset_right = 202.0
 grow_horizontal = 2
 grow_vertical = 0
 size_flags_horizontal = 3
 columns = 6
-script = SubResource("GDScript_h6o82")
+script = ExtResource("2_hfa3h")

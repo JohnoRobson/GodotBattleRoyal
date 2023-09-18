@@ -32,7 +32,7 @@ func execute_physics(controller: AiActorController):
 		controller.set_move_direction(Vector2(dir.x, dir.z))
 		controller.set_aim_position(current_target.global_position)
 
-		var closest_weapon = controller.actor.get_closest_weapon_if_exists()
+		var closest_weapon = controller.actor._item_pickup_manager.get_item_that_cursor_is_over_and_is_in_interaction_range()
 		
 		if closest_weapon == current_target:
 			controller.set_is_exchanging_weapon(true)

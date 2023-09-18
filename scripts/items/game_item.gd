@@ -1,6 +1,6 @@
-extends RigidBody3D
-
 class_name GameItem
+
+extends RigidBody3D
 
 var is_held: bool
 @export var item_name: String = "Example Name"

@@ -4,9 +4,12 @@ extends RigidBody3D
 
 var is_held: bool
 @export var item_name: String = "Example Name"
+@export var action: Action
 
 signal item_updated()
 signal item_used_up()
+signal action_triggered(action: Action, game_item: GameItem)
+signal remove_from_inventory_and_put_in_world(game_item: GameItem)
 
 func _init():
 	is_held = false
@@ -28,6 +31,7 @@ func _physics_process(_delta):
 	freeze = is_held
 
 func use_item(_actor: Actor):
+	action_triggered.emit(action, self)
 	item_updated.emit()
 
 func dispose_of_item():

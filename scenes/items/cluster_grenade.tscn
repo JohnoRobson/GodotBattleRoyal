@@ -1,0 +1,48 @@
+[gd_scene load_steps=12 format=3 uid="uid://b5pidhuj5uftx"]
+
+[ext_resource type="Script" path="res://scripts/items/game_item.gd" id="1_7qq3y"]
+[ext_resource type="Script" path="res://scripts/action_system/actions/raycast.gd" id="2_7b4xk"]
+[ext_resource type="Script" path="res://scripts/action_system/actions/repeat_delay.gd" id="2_yn7a3"]
+[ext_resource type="Script" path="res://scripts/action_system/actions/timer.gd" id="7_jukry"]
+[ext_resource type="Script" path="res://scripts/action_system/actions/throw.gd" id="8_883fx"]
+[ext_resource type="PackedScene" uid="uid://bmkdhqo5v1fou" path="res://models/medkit.blend" id="9_nrkse"]
+
+[sub_resource type="Resource" id="Resource_w3bdb"]
+script = ExtResource("2_7b4xk")
+cast_collision_mask = 3
+cast_degrees_of_inaccuracy = Callable()
+cast_start_position_local = Vector3(0, 0, 0)
+cast_range = 10.0
+targeted_actions = Array[Resource("res://scripts/action_system/actions/targeted_action.gd")]([])
+actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
+
+[sub_resource type="Resource" id="Resource_qvicn"]
+script = ExtResource("2_yn7a3")
+countdown_in_seconds = 1.0
+number_of_times_to_activate = 1
+actions_to_perform = Array[Resource("res://scripts/action_system/actions/action.gd")]([SubResource("Resource_w3bdb")])
+actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
+
+[sub_resource type="Resource" id="Resource_51wv8"]
+script = ExtResource("7_jukry")
+countdown_in_seconds = 1.0
+actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([SubResource("Resource_qvicn")])
+
+[sub_resource type="Resource" id="Resource_vnnrj"]
+script = ExtResource("8_883fx")
+degrees_of_inaccuracy = 0.0
+force = 12.0
+actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([SubResource("Resource_51wv8")])
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1e27m"]
+size = Vector3(1.03257, 0.513558, 1.03219)
+
+[node name="Cluster_Grenade" type="RigidBody3D" groups=["items"]]
+script = ExtResource("1_7qq3y")
+item_name = "Grenade"
+action = SubResource("Resource_vnnrj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_1e27m")
+
+[node name="medkit" parent="." instance=ExtResource("9_nrkse")]

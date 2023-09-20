@@ -18,11 +18,11 @@ func _physics_process(_delta):
 	
 	# remove labels
 	for item in items_that_have_labels.keys():
-		if !items_in_actor_area.has(item) and !items_in_cursor_area.has(item):
+		var label = items_that_have_labels.get(item)
+		if item == null or (!items_in_actor_area.has(item) and !items_in_cursor_area.has(item)):
 			# remove label
-			var label_to_remove = items_that_have_labels.get(item)
 			items_that_have_labels.erase(item)
-			label_to_remove.queue_free()
+			label.queue_free()
 	
 	for item in items_in_actor_area:
 		if !items_that_have_labels.has(item):

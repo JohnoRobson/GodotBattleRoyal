@@ -6,7 +6,7 @@ class_name Hud
 @onready var health: Label = get_node("Health")
 @onready var inventory: InventoryUI = get_node("Inventory")
 
-var current_weapon: Weapon = null
+var current_weapon: GameItem = null
 
 func on_update_health(_old_value: float, new_value: float):
 	health.text = "Health:" + str(new_value)
@@ -19,7 +19,7 @@ func _on_weapon_swap(game_item):
 		current_weapon.update_ammo_ui.disconnect(on_update_ammo)
 		current_weapon = null
 	
-	if game_item is Weapon:
+	if game_item is Weapon or game_item is WeaponAction:
 		current_weapon = game_item
 		current_weapon.update_ammo_ui.connect(on_update_ammo)
 		on_update_ammo(game_item._current_ammo, game_item.stats.max_ammo)

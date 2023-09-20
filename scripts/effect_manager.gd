@@ -17,3 +17,5 @@ func _on_actor_shoot(start_position, end_position):
 	bullet.start = start_position
 	bullet.end = end_position
 	add_child(bullet)
+
+# func _on_explosion(position: Vector3) -> void:

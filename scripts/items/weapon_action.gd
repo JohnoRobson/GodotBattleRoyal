@@ -1,13 +1,12 @@
 extends GameItem
 
-class_name Weapon
+class_name WeaponAction
 
 @export var stats: WeaponType
 @onready var _current_ammo: int = stats.max_ammo
 @onready var _fire_rate_per_second = stats.fire_rate_per_minute / 60
 
 var _weapon_cooldown_in_seconds: float = 0.0
-var _weapon_raycast_collision_mask: int = 0b0011
 var _reload_time_cooldown: float = 0.0
 var _is_moving: bool = false
 
@@ -44,28 +43,8 @@ func fire():
 		# apply cooldown
 		_weapon_cooldown_in_seconds = 1.0 / _fire_rate_per_second
 		_current_state = WeaponState.COOLDOWN
-
-		for i in stats.number_of_shots_per_fire:
-			# do the raycast
-			var aim_vector_local = VectorUtils.make_local_inaccuracy_vector(_get_degrees_of_inaccuracy())
-			var space_state = get_world_3d().direct_space_state
-			var raycast_start_position = to_global(stats.bullet_spawn_position_local)
-			var raycast_end_position = to_global(position + aim_vector_local * stats.weapon_range)
-			var query = PhysicsRayQueryParameters3D.create(raycast_start_position, raycast_end_position, _weapon_raycast_collision_mask)
-			query.collide_with_areas = true
-			query.collide_with_bodies = false
-			var result = space_state.intersect_ray(query)
-
-			# apply effect and damage
-			if result:
-				var raycast_hit_position = result.position
-				on_firing.emit(raycast_start_position, raycast_hit_position)
-				var target = result.collider
-				if target != null:
-					if target.is_in_group("Hurtbox"):
-						target.take_damage(stats.weapon_damage, raycast_hit_position, (raycast_hit_position - raycast_start_position).normalized())
-			else:
-				on_firing.emit(raycast_start_position, raycast_end_position)
+		print("fired")
+		action_triggered.emit(action, self)
 
 func _get_degrees_of_inaccuracy() -> float:
 	return stats.degrees_of_inaccuracy_moving if _is_moving else stats.degrees_of_inaccuracy_stationary

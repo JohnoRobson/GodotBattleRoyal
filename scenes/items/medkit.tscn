@@ -1,21 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://dh6uydtmtwo02"]
+[gd_scene load_steps=8 format=3 uid="uid://dh6uydtmtwo02"]
 
 [ext_resource type="PackedScene" uid="uid://bmkdhqo5v1fou" path="res://models/medkit.blend" id="1_d6ka3"]
 [ext_resource type="Script" path="res://scripts/items/game_item.gd" id="1_icxwt"]
-[ext_resource type="PackedScene" uid="uid://bcp66a5dwpxmx" path="res://scenes/effects/heal.tscn" id="2_hfa6j"]
-[ext_resource type="Script" path="res://scripts/action_system/actions/remove.gd" id="2_jngqe"]
 [ext_resource type="Script" path="res://scripts/action_system/actions/area.gd" id="3_w2ggo"]
-[ext_resource type="Script" path="res://scripts/action_system/actions/effect.gd" id="3_ymxkr"]
 [ext_resource type="Script" path="res://scripts/action_system/actions/heal.gd" id="4_f30rl"]
-
-[sub_resource type="Resource" id="Resource_3g743"]
-script = ExtResource("3_ymxkr")
-scene_to_spawn = ExtResource("2_hfa6j")
-actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
-
-[sub_resource type="Resource" id="Resource_hsm0i"]
-script = ExtResource("2_jngqe")
-actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
 
 [sub_resource type="Resource" id="Resource_hkmx1"]
 script = ExtResource("4_f30rl")
@@ -27,7 +15,7 @@ actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
 script = ExtResource("3_w2ggo")
 radius = 2.0
 targeted_actions = Array[Resource("res://scripts/action_system/actions/targeted_action.gd")]([SubResource("Resource_hkmx1")])
-actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([SubResource("Resource_3g743"), SubResource("Resource_hsm0i")])
+actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_1e27m"]
 size = Vector3(1.03257, 0.513558, 1.03219)

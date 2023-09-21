@@ -6,8 +6,8 @@ extends Action
 func _init():
 	action_name = self.Name.THROW
 
-func perform(_delta: float, _game_item: GameItem) -> bool:
+func perform(_delta: float, item_node: ActionStack.ItemNode) -> bool:
 	var scene = scene_to_spawn.instantiate()
-	world.add_child(scene)
-	scene.global_position = _game_item.global_position
+	item_node.data[Action.Keys.WORLD].add_child(scene)
+	scene.global_position = item_node.data.get(self.Keys.POSITION)
 	return true

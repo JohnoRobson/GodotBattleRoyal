@@ -6,7 +6,7 @@ extends TargetedAction
 func _init():
 	action_name = self.Name.HEAL
 
-func perform(_delta: float, _game_item: GameItem) -> bool:
+func perform(_delta: float, _item_node: ActionStack.ItemNode) -> bool:
 	for target in targets:
 		if target is Actor:
 			var actor: Actor = target as Actor

@@ -28,6 +28,7 @@ metallic_specular = 1.0
 emission_enabled = true
 emission = Color(0, 0.988235, 0, 1)
 emission_energy_multiplier = 4.89
+texture_filter = 0
 billboard_mode = 3
 billboard_keep_scale = true
 particles_anim_h_frames = 1

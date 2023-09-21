@@ -25,6 +25,8 @@ func _ready():
 	spawn_weapon(Vector2(-15,5), Weapons.SHOTGUN)
 	spawn_weapon(Vector2(25,-5), Weapons.SNIPER)
 	items.append_array(get_tree().get_nodes_in_group("items"))
+
+	# move this somewhere else
 	for item in items:
 		item.action_triggered.connect(action_system.action_triggered)
 
@@ -60,7 +62,7 @@ func spawn_player(spawn_position: Vector2):
 	actor.controller = controller
 	actor.add_child(controller)
 
-	actor.health.take_damage(80)
+	#	actor.health.take_damage(80)
 	
 	var inventory_ui: InventoryUI = actor.get_node("HUD/Inventory")
 

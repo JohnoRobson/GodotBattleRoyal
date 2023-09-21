@@ -12,13 +12,12 @@ signal on_raycast(start_position_global: Vector3, end_position_global: Vector3)
 func _init():
 	action_name = self.Name.RAYCAST
 
-func perform(_delta: float, game_item: GameItem) -> bool:
+func perform(_delta: float, item_node: ActionStack.ItemNode) -> bool:
 	# need to figure this out. There needs to be a way to pass parameters at runtime to the action stack
-	# var aim_vector_local = VectorUtils.make_local_inaccuracy_vector(cast_degrees_of_inaccuracy.call())
 	var aim_vector_local = Vector3.FORWARD
-	var space_state = game_item.get_world_3d().direct_space_state
-	var raycast_start_position = game_item.to_global(cast_start_position_local)
-	var raycast_end_position = game_item.to_global(cast_start_position_local + aim_vector_local * cast_range)
+	var space_state = item_node.game_item.get_world_3d().direct_space_state
+	var raycast_start_position = item_node.game_item.to_global(cast_start_position_local)
+	var raycast_end_position = item_node.game_item.to_global(cast_start_position_local + aim_vector_local * cast_range)
 	var query = PhysicsRayQueryParameters3D.create(raycast_start_position, raycast_end_position, cast_collision_mask)
 	query.collide_with_areas = true
 	query.collide_with_bodies = false

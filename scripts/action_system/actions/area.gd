@@ -7,8 +7,8 @@ extends Action
 func _init():
 	action_name = self.Name.AREA
 
-func perform(_delta: float, game_item: GameItem) -> bool:
-	var things_in_area = world.get_actors_and_gameitems_in_area(game_item.global_transform.origin, radius)
+func perform(_delta: float, item_node: ActionStack.ItemNode) -> bool:
+	var things_in_area = item_node.data[Action.Keys.WORLD].get_actors_and_gameitems_in_area(item_node.data[Action.Keys.POSITION], radius)
 	
 	for targeted_action in targeted_actions:
 		# do weird array type casting trick

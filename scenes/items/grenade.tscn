@@ -1,40 +1,40 @@
 [gd_scene load_steps=17 format=3 uid="uid://b7e2n7bieo85i"]
 
 [ext_resource type="Script" path="res://scripts/items/game_item.gd" id="1_deal3"]
-[ext_resource type="Script" path="res://scripts/action_system/actions/remove.gd" id="2_f6sj1"]
-[ext_resource type="PackedScene" uid="uid://be4ixwniduwoc" path="res://scenes/effects/explosion.tscn" id="2_mtl1s"]
-[ext_resource type="Script" path="res://scripts/action_system/actions/area.gd" id="3_olto0"]
-[ext_resource type="Script" path="res://scripts/action_system/actions/effect.gd" id="3_si7aw"]
-[ext_resource type="Script" path="res://scripts/action_system/actions/damage.gd" id="4_mkeod"]
-[ext_resource type="PackedScene" uid="uid://bmkdhqo5v1fou" path="res://models/medkit.blend" id="5_2rw80"]
+[ext_resource type="Script" path="res://scripts/action_system/actions/area.gd" id="2_lvbq1"]
+[ext_resource type="Script" path="res://scripts/action_system/actions/damage.gd" id="3_3s1e7"]
+[ext_resource type="PackedScene" uid="uid://be4ixwniduwoc" path="res://scenes/effects/explosion.tscn" id="4_jc4rt"]
 [ext_resource type="Script" path="res://scripts/action_system/actions/timer.gd" id="5_pf5dd"]
+[ext_resource type="Script" path="res://scripts/action_system/actions/effect.gd" id="5_vtomp"]
+[ext_resource type="Script" path="res://scripts/action_system/actions/remove.gd" id="6_6ji73"]
 [ext_resource type="Script" path="res://scripts/action_system/actions/throw.gd" id="6_nxvo4"]
+[ext_resource type="PackedScene" uid="uid://cpmjh7rwyd1uw" path="res://models/grenade.blend" id="9_yjes0"]
 
-[sub_resource type="Resource" id="Resource_g0gs4"]
-script = ExtResource("3_si7aw")
-scene_to_spawn = ExtResource("2_mtl1s")
-actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
-
-[sub_resource type="Resource" id="Resource_v6jnv"]
-script = ExtResource("2_f6sj1")
-actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
-
-[sub_resource type="Resource" id="Resource_3qwjp"]
-script = ExtResource("4_mkeod")
+[sub_resource type="Resource" id="Resource_jmcc7"]
+script = ExtResource("3_3s1e7")
 damage = 40.0
 targets = Array[Node3D]([])
 actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
 
-[sub_resource type="Resource" id="Resource_vmx8o"]
-script = ExtResource("3_olto0")
-radius = 10.0
-targeted_actions = Array[Resource("res://scripts/action_system/actions/targeted_action.gd")]([SubResource("Resource_3qwjp")])
-actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([SubResource("Resource_g0gs4"), SubResource("Resource_v6jnv")])
+[sub_resource type="Resource" id="Resource_dcx7y"]
+script = ExtResource("2_lvbq1")
+radius = 5.0
+targeted_actions = Array[Resource("res://scripts/action_system/actions/targeted_action.gd")]([SubResource("Resource_jmcc7")])
+actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
+
+[sub_resource type="Resource" id="Resource_n0nyn"]
+script = ExtResource("5_vtomp")
+scene_to_spawn = ExtResource("4_jc4rt")
+actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
+
+[sub_resource type="Resource" id="Resource_ifu1g"]
+script = ExtResource("6_6ji73")
+actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
 
 [sub_resource type="Resource" id="Resource_51wv8"]
 script = ExtResource("5_pf5dd")
 countdown_in_seconds = 2.0
-actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([SubResource("Resource_vmx8o")])
+actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([SubResource("Resource_dcx7y"), SubResource("Resource_n0nyn"), SubResource("Resource_ifu1g")])
 
 [sub_resource type="Resource" id="Resource_vnnrj"]
 script = ExtResource("6_nxvo4")
@@ -43,7 +43,7 @@ force = 12.0
 actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([SubResource("Resource_51wv8")])
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_1e27m"]
-size = Vector3(1.03257, 0.513558, 1.03219)
+size = Vector3(0.449902, 0.646793, 0.592482)
 
 [node name="Grenade" type="RigidBody3D" groups=["items", "weapons"]]
 script = ExtResource("1_deal3")
@@ -51,6 +51,7 @@ item_name = "Grenade"
 action = SubResource("Resource_vnnrj")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.102114, -0.0777727)
 shape = SubResource("BoxShape3D_1e27m")
 
-[node name="medkit" parent="." instance=ExtResource("5_2rw80")]
+[node name="grenade" parent="." instance=ExtResource("9_yjes0")]

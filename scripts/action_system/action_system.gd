@@ -7,17 +7,21 @@ var frame_count: int = 0
 @export var effect_manager: EffectManager
 
 func _process(delta):
+	var uncompleted_action_stacks: Array[ActionStack] = []
 	for action_stack in action_stacks:
 		action_stack.perform(delta)
+		if action_stack.stack_is_completed():
+			action_stack.queue_free()
+		else:
+			uncompleted_action_stacks.append(action_stack)
 	
-	action_stacks = action_stacks.filter(func(a): return !a.stack_is_completed())
+	action_stacks = uncompleted_action_stacks
 	frame_count += 1
 
 func action_triggered(action: Action, game_item: GameItem):
 	print("action triggered at frame %s" % frame_count)
 	var duplicated_action = action.duplicate(true)
-	var action_stack = ActionStack.new(game_item, self, world, _add_connections_to_action)
-	action_stack.uncompleted_top_level_actions.append(duplicated_action)
+	var action_stack = ActionStack.new(game_item, self, world, _add_connections_to_action, duplicated_action)
 	action_stacks.append(action_stack)
 
 # TARGETEDACTIONS DON'T GET A WORLD REFERENCE RIGHT NOW!

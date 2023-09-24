@@ -19,7 +19,7 @@ max_ammo = 8
 [sub_resource type="BoxShape3D" id="BoxShape3D_5w137"]
 size = Vector3(0.300564, 0.364884, 1.96176)
 
-[node name="Shotgun" type="RigidBody3D"]
+[node name="Shotgun" type="RigidBody3D" groups=["items", "weapons"]]
 collision_layer = 4
 collision_mask = 3
 script = ExtResource("1_2stcs")

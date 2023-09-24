@@ -10,31 +10,31 @@
 [ext_resource type="Script" path="res://scripts/action_system/actions/throw.gd" id="6_nxvo4"]
 [ext_resource type="PackedScene" uid="uid://cpmjh7rwyd1uw" path="res://models/grenade.blend" id="9_yjes0"]
 
-[sub_resource type="Resource" id="Resource_jmcc7"]
+[sub_resource type="Resource" id="Resource_3rtil"]
 script = ExtResource("3_3s1e7")
 damage = 40.0
-targets = Array[Node3D]([])
-actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
+targets = null
+actions = null
 
-[sub_resource type="Resource" id="Resource_dcx7y"]
+[sub_resource type="Resource" id="Resource_r3qq1"]
 script = ExtResource("2_lvbq1")
-radius = 5.0
-targeted_actions = Array[Resource("res://scripts/action_system/actions/targeted_action.gd")]([SubResource("Resource_jmcc7")])
-actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
+radius = null
+targeted_actions = Array[Resource("res://scripts/action_system/actions/targeted_action.gd")]([SubResource("Resource_3rtil")])
+actions = null
 
-[sub_resource type="Resource" id="Resource_n0nyn"]
+[sub_resource type="Resource" id="Resource_co7if"]
 script = ExtResource("5_vtomp")
 scene_to_spawn = ExtResource("4_jc4rt")
-actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
+actions = null
 
-[sub_resource type="Resource" id="Resource_ifu1g"]
+[sub_resource type="Resource" id="Resource_bwwfc"]
 script = ExtResource("6_6ji73")
-actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
+actions = null
 
 [sub_resource type="Resource" id="Resource_51wv8"]
 script = ExtResource("5_pf5dd")
 countdown_in_seconds = 2.0
-actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([SubResource("Resource_dcx7y"), SubResource("Resource_n0nyn"), SubResource("Resource_ifu1g")])
+actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([SubResource("Resource_r3qq1"), SubResource("Resource_co7if"), SubResource("Resource_bwwfc")])
 
 [sub_resource type="Resource" id="Resource_vnnrj"]
 script = ExtResource("6_nxvo4")

@@ -10,15 +10,15 @@
 [sub_resource type="Resource" id="Resource_eolp6"]
 script = ExtResource("3_gr3sa")
 game_item_to_create = ExtResource("2_a4xo7")
-actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
+actions = null
 
 [sub_resource type="Resource" id="Resource_6ti37"]
 script = ExtResource("4_2oape")
-actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
+actions = null
 
 [sub_resource type="Resource" id="Resource_agqvs"]
 script = ExtResource("4_gavhw")
-degrees_of_inaccuracy = 1.0
+degrees_of_inaccuracy = null
 force = 15.0
 actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([SubResource("Resource_eolp6"), SubResource("Resource_6ti37")])
 

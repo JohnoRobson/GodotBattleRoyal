@@ -3,6 +3,7 @@ class_name GameItem
 extends RigidBody3D
 
 var is_held: bool
+var can_be_used: bool
 @export var item_name: String = "Example Name"
 @export var action: Action
 
@@ -13,6 +14,7 @@ signal remove_from_inventory_and_put_in_world(game_item: GameItem)
 
 func _init():
 	is_held = false
+	can_be_used = true
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -31,8 +33,9 @@ func _physics_process(_delta):
 	freeze = is_held
 
 func use_item(_actor: Actor):
-	action_triggered.emit(action, self)
-	item_updated.emit()
+	if can_be_used:
+		action_triggered.emit(action, self)
+		item_updated.emit()
 
 func dispose_of_item():
 	item_used_up.emit()

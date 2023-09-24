@@ -47,7 +47,7 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_1h2b2")
 
-[node name="Smg" type="RigidBody3D"]
+[node name="Smg" type="RigidBody3D" groups=["items", "weapons"]]
 collision_layer = 4
 collision_mask = 3
 script = ExtResource("1_2nnhw")

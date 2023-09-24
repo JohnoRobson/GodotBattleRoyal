@@ -9,9 +9,7 @@ func _init():
 func perform(_delta: float, item_node: ActionStack.ItemNode) -> bool:
 	var current_game_item: GameItem = item_node.game_item
 	var new_game_item = replacement_game_item.instantiate()
-	current_game_item.get_parent().add_child(new_game_item)
-	new_game_item.position = current_game_item.position
-	new_game_item.rotation = current_game_item.rotation
+	item_node.data[Action.Keys.WORLD].return_item_to_world(new_game_item, current_game_item.position, current_game_item.rotation)
 	new_game_item.linear_velocity = current_game_item.linear_velocity
 	new_game_item.angular_velocity = current_game_item.angular_velocity
 

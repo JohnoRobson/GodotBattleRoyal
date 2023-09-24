@@ -1,10 +1,13 @@
-[gd_scene load_steps=10 format=3 uid="uid://cegel3cpoc2hy"]
+[gd_scene load_steps=15 format=3 uid="uid://cegel3cpoc2hy"]
 
 [ext_resource type="Script" path="res://scripts/items/weapon_action.gd" id="1_yfwc3"]
 [ext_resource type="Script" path="res://resources/weapon_type.gd" id="2_2q0du"]
 [ext_resource type="Script" path="res://scripts/action_system/actions/raycast.gd" id="3_j2bm5"]
 [ext_resource type="PackedScene" uid="uid://o0g0axyk2njf" path="res://models/sniper_rifle.blend" id="3_mylws"]
+[ext_resource type="Script" path="res://scripts/action_system/actions/area.gd" id="3_s16u3"]
 [ext_resource type="Script" path="res://scripts/action_system/actions/damage.gd" id="4_yf6im"]
+[ext_resource type="PackedScene" uid="uid://be4ixwniduwoc" path="res://scenes/effects/explosion.tscn" id="5_axjqf"]
+[ext_resource type="Script" path="res://scripts/action_system/actions/effect.gd" id="6_s0ive"]
 
 [sub_resource type="Resource" id="Resource_hm74y"]
 script = ExtResource("2_2q0du")
@@ -18,10 +21,21 @@ weapon_reload_time_seconds = 2.0
 number_of_shots_per_fire = 1
 max_ammo = 200
 
-[sub_resource type="Resource" id="Resource_cc11v"]
+[sub_resource type="Resource" id="Resource_tnhjj"]
 script = ExtResource("4_yf6im")
-damage = 30.0
+damage = 60.0
 targets = Array[Node3D]([])
+actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
+
+[sub_resource type="Resource" id="Resource_6kfxy"]
+script = ExtResource("3_s16u3")
+radius = 5.0
+targeted_actions = Array[Resource("res://scripts/action_system/actions/targeted_action.gd")]([SubResource("Resource_tnhjj")])
+actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
+
+[sub_resource type="Resource" id="Resource_pooku"]
+script = ExtResource("6_s0ive")
+scene_to_spawn = ExtResource("5_axjqf")
 actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
 
 [sub_resource type="Resource" id="Resource_4cail"]
@@ -30,13 +44,14 @@ cast_collision_mask = 3
 cast_degrees_of_inaccuracy = Callable()
 cast_start_position_local = Vector3(0, 0, 0)
 cast_range = 2000.0
-targeted_actions = Array[Resource("res://scripts/action_system/actions/targeted_action.gd")]([SubResource("Resource_cc11v")])
+targeted_actions = Array[Resource("res://scripts/action_system/actions/targeted_action.gd")]([])
+actions_to_apply_at_hit_location = Array[Resource("res://scripts/action_system/actions/action.gd")]([SubResource("Resource_6kfxy"), SubResource("Resource_pooku")])
 actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_j006u"]
 size = Vector3(0.157325, 0.655788, 3.35328)
 
-[node name="SniperRifle" type="RigidBody3D" groups=["items"]]
+[node name="SniperRifle" type="RigidBody3D" groups=["items", "weapons"]]
 collision_layer = 4
 collision_mask = 3
 script = ExtResource("1_yfwc3")

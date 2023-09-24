@@ -43,7 +43,6 @@ func fire():
 		# apply cooldown
 		_weapon_cooldown_in_seconds = 1.0 / _fire_rate_per_second
 		_current_state = WeaponState.COOLDOWN
-		print("fired")
 		action_triggered.emit(action, self)
 
 func _get_degrees_of_inaccuracy() -> float:

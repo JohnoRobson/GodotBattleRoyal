@@ -19,7 +19,7 @@ max_ammo = 2
 [sub_resource type="BoxShape3D" id="BoxShape3D_j006u"]
 size = Vector3(0.157325, 0.655788, 3.35328)
 
-[node name="SniperRifle" type="RigidBody3D"]
+[node name="SniperRifle" type="RigidBody3D" groups=["items", "weapons"]]
 collision_layer = 4
 collision_mask = 3
 script = ExtResource("1_vdfrr")

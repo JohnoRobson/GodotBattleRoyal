@@ -1,0 +1,61 @@
+[gd_scene load_steps=17 format=3 uid="uid://bgv7vcf44b558"]
+
+[ext_resource type="Script" path="res://scripts/items/game_item.gd" id="1_rf4ni"]
+[ext_resource type="Script" path="res://scripts/action_system/actions/area.gd" id="2_54hln"]
+[ext_resource type="Script" path="res://scripts/action_system/actions/damage.gd" id="3_ory47"]
+[ext_resource type="PackedScene" uid="uid://be4ixwniduwoc" path="res://scenes/effects/explosion.tscn" id="4_mfbt6"]
+[ext_resource type="Script" path="res://scripts/action_system/actions/effect.gd" id="5_4q3gh"]
+[ext_resource type="Script" path="res://scripts/action_system/actions/remove.gd" id="6_lk8ut"]
+[ext_resource type="Script" path="res://scripts/action_system/actions/timer.gd" id="7_emnfc"]
+[ext_resource type="Script" path="res://scripts/action_system/actions/throw.gd" id="8_ptsmn"]
+[ext_resource type="PackedScene" uid="uid://cpmjh7rwyd1uw" path="res://models/grenade.blend" id="9_j3s3v"]
+
+[sub_resource type="Resource" id="Resource_d0kh8"]
+script = ExtResource("3_ory47")
+damage = 10.0
+targets = Array[Node3D]([])
+actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
+
+[sub_resource type="Resource" id="Resource_n1606"]
+script = ExtResource("2_54hln")
+radius = 3.0
+targeted_actions = Array[Resource("res://scripts/action_system/actions/targeted_action.gd")]([SubResource("Resource_d0kh8")])
+actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
+
+[sub_resource type="Resource" id="Resource_kn0tx"]
+script = ExtResource("5_4q3gh")
+scene_to_spawn = ExtResource("4_mfbt6")
+actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
+
+[sub_resource type="Resource" id="Resource_8ks3o"]
+script = ExtResource("6_lk8ut")
+actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
+
+[sub_resource type="Resource" id="Resource_51wv8"]
+script = ExtResource("7_emnfc")
+countdown_in_seconds = 2.0
+actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([SubResource("Resource_n1606"), SubResource("Resource_kn0tx"), SubResource("Resource_8ks3o")])
+
+[sub_resource type="Resource" id="Resource_vnnrj"]
+script = ExtResource("8_ptsmn")
+degrees_of_inaccuracy = 180.0
+force = 10.0
+actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([SubResource("Resource_51wv8")])
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1e27m"]
+size = Vector3(0.124092, 0.19753, 0.181521)
+
+[node name="Bomblet" type="RigidBody3D"]
+collision_layer = 0
+collision_mask = 0
+mass = 0.1
+script = ExtResource("1_rf4ni")
+item_name = "Bomblet"
+action = SubResource("Resource_vnnrj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0224871, -0.0310805)
+shape = SubResource("BoxShape3D_1e27m")
+
+[node name="grenade" parent="." instance=ExtResource("9_j3s3v")]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)

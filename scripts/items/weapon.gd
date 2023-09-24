@@ -53,7 +53,7 @@ func fire():
 			var raycast_end_position = to_global(position + aim_vector_local * stats.weapon_range)
 			var query = PhysicsRayQueryParameters3D.create(raycast_start_position, raycast_end_position, _weapon_raycast_collision_mask)
 			query.collide_with_areas = true
-			query.collide_with_bodies = false
+			query.collide_with_bodies = true
 			var result = space_state.intersect_ray(query)
 
 			# apply effect and damage

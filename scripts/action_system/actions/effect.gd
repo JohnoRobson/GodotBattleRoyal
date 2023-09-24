@@ -4,7 +4,7 @@ extends Action
 @export var scene_to_spawn: Resource
 
 func _init():
-	action_name = self.Name.THROW
+	action_name = self.Name.EFFECT
 
 func perform(_delta: float, item_node: ActionStack.ItemNode) -> bool:
 	var scene = scene_to_spawn.instantiate()

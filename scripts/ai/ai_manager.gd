@@ -1,7 +1,7 @@
 extends Node3D
 
 @export var world_navmesh: NavigationRegion3D
-@export var ai_actor: AiActor
+@export var ai_actor: Actor
 @export var world: World
 
 var ai_controller: AiActorController

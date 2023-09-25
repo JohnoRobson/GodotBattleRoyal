@@ -16,5 +16,10 @@ transform = Transform3D(1, 0, 0, 0, 0.559193, 0.829038, 0, -0.829038, 0.559193, 
 
 [node name="HUD" parent="." index="6" instance=ExtResource("2_yloko")]
 
+[node name="ItemInteractionArea" parent="ActorCursor" index="0"]
+show_pickup_text = false
+show_any_text = false
+
 [connection signal="weapon_swap" from="." to="HUD" method="_on_weapon_swap"]
 [connection signal="health_changed" from="Health" to="HUD" method="on_update_health"]
+[connection signal="inventory_changed" from="WeaponInventory" to="HUD" method="_on_inventory_changed"]

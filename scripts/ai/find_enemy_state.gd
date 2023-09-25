@@ -10,7 +10,7 @@ func enter(_controller: AiActorController):
 func execute(controller: AiActorController):
 	if controller.actor.held_weapon == null:
 		controller.state_machine.change_state(FindWeaponState.new())
-	elif controller.actor.health.is_below_percent_health(0.6):
+	elif controller.actor.health.is_below_percent_health(0.6) and controller.world.get_closest_available_health(controller.actor.global_transform.origin) != null:
 		controller.state_machine.change_state(FindHealthState.new())
 	else:
 		current_target = controller.world.get_closest_actor(controller.actor.global_transform.origin, controller.actor)

@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://smivmtkbm1yv"]
 
-[ext_resource type="Script" path="res://scripts/weapon.gd" id="1_vdfrr"]
+[ext_resource type="Script" path="res://scripts/items/weapon.gd" id="1_vdfrr"]
 [ext_resource type="Script" path="res://resources/weapon_type.gd" id="2_b577d"]
 [ext_resource type="PackedScene" uid="uid://o0g0axyk2njf" path="res://models/sniper_rifle.blend" id="3_04if4"]
 
@@ -24,6 +24,7 @@ collision_layer = 4
 collision_mask = 3
 script = ExtResource("1_vdfrr")
 stats = SubResource("Resource_7n53x")
+item_name = "Sniper Rifle"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00614242, -0.740711)

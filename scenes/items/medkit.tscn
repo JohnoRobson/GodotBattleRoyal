@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://64w1l20fq4qb"]
+
+[ext_resource type="Script" path="res://scripts/items/medkit.gd" id="1_c7euk"]
+[ext_resource type="PackedScene" uid="uid://bmkdhqo5v1fou" path="res://models/medkit.blend" id="1_d6ka3"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1e27m"]
+size = Vector3(1.03257, 0.513558, 1.03219)
+
+[node name="Medkit" type="RigidBody3D"]
+script = ExtResource("1_c7euk")
+healing_amount = 50.0
+item_name = "Medkit"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_1e27m")
+
+[node name="medkit" parent="." instance=ExtResource("1_d6ka3")]

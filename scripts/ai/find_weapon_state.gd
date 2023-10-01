@@ -30,14 +30,14 @@ func execute_physics(controller: AiActorController):
 		var next_location = controller.nav_agent.get_next_path_position()
 		var dir = (next_location - current_location).normalized()
 		controller.set_move_direction(Vector2(dir.x, dir.z))
-		controller.set_aim_position(controller.actor.to_global(Vector3(dir.x * 100, 0, dir.z * 100)))
+		controller.set_aim_position(current_target.global_position)
 
-		var target_distance: float = target_pos.distance_to(controller.actor.global_transform.origin)
-		var closest_weapon = controller.actor.get_closest_weapon_if_exists()
+		var closest_weapon = controller.actor._item_pickup_manager.get_item_that_cursor_is_over_and_is_in_interaction_range()
 		
 		if closest_weapon == current_target:
 			controller.set_is_exchanging_weapon(true)
 			picked_up_weapon_last_tick = true
 
 func exit(controller: AiActorController):
+	controller.set_is_exchanging_weapon(false)
 	controller.set_move_direction(Vector2.ZERO)

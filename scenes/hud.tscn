@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://pciev3jsxk36"]
+[gd_scene load_steps=3 format=3 uid="uid://pciev3jsxk36"]
 
 [ext_resource type="Script" path="res://scripts/hud.gd" id="1_ondyb"]
+[ext_resource type="Script" path="res://scripts/components/inventory/inventory_ui.gd" id="2_hfa3h"]
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_ondyb")
@@ -28,3 +29,15 @@ offset_right = 143.0
 grow_vertical = 0
 text = "Health: 100"
 vertical_alignment = 1
+
+[node name="Inventory" type="GridContainer" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 3
+columns = 6
+script = ExtResource("2_hfa3h")

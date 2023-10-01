@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://ugmvx4nxxjn2"]
 
-[ext_resource type="Script" path="res://scripts/weapon.gd" id="1_2nnhw"]
+[ext_resource type="Script" path="res://scripts/items/weapon.gd" id="1_2nnhw"]
 [ext_resource type="Script" path="res://resources/weapon_type.gd" id="2_7qbj6"]
 
 [sub_resource type="Resource" id="Resource_7n53x"]
@@ -52,6 +52,7 @@ collision_layer = 4
 collision_mask = 3
 script = ExtResource("1_2nnhw")
 stats = SubResource("Resource_7n53x")
+item_name = "SMG"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.10401, -0.204375)

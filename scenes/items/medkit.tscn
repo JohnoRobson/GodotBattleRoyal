@@ -32,7 +32,7 @@ actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([SubR
 [sub_resource type="BoxShape3D" id="BoxShape3D_1e27m"]
 size = Vector3(1.03257, 0.513558, 1.03219)
 
-[node name="Medkit" type="RigidBody3D" groups=["items"]]
+[node name="Medkit" type="RigidBody3D" groups=["healing", "items"]]
 script = ExtResource("1_icxwt")
 item_name = "Medkit"
 action = SubResource("Resource_bmy8g")

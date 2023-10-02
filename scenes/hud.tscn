@@ -41,3 +41,7 @@ grow_vertical = 0
 size_flags_horizontal = 3
 columns = 6
 script = ExtResource("2_hfa3h")
+
+[node name="Reticule" type="ColorRect" parent="."]
+offset_right = 14.0
+offset_bottom = 14.0

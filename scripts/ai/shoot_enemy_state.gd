@@ -15,7 +15,7 @@ func execute(controller: AiActorController):
 		var target_distance: float = target_pos.distance_to(controller.actor.global_transform.origin)
 
 		var weapon = controller.actor.held_weapon
-		if weapon != null && weapon.empty_and_can_reload():
+		if weapon != null && (weapon is Weapon or weapon is WeaponAction) && weapon.empty_and_can_reload():
 			controller.set_is_reloading(true)
 		else:
 			controller.set_is_reloading(false)

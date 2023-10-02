@@ -93,7 +93,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.76988, 0.567462, 2.2995)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 5)
 
 [node name="SniperRifle" parent="World" instance=ExtResource("11_8a3v7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.96482, 0.793014, 2.12351)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.17117, 0.793014, 13.5145)
 
 [node name="Medkit" parent="World" instance=ExtResource("5_q6hoj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.59143, 0.460952, 4.25412)

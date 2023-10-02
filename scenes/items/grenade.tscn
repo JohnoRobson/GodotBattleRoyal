@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://b7e2n7bieo85i"]
+[gd_scene load_steps=19 format=3 uid="uid://b7e2n7bieo85i"]
 
 [ext_resource type="Script" path="res://scripts/items/game_item.gd" id="1_deal3"]
 [ext_resource type="Script" path="res://scripts/action_system/actions/area.gd" id="2_lvbq1"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://scripts/action_system/actions/effect.gd" id="5_vtomp"]
 [ext_resource type="Script" path="res://scripts/action_system/actions/remove.gd" id="6_6ji73"]
 [ext_resource type="Script" path="res://scripts/action_system/actions/throw.gd" id="6_nxvo4"]
+[ext_resource type="Script" path="res://scripts/items/aim_function.gd" id="9_bgx5d"]
 [ext_resource type="PackedScene" uid="uid://cpmjh7rwyd1uw" path="res://models/grenade.blend" id="9_yjes0"]
 
 [sub_resource type="Resource" id="Resource_3rtil"]
@@ -42,6 +43,10 @@ degrees_of_inaccuracy = 0.0
 force = 12.0
 actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([SubResource("Resource_51wv8")])
 
+[sub_resource type="Resource" id="Resource_gme78"]
+script = ExtResource("9_bgx5d")
+projectile_velocity = 12.0
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_1e27m"]
 size = Vector3(0.449902, 0.646793, 0.592482)
 
@@ -49,6 +54,7 @@ size = Vector3(0.449902, 0.646793, 0.592482)
 script = ExtResource("1_deal3")
 item_name = "Grenade"
 action = SubResource("Resource_vnnrj")
+aim_function = SubResource("Resource_gme78")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.102114, -0.0777727)

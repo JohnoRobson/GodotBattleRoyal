@@ -45,8 +45,8 @@ func _aim_weapon():
 		rotator.look_at(aim_position, Vector3.UP)
 
 		# up and down rotation
-		if held_weapon != null && (held_weapon is Weapon or held_weapon is WeaponAction):
-			var angle_vector = held_weapon.get_angle_to_aim_at(aim_position)
+		if held_weapon != null:
+			var angle_vector = held_weapon.get_aim_vector(aim_position)
 			weapon_base.look_at(to_global(angle_vector) + (weapon_base.global_position - global_position), Vector3.UP)
 
 func _process(_delta):

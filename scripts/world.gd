@@ -4,8 +4,6 @@ class_name World
 
 @onready var player_actors: Array[Actor] = []
 @onready var ai_actors: Array[Actor] = []
-@onready var items: Array[GameItem] = []
-@onready var weapons: Array[GameItem] = []
 
 @export var effect_manager: EffectManager
 
@@ -18,16 +16,15 @@ enum Weapons {SMG, SHOTGUN, SNIPER}
 func _ready():
 	action_system.world = self
 	spawn_player(Vector2(0,5))
-	#spawn_ai(Vector2(-10,0))
-	#spawn_ai(Vector2(-10,5))
-	#spawn_ai(Vector2(30,0))
+	spawn_ai(Vector2(-10,0))
+	spawn_ai(Vector2(-10,5))
+	spawn_ai(Vector2(30,0))
 	spawn_weapon(Vector2(5,5), Weapons.SMG)
 	spawn_weapon(Vector2(-15,5), Weapons.SHOTGUN)
 	spawn_weapon(Vector2(25,-5), Weapons.SNIPER)
-	items.append_array(get_tree().get_nodes_in_group("items"))
 
 	# move this somewhere else
-	for item in items:
+	for item in get_tree().get_nodes_in_group("items"):
 		item.action_triggered.connect(action_system.action_triggered)
 
 func _process(_delta):
@@ -61,8 +58,6 @@ func spawn_player(spawn_position: Vector2):
 	controller.set_script(controller_script)
 	actor.controller = controller
 	actor.add_child(controller)
-
-	#	actor.health.take_damage(80)
 	
 	var inventory_ui: InventoryUI = actor.get_node("HUD/Inventory")
 
@@ -103,7 +98,6 @@ func spawn_weapon(spawn_position: Vector2, weapon_type: Weapons) -> Weapon:
 	add_child(weapon)
 	weapon.set_global_position(Vector3(spawn_position.x, 5.0, spawn_position.y))
 	weapon.set_global_rotation_degrees(Vector3(0, 90, 0))
-	weapons.append(weapon)
 	return weapon
 
 func _on_actor_killed(actor: Actor):
@@ -127,7 +121,7 @@ func get_closest_actor(from_position: Vector3, ignore: Actor = null) -> Actor:
 
 func get_closest_available_health(from_position: Vector3) -> GameItem:
 	var pickups = []
-	pickups.append_array(items)
+	pickups.append_array(get_tree().get_nodes_in_group("healing"))
 
 	# Filter returns the filtered array, but sort is in-place
 	pickups = pickups.filter(func(a): return a != null and !a.is_held)
@@ -136,9 +130,9 @@ func get_closest_available_health(from_position: Vector3) -> GameItem:
 
 	return pickups.front() if !pickups.is_empty() else null
 
-func get_closest_available_weapon(from_position: Vector3) -> Weapon:
+func get_closest_available_weapon(from_position: Vector3) -> GameItem:
 	var weapon_array = []
-	weapon_array.append_array(weapons)
+	weapon_array.append_array(get_tree().get_nodes_in_group("weapons"))
 
 	weapon_array.sort_custom(func(a, b): return from_position.distance_to(a.global_transform.origin) < from_position.distance_to(b.global_transform.origin))
 	weapon_array = weapon_array.filter(func(a): return !a.is_held)
@@ -156,6 +150,6 @@ func return_item_to_world(item: GameItem, global_position_to_place_item: Vector3
 	item.rotation = global_rotation_to_place_item
 
 func get_actors_and_gameitems_in_area(target_position: Vector3, distance: float) -> Array:
-	var things = player_actors + ai_actors + items
+	var things = player_actors + ai_actors + get_tree().get_nodes_in_group("items")
 
 	return things.filter(func(a):return a != null).filter(func(a): return a.is_inside_tree()).filter(func(a): return target_position.distance_to(a.global_transform.origin) <= distance)

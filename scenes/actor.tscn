@@ -10,8 +10,8 @@
 [ext_resource type="Script" path="res://scripts/item_pickup_manager.gd" id="8_6j5c1"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mj10y"]
-radius = 0.50135
-height = 2.00418
+radius = 0.542762
+height = 2.0713
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_ie7wx"]
 

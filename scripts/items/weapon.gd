@@ -53,7 +53,7 @@ func fire():
 			var raycast_end_position = to_global(position + aim_vector_local * stats.weapon_range)
 			var query = PhysicsRayQueryParameters3D.create(raycast_start_position, raycast_end_position, _weapon_raycast_collision_mask)
 			query.collide_with_areas = true
-			query.collide_with_bodies = true
+			query.collide_with_bodies = false
 			var result = space_state.intersect_ray(query)
 
 			# apply effect and damage
@@ -86,12 +86,6 @@ func _apply_weapon_reload(delta: float):
 		_current_ammo = stats.max_ammo
 		update_ammo_ui.emit(_current_ammo, stats.max_ammo)
 		_current_state = WeaponState.CAN_FIRE
-
-# returns a direction vector that points in the direction needed for the weapon to hit the provided global position 
-# for hitscan weapons, this would point straight at the target, but for something that travels on a ballistic trajectory
-# it would need to aim up to arc the shot
-func get_angle_to_aim_at(target_global_position: Vector3) -> Vector3:
-	return target_global_position - global_position
 
 # used for ai checking if the weapon should be reloaded
 func empty_and_can_reload() -> bool:

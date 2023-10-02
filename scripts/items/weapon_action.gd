@@ -65,12 +65,6 @@ func _apply_weapon_reload(delta: float):
 		update_ammo_ui.emit(_current_ammo, stats.max_ammo)
 		_current_state = WeaponState.CAN_FIRE
 
-# returns a direction vector that points in the direction needed for the weapon to hit the provided global position 
-# for hitscan weapons, this would point straight at the target, but for something that travels on a ballistic trajectory
-# it would need to aim up to arc the shot
-func get_angle_to_aim_at(target_global_position: Vector3) -> Vector3:
-	return target_global_position - global_position
-
 # used for ai checking if the weapon should be reloaded
 func empty_and_can_reload() -> bool:
 	return _current_state == WeaponState.NO_AMMO

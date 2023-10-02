@@ -2,7 +2,7 @@ extends State
 
 class_name FindWeaponState
 
-var current_target: Weapon
+var current_target: GameItem
 var picked_up_weapon_last_tick: bool = false
 
 func enter(_controller: AiActorController):

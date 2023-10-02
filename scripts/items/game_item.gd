@@ -6,6 +6,7 @@ var is_held: bool
 var can_be_used: bool
 @export var item_name: String = "Example Name"
 @export var action: Action
+@export var aim_function: AimFunction = null
 
 signal item_updated()
 signal item_used_up()
@@ -40,3 +41,13 @@ func use_item(_actor: Actor):
 func dispose_of_item():
 	item_used_up.emit()
 	queue_free()
+
+# returns a vector that points from the weapon to the target, in local space
+func get_aim_vector(target_global_position: Vector3) -> Vector3:
+	var distance_to_target = target_global_position.distance_to(global_position)
+	var aim_direction = target_global_position - global_position
+
+	if (aim_function != null):
+		aim_direction = aim_function.aim_angle(distance_to_target, target_global_position, global_position)
+	
+	return aim_direction

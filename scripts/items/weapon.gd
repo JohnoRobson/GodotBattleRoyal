@@ -1,6 +1,6 @@
 extends GameItem
 
-class_name WeaponAction
+class_name Weapon
 
 @export var stats: WeaponType
 @onready var _current_ammo: int = stats.max_ammo

@@ -1,6 +1,6 @@
 [gd_scene load_steps=14 format=3 uid="uid://ugmvx4nxxjn2"]
 
-[ext_resource type="Script" path="res://scripts/items/weapon_action.gd" id="1_rrsjv"]
+[ext_resource type="Script" path="res://scripts/items/weapon.gd" id="1_rrsjv"]
 [ext_resource type="Script" path="res://resources/weapon_type.gd" id="2_7qbj6"]
 [ext_resource type="Script" path="res://scripts/action_system/actions/raycast.gd" id="3_xaf80"]
 [ext_resource type="Script" path="res://scripts/action_system/actions/damage.gd" id="4_wk4t0"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://smivmtkbm1yv"]
 
-[ext_resource type="Script" path="res://scripts/items/weapon_action.gd" id="1_li6lw"]
+[ext_resource type="Script" path="res://scripts/items/weapon.gd" id="1_x56va"]
 [ext_resource type="Script" path="res://resources/weapon_type.gd" id="2_b577d"]
 [ext_resource type="Script" path="res://scripts/action_system/actions/raycast.gd" id="3_3q72a"]
 [ext_resource type="PackedScene" uid="uid://o0g0axyk2njf" path="res://models/sniper_rifle.blend" id="3_04if4"]
@@ -37,7 +37,7 @@ size = Vector3(0.157325, 0.655788, 3.35328)
 [node name="SniperRifle" type="RigidBody3D" groups=["items", "weapons"]]
 collision_layer = 4
 collision_mask = 3
-script = ExtResource("1_li6lw")
+script = ExtResource("1_x56va")
 stats = SubResource("Resource_ort1h")
 item_name = "Sniper Rifle"
 action = SubResource("Resource_sh3ju")

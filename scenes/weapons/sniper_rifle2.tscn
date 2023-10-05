@@ -1,6 +1,6 @@
 [gd_scene load_steps=17 format=3 uid="uid://cegel3cpoc2hy"]
 
-[ext_resource type="Script" path="res://scripts/items/weapon_action.gd" id="1_yfwc3"]
+[ext_resource type="Script" path="res://scripts/items/weapon.gd" id="1_yfwc3"]
 [ext_resource type="Script" path="res://resources/weapon_type.gd" id="2_2q0du"]
 [ext_resource type="Script" path="res://scripts/items/aim_function.gd" id="3_it5mn"]
 [ext_resource type="Script" path="res://scripts/action_system/actions/raycast.gd" id="3_j2bm5"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=3 uid="uid://dpngd0gfeouw0"]
 
-[ext_resource type="Script" path="res://scripts/items/weapon_action.gd" id="1_jqidy"]
+[ext_resource type="Script" path="res://scripts/items/weapon.gd" id="1_jqidy"]
 [ext_resource type="Script" path="res://resources/weapon_type.gd" id="2_24fvs"]
 [ext_resource type="PackedScene" uid="uid://c3qc2oy1fxi5w" path="res://models/shotgun.blend" id="3_6dwa7"]
 [ext_resource type="Script" path="res://scripts/action_system/actions/raycast.gd" id="3_exogs"]

@@ -1,19 +1,39 @@
-[gd_scene load_steps=8 format=3 uid="uid://ugmvx4nxxjn2"]
+[gd_scene load_steps=14 format=3 uid="uid://ugmvx4nxxjn2"]
 
-[ext_resource type="Script" path="res://scripts/items/weapon.gd" id="1_2nnhw"]
+[ext_resource type="Script" path="res://scripts/items/weapon_action.gd" id="1_rrsjv"]
 [ext_resource type="Script" path="res://resources/weapon_type.gd" id="2_7qbj6"]
+[ext_resource type="Script" path="res://scripts/action_system/actions/raycast.gd" id="3_xaf80"]
+[ext_resource type="Script" path="res://scripts/action_system/actions/damage.gd" id="4_wk4t0"]
+[ext_resource type="Script" path="res://scripts/items/aim_function.gd" id="5_esgpq"]
 
-[sub_resource type="Resource" id="Resource_7n53x"]
+[sub_resource type="Resource" id="Resource_wjeax"]
 script = ExtResource("2_7qbj6")
-bullet_spawn_position_local = Vector3(0, 0.042, -1.311)
-weapon_damage = 10.0
 fire_rate_per_minute = 600.0
 degrees_of_inaccuracy_stationary = 6.0
 degrees_of_inaccuracy_moving = 12.0
-weapon_range = 2000.0
 weapon_reload_time_seconds = 1.0
 number_of_shots_per_fire = 1
 max_ammo = 30
+
+[sub_resource type="Resource" id="Resource_vox38"]
+script = ExtResource("4_wk4t0")
+damage = 10.0
+targets = Array[Node3D]([])
+actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
+
+[sub_resource type="Resource" id="Resource_yrey2"]
+script = ExtResource("3_xaf80")
+cast_collision_mask = 3
+cast_degrees_of_inaccuracy = null
+cast_start_position_local = Vector3(0, 0.042, -1.311)
+cast_range = 2000.0
+targeted_actions = Array[Resource("res://scripts/action_system/actions/targeted_action.gd")]([SubResource("Resource_vox38")])
+actions_to_apply_at_hit_location = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
+actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
+
+[sub_resource type="Resource" id="Resource_eekuc"]
+script = ExtResource("5_esgpq")
+projectile_velocity = 100000.0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_j006u"]
 size = Vector3(0.157325, 0.498044, 2.18281)
@@ -50,9 +70,11 @@ shadow_mesh = SubResource("ArrayMesh_1h2b2")
 [node name="Smg" type="RigidBody3D" groups=["items", "weapons"]]
 collision_layer = 4
 collision_mask = 3
-script = ExtResource("1_2nnhw")
-stats = SubResource("Resource_7n53x")
+script = ExtResource("1_rrsjv")
+stats = SubResource("Resource_wjeax")
 item_name = "SMG"
+action = SubResource("Resource_yrey2")
+aim_function = SubResource("Resource_eekuc")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.10401, -0.204375)

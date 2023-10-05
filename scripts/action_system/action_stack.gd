@@ -1,6 +1,9 @@
 class_name ActionStack
 extends Node
 
+# This represents a tree of actions. Each individual instance of an action tree being performed is represented by an ActionStack.
+# The ActionStack handles action tree state along with keeping track of the game item the action is linked to.
+
 var uncompleted_top_level_nodes: Array[ItemNode] = []
 var root_game_item: GameItem
 var action_system: ActionSystem
@@ -41,7 +44,6 @@ func perform(delta: float):
 					var child_node: ItemNode = current_node.child_nodes[i]
 					set_action_keys_for_node(child_node)
 					
-					#if current_node.action is ActionCreate:
 					callable_for_actions.call(child_node.action)
 					uncompleted_top_level_nodes.insert(uncompleted_node_index, child_node)
 		else:

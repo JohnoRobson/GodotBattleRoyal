@@ -19,7 +19,7 @@ func _on_weapon_swap(game_item):
 		current_weapon.update_ammo_ui.disconnect(on_update_ammo)
 		current_weapon = null
 	
-	if game_item is Weapon or game_item is WeaponAction:
+	if game_item is WeaponAction:
 		current_weapon = game_item
 		current_weapon.update_ammo_ui.connect(on_update_ammo)
 		on_update_ammo(game_item._current_ammo, game_item.stats.max_ammo)

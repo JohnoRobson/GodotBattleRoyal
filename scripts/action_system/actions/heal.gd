@@ -1,6 +1,8 @@
 class_name ActionHeal
 extends TargetedAction
 
+# Heals an actor
+
 @export var healing: float = 1.0
 
 func _init():

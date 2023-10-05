@@ -43,6 +43,7 @@ func dispose_of_item():
 	queue_free()
 
 # returns a vector that points from the weapon to the target, in local space
+# Uses aim_function if it is not null 
 func get_aim_vector(target_global_position: Vector3) -> Vector3:
 	var distance_to_target = target_global_position.distance_to(global_position)
 	var aim_direction = target_global_position - global_position

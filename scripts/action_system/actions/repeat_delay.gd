@@ -1,6 +1,8 @@
 class_name ActionRepeatDelay
 extends Action
 
+# Performs its child actions all at once, repeatedly with a delay between each time it activates them all
+
 @export var countdown_in_seconds: float = 1.0
 @export var number_of_times_to_activate: int = 1
 @export var actions_to_perform: Array[Action] = []

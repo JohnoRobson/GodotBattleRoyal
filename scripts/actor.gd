@@ -56,14 +56,14 @@ func _process(_delta):
 		_drop_weapon_cooldown_timer -= _delta
 	_aim_weapon()
 	if (controller.is_shooting() && held_weapon != null):
-		if held_weapon is Weapon or held_weapon is WeaponAction:
+		if held_weapon is WeaponAction:
 			held_weapon.fire()
 		else:
 			held_weapon.use_item(self)
 		weapon_inventory.emit_updates()
 	if (controller.is_reloading() && held_weapon != null):
 		held_weapon.reload()
-	if held_weapon != null && (held_weapon is Weapon or held_weapon is WeaponAction):
+	if held_weapon != null && (held_weapon is WeaponAction):
 		held_weapon.set_is_moving(!controller.get_move_direction().is_zero_approx())
 	if (controller.is_exchanging_weapon()):
 		_try_to_exchange_weapon()
@@ -139,7 +139,7 @@ func equip_weapon(weapon: GameItem):
 	if held_weapon.item_used_up.is_connected(_on_item_used_up):
 		held_weapon.item_used_up.disconnect(_on_item_used_up)
 	held_weapon.item_used_up.connect(_on_item_used_up)
-	if weapon is Weapon or weapon is WeaponAction:
+	if weapon is WeaponAction:
 		weapon_swap.emit(weapon)
 
 func unequip_weapon():

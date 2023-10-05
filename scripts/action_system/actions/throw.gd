@@ -1,6 +1,8 @@
 class_name ActionThrow
 extends Action
 
+# Throws a game item forward, (-Z local), and removes it from an inventory, if it is in one. Also sets the game item's can_be_used variable to false so that it can't be picked up after being thrown
+
 @export var degrees_of_inaccuracy: float = 1.0
 @export var force: float = 1
 

@@ -14,23 +14,23 @@
 [sub_resource type="Resource" id="Resource_3rtil"]
 script = ExtResource("3_3s1e7")
 damage = 40.0
-targets = null
-actions = null
+targets = Array[Node3D]([])
+actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
 
 [sub_resource type="Resource" id="Resource_r3qq1"]
 script = ExtResource("2_lvbq1")
-radius = null
+radius = 2.0
 targeted_actions = Array[Resource("res://scripts/action_system/actions/targeted_action.gd")]([SubResource("Resource_3rtil")])
-actions = null
+actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
 
 [sub_resource type="Resource" id="Resource_co7if"]
 script = ExtResource("5_vtomp")
 scene_to_spawn = ExtResource("4_jc4rt")
-actions = null
+actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
 
 [sub_resource type="Resource" id="Resource_bwwfc"]
 script = ExtResource("6_6ji73")
-actions = null
+actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
 
 [sub_resource type="Resource" id="Resource_51wv8"]
 script = ExtResource("5_pf5dd")

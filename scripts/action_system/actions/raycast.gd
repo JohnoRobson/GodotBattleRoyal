@@ -1,8 +1,10 @@
 class_name ActionRaycast
 extends Action
 
+# Makes a raycast forwards, (-Z local), and applies TargetedActions to Actors via their Hurtboxes, and Actions to the point that was hit
+
 @export var cast_collision_mask: int = 0b0011
-@export var cast_degrees_of_inaccuracy: Callable
+@export var cast_degrees_of_inaccuracy: Callable = func(): return 0.0
 @export var cast_start_position_local: Vector3 = Vector3.ZERO
 @export var cast_range: float = 10.0
 @export var targeted_actions: Array[TargetedAction] = []
@@ -14,14 +16,14 @@ func _init():
 	action_name = self.Name.RAYCAST
 
 func perform(_delta: float, item_node: ActionStack.ItemNode) -> bool:
-	# need to figure this out. There needs to be a way to pass parameters at runtime to the action stack
-	var aim_vector_local = Vector3.FORWARD
+	var aim_vector_local = VectorUtils.make_local_inaccuracy_vector(cast_degrees_of_inaccuracy.call())
+
 	var space_state = item_node.game_item.get_world_3d().direct_space_state
 	var raycast_start_position = item_node.game_item.to_global(cast_start_position_local)
 	var raycast_end_position = item_node.game_item.to_global(cast_start_position_local + aim_vector_local * cast_range)
 	var query = PhysicsRayQueryParameters3D.create(raycast_start_position, raycast_end_position, cast_collision_mask)
 	query.collide_with_areas = true
-	query.collide_with_bodies = true
+	query.collide_with_bodies = true # this may need to change
 	var result = space_state.intersect_ray(query)
 	
 	var raycast_end_position_after_check: Vector3
@@ -32,7 +34,7 @@ func perform(_delta: float, item_node: ActionStack.ItemNode) -> bool:
 		var target = result.collider
 		raycast_end_position_after_check = raycast_hit_position
 
-		# this is kinda goofy and not generic
+		# this is kinda goofy and not generic. This will probably need to change
 		if target != null and target.is_in_group("Hurtbox"):
 			for targeted_action in targeted_actions:
 				targeted_action.targets = [target.get_parent()]

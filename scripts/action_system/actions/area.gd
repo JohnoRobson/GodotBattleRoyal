@@ -1,6 +1,8 @@
 class_name ActionArea
 extends Action
 
+# Applys a TargetedAction to actors and game items in an area
+
 @export var radius: float = 1.0
 @export var targeted_actions: Array[TargetedAction] = []
 

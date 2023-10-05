@@ -1,6 +1,8 @@
 class_name ActionCreate
 extends Action
 
+# Creates a new game item and triggers its first action
+
 @export var game_item_to_create: Resource
 
 func _init():

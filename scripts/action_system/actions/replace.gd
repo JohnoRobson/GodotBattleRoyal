@@ -1,7 +1,9 @@
 class_name ActionReplace
 extends Action
 
-@export var replacement_game_item: Resource
+# Replaces the current game item with the replacement_game_item
+
+@export var replacement_game_item: PackedScene
 
 func _init():
 	action_name = self.Name.REPLACE

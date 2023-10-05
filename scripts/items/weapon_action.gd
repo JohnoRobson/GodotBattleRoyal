@@ -17,6 +17,13 @@ var _current_state: WeaponState = WeaponState.CAN_FIRE
 signal on_firing(start_position: Vector3, end_position: Vector3)
 signal update_ammo_ui(current_ammo: int, max_ammo: int)
 
+func _ready():
+	# big hack, but it works for now
+	if (action is ActionRaycast):
+		(action as ActionRaycast).cast_degrees_of_inaccuracy = get_degrees_of_inaccuracy
+	elif (action is ActionRepeat and action.action_to_repeat != null and action.action_to_repeat is ActionRaycast):
+		(action.action_to_repeat as ActionRaycast).cast_degrees_of_inaccuracy = get_degrees_of_inaccuracy
+
 func _process(delta):
 	match _current_state:
 		WeaponState.CAN_FIRE:
@@ -45,7 +52,7 @@ func fire():
 		_current_state = WeaponState.COOLDOWN
 		action_triggered.emit(action, self)
 
-func _get_degrees_of_inaccuracy() -> float:
+func get_degrees_of_inaccuracy() -> float:
 	return stats.degrees_of_inaccuracy_moving if _is_moving else stats.degrees_of_inaccuracy_stationary
 
 func _apply_weapon_cooldown(delta: float):

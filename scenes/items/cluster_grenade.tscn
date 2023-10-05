@@ -18,7 +18,6 @@ actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
 [sub_resource type="Resource" id="Resource_76q85"]
 script = ExtResource("4_y5u0e")
 number_of_times_to_repeat = 10
-seconds_between_repeats = 0.0
 action_to_repeat = SubResource("Resource_myra3")
 actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://8ijx2rjjx2jg"]
+[gd_scene load_steps=14 format=3 uid="uid://8ijx2rjjx2jg"]
 
 [ext_resource type="Script" path="res://scripts/actor.gd" id="1_ico6x"]
 [ext_resource type="PackedScene" uid="uid://bo23y3eikvkx8" path="res://scenes/components/health.tscn" id="2_p7v67"]
@@ -10,10 +10,14 @@
 [ext_resource type="Script" path="res://scripts/item_pickup_manager.gd" id="8_6j5c1"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mj10y"]
-radius = 0.542762
-height = 2.0713
+radius = 0.494679
+height = 1.98225
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_ie7wx"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_vc8i0"]
+radius = 0.54374
+height = 2.03879
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_tsjx1"]
 height = 2.6
@@ -45,9 +49,9 @@ collision_layer = 2
 collision_mask = 2
 health = NodePath("../Health")
 
-[node name="HurtboxCollisionShape3D" type="CollisionShape3D" parent="Hurtbox"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("CapsuleShape3D_mj10y")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.00658, 0)
+shape = SubResource("CapsuleShape3D_vc8i0")
 
 [node name="ItemPickupArea" parent="." instance=ExtResource("4_yx5h3")]
 

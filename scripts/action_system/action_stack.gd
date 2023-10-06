@@ -36,6 +36,7 @@ func perform(delta: float):
 
 			if current_node.action.has_children() or !current_node.child_nodes.is_empty():
 				# add the current_action's children to the actions to complete and set up ItemNodes for them
+				# reverse ordered for loop so that the insert puts the new nodes in the order as viewed in the editor
 				for i in range(current_node.action.actions.size()-1, -1, -1):
 					var new_node: ItemNode = make_node_from_action(current_node.action.actions[i], current_node.game_item, current_node)
 					uncompleted_top_level_nodes.insert(uncompleted_node_index, new_node)
@@ -64,11 +65,15 @@ func set_action_keys_for_node(item_node: ItemNode) -> void:
 	item_node.data[Action.Keys.ACTION_SYSTEM] = action_system # change this?
 	if !item_node.data.has(Action.Keys.POSITION):
 		item_node.data[Action.Keys.POSITION] = item_node.game_item.global_position
-	item_node.data[Action.Keys.WORLD] = world
+	item_node.data[Action.Keys.WORLD] = world # this is a little weird and should probably change, but Actions do need a way to access the world to find Actors/GameItems and do things.
 
 func stack_is_completed() -> bool:
 	return uncompleted_top_level_nodes.is_empty()
 
+# The ActionStack makes a tree of ItemNodes that matches the Action tree. Each action gets an ItemNode to store state in.
+# Additionaly, Actions can add new ItemNodes as child nodes or change the fields of the ItemNode that they're linked to,
+# For example, ActionReplace makes a new instance of a GameItem and replaces its ItemNode's game_item value with the new object and
+# adds the new GameItem's Actions as children to the ItemNode so that they are executed by the current ActionStack. 
 class ItemNode:
 	var action: Action
 	var game_item: GameItem

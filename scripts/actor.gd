@@ -63,7 +63,7 @@ func _process(_delta):
 		weapon_inventory.emit_updates()
 	if (controller.is_reloading() && held_weapon != null):
 		held_weapon.reload()
-	if held_weapon != null && (held_weapon is Weapon):
+	if (held_weapon != null && held_weapon is Weapon):
 		held_weapon.set_is_moving(!controller.get_move_direction().is_zero_approx())
 	if (controller.is_exchanging_weapon()):
 		_try_to_exchange_weapon()

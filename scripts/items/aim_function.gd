@@ -1,5 +1,5 @@
 extends Resource
-class_name BallisticAimFunction
+class_name AimFunction
 
 @export var projectile_velocity: float
 

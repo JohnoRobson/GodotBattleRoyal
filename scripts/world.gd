@@ -134,7 +134,7 @@ func get_closest_available_weapon(from_position: Vector3) -> GameItem:
 	weapon_array.append_array(get_tree().get_nodes_in_group("weapons"))
 
 	weapon_array.sort_custom(func(a, b): return from_position.distance_to(a.global_transform.origin) < from_position.distance_to(b.global_transform.origin))
-	weapon_array = weapon_array.filter(func(a): return !a.is_held)
+	weapon_array = weapon_array.filter(func(a): return !a.is_held && a.can_be_used)
 
 	return weapon_array.front() if !weapon_array.is_empty() else null
 

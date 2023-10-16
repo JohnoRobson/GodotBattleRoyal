@@ -20,7 +20,7 @@ func execute(controller: AiActorController):
 		else:
 			controller.set_is_reloading(false)
 
-		if target_distance <= 10.0:
+		if target_distance <= 10.0 && weapon != null:
 			controller.set_aim_position(target_pos + (Vector3.UP * 1.5))
 			controller.set_is_shooting(true)
 		else:
@@ -31,3 +31,6 @@ func execute_physics(_controller: AiActorController):
 
 func exit(controller: AiActorController):
 	controller.set_is_shooting(false)
+
+func get_name() -> String:
+	return "ShootEnemyState"

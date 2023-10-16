@@ -41,3 +41,6 @@ func execute_physics(controller: AiActorController):
 func exit(controller: AiActorController):
 	controller.set_is_exchanging_weapon(false)
 	controller.set_move_direction(Vector2.ZERO)
+
+func get_name() -> String:
+	return "FindWeaponState"

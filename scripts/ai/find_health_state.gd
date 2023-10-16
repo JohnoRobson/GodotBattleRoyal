@@ -64,3 +64,6 @@ func exit(controller: AiActorController):
 	controller.set_is_exchanging_weapon(false)
 	controller.set_is_shooting(false)
 	pass
+
+func get_name() -> String:
+	return "FindHealthState"

@@ -13,12 +13,15 @@ var is_reloading_bool: bool = false
 var current_target: Actor = null
 var is_exchanging_weapon_bool: bool = false
 
+@onready var state_label: Label3D = get_node("../Label3D")
+
 func _process(delta):
 	state_machine._process(delta)
 	pass
 
 func _physics_process(delta):
 	state_machine._physics_process(delta)
+	state_label.text = state_machine.get_current_state_name()
 	pass
 
 func get_aim_position() -> Vector3:

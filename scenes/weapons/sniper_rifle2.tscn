@@ -12,12 +12,9 @@
 
 [sub_resource type="Resource" id="Resource_hm74y"]
 script = ExtResource("2_2q0du")
-bullet_spawn_position_local = Vector3(0, 0.004, -2.397)
-weapon_damage = 0.0
 fire_rate_per_minute = 60.0
 degrees_of_inaccuracy_stationary = 1.0
 degrees_of_inaccuracy_moving = 60.0
-weapon_range = 2000.0
 weapon_reload_time_seconds = 2.0
 number_of_shots_per_fire = 1
 max_ammo = 200
@@ -43,7 +40,7 @@ actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
 script = ExtResource("3_j2bm5")
 cast_collision_mask = 3
 cast_degrees_of_inaccuracy = Callable()
-cast_start_position_local = Vector3(0, 0, 0)
+cast_start_position_local = Vector3(0, 0.04, -2.397)
 cast_range = 2000.0
 targeted_actions = Array[Resource("res://scripts/action_system/actions/targeted_action.gd")]([])
 actions_to_apply_at_hit_location = Array[Resource("res://scripts/action_system/actions/action.gd")]([SubResource("Resource_6kfxy"), SubResource("Resource_pooku")])

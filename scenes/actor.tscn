@@ -39,19 +39,20 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = SubResource("CapsuleMesh_ie7wx")
 skeleton = NodePath("../..")
 
+[node name="Hurtbox" parent="Rotator/Body" node_paths=PackedStringArray("health") instance=ExtResource("3_fje2p")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+collision_layer = 2
+collision_mask = 2
+health = NodePath("../../../Health")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Rotator/Body/Hurtbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.00658, 0)
+shape = SubResource("CapsuleShape3D_vc8i0")
+
 [node name="WeaponBase" type="Node3D" parent="Rotator"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.13, -0.803629)
 
 [node name="Health" parent="." instance=ExtResource("2_p7v67")]
-
-[node name="Hurtbox" parent="." node_paths=PackedStringArray("health") instance=ExtResource("3_fje2p")]
-collision_layer = 2
-collision_mask = 2
-health = NodePath("../Health")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.00658, 0)
-shape = SubResource("CapsuleShape3D_vc8i0")
 
 [node name="ItemPickupArea" parent="." instance=ExtResource("4_yx5h3")]
 
@@ -79,6 +80,6 @@ script = ExtResource("8_6j5c1")
 item_area_actor = NodePath("../ItemPickupArea")
 item_area_cursor = NodePath("../ActorCursor/ItemInteractionArea")
 
+[connection signal="was_hit" from="Rotator/Body/Hurtbox" to="." method="_on_hurtbox_was_hit"]
 [connection signal="health_depleted" from="Health" to="." method="_on_health_depleted"]
-[connection signal="was_hit" from="Hurtbox" to="." method="_on_hurtbox_was_hit"]
 [connection signal="inventory_changed" from="WeaponInventory" to="." method="_on_weapon_inventory_inventory_changed"]

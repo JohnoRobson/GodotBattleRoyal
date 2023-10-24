@@ -6,7 +6,7 @@ extends Node
 
 var action_stacks: Array[ActionStack] = []
 var world: World
-var frame_count: int = 0
+#var frame_count: int = 0
 @export var effect_manager: EffectManager
 
 func _process(delta):
@@ -19,7 +19,7 @@ func _process(delta):
 			uncompleted_action_stacks.append(action_stack)
 	
 	action_stacks = uncompleted_action_stacks
-	frame_count += 1
+	#frame_count += 1
 
 func action_triggered(action: Action, game_item: GameItem):
 	#print("action triggered at frame %s" % frame_count)

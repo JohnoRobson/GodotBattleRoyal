@@ -10,7 +10,7 @@
 [ext_resource type="Script" path="res://scripts/action_system/actions/timer.gd" id="7_t23rv"]
 [ext_resource type="Script" path="res://scripts/action_system/actions/throw.gd" id="8_8mss6"]
 [ext_resource type="PackedScene" uid="uid://bmkdhqo5v1fou" path="res://models/medkit.blend" id="9_h48xs"]
-[ext_resource type="Script" path="res://scripts/items/aim_function.gd" id="10_iyacm"]
+[ext_resource type="Script" path="res://scripts/items/trajectory_aim_function.gd" id="10_5saf0"]
 
 [sub_resource type="Resource" id="Resource_6lsvq"]
 script = ExtResource("4_pnr7i")
@@ -51,8 +51,8 @@ degrees_of_inaccuracy = 0.0
 force = 12.0
 actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([SubResource("Resource_51wv8")])
 
-[sub_resource type="Resource" id="Resource_vgmok"]
-script = ExtResource("10_iyacm")
+[sub_resource type="Resource" id="Resource_8y2xw"]
+script = ExtResource("10_5saf0")
 projectile_velocity = 12.0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_1e27m"]
@@ -62,7 +62,7 @@ size = Vector3(1.03257, 0.513558, 1.03219)
 script = ExtResource("1_prsue")
 item_name = "AOE Heal Grenade"
 action = SubResource("Resource_vnnrj")
-aim_function = SubResource("Resource_vgmok")
+aim_function = SubResource("Resource_8y2xw")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_1e27m")

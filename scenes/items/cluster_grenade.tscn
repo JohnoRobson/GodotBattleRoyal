@@ -8,7 +8,7 @@
 [ext_resource type="Script" path="res://scripts/action_system/actions/timer.gd" id="7_jukry"]
 [ext_resource type="PackedScene" uid="uid://cpmjh7rwyd1uw" path="res://models/grenade.blend" id="8_1yqhf"]
 [ext_resource type="Script" path="res://scripts/action_system/actions/throw.gd" id="8_883fx"]
-[ext_resource type="Script" path="res://scripts/items/aim_function.gd" id="8_w1pdx"]
+[ext_resource type="Script" path="res://scripts/items/trajectory_aim_function.gd" id="8_l6733"]
 
 [sub_resource type="Resource" id="Resource_myra3"]
 script = ExtResource("3_wof15")
@@ -36,8 +36,8 @@ degrees_of_inaccuracy = 0.0
 force = 12.0
 actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([SubResource("Resource_51wv8")])
 
-[sub_resource type="Resource" id="Resource_6bako"]
-script = ExtResource("8_w1pdx")
+[sub_resource type="Resource" id="Resource_6m8ed"]
+script = ExtResource("8_l6733")
 projectile_velocity = 12.0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_1e27m"]
@@ -47,7 +47,7 @@ size = Vector3(0.408771, 0.651572, 0.7045)
 script = ExtResource("1_7qq3y")
 item_name = "Cluster Grenade"
 action = SubResource("Resource_vnnrj")
-aim_function = SubResource("Resource_6bako")
+aim_function = SubResource("Resource_6m8ed")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.104169, -0.0971395)

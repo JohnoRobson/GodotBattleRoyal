@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://smivmtkbm1yv"]
+[gd_scene load_steps=12 format=3 uid="uid://smivmtkbm1yv"]
 
 [ext_resource type="Script" path="res://scripts/items/weapon.gd" id="1_x56va"]
 [ext_resource type="Script" path="res://resources/weapon_type.gd" id="2_b577d"]
 [ext_resource type="Script" path="res://scripts/action_system/actions/raycast.gd" id="3_3q72a"]
 [ext_resource type="PackedScene" uid="uid://o0g0axyk2njf" path="res://models/sniper_rifle.blend" id="3_04if4"]
 [ext_resource type="Script" path="res://scripts/action_system/actions/damage.gd" id="4_harab"]
+[ext_resource type="Script" path="res://scripts/items/aim_function.gd" id="5_dtogy"]
 
 [sub_resource type="Resource" id="Resource_ort1h"]
 script = ExtResource("2_b577d")
@@ -31,6 +32,9 @@ targeted_actions = Array[Resource("res://scripts/action_system/actions/targeted_
 actions_to_apply_at_hit_location = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
 actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
 
+[sub_resource type="Resource" id="Resource_sda8k"]
+script = ExtResource("5_dtogy")
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_j006u"]
 size = Vector3(0.157325, 0.655788, 3.35328)
 
@@ -41,6 +45,7 @@ script = ExtResource("1_x56va")
 stats = SubResource("Resource_ort1h")
 item_name = "Sniper Rifle"
 action = SubResource("Resource_sh3ju")
+aim_function = SubResource("Resource_sda8k")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00614242, -0.740711)

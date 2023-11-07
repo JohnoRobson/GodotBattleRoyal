@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="ActionArea" load_steps=9 format=3 uid="uid://cdfbi0jkrxcxe"]
+
+[ext_resource type="PackedScene" uid="uid://b7v6xa2vv32qx" path="res://scenes/effects/explosion.tscn" id="1_7ny0n"]
+[ext_resource type="Script" path="res://scripts/action_system/actions/effect.gd" id="2_7tbc8"]
+[ext_resource type="Script" path="res://scripts/action_system/actions/remove.gd" id="3_eajii"]
+[ext_resource type="Script" path="res://scripts/action_system/actions/area.gd" id="4_04ve2"]
+[ext_resource type="Script" path="res://scripts/action_system/actions/damage.gd" id="5_5lqxw"]
+
+[sub_resource type="Resource" id="Resource_g0gs4"]
+script = ExtResource("2_7tbc8")
+scene_to_spawn = ExtResource("1_7ny0n")
+actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
+
+[sub_resource type="Resource" id="Resource_v6jnv"]
+script = ExtResource("3_eajii")
+actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
+
+[sub_resource type="Resource" id="Resource_3qwjp"]
+script = ExtResource("5_5lqxw")
+damage = 40.0
+targets = Array[Node3D]([])
+actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
+
+[resource]
+script = ExtResource("4_04ve2")
+radius = 5.0
+targeted_actions = Array[Resource("res://scripts/action_system/actions/targeted_action.gd")]([SubResource("Resource_3qwjp")])
+actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([SubResource("Resource_g0gs4"), SubResource("Resource_v6jnv")])

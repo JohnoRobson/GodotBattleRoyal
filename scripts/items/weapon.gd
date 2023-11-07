@@ -7,7 +7,6 @@ class_name Weapon
 @onready var _fire_rate_per_second = stats.fire_rate_per_minute / 60
 
 var _weapon_cooldown_in_seconds: float = 0.0
-var _weapon_raycast_collision_mask: int = 0b0011
 var _reload_time_cooldown: float = 0.0
 var _is_moving: bool = false
 
@@ -17,6 +16,13 @@ var _current_state: WeaponState = WeaponState.CAN_FIRE
 
 signal on_firing(start_position: Vector3, end_position: Vector3)
 signal update_ammo_ui(current_ammo: int, max_ammo: int)
+
+func _ready():
+	# big hack, but it works for now
+	if (action is ActionRaycast):
+		(action as ActionRaycast).cast_degrees_of_inaccuracy = get_degrees_of_inaccuracy
+	elif (action is ActionRepeat and action.action_to_repeat != null and action.action_to_repeat is ActionRaycast):
+		(action.action_to_repeat as ActionRaycast).cast_degrees_of_inaccuracy = get_degrees_of_inaccuracy
 
 func _process(delta):
 	match _current_state:
@@ -44,40 +50,9 @@ func fire():
 		# apply cooldown
 		_weapon_cooldown_in_seconds = 1.0 / _fire_rate_per_second
 		_current_state = WeaponState.COOLDOWN
+		action_triggered.emit(action, self)
 
-		for i in stats.number_of_shots_per_fire:
-			# do the raycast
-			var aim_vector_local = _make_local_inaccuracy_vector()
-			var space_state = get_world_3d().direct_space_state
-			var raycast_start_position = to_global(stats.bullet_spawn_position_local)
-			var raycast_end_position = to_global(position + aim_vector_local * stats.weapon_range)
-			var query = PhysicsRayQueryParameters3D.create(raycast_start_position, raycast_end_position, _weapon_raycast_collision_mask)
-			query.collide_with_areas = true
-			query.collide_with_bodies = false
-			var result = space_state.intersect_ray(query)
-
-			# apply effect and damage
-			if result:
-				var raycast_hit_position = result.position
-				on_firing.emit(raycast_start_position, raycast_hit_position)
-				var target = result.collider
-				if target != null:
-					if target.is_in_group("Hurtbox"):
-						target.take_damage(stats.weapon_damage, raycast_hit_position, (raycast_hit_position - raycast_start_position).normalized())
-			else:
-				on_firing.emit(raycast_start_position, raycast_end_position)
-
-func _make_local_inaccuracy_vector() -> Vector3:
-	# set up the inaccuracy and aim vector for the raycast
-	var random = RandomNumberGenerator.new()
-	var radians_of_inaccuracy_for_this_shot = deg_to_rad(random.randf_range(-_get_degrees_of_inaccuracy() / 2, _get_degrees_of_inaccuracy() / 2))
-	var rotation_angle_of_inaccuracy_for_this_shot = random.randf_range(0.0, PI)
-	# get the inaccuracy vector, which is only up and down inaccuracy
-	var inaccuracy_vector = Vector3(0, sin(radians_of_inaccuracy_for_this_shot), -cos(radians_of_inaccuracy_for_this_shot))
-	# rotate the inaccuracy vector by rotation_angle_of_inaccuracy_for_this_shot
-	return inaccuracy_vector.rotated(Vector3.FORWARD, rotation_angle_of_inaccuracy_for_this_shot)
-
-func _get_degrees_of_inaccuracy() -> float:
+func get_degrees_of_inaccuracy() -> float:
 	return stats.degrees_of_inaccuracy_moving if _is_moving else stats.degrees_of_inaccuracy_stationary
 
 func _apply_weapon_cooldown(delta: float):
@@ -96,12 +71,6 @@ func _apply_weapon_reload(delta: float):
 		_current_ammo = stats.max_ammo
 		update_ammo_ui.emit(_current_ammo, stats.max_ammo)
 		_current_state = WeaponState.CAN_FIRE
-
-# returns a direction vector that points in the direction needed for the weapon to hit the provided global position 
-# for hitscan weapons, this would point straight at the target, but for something that travels on a ballistic trajectory
-# it would need to aim up to arc the shot
-func get_angle_to_aim_at(target_global_position: Vector3) -> Vector3:
-	return target_global_position - global_position
 
 # used for ai checking if the weapon should be reloaded
 func empty_and_can_reload() -> bool:

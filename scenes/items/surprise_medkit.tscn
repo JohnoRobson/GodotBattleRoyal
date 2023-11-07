@@ -1,0 +1,42 @@
+[gd_scene load_steps=13 format=3 uid="uid://cvwfiql117y18"]
+
+[ext_resource type="Script" path="res://scripts/items/game_item.gd" id="1_vejvr"]
+[ext_resource type="PackedScene" uid="uid://b7e2n7bieo85i" path="res://scenes/items/grenade.tscn" id="2_a4xo7"]
+[ext_resource type="Script" path="res://scripts/action_system/actions/create.gd" id="3_gr3sa"]
+[ext_resource type="Script" path="res://scripts/action_system/actions/remove.gd" id="4_2oape"]
+[ext_resource type="Script" path="res://scripts/action_system/actions/throw.gd" id="4_gavhw"]
+[ext_resource type="Script" path="res://scripts/items/trajectory_aim_function.gd" id="6_6sgsf"]
+[ext_resource type="PackedScene" uid="uid://bmkdhqo5v1fou" path="res://models/medkit.blend" id="7_avang"]
+
+[sub_resource type="Resource" id="Resource_eolp6"]
+script = ExtResource("3_gr3sa")
+game_item_to_create = ExtResource("2_a4xo7")
+actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
+
+[sub_resource type="Resource" id="Resource_6ti37"]
+script = ExtResource("4_2oape")
+actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
+
+[sub_resource type="Resource" id="Resource_agqvs"]
+script = ExtResource("4_gavhw")
+degrees_of_inaccuracy = 1.0
+force = 15.0
+actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([SubResource("Resource_eolp6"), SubResource("Resource_6ti37")])
+
+[sub_resource type="Resource" id="Resource_w2uwj"]
+script = ExtResource("6_6sgsf")
+projectile_velocity = 15.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1e27m"]
+size = Vector3(1.03257, 0.513558, 1.03219)
+
+[node name="Medkit" type="RigidBody3D" groups=["items", "weapons"]]
+script = ExtResource("1_vejvr")
+item_name = "Medkit"
+action = SubResource("Resource_agqvs")
+aim_function = SubResource("Resource_w2uwj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_1e27m")
+
+[node name="medkit" parent="." instance=ExtResource("7_avang")]

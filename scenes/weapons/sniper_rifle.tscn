@@ -1,30 +1,51 @@
-[gd_scene load_steps=6 format=3 uid="uid://smivmtkbm1yv"]
+[gd_scene load_steps=12 format=3 uid="uid://smivmtkbm1yv"]
 
-[ext_resource type="Script" path="res://scripts/items/weapon.gd" id="1_vdfrr"]
+[ext_resource type="Script" path="res://scripts/items/weapon.gd" id="1_x56va"]
 [ext_resource type="Script" path="res://resources/weapon_type.gd" id="2_b577d"]
+[ext_resource type="Script" path="res://scripts/action_system/actions/raycast.gd" id="3_3q72a"]
 [ext_resource type="PackedScene" uid="uid://o0g0axyk2njf" path="res://models/sniper_rifle.blend" id="3_04if4"]
+[ext_resource type="Script" path="res://scripts/action_system/actions/damage.gd" id="4_harab"]
+[ext_resource type="Script" path="res://scripts/items/aim_function.gd" id="5_dtogy"]
 
-[sub_resource type="Resource" id="Resource_7n53x"]
+[sub_resource type="Resource" id="Resource_ort1h"]
 script = ExtResource("2_b577d")
-bullet_spawn_position_local = Vector3(0, 0.04, -2.397)
-weapon_damage = 50.0
 fire_rate_per_minute = 12.0
 degrees_of_inaccuracy_stationary = 1.0
 degrees_of_inaccuracy_moving = 60.0
-weapon_range = 2000.0
 weapon_reload_time_seconds = 5.0
 number_of_shots_per_fire = 1
 max_ammo = 2
 
+[sub_resource type="Resource" id="Resource_n63ao"]
+script = ExtResource("4_harab")
+damage = 50.0
+targets = Array[Node3D]([])
+actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
+
+[sub_resource type="Resource" id="Resource_sh3ju"]
+script = ExtResource("3_3q72a")
+cast_collision_mask = 3
+cast_degrees_of_inaccuracy = null
+cast_start_position_local = Vector3(0, 0.04, -2.397)
+cast_range = 2000.0
+targeted_actions = Array[Resource("res://scripts/action_system/actions/targeted_action.gd")]([SubResource("Resource_n63ao")])
+actions_to_apply_at_hit_location = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
+actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
+
+[sub_resource type="Resource" id="Resource_sda8k"]
+script = ExtResource("5_dtogy")
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_j006u"]
 size = Vector3(0.157325, 0.655788, 3.35328)
 
-[node name="SniperRifle" type="RigidBody3D"]
+[node name="SniperRifle" type="RigidBody3D" groups=["items", "weapons"]]
 collision_layer = 4
 collision_mask = 3
-script = ExtResource("1_vdfrr")
-stats = SubResource("Resource_7n53x")
+script = ExtResource("1_x56va")
+stats = SubResource("Resource_ort1h")
 item_name = "Sniper Rifle"
+action = SubResource("Resource_sh3ju")
+aim_function = SubResource("Resource_sda8k")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00614242, -0.740711)

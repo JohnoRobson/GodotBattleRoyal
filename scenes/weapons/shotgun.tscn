@@ -1,30 +1,58 @@
-[gd_scene load_steps=6 format=3 uid="uid://dpngd0gfeouw0"]
+[gd_scene load_steps=14 format=3 uid="uid://dpngd0gfeouw0"]
 
-[ext_resource type="Script" path="res://scripts/items/weapon.gd" id="1_2stcs"]
+[ext_resource type="Script" path="res://scripts/items/weapon.gd" id="1_jqidy"]
 [ext_resource type="Script" path="res://resources/weapon_type.gd" id="2_24fvs"]
 [ext_resource type="PackedScene" uid="uid://c3qc2oy1fxi5w" path="res://models/shotgun.blend" id="3_6dwa7"]
+[ext_resource type="Script" path="res://scripts/action_system/actions/raycast.gd" id="3_exogs"]
+[ext_resource type="Script" path="res://scripts/action_system/actions/damage.gd" id="4_g60ml"]
+[ext_resource type="Script" path="res://scripts/action_system/actions/repeat.gd" id="5_c3eip"]
+[ext_resource type="Script" path="res://scripts/items/aim_function.gd" id="6_mlete"]
 
-[sub_resource type="Resource" id="Resource_7n53x"]
+[sub_resource type="Resource" id="Resource_urvxe"]
 script = ExtResource("2_24fvs")
-bullet_spawn_position_local = Vector3(0, 0.056, -1.403)
-weapon_damage = 5.0
 fire_rate_per_minute = 40.0
 degrees_of_inaccuracy_stationary = 20.0
 degrees_of_inaccuracy_moving = 30.0
-weapon_range = 20.0
 weapon_reload_time_seconds = 3.0
 number_of_shots_per_fire = 15
 max_ammo = 8
 
+[sub_resource type="Resource" id="Resource_5bng7"]
+script = ExtResource("4_g60ml")
+damage = 5.0
+targets = Array[Node3D]([])
+actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
+
+[sub_resource type="Resource" id="Resource_ovmnb"]
+script = ExtResource("3_exogs")
+cast_collision_mask = 3
+cast_degrees_of_inaccuracy = null
+cast_start_position_local = Vector3(0, 0, 0)
+cast_range = 20.0
+targeted_actions = Array[Resource("res://scripts/action_system/actions/targeted_action.gd")]([SubResource("Resource_5bng7")])
+actions_to_apply_at_hit_location = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
+actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
+
+[sub_resource type="Resource" id="Resource_r4pbb"]
+script = ExtResource("5_c3eip")
+number_of_times_to_repeat = 15
+action_to_repeat = SubResource("Resource_ovmnb")
+actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
+
+[sub_resource type="Resource" id="Resource_a5fl6"]
+script = ExtResource("6_mlete")
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_5w137"]
 size = Vector3(0.300564, 0.364884, 1.96176)
 
-[node name="Shotgun" type="RigidBody3D"]
+[node name="Shotgun" type="RigidBody3D" groups=["items", "weapons"]]
 collision_layer = 4
 collision_mask = 3
-script = ExtResource("1_2stcs")
-stats = SubResource("Resource_7n53x")
+script = ExtResource("1_jqidy")
+stats = SubResource("Resource_urvxe")
 item_name = "Shotgun"
+action = SubResource("Resource_r4pbb")
+aim_function = SubResource("Resource_a5fl6")
 
 [node name="shotgun" parent="." instance=ExtResource("3_6dwa7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.603979)

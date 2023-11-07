@@ -20,22 +20,25 @@ func add_item_to_inventory_from_world(item: GameItem) -> bool:
 	
 	item.is_held = true
 	inventory_changed.emit(inventory_data, _selected_slot_index)
-	
+	connect_remove_signal(item)
+
 	return true
 
 func remove_item_from_inventory_to_world(item: GameItem) -> bool:
 	if !inventory_data.remove_item(item):
 		push_error("Failed to remove an item from an inventory")
 		return false
+	
+	var item_global_position = item.global_position
+	var item_global_rotation = item.global_rotation
 
 	if item.get_parent() != null:
 		item.get_parent().remove_child(item)
 
-	item.position = Vector3.ZERO
-	item.rotation = Vector3.ZERO
 	item.is_held = false
 	inventory_changed.emit(inventory_data, _selected_slot_index)
-	return_item_to_world.emit(item, global_position + Vector3.UP * 1)
+	return_item_to_world.emit(item, item_global_position, item_global_rotation)
+	disconnect_remove_signal(item)
 
 	return true
 
@@ -43,17 +46,20 @@ func swap_item_from_world_to_inventory(world_item: GameItem, inventory_item: Gam
 	if !inventory_data.swap_items(world_item, inventory_item):
 		push_error("Failed to swap an item from an inventory")
 		return false
+	
+	var world_global_position = world_item.global_position
+	var world_global_rotation = world_item.global_rotation
 
 	if world_item.get_parent() != null:
 		world_item.get_parent().remove_child(world_item)
 	
 	world_item.is_held = true
-
-	inventory_changed.emit(inventory_data, _selected_slot_index)
-	inventory_item.position = Vector3.ZERO
-	inventory_item.rotation = Vector3.ZERO
 	inventory_item.is_held = false
-	return_item_to_world.emit(inventory_item, global_position + Vector3.UP * 1)
+	
+	inventory_changed.emit(inventory_data, _selected_slot_index)
+	return_item_to_world.emit(inventory_item, world_global_position, world_global_rotation)
+	connect_remove_signal(world_item)
+	disconnect_remove_signal(inventory_item)
 
 	return true
 
@@ -91,3 +97,11 @@ func selected_slot_scrolled_down() -> void:
 
 func emit_updates():
 	inventory_changed.emit(inventory_data, _selected_slot_index)
+
+func connect_remove_signal(item: GameItem):
+	if !item.remove_from_inventory_and_put_in_world.is_connected(remove_item_from_inventory_to_world):
+		item.remove_from_inventory_and_put_in_world.connect(remove_item_from_inventory_to_world)
+
+func disconnect_remove_signal(item: GameItem):
+	if item.remove_from_inventory_and_put_in_world.is_connected(remove_item_from_inventory_to_world):
+		item.remove_from_inventory_and_put_in_world.disconnect(remove_item_from_inventory_to_world)

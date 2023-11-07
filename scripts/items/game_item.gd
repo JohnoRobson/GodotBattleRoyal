@@ -3,13 +3,19 @@ class_name GameItem
 extends RigidBody3D
 
 var is_held: bool
+var can_be_used: bool
 @export var item_name: String = "Example Name"
+@export var action: Action
+@export var aim_function: AimFunction = null
 
 signal item_updated()
 signal item_used_up()
+signal action_triggered(action: Action, game_item: GameItem)
+signal remove_from_inventory_and_put_in_world(game_item: GameItem)
 
 func _init():
 	is_held = false
+	can_be_used = true
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -28,8 +34,21 @@ func _physics_process(_delta):
 	freeze = is_held
 
 func use_item(_actor: Actor):
-	item_updated.emit()
+	if can_be_used:
+		action_triggered.emit(action, self)
+		item_updated.emit()
 
 func dispose_of_item():
 	item_used_up.emit()
 	queue_free()
+
+# returns a vector that points from the weapon to the target, in local space
+# Points straight ahead if no aim function is set
+func get_aim_vector(target_global_position: Vector3) -> Vector3:
+	var aim_direction = target_global_position - global_position
+	aim_direction = Vector3(aim_direction.x, 0.0, aim_direction.z)
+
+	if (aim_function != null):
+		aim_direction = aim_function.aim_angle(target_global_position, global_position)
+	
+	return aim_direction

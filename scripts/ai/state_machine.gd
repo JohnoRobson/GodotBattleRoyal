@@ -17,3 +17,6 @@ func _physics_process(_delta):
 
 func _process(_delta):
 	current_state.execute(owner)
+
+func get_current_state_name() -> String:
+	return current_state.get_name()

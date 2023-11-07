@@ -12,3 +12,9 @@ controller = NodePath("AiActorController")
 script = ExtResource("3_q60xr")
 actor = NodePath("..")
 nav_agent = NodePath("../NavigationAgent3D")
+
+[node name="AIStateLabel3D" type="Label3D" parent="." index="10"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.28426, 0)
+visible = false
+billboard = 1
+text = "Test"

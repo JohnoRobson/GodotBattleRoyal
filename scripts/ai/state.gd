@@ -11,3 +11,6 @@ func execute_physics(_controller: AiActorController):
 
 func exit(_controller: AiActorController):
 	pass
+
+func get_name() -> String:
+	return "State"

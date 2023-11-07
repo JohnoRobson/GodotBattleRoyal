@@ -6,7 +6,7 @@ class_name Hud
 @onready var health: Label = get_node("Health")
 @onready var inventory: InventoryUI = get_node("Inventory")
 
-var current_weapon: Weapon = null
+var current_weapon: GameItem = null
 
 func on_update_health(_old_value: float, new_value: float):
 	health.text = "Health:" + str(new_value)

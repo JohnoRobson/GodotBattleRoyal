@@ -34,3 +34,6 @@ func execute_physics(controller: AiActorController):
 func exit(controller: AiActorController):
 	controller.set_move_direction(Vector2.ZERO)
 	pass
+
+func get_name() -> String:
+	return "FindEnemyState"

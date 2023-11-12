@@ -19,10 +19,12 @@ func get_mouse_position_in_3d() -> Vector3:
 	var camera = get_tree().root.get_camera_3d()
 	var ray_origin = camera.project_ray_origin(mouse_position)
 	var ray_end = ray_origin + camera.project_ray_normal(mouse_position) * 2000
-	var ray_array = space_state.intersect_ray(PhysicsRayQueryParameters3D.create(ray_origin, ray_end))
+	var query = PhysicsRayQueryParameters3D.create(ray_origin, ray_end)
+	query.exclude = [get_parent()] # exclude the actor so that you can get things on the other side of the actor
+	var result = space_state.intersect_ray(query)
 
-	if (ray_array.has("position")):
-		return ray_array["position"]
+	if (result.has("position")):
+		return result["position"]
 	else:
 		return Vector3.ZERO
 

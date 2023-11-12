@@ -9,7 +9,7 @@ func enter(controller: AiActorController):
 
 func execute(controller: AiActorController):
 	if current_target == null:
-		controller.state_machine.change_state(FindEnemyState.new())
+		controller.state_machine.change_state(DecisionMakingState.new())
 	else:
 		var target_pos = current_target.global_transform.origin
 		var target_distance: float = target_pos.distance_to(controller.actor.global_transform.origin)
@@ -24,7 +24,7 @@ func execute(controller: AiActorController):
 			controller.set_aim_position(target_pos + (Vector3.UP * 1.5))
 			controller.set_is_shooting(true)
 		else:
-			controller.state_machine.change_state(FindEnemyState.new())
+			controller.state_machine.change_state(DecisionMakingState.new())
 
 func execute_physics(_controller: AiActorController):
 	pass

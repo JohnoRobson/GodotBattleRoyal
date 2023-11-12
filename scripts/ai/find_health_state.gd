@@ -18,10 +18,10 @@ func execute(controller: AiActorController):
 		current_target = closest_health
 		if controller.actor.health.is_max_health():
 			# no reason to get health pickups if you're at max health
-			controller.state_machine.change_state(FindEnemyState.new())
+			controller.state_machine.change_state(DecisionMakingState.new())
 	else:
 		# there are no health pickups
-		controller.state_machine.change_state(FindEnemyState.new())
+		controller.state_machine.change_state(DecisionMakingState.new())
 
 func execute_physics(controller: AiActorController):
 	if medkit_pickup_routine_started and medkit_pickup_countdown > 0:
@@ -31,7 +31,7 @@ func execute_physics(controller: AiActorController):
 	elif medkit_pickup_routine_started and medkit_pickup_countdown <= 0:
 		# medkit has been used
 		controller.set_is_shooting(false)
-		controller.state_machine.change_state(FindEnemyState.new())
+		controller.state_machine.change_state(DecisionMakingState.new())
 	else:
 		# find medkit
 		controller.set_is_exchanging_weapon(false)

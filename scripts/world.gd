@@ -139,7 +139,8 @@ func get_closest_available_weapon(from_position: Vector3) -> GameItem:
 	return weapon_array.front() if !weapon_array.is_empty() else null
 
 func _on_player_killed(_player: Actor):
-	get_tree().change_scene_to_file("res://scenes/death_screen.tscn")
+	#get_tree().change_scene_to_file("res://scenes/death_screen.tscn")
+	get_tree().change_scene_to_packed(preload("res://scenes/death_screen.tscn"))
 
 func return_item_to_world(item: GameItem, global_position_to_place_item: Vector3, global_rotation_to_place_item: Vector3):
 	if item.get_parent() != null:

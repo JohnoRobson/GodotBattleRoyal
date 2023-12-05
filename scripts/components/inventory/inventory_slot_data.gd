@@ -2,7 +2,7 @@ class_name InventorySlotData
 extends Resource
 
 @export var stack_size: int
-@export var item: GameItem :
+var item: GameItem :
 	get:
 		return item
 	set(value):

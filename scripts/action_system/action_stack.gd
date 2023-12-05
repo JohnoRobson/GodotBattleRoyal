@@ -9,6 +9,7 @@ var root_game_item: GameItem
 var action_system: ActionSystem
 var callable_for_actions: Callable
 var world: World
+var is_canceled: bool
 
 func _init(_root_game_item: GameItem, _action_system: ActionSystem, _world: World, _callable_for_actions: Callable, _first_action: Action):
 	root_game_item = _root_game_item
@@ -18,6 +19,7 @@ func _init(_root_game_item: GameItem, _action_system: ActionSystem, _world: Worl
 	var first_node: ItemNode = make_node_from_action(_first_action, root_game_item, null)
 	uncompleted_top_level_nodes.append(first_node)
 	callable_for_actions.call(_first_action)
+	is_canceled = false
 
 func perform(delta: float):
 	if uncompleted_top_level_nodes.is_empty():
@@ -26,11 +28,12 @@ func perform(delta: float):
 	var uncompleted_node_index = 0
 	var current_node: ItemNode = uncompleted_top_level_nodes[uncompleted_node_index]
 	
-	while there_are_completable_actions:
+	while there_are_completable_actions and !is_canceled:
 		var current_action_is_completed: bool
 		
 		#print("performing action %s" % Action.Name.keys()[current_node.action.action_name])
 		current_action_is_completed = current_node.action.perform(delta, current_node)
+		
 		if current_action_is_completed:
 			uncompleted_top_level_nodes.remove_at(uncompleted_node_index)
 
@@ -69,6 +72,9 @@ func set_action_keys_for_node(item_node: ItemNode) -> void:
 
 func stack_is_completed() -> bool:
 	return uncompleted_top_level_nodes.is_empty()
+
+func cancel_stack() -> void:
+	is_canceled = true
 
 # The ActionStack makes a tree of ItemNodes that matches the Action tree. Each action gets an ItemNode to store state in.
 # Additionaly, Actions can add new ItemNodes as child nodes or change the fields of the ItemNode that they're linked to,

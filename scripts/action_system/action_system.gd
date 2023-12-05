@@ -33,3 +33,8 @@ func _add_connections_to_action(action: Action):
 		action.on_raycast.connect(effect_manager._on_actor_shoot) # terrible
 	for child_action in action.actions:
 		_add_connections_to_action(child_action)
+
+func shut_down() -> void:
+	for action_stack: ActionStack in action_stacks:
+		action_stack.cancel_stack()
+	queue_free()

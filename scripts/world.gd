@@ -105,7 +105,7 @@ func _on_actor_killed(actor: Actor):
 	
 	# check for win condition
 	if player_actors.size() + ai_actors.size() == 1:
-		get_tree().change_scene_to_file("res://scenes/win_screen.tscn")
+		change_scene("res://scenes/win_screen.tscn")
 
 func get_closest_actor(from_position: Vector3, ignore: Actor = null) -> Actor:
 	var actors = player_actors + ai_actors # Apparently you can concatenate arrays like this - MW 2023-05-15
@@ -139,8 +139,7 @@ func get_closest_available_weapon(from_position: Vector3) -> GameItem:
 	return weapon_array.front() if !weapon_array.is_empty() else null
 
 func _on_player_killed(_player: Actor):
-	#get_tree().change_scene_to_file("res://scenes/death_screen.tscn")
-	get_tree().change_scene_to_packed(preload("res://scenes/death_screen.tscn"))
+	change_scene("res://scenes/death_screen.tscn")
 
 func return_item_to_world(item: GameItem, global_position_to_place_item: Vector3, global_rotation_to_place_item: Vector3):
 	if item.get_parent() != null:
@@ -153,3 +152,7 @@ func get_actors_and_gameitems_in_area(target_position: Vector3, distance: float)
 	var things = player_actors + ai_actors + get_tree().get_nodes_in_group("items")
 
 	return things.filter(func(a):return a != null).filter(func(a): return a.is_inside_tree()).filter(func(a): return target_position.distance_to(a.global_transform.origin) <= distance)
+
+func change_scene(path: String) -> void:
+	get_tree().change_scene_to_file(path) # this now unloads the world, then when the frame is finished it swaps the scenes
+	action_system.shut_down() # this is needed so that the action system doesn't cause errors while finishing its stacks during a frame where the world is unloaded

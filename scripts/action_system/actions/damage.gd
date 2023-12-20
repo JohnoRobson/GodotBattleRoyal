@@ -12,5 +12,6 @@ func perform(_delta: float, item_node: ActionStack.ItemNode) -> bool:
 	for target in targets:
 		if target is Actor:
 			var actor: Actor = target as Actor
-			actor.get_node("Hurtbox").take_damage(damage, item_node.data.get(self.Keys.POSITION), (actor.global_position - item_node.data.get(self.Keys.POSITION)).normalized())
+			if is_instance_valid(actor):
+				actor.get_node("Hurtbox").take_damage(damage, item_node.data.get(self.Keys.POSITION), (actor.global_position - item_node.data.get(self.Keys.POSITION)).normalized())
 	return true

@@ -14,13 +14,13 @@ func execute(controller: AiActorController):
 		current_target = closest_weapon
 	else:
 		# there are no free weapons
-		controller.state_machine.change_state(FindEnemyState.new())
+		controller.state_machine.change_state(DecisionMakingState.new())
 
 func execute_physics(controller: AiActorController):
 	if (picked_up_weapon_last_tick):
 		picked_up_weapon_last_tick = false
 		controller.set_is_exchanging_weapon(false)
-		controller.state_machine.change_state(FindEnemyState.new())
+		controller.state_machine.change_state(DecisionMakingState.new())
 	elif (current_target != null):
 		var target_pos = current_target.global_transform.origin
 		controller.nav_agent.target_position = target_pos

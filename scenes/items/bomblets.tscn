@@ -52,6 +52,7 @@ mass = 0.1
 script = ExtResource("1_rf4ni")
 item_name = "Bomblet"
 action = SubResource("Resource_vnnrj")
+traits = Array[int]([1])
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0224871, -0.0310805)

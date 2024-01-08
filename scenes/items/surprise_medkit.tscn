@@ -35,6 +35,7 @@ script = ExtResource("1_vejvr")
 item_name = "Medkit"
 action = SubResource("Resource_agqvs")
 aim_function = SubResource("Resource_w2uwj")
+traits = Array[int]([1, 3])
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_1e27m")

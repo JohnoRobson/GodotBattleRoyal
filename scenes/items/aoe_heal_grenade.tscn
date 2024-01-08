@@ -63,6 +63,7 @@ script = ExtResource("1_prsue")
 item_name = "AOE Heal Grenade"
 action = SubResource("Resource_vnnrj")
 aim_function = SubResource("Resource_8y2xw")
+traits = Array[int]([0, 3])
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_1e27m")

@@ -1,5 +1,4 @@
 class_name GameItem
-
 extends RigidBody3D
 
 var is_held: bool
@@ -7,11 +6,20 @@ var can_be_used: bool
 @export var item_name: String = "Example Name"
 @export var action: Action
 @export var aim_function: AimFunction = null
+@export var traits: Array[ItemTrait] = []
 
 signal item_updated()
 signal item_used_up()
 signal action_triggered(action: Action, game_item: GameItem)
 signal remove_from_inventory_and_put_in_world(game_item: GameItem)
+
+enum ItemTrait {
+	HEALING,
+	EXPLOSIVE,
+	FIREARM,
+	THROWABLE,
+	SELF_USE
+}
 
 func _init():
 	is_held = false
@@ -52,3 +60,6 @@ func get_aim_vector(target_global_position: Vector3) -> Vector3:
 		aim_direction = aim_function.aim_angle(target_global_position, global_position)
 	
 	return aim_direction
+
+func has_trait(item_trait: ItemTrait):
+	return traits.has(item_trait)

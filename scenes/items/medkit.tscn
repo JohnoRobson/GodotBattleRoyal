@@ -36,6 +36,7 @@ size = Vector3(1.03257, 0.513558, 1.03219)
 script = ExtResource("1_icxwt")
 item_name = "Medkit"
 action = SubResource("Resource_bmy8g")
+traits = Array[int]([0])
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_1e27m")

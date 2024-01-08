@@ -79,7 +79,7 @@ func spawn_ai(spawn_position: Vector2):
 	controller.actor = actor
 	controller.world = self
 	controller.world_navmesh = nav_region
-	controller.state_machine = StateMachine.new(FindEnemyState.new(), controller)
+	controller.state_machine = StateMachine.new(DecisionMakingState.new(), controller)
 
 func spawn_weapon(spawn_position: Vector2, weapon_type: Weapons) -> Weapon:
 	var weapon: Weapon

@@ -20,7 +20,6 @@ max_ammo = 8
 [sub_resource type="Resource" id="Resource_5bng7"]
 script = ExtResource("4_g60ml")
 damage = 5.0
-targets = Array[Node3D]([])
 actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
 
 [sub_resource type="Resource" id="Resource_ovmnb"]

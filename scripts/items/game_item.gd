@@ -17,7 +17,8 @@ enum ItemTrait {
 	HEALING,
 	EXPLOSIVE,
 	FIREARM,
-	THROWABLE
+	THROWABLE,
+	SELF_USE
 }
 
 func _init():

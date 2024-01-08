@@ -17,12 +17,10 @@ var is_exchanging_weapon_bool: bool = false
 
 func _process(delta):
 	state_machine._process(delta)
-	pass
 
 func _physics_process(delta):
 	state_machine._physics_process(delta)
 	state_label.text = state_machine.get_current_state_name()
-	pass
 
 func get_aim_position() -> Vector3:
 	return aim_position
@@ -34,7 +32,8 @@ func is_shooting() -> bool:
 	return is_shooting_bool
 
 func set_aim_position(new_aim_position: Vector3):
-	aim_position = new_aim_position
+	var tween: Tween = get_tree().create_tween()
+	tween.tween_property(self, "aim_position", new_aim_position, 0.25)
 
 func set_move_direction(dir: Vector2):
 	if (dir.is_normalized()):

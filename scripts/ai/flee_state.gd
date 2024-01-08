@@ -23,10 +23,8 @@ func enter(controller: AiActorController):
 		average_danger_direction_local += local_dir
 	
 	# flee in the opposite direction of the danger
-	position_to_flee_to = (current_position - average_danger_direction_local).normalized() * 10.0 + current_position
+	position_to_flee_to = current_position + (-average_danger_direction_local).normalized() * 10.0
 	controller.nav_agent.target_position = position_to_flee_to
-	
-	pass
 
 func execute(_controller: AiActorController):
 	pass

@@ -171,4 +171,3 @@ func _on_weapon_inventory_inventory_changed(inventory_data: InventoryData, selec
 
 func _on_item_used_up():
 	held_weapon = null
-	

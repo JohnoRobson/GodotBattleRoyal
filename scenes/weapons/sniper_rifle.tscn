@@ -19,7 +19,6 @@ max_ammo = 2
 [sub_resource type="Resource" id="Resource_n63ao"]
 script = ExtResource("4_harab")
 damage = 50.0
-targets = Array[Node3D]([])
 actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
 
 [sub_resource type="Resource" id="Resource_sh3ju"]
@@ -46,6 +45,7 @@ stats = SubResource("Resource_ort1h")
 item_name = "Sniper Rifle"
 action = SubResource("Resource_sh3ju")
 aim_function = SubResource("Resource_sda8k")
+traits = Array[int]([2])
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00614242, -0.740711)

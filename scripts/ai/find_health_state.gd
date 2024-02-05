@@ -10,12 +10,18 @@ func enter(_controller: AiActorController):
 	pass
 
 func execute(controller: AiActorController):
-	var closest_health = controller.world.get_closest_available_health(controller.actor.global_transform.origin)
+	var closest_health_in_world = controller.world.get_closest_item_with_trait(controller.actor.global_transform.origin, GameItem.ItemTrait.HEALING)
+	var health_in_inventory = InventoryUtils.switch_to_item_with_trait(controller.actor.weapon_inventory, GameItem.ItemTrait.HEALING)
+	
+	if health_in_inventory:
+		medkit_pickup_routine_started = true
+		medkit_pickup_countdown = 1
+	
 	if medkit_pickup_routine_started:	
 		# do nothing, you are holding a medkit
 		return
-	if closest_health != null:
-		current_target = closest_health
+	if closest_health_in_world != null:
+		current_target = closest_health_in_world
 		if controller.actor.health.is_max_health():
 			# no reason to get health pickups if you're at max health
 			controller.state_machine.change_state(DecisionMakingState.new())

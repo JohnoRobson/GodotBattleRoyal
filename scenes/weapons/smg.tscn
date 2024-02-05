@@ -45,6 +45,7 @@ stats = SubResource("Resource_wjeax")
 item_name = "SMG"
 action = SubResource("Resource_yrey2")
 aim_function = SubResource("Resource_h3ab6")
+traits = Array[int]([2])
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.10401, -0.204375)

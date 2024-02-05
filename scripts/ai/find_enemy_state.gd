@@ -5,6 +5,9 @@ class_name FindEnemyState
 var current_target: Actor
 
 func enter(controller: AiActorController):
+	# switch to weapon
+	var has_weapon: bool = InventoryUtils.switch_to_item_with_trait(controller.actor.weapon_inventory, GameItem.ItemTrait.FIREARM)
+	
 	current_target = controller.world.get_closest_actor(controller.actor.global_transform.origin, controller.actor)
 
 func execute(controller: AiActorController):

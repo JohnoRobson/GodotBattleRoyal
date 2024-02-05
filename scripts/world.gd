@@ -13,12 +13,14 @@ class_name World
 
 enum Weapons {SMG, SHOTGUN, SNIPER}
 
+var scene_change_triggered_this_frame: bool = false
+
 func _ready():
 	action_system.world = self
 	spawn_player(Vector2(0,5))
 	spawn_ai(Vector2(-10,0))
-	spawn_ai(Vector2(-10,5))
-	spawn_ai(Vector2(30,0))
+	#spawn_ai(Vector2(-10,5))
+	#spawn_ai(Vector2(30,0))
 	spawn_weapon(Vector2(5,5), Weapons.SMG)
 	spawn_weapon(Vector2(-15,5), Weapons.SHOTGUN)
 	spawn_weapon(Vector2(25,-5), Weapons.SNIPER)
@@ -123,7 +125,7 @@ func get_closest_available_health(from_position: Vector3) -> GameItem:
 	pickups.append_array(get_tree().get_nodes_in_group("healing"))
 
 	# Filter returns the filtered array, but sort is in-place
-	pickups = pickups.filter(func(a): return a != null and !a.is_held)
+	pickups = pickups.filter(func(a): return a != null and !a.is_held and a.can_be_used)
 	pickups = pickups.filter(func(a): return a.item_name == "Medkit")
 	pickups.sort_custom(func(a, b): return from_position.distance_to(a.global_transform.origin) < from_position.distance_to(b.global_transform.origin))
 
@@ -137,6 +139,17 @@ func get_closest_available_weapon(from_position: Vector3) -> GameItem:
 	weapon_array = weapon_array.filter(func(a): return !a.is_held && a.can_be_used)
 
 	return weapon_array.front() if !weapon_array.is_empty() else null
+
+func get_closest_item_with_trait(from_position: Vector3, item_trait: GameItem.ItemTrait) -> GameItem:
+	var items = []
+	
+	items.append_array(get_tree().get_nodes_in_group("healing"))
+	items.append_array(get_tree().get_nodes_in_group("weapons"))
+	items = items.filter(func(a): return a != null and !a.is_held and a.can_be_used)
+	items = items.filter(func(a): return a.traits.has(item_trait))
+	items.sort_custom(func(a, b): return from_position.distance_to(a.global_transform.origin) < from_position.distance_to(b.global_transform.origin))
+	
+	return items.front() if !items.is_empty() else null
 
 func _on_player_killed(_player: Actor):
 	change_scene("res://scenes/death_screen.tscn")
@@ -154,5 +167,7 @@ func get_actors_and_gameitems_in_area(target_position: Vector3, distance: float)
 	return things.filter(func(a):return a != null).filter(func(a): return a.is_inside_tree()).filter(func(a): return target_position.distance_to(a.global_transform.origin) <= distance)
 
 func change_scene(path: String) -> void:
-	get_tree().change_scene_to_file(path) # this now unloads the world, then when the frame is finished it swaps the scenes
-	action_system.shut_down() # this is needed so that the action system doesn't cause errors while finishing its stacks during a frame where the world is unloaded
+	if !scene_change_triggered_this_frame:
+		action_system.shut_down() # this is needed so that the action system doesn't cause errors while finishing its stacks during a frame where the world is unloaded
+		get_tree().change_scene_to_file(path) # this now unloads the world, then when the frame is finished it swaps the scenes
+		scene_change_triggered_this_frame = true

@@ -20,7 +20,6 @@ actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
 [sub_resource type="Resource" id="Resource_hkmx1"]
 script = ExtResource("4_f30rl")
 healing = 50.0
-targets = null
 actions = null
 
 [sub_resource type="Resource" id="Resource_bmy8g"]
@@ -36,7 +35,7 @@ size = Vector3(1.03257, 0.513558, 1.03219)
 script = ExtResource("1_icxwt")
 item_name = "Medkit"
 action = SubResource("Resource_bmy8g")
-traits = Array[int]([0])
+traits = Array[int]([0, 4])
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_1e27m")

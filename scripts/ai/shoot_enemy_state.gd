@@ -20,7 +20,7 @@ func execute(controller: AiActorController):
 		else:
 			controller.set_is_reloading(false)
 
-		if target_distance <= 10.0 && weapon != null:
+		if target_distance <= 10.0 && weapon != null && is_pointing_at_target(weapon, target_pos):
 			controller.set_aim_position(target_pos + (Vector3.UP * 1.5))
 			controller.set_is_shooting(true)
 		else:
@@ -34,3 +34,9 @@ func exit(controller: AiActorController):
 
 func get_name() -> String:
 	return "ShootEnemyState"
+
+func is_pointing_at_target(weapon: GameItem, target_pos_global: Vector3) -> bool:
+	var weapon_direction_local: Vector3 = weapon.to_global(Vector3.FORWARD)
+	var target_pos_local: Vector3 = target_pos_global - weapon.global_position
+	var dot_product = acos(weapon_direction_local.dot(target_pos_local))
+	return dot_product <= 10.0

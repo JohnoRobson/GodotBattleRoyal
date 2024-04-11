@@ -8,7 +8,7 @@ static func get_traits(inventory_data: InventoryData) -> Array[GameItem.ItemTrai
 	for item: GameItem in items_in_inventory:
 		for item_trait: GameItem.ItemTrait in item.traits:
 			traits_in_inventory[item_trait] = true
-			
+	
 	# array casting trick
 	var trait_array: Array[GameItem.ItemTrait] = []
 	trait_array.append_array(traits_in_inventory.keys())

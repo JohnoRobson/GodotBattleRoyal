@@ -47,7 +47,7 @@ actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([SubR
 [sub_resource type="Resource" id="Resource_vnnrj"]
 script = ExtResource("8_8mss6")
 degrees_of_inaccuracy = 0.0
-force = 12.0
+force = 0.0
 actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([SubResource("Resource_51wv8")])
 
 [sub_resource type="Resource" id="Resource_8y2xw"]
@@ -57,7 +57,7 @@ projectile_velocity = 12.0
 [sub_resource type="BoxShape3D" id="BoxShape3D_1e27m"]
 size = Vector3(1.03257, 0.513558, 1.03219)
 
-[node name="AoeHealGrenade" type="RigidBody3D" groups=["healing", "items"]]
+[node name="AoeHealGrenade" type="RigidBody3D" groups=["aoe", "healing", "items"]]
 script = ExtResource("1_prsue")
 item_name = "AOE Heal Grenade"
 action = SubResource("Resource_vnnrj")

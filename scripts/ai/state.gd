@@ -14,3 +14,6 @@ func exit(_controller: AiActorController):
 
 func get_name() -> String:
 	return "State"
+
+func evaluate(_factor_context: FactorContext) -> float:
+	return 0.0

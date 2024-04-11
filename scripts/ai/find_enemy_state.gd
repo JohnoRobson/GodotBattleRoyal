@@ -1,5 +1,4 @@
 extends State
-
 class_name FindEnemyState
 
 var current_target: Actor
@@ -7,6 +6,10 @@ var current_target: Actor
 func enter(controller: AiActorController):
 	# switch to weapon
 	var has_weapon: bool = InventoryUtils.switch_to_item_with_trait(controller.actor.weapon_inventory, GameItem.ItemTrait.FIREARM)
+	
+	if !has_weapon:
+		controller.state_machine.change_state(DecisionMakingState.new())
+		return
 	
 	current_target = controller.world.get_closest_actor(controller.actor.global_transform.origin, controller.actor)
 
@@ -31,7 +34,9 @@ func execute_physics(controller: AiActorController):
 
 func exit(controller: AiActorController):
 	controller.set_move_direction(Vector2.ZERO)
-	pass
 
 func get_name() -> String:
 	return "FindEnemyState"
+
+func evaluate(_factor_context: FactorContext) -> float:
+	return 0.5

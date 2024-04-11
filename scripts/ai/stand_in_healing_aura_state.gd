@@ -17,7 +17,7 @@ func execute_physics(controller: AiActorController):
 		controller.state_machine.change_state(DecisionMakingState.new())
 		return
 	
-	is_standing_in_healing_aura = closest_aura.global_position.distance_to(controller.actor.global_position) <= 3.0
+	is_standing_in_healing_aura = closest_aura.global_position.distance_to(controller.actor.global_position) <= 2.0
 	
 	if is_standing_in_healing_aura:
 		controller.set_move_direction(Vector2.ZERO)
@@ -47,9 +47,6 @@ func get_name() -> String:
 func evaluate(factor_context: FactorContext) -> float:
 	var health_factor: float = HealthFactor.evaluate(factor_context)
 	var closest_aura: GameItem = factor_context.world.get_closest_healing_aura(factor_context.target_position)
-	#var distance_to_aura: float = closest_aura.transform.origin.distance_to(factor_context.target_position)
-	
-	#var dist: float = 10.0
 	
 	if closest_aura == null:
 		return 0.0

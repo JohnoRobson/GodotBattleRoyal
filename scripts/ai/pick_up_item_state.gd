@@ -34,7 +34,7 @@ func execute_physics(controller: AiActorController):
 		var closest_item = controller.actor._item_pickup_manager.get_item_that_cursor_is_over_and_is_in_interaction_range()
 		if closest_item == current_target:
 			if !InventoryUtils.switch_to_empty_slot(controller.actor.weapon_inventory):
-				controller.state_machine.change_state(DecisionMakingState.new()) # just a safty check
+				controller.state_machine.change_state(DecisionMakingState.new()) # just a safety check
 			controller.set_is_exchanging_weapon(true)
 			picked_up_weapon_last_tick = true
 

@@ -19,8 +19,8 @@ func _ready():
 	action_system.world = self
 	spawn_player(Vector2(0,5))
 	spawn_ai(Vector2(-10,0))
-	#spawn_ai(Vector2(-10,5))
-	#spawn_ai(Vector2(30,0))
+	spawn_ai(Vector2(-10,5))
+	spawn_ai(Vector2(30,0))
 	spawn_weapon(Vector2(5,5), Weapons.SMG)
 	spawn_weapon(Vector2(-15,5), Weapons.SHOTGUN)
 	spawn_weapon(Vector2(25,-5), Weapons.SNIPER)
@@ -126,7 +126,7 @@ func get_closest_available_health(from_position: Vector3) -> GameItem:
 
 	# Filter returns the filtered array, but sort is in-place
 	pickups = pickups.filter(func(a): return a != null and !a.is_held and a.can_be_used)
-	pickups = pickups.filter(func(a): return a.item_name == "Medkit")
+	#pickups = pickups.filter(func(a): return a.item_name == "Medkit")
 	pickups.sort_custom(func(a, b): return from_position.distance_to(a.global_transform.origin) < from_position.distance_to(b.global_transform.origin))
 
 	return pickups.front() if !pickups.is_empty() else null
@@ -147,6 +147,17 @@ func get_closest_item_with_trait(from_position: Vector3, item_trait: GameItem.It
 	items.append_array(get_tree().get_nodes_in_group("weapons"))
 	items = items.filter(func(a): return a != null and !a.is_held and a.can_be_used)
 	items = items.filter(func(a): return a.traits.has(item_trait))
+	items.sort_custom(func(a, b): return from_position.distance_to(a.global_transform.origin) < from_position.distance_to(b.global_transform.origin))
+	
+	return items.front() if !items.is_empty() else null
+
+# this is not good
+func get_closest_healing_aura(from_position: Vector3) -> GameItem:
+	var items = []
+	
+	items.append_array(get_tree().get_nodes_in_group("aoe"))
+	items = items.filter(func(a): return a != null and !a.is_held and !a.can_be_used)
+	items = items.filter(func(a): return a.traits.has(GameItem.ItemTrait.HEALING))
 	items.sort_custom(func(a, b): return from_position.distance_to(a.global_transform.origin) < from_position.distance_to(b.global_transform.origin))
 	
 	return items.front() if !items.is_empty() else null

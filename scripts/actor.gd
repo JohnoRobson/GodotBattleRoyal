@@ -40,7 +40,7 @@ func _move_direction(input_dir: Vector2):
 
 func _aim_weapon():
 	var aim_position = controller.get_aim_position()
-	if !aim_position.is_equal_approx(Vector3.UP):
+	if !aim_position.is_equal_approx(Vector3.UP) and !aim_position.is_equal_approx(rotator.global_position):
 		# side to side rotation
 		rotator.look_at(aim_position, Vector3.UP)
 

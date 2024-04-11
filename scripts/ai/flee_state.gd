@@ -47,3 +47,8 @@ func exit(controller: AiActorController):
 
 func get_name() -> String:
 	return "FleeState"
+
+func evaluate(factor_context: FactorContext) -> float:
+	var danger_factor: float = DangerFactor.evaluate(factor_context) / 2.0
+	var health_factor: float = HealthFactor.evaluate(factor_context) / 3.0
+	return clampf(danger_factor + health_factor, 0.0, 1.0)

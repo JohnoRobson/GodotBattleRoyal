@@ -12,16 +12,22 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 # the global position that this actor is aiming at
 var aimpoint: Vector3 = Vector3.UP
 var movement_direction: Vector3 = Vector3.ZERO
+var actor_state: ActorState = ActorState.IDLE
 
 @onready var cursor: ActorCursor = get_node("ActorCursor")
 @onready var rotator: Node3D = get_node("Rotator")
-@onready var weapon_base: Node3D = get_node("Rotator/WeaponBase")
+@onready var weapon_base: Node3D = get_node("Rotator/Animatable/WeaponBase")
 @onready var health: Health = get_node("Health")
 @onready var item_pickup_area: ItemInteractionArea = get_node("ItemPickupArea")
 @onready var _item_pickup_manager: ItemPickupManager = get_node("ItemPickupManager")
 @onready var weapon_inventory: Inventory = get_node("WeaponInventory")
+@onready var animation_player: AnimationPlayer = get_node("AnimationPlayer")
 
 @export var held_weapon: GameItem
+
+enum ActorState {
+	IDLE, WALKING, DEAD
+}
 
 # Remove these when proper inventory and item pickups are developed
 var _drop_weapon_cooldown_time: float = 0.5
@@ -50,6 +56,12 @@ func _aim_weapon():
 			weapon_base.look_at(to_global(angle_vector) + (weapon_base.global_position - global_position), Vector3.UP)
 
 func _process(_delta):
+	if (actor_state == ActorState.DEAD):
+		if (!animation_player.is_playing()): # death animation is over, remove actor
+			actor_killed.emit(self)
+			queue_free()
+		return
+	
 	cursor.global_position = controller.get_aim_position()
 	
 	if (_drop_weapon_cooldown_timer > 0.0):
@@ -67,6 +79,13 @@ func _process(_delta):
 		held_weapon.set_is_moving(!controller.get_move_direction().is_zero_approx())
 	if (controller.is_exchanging_weapon()):
 		_try_to_exchange_weapon()
+	if (!controller.get_move_direction().is_zero_approx()):
+		actor_state = ActorState.WALKING
+		if animation_player.current_animation != "walking":
+			animation_player.play("walking")
+	else:
+		actor_state = ActorState.IDLE
+		animation_player.play("idle")
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -98,9 +117,9 @@ func _on_health_depleted():
 		held_weapon.is_held = false
 		held_weapon.global_position = weapon_position
 		held_weapon.global_rotation = weapon_rotation
-		
-	actor_killed.emit(self)
-	queue_free()
+	
+	actor_state = ActorState.DEAD
+	animation_player.play("dead")
 
 func _on_hurtbox_was_hit(amount, _hit_position_global, hit_normalized_direction):
 	_velocity_to_add += hit_normalized_direction * amount * 100.0 * Vector3(1,0,1)

@@ -1,6 +1,4 @@
-extends Node3D
-
-class_name World
+class_name World extends Node3D
 
 @onready var player_actors: Array[Actor] = []
 @onready var ai_actors: Array[Actor] = []
@@ -12,6 +10,9 @@ class_name World
 @export var action_system: ActionSystem
 
 enum Weapons {SMG, SHOTGUN, SNIPER}
+
+signal game_lost
+signal game_won
 
 func _ready():
 	action_system.world = self
@@ -58,6 +59,7 @@ func spawn_player(spawn_position: Vector2):
 	controller.set_script(controller_script)
 	actor.controller = controller
 	actor.add_child(controller)
+	actor.set_camera_current()
 	
 	var inventory_ui: InventoryUI = actor.get_node("HUD/Inventory")
 
@@ -105,7 +107,8 @@ func _on_actor_killed(actor: Actor):
 	
 	# check for win condition
 	if player_actors.size() + ai_actors.size() == 1:
-		change_scene("res://scenes/win_screen.tscn")
+		action_system.shut_down()
+		game_won.emit()
 
 func get_closest_actor(from_position: Vector3, ignore: Actor = null) -> Actor:
 	var actors = player_actors + ai_actors # Apparently you can concatenate arrays like this - MW 2023-05-15
@@ -139,7 +142,8 @@ func get_closest_available_weapon(from_position: Vector3) -> GameItem:
 	return weapon_array.front() if !weapon_array.is_empty() else null
 
 func _on_player_killed(_player: Actor):
-	change_scene("res://scenes/death_screen.tscn")
+	action_system.shut_down()
+	game_lost.emit()
 
 func return_item_to_world(item: GameItem, global_position_to_place_item: Vector3, global_rotation_to_place_item: Vector3):
 	if item.get_parent() != null:
@@ -152,7 +156,3 @@ func get_actors_and_gameitems_in_area(target_position: Vector3, distance: float)
 	var things = player_actors + ai_actors + get_tree().get_nodes_in_group("items")
 
 	return things.filter(func(a):return a != null).filter(func(a): return a.is_inside_tree()).filter(func(a): return target_position.distance_to(a.global_transform.origin) <= distance)
-
-func change_scene(path: String) -> void:
-	get_tree().change_scene_to_file(path) # this now unloads the world, then when the frame is finished it swaps the scenes
-	action_system.shut_down() # this is needed so that the action system doesn't cause errors while finishing its stacks during a frame where the world is unloaded

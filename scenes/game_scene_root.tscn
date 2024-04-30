@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://cbhy7lx4lnl1v"]
+
+[ext_resource type="Script" path="res://scripts/game_scene_root.gd" id="1_17feb"]
+[ext_resource type="PackedScene" uid="uid://cxtqrmnc7fwf" path="res://scenes/title_screen.tscn" id="2_nr3tc"]
+[ext_resource type="PackedScene" uid="uid://ccjq8nxyfnpl2" path="res://scenes/win_screen.tscn" id="3_puocf"]
+[ext_resource type="PackedScene" uid="uid://c6odqg6a2357w" path="res://scenes/death_screen.tscn" id="4_ruoo4"]
+
+[node name="GameSceneRoot" type="Node"]
+script = ExtResource("1_17feb")
+
+[node name="GameScenes" type="Node" parent="."]
+
+[node name="TitleScreen" parent="." instance=ExtResource("2_nr3tc")]
+process_mode = 3
+
+[node name="WinScreen" parent="." instance=ExtResource("3_puocf")]
+process_mode = 3
+visible = false
+
+[node name="LostScreen" parent="." instance=ExtResource("4_ruoo4")]
+process_mode = 3
+visible = false
+
+[connection signal="start_game_pressed" from="TitleScreen" to="." method="_on_start_game_pressed"]
+[connection signal="return_to_title_pressed" from="WinScreen" to="." method="_on_return_to_title_pressed"]
+[connection signal="start_game_pressed" from="WinScreen" to="." method="_on_start_game_pressed"]
+[connection signal="return_to_title_pressed" from="LostScreen" to="." method="_on_return_to_title_pressed"]
+[connection signal="start_game_pressed" from="LostScreen" to="." method="_on_start_game_pressed"]

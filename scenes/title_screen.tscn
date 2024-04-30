@@ -1,23 +1,23 @@
 [gd_scene load_steps=2 format=3 uid="uid://cxtqrmnc7fwf"]
 
-[ext_resource type="Script" path="res://scripts/start_screen.gd" id="1_etaam"]
+[ext_resource type="Script" path="res://scripts/menu_screen.gd" id="1_etaam"]
 
-[node name="StartScreen" type="Node3D" node_paths=PackedStringArray("start_button")]
+[node name="TitleScreen" type="Node2D"]
 script = ExtResource("1_etaam")
-start_button = NodePath("Start Button")
 
 [node name="Title" type="Label" parent="."]
-anchors_preset = 5
-anchor_left = 0.5
+anchors_preset = -1
 anchor_right = 0.5
-offset_left = -183.5
-offset_right = 183.5
-offset_bottom = 155.0
+offset_left = 394.0
+offset_top = 166.0
+offset_right = 761.0
+offset_bottom = 321.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 50
 text = "Battle Royal"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Start Button" type="Button" parent="."]
 anchors_preset = 8
@@ -25,15 +25,14 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -145.5
-offset_top = -52.0
-offset_right = 145.5
-offset_bottom = 52.0
+offset_left = 435.0
+offset_top = 295.0
+offset_right = 726.0
+offset_bottom = 399.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 40
 text = "Start"
-
-[node name="Camera3D" type="Camera3D" parent="."]
+metadata/_edit_use_anchors_ = true
 
 [connection signal="pressed" from="Start Button" to="." method="_on_start_button_pressed"]

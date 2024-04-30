@@ -169,7 +169,6 @@ func unequip_weapon():
 		held_weapon.item_used_up.disconnect(_on_item_used_up)
 
 	held_weapon = null
-	
 
 func _on_weapon_inventory_inventory_changed(inventory_data: InventoryData, selected_slot_index: int):
 	var item_in_selected_slot: GameItem = inventory_data.get_item_at_index(selected_slot_index)
@@ -190,3 +189,6 @@ func _on_weapon_inventory_inventory_changed(inventory_data: InventoryData, selec
 
 func _on_item_used_up():
 	held_weapon = null
+
+func set_camera_current():
+	$Camera3D.current = true

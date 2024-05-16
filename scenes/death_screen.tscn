@@ -2,17 +2,24 @@
 
 [ext_resource type="Script" path="res://scripts/menu_screen.gd" id="1_ayjjb"]
 
-[node name="DeathScreen" type="Node2D"]
+[node name="DeathScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_ayjjb")
 
 [node name="Title" type="Label" parent="."]
+layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = 401.0
-offset_top = 127.0
-offset_right = 768.0
-offset_bottom = 282.0
+offset_left = -183.0
+offset_top = 83.0
+offset_right = 184.0
+offset_bottom = 238.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 50
 text = "You died!"
@@ -20,30 +27,32 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Restart Button" type="Button" parent="."]
+layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 388.0
-offset_top = 321.0
-offset_right = 788.0
-offset_bottom = 425.0
+offset_left = -202.0
+offset_top = 31.0
+offset_right = 198.0
+offset_bottom = 135.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 40
 text = "Restart"
 
 [node name="Return To Title Button" type="Button" parent="."]
+layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 388.0
-offset_top = 439.0
-offset_right = 788.0
-offset_bottom = 543.0
+offset_left = -206.0
+offset_top = 166.0
+offset_right = 194.0
+offset_bottom = 270.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 40

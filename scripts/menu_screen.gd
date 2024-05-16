@@ -1,4 +1,4 @@
-class_name MenuScreen extends Node2D
+class_name MenuScreen extends Control
 
 signal start_game_pressed
 signal return_to_title_pressed

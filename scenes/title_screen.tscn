@@ -2,12 +2,22 @@
 
 [ext_resource type="Script" path="res://scripts/menu_screen.gd" id="1_etaam"]
 
-[node name="TitleScreen" type="Node2D"]
+[node name="TitleScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_etaam")
 
 [node name="Title" type="Label" parent="."]
+layout_mode = 1
 anchors_preset = -1
-anchor_right = 0.5
+anchor_left = -0.255208
+anchor_top = -0.0833333
+anchor_right = 0.244792
+anchor_bottom = -0.0833333
 offset_left = 394.0
 offset_top = 166.0
 offset_right = 761.0
@@ -20,15 +30,16 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Start Button" type="Button" parent="."]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 435.0
-offset_top = 295.0
-offset_right = 726.0
-offset_bottom = 399.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.37
+anchor_top = 0.552
+anchor_right = 0.622
+anchor_bottom = 0.713
+offset_left = -0.23999
+offset_top = 0.303955
+offset_right = 0.455933
+offset_bottom = -0.0240479
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 40

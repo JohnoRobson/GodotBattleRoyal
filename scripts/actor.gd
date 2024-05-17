@@ -9,8 +9,6 @@ class_name Actor
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
-# the global position that this actor is aiming at
-var aimpoint: Vector3 = Vector3.UP
 var movement_direction: Vector3 = Vector3.ZERO
 var actor_state: ActorState = ActorState.IDLE
 
@@ -38,9 +36,6 @@ var _velocity_to_add: Vector3 = Vector3.ZERO
 signal actor_killed(me: Actor)
 signal weapon_swap(weapon: GameItem)
 
-func _aim_at(target_position: Vector3):
-	aimpoint = target_position
-
 func _move_direction(input_dir: Vector2):
 	movement_direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 
@@ -48,7 +43,7 @@ func _aim_weapon():
 	var aim_position = controller.get_aim_position()
 	if !aim_position.is_equal_approx(Vector3.UP) and !aim_position.is_equal_approx(rotator.global_position):
 		# side to side rotation
-		rotator.look_at(aim_position, Vector3.UP)
+		rotator.look_at(Vector3(aim_position.x, rotator.global_position.y, aim_position.z), Vector3.UP)
 
 		# up and down rotation
 		if held_weapon != null:

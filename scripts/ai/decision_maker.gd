@@ -3,7 +3,7 @@ class_name DecisionMaker
 static var top_level_states: Array[State] = [
 		FindHealthState.new(),
 		FleeState.new(),
-		FindEnemyState.new(),
+		FightState.new(),
 		FindWeaponState.new(),
 		StandInHealingAuraState.new(),
 		UseHealthItemState.new()

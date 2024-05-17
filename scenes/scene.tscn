@@ -51,6 +51,7 @@ navigation_mesh = SubResource("NavigationMesh_vvk85")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="World/NavigationRegion3D/Ground"]
 collision_mask = 3
+collision_priority = 100.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="World/NavigationRegion3D/Ground/StaticBody3D"]
 shape = SubResource("HeightMapShape3D_0v8pg")

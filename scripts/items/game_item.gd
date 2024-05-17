@@ -8,6 +8,9 @@ var can_be_used: bool
 @export var aim_function: AimFunction = null
 @export var traits: Array[ItemTrait] = []
 
+const DEFAULT_COLLISION_LAYER = 0b0100
+const DEFAULT_COLLISION_MASK = 0b0111
+
 signal item_updated()
 signal item_used_up()
 signal action_triggered(action: Action, game_item: GameItem)
@@ -29,9 +32,9 @@ func _init():
 func _ready():
 	freeze_mode = RigidBody3D.FREEZE_MODE_STATIC
 	# exists on the "Items" layer
-	collision_layer = 0b0100
+	collision_layer = DEFAULT_COLLISION_LAYER
 	# collides with everything
-	collision_mask = 0b0111
+	collision_mask = DEFAULT_COLLISION_MASK
 	freeze = is_held
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -39,7 +42,12 @@ func _process(_delta):
 	pass
 
 func _physics_process(_delta):
-	freeze = is_held
+	if is_held:
+		freeze = true
+		collision_layer = 0b0000
+	else:
+		freeze = false
+		collision_layer = DEFAULT_COLLISION_LAYER
 
 func use_item(_actor: Actor):
 	if can_be_used:

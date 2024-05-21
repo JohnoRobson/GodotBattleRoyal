@@ -18,7 +18,6 @@ func start_game_scene(new_game_scene:PackedScene):
 	new_instantiated_game_scene.game_lost.connect(_on_game_scene_game_lost)
 	new_instantiated_game_scene.game_won.connect(_on_game_scene_game_won)
 	$GameScenes.add_child(new_instantiated_game_scene)
-	$MenuManager.clear_menus()
 	get_tree().paused = false
 
 # Clear all current game scenes from the game scene root
@@ -34,12 +33,8 @@ func toggle_pause_menu():
 		$MenuManager.open_pause_menu()
 		get_tree().paused = true
 	else:
-		$MenuManager.close_menu()
+		$MenuManager.clear_menus()
 		get_tree().paused = false
-
-func _on_start_game_pressed():
-	clear_game_scenes()
-	start_game_scene.call_deferred(load("res://scenes/scene.tscn"))
 
 func _on_game_scene_game_lost():
 	clear_game_scenes()
@@ -51,14 +46,10 @@ func _on_game_scene_game_won():
 	$MenuManager.open_win_menu()
 	get_tree().paused = true
 
-func _on_return_to_title_pressed():
+func _on_start_game_button_pressed():
 	clear_game_scenes()
-	$MenuManager.open_title_menu()
-	get_tree().paused = true
+	start_game_scene.call_deferred(load("res://scenes/scene.tscn"))
 
-func _on_settings_pressed():
-	$MenuManager.open_settings_menu()
+func _on_return_to_title_button_pressed():
+	clear_game_scenes()
 	get_tree().paused = true
-
-func _on_back_pressed():
-	$MenuManager.close_menu()

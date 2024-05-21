@@ -1,28 +1,12 @@
 class_name MenuManager extends Node
 
+signal start_game_button_pressed
+signal return_to_title_button_pressed
+
 var menus: Array[Control] = []
 
 func _ready():
 	open_menu($TitleMenu)
-
-func open_title_menu():
-	clear_menus()
-	open_menu($TitleMenu)
-
-func open_death_menu():
-	clear_menus()
-	open_menu($DeathMenu)
-
-func open_win_menu():
-	clear_menus()
-	open_menu($WinMenu)
-
-func open_pause_menu():
-	clear_menus()
-	open_menu($PauseMenu)
-
-func open_settings_menu():
-	open_menu($SettingsMenu)
 
 func clear_menus():
 	menus.clear()
@@ -42,3 +26,30 @@ func handle_menu_visibility():
 			menu.show()
 		else:
 			menu.hide()
+
+func open_death_menu():
+	clear_menus()
+	open_menu($DeathMenu)
+
+func open_win_menu():
+	clear_menus()
+	open_menu($WinMenu)
+
+func open_pause_menu():
+	clear_menus()
+	open_menu($PauseMenu)
+
+func _on_start_game_button_pressed():
+	clear_menus()
+	start_game_button_pressed.emit()
+
+func _on_return_to_title_button_pressed():
+	clear_menus()
+	open_menu($TitleMenu)
+	return_to_title_button_pressed.emit()
+
+func _on_settings_button_pressed():
+	open_menu($SettingsMenu)
+
+func _on_back_button_pressed():
+	close_menu()

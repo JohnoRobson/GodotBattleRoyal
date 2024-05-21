@@ -17,6 +17,7 @@ func start_game_scene(new_game_scene:PackedScene):
 	var new_instantiated_game_scene = new_game_scene.instantiate()
 	new_instantiated_game_scene.game_lost.connect(_on_game_scene_game_lost)
 	new_instantiated_game_scene.game_won.connect(_on_game_scene_game_won)
+	new_instantiated_game_scene.game_loaded.connect(_on_game_scene_game_loaded)
 	$GameScenes.add_child(new_instantiated_game_scene)
 	get_tree().paused = false
 
@@ -45,6 +46,9 @@ func _on_game_scene_game_won():
 	clear_game_scenes()
 	$MenuManager.open_win_menu()
 	get_tree().paused = true
+
+func _on_game_scene_game_loaded():
+	$MenuManager.clear_menus()
 
 func _on_start_game_button_pressed():
 	clear_game_scenes()

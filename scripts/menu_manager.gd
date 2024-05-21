@@ -3,7 +3,7 @@ class_name MenuManager extends Node
 signal start_game_button_pressed
 signal return_to_title_button_pressed
 
-var menus: Array[Control] = []
+var menus: Array[Menu] = []
 
 func _ready():
 	open_menu($TitleMenu)
@@ -41,6 +41,7 @@ func open_pause_menu():
 
 func _on_start_game_button_pressed():
 	clear_menus()
+	open_menu($LoadingScreen)
 	start_game_button_pressed.emit()
 
 func _on_return_to_title_button_pressed():

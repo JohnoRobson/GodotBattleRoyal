@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cbhy7lx4lnl1v"]
+[gd_scene load_steps=10 format=3 uid="uid://cbhy7lx4lnl1v"]
 
 [ext_resource type="Script" path="res://scripts/game_scene_root.gd" id="1_17feb"]
 [ext_resource type="Script" path="res://scripts/menu_manager.gd" id="2_je011"]
@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://c6odqg6a2357w" path="res://scenes/menus/death_menu.tscn" id="4_ruoo4"]
 [ext_resource type="PackedScene" uid="uid://baekuelowkltt" path="res://scenes/menus/pause_menu.tscn" id="5_2wsfx"]
 [ext_resource type="PackedScene" uid="uid://dcu6ldiv7dvu4" path="res://scenes/menus/settings_menu.tscn" id="7_cpqgh"]
+[ext_resource type="PackedScene" uid="uid://5jf6q7wspxek" path="res://scenes/menus/loading_screen.tscn" id="8_diy1m"]
+[ext_resource type="Script" path="res://scripts/menu.gd" id="9_1a2ev"]
 
 [node name="GameSceneRoot" type="Node"]
 process_mode = 3
@@ -36,7 +38,13 @@ process_mode = 3
 visible = false
 
 [node name="SettingsMenu" parent="MenuManager" instance=ExtResource("7_cpqgh")]
+process_mode = 3
 visible = false
+
+[node name="LoadingScreen" parent="MenuManager" instance=ExtResource("8_diy1m")]
+process_mode = 3
+visible = false
+script = ExtResource("9_1a2ev")
 
 [connection signal="return_to_title_button_pressed" from="MenuManager" to="." method="_on_return_to_title_button_pressed"]
 [connection signal="start_game_button_pressed" from="MenuManager" to="." method="_on_start_game_button_pressed"]

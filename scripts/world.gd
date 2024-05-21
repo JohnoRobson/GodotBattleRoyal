@@ -13,6 +13,7 @@ enum Weapons {SMG, SHOTGUN, SNIPER}
 
 signal game_lost
 signal game_won
+signal game_loaded
 
 func _ready():
 	action_system.world = self
@@ -27,6 +28,8 @@ func _ready():
 	# move this somewhere else
 	for item in get_tree().get_nodes_in_group("items"):
 		item.action_triggered.connect(action_system.action_triggered)
+
+	game_loaded.emit()
 
 func _process(_delta):
 	pass

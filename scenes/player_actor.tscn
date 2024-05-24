@@ -7,18 +7,18 @@
 collision_layer = 3
 collision_mask = 3
 
-[node name="Hurtbox" parent="." index="3"]
-collision_layer = 3
-collision_mask = 3
+[node name="ItemInteractionArea" parent="ActorCursor" index="0"]
+show_pickup_text = false
+show_any_text = false
 
 [node name="Camera3D" type="Camera3D" parent="." index="4"]
 transform = Transform3D(1, 0, 0, 0, 0.559193, 0.829038, 0, -0.829038, 0.559193, 0, 11.4105, 7.52074)
 
 [node name="HUD" parent="." index="6" instance=ExtResource("2_yloko")]
 
-[node name="ItemInteractionArea" parent="ActorCursor" index="0"]
-show_pickup_text = false
-show_any_text = false
+[node name="Hurtbox" parent="." index="10"]
+collision_layer = 3
+collision_mask = 3
 
 [connection signal="weapon_swap" from="." to="HUD" method="_on_weapon_swap"]
 [connection signal="health_changed" from="Health" to="HUD" method="on_update_health"]

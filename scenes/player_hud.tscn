@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/hud.gd" id="1_ondyb"]
 [ext_resource type="Script" path="res://scripts/components/inventory/inventory_ui.gd" id="2_hfa3h"]
 
-[node name="HUD" type="CanvasLayer"]
+[node name="PlayerHud" type="CanvasLayer"]
 script = ExtResource("1_ondyb")
 
 [node name="AmmoCount" type="Label" parent="."]
@@ -42,6 +42,11 @@ size_flags_horizontal = 3
 columns = 6
 script = ExtResource("2_hfa3h")
 
-[node name="Reticule" type="ColorRect" parent="."]
-offset_right = 14.0
-offset_bottom = 14.0
+[node name="PauseButton" type="Button" parent="."]
+offset_left = 15.0
+offset_top = 13.0
+offset_right = 64.0
+offset_bottom = 57.0
+text = "|||"
+
+[connection signal="pressed" from="PauseButton" to="." method="_on_pause_button_pressed"]

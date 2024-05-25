@@ -1,6 +1,4 @@
-extends CanvasLayer
-
-class_name Hud
+class_name PlayerHud extends CanvasLayer
 
 @onready var ammo_count: Label = get_node("AmmoCount")
 @onready var health: Label = get_node("Health")
@@ -28,3 +26,6 @@ func _on_weapon_swap(game_item):
 
 func _on_inventory_changed(inventory_data: InventoryData, selected_slot_index: int):
 	inventory._on_inventory_changed(inventory_data, selected_slot_index)
+
+func _on_pause_button_pressed():
+	print("pause button pressed")

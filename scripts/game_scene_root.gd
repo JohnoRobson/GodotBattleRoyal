@@ -57,3 +57,6 @@ func _on_start_game_button_pressed():
 func _on_return_to_title_button_pressed():
 	clear_game_scenes()
 	get_tree().paused = true
+
+func _on_close_button_pressed():
+	get_tree().root.propagate_notification(NOTIFICATION_WM_CLOSE_REQUEST)

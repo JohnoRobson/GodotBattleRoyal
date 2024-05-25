@@ -1,0 +1,50 @@
+[gd_scene load_steps=8 format=3 uid="uid://cbhy7lx4lnl1v"]
+
+[ext_resource type="Script" path="res://scripts/game_scene_root.gd" id="1_17feb"]
+[ext_resource type="Script" path="res://scripts/menu_manager.gd" id="2_je011"]
+[ext_resource type="PackedScene" uid="uid://cxtqrmnc7fwf" path="res://scenes/menus/title_menu.tscn" id="2_nr3tc"]
+[ext_resource type="PackedScene" uid="uid://ccjq8nxyfnpl2" path="res://scenes/menus/win_menu.tscn" id="3_puocf"]
+[ext_resource type="PackedScene" uid="uid://c6odqg6a2357w" path="res://scenes/menus/death_menu.tscn" id="4_ruoo4"]
+[ext_resource type="PackedScene" uid="uid://baekuelowkltt" path="res://scenes/menus/pause_menu.tscn" id="5_2wsfx"]
+[ext_resource type="PackedScene" uid="uid://dcu6ldiv7dvu4" path="res://scenes/menus/settings_menu.tscn" id="7_cpqgh"]
+
+[node name="GameSceneRoot" type="Node"]
+process_mode = 3
+script = ExtResource("1_17feb")
+
+[node name="GameScenes" type="Node" parent="."]
+process_mode = 1
+
+[node name="MenuManager" type="Node" parent="."]
+process_mode = 3
+script = ExtResource("2_je011")
+
+[node name="PauseMenu" parent="MenuManager" instance=ExtResource("5_2wsfx")]
+process_mode = 3
+visible = false
+
+[node name="DeathMenu" parent="MenuManager" instance=ExtResource("4_ruoo4")]
+process_mode = 3
+visible = false
+
+[node name="WinMenu" parent="MenuManager" instance=ExtResource("3_puocf")]
+process_mode = 3
+visible = false
+
+[node name="TitleMenu" parent="MenuManager" instance=ExtResource("2_nr3tc")]
+process_mode = 3
+visible = false
+
+[node name="SettingsMenu" parent="MenuManager" instance=ExtResource("7_cpqgh")]
+visible = false
+
+[connection signal="return_to_title_pressed" from="MenuManager/PauseMenu" to="." method="_on_return_to_title_pressed"]
+[connection signal="settings_pressed" from="MenuManager/PauseMenu" to="." method="_on_settings_pressed"]
+[connection signal="start_game_pressed" from="MenuManager/PauseMenu" to="." method="_on_start_game_pressed"]
+[connection signal="return_to_title_pressed" from="MenuManager/DeathMenu" to="." method="_on_return_to_title_pressed"]
+[connection signal="start_game_pressed" from="MenuManager/DeathMenu" to="." method="_on_start_game_pressed"]
+[connection signal="return_to_title_pressed" from="MenuManager/WinMenu" to="." method="_on_return_to_title_pressed"]
+[connection signal="start_game_pressed" from="MenuManager/WinMenu" to="." method="_on_start_game_pressed"]
+[connection signal="settings_pressed" from="MenuManager/TitleMenu" to="." method="_on_settings_pressed"]
+[connection signal="start_game_pressed" from="MenuManager/TitleMenu" to="." method="_on_start_game_pressed"]
+[connection signal="back_pressed" from="MenuManager/SettingsMenu" to="." method="_on_back_pressed"]

@@ -1,0 +1,68 @@
+[gd_scene load_steps=2 format=3 uid="uid://cxtqrmnc7fwf"]
+
+[ext_resource type="Script" path="res://scripts/menu.gd" id="1_etaam"]
+
+[node name="TitleScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_etaam")
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.255208
+anchor_top = -0.0833333
+anchor_right = 0.244792
+anchor_bottom = -0.0833333
+offset_left = 394.0
+offset_top = 166.0
+offset_right = 761.0
+offset_bottom = 321.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 50
+text = "Battle Royal"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Start Button" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.370868
+anchor_top = 0.629161
+anchor_right = 0.622868
+anchor_bottom = 0.790161
+offset_left = -0.23999
+offset_top = 0.303955
+offset_right = 0.455933
+offset_bottom = -0.0240479
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 40
+text = "Start"
+metadata/_edit_use_anchors_ = true
+
+[node name="Start Button" type="Button" parent="Start Button"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.00261172
+anchor_top = -1.08946
+anchor_right = 1.00874
+anchor_bottom = -0.211307
+offset_left = -0.23999
+offset_top = 0.303955
+offset_right = 0.455933
+offset_bottom = -0.0240479
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 40
+text = "Settings
+"
+metadata/_edit_use_anchors_ = true
+
+[connection signal="pressed" from="Start Button" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="Start Button/Start Button" to="." method="_on_settings_button_pressed"]

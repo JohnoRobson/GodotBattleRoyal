@@ -32,9 +32,11 @@ func toggle_pause_menu():
 	var currently_paused = get_tree().paused
 	if not currently_paused:
 		$MenuManager.open_pause_menu()
+		$TransparentOverlay.show()
 		get_tree().paused = true
 	else:
 		$MenuManager.clear_menus()
+		$TransparentOverlay.hide()
 		get_tree().paused = false
 
 func _on_game_scene_game_lost():
@@ -52,8 +54,10 @@ func _on_game_scene_game_loaded():
 
 func _on_start_game_button_pressed():
 	clear_game_scenes()
+	$TransparentOverlay.hide()
 	start_game_scene.call_deferred(load("res://scenes/scene.tscn"))
 
 func _on_return_to_title_button_pressed():
 	clear_game_scenes()
+	$TransparentOverlay.hide()
 	get_tree().paused = true

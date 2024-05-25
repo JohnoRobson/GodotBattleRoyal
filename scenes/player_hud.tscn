@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://pciev3jsxk36"]
 
-[ext_resource type="Script" path="res://scripts/hud.gd" id="1_ondyb"]
+[ext_resource type="Script" path="res://scripts/player_hud.gd" id="1_ondyb"]
 [ext_resource type="Script" path="res://scripts/components/inventory/inventory_ui.gd" id="2_hfa3h"]
 
 [node name="PlayerHud" type="CanvasLayer"]

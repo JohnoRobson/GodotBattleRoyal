@@ -25,10 +25,10 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -191.0
-offset_top = 96.0
-offset_right = 176.0
-offset_bottom = 251.0
+offset_left = -178.0
+offset_top = 63.0
+offset_right = 189.0
+offset_bottom = 218.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 50
 text = "Paused"
@@ -42,10 +42,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -421.0
-offset_top = 64.0
-offset_right = -21.0
-offset_bottom = 168.0
+offset_left = 25.0
+offset_top = 61.0
+offset_right = 425.0
+offset_bottom = 165.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 40
@@ -74,15 +74,32 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 7.0
-offset_top = 68.0
-offset_right = 407.0
-offset_bottom = 172.0
+offset_left = -413.0
+offset_top = 61.0
+offset_right = -13.0
+offset_bottom = 165.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 40
 text = "Settings"
 
+[node name="Resume Button" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -195.0
+offset_top = -92.0
+offset_right = 205.0
+offset_bottom = 12.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 40
+text = "Resume"
+
 [connection signal="pressed" from="Restart Button" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="Return To Title Button" to="." method="_on_return_to_title_button_pressed"]
 [connection signal="pressed" from="Settings Button" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="Resume Button" to="." method="_on_resume_button_pressed"]

@@ -60,3 +60,6 @@ func _on_return_to_title_button_pressed():
 
 func _on_close_button_pressed():
 	get_tree().root.propagate_notification(NOTIFICATION_WM_CLOSE_REQUEST)
+
+func _on_resume_button_pressed():
+	toggle_pause_menu()

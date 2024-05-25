@@ -48,6 +48,7 @@ script = ExtResource("9_1a2ev")
 
 [connection signal="return_to_title_button_pressed" from="MenuManager" to="." method="_on_return_to_title_button_pressed"]
 [connection signal="start_game_button_pressed" from="MenuManager" to="." method="_on_start_game_button_pressed"]
+[connection signal="resume_button_pressed" from="MenuManager/PauseMenu" to="." method="_on_resume_button_pressed"]
 [connection signal="return_to_title_button_pressed" from="MenuManager/PauseMenu" to="MenuManager" method="_on_return_to_title_button_pressed"]
 [connection signal="settings_button_pressed" from="MenuManager/PauseMenu" to="MenuManager" method="_on_settings_button_pressed"]
 [connection signal="start_game_button_pressed" from="MenuManager/PauseMenu" to="MenuManager" method="_on_start_game_button_pressed"]

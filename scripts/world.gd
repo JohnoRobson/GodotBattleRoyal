@@ -6,6 +6,7 @@ class_name World extends Node3D
 @export var effect_manager: EffectManager
 
 @export var nav_region: NavigationRegion3D
+@export var default_camera: Camera3D
 
 @export var action_system: ActionSystem
 
@@ -17,13 +18,11 @@ signal game_loaded
 
 func _ready():
 	action_system.world = self
-	spawn_player(Vector2(0,5))
-	spawn_ai(Vector2(-10,0))
-	spawn_ai(Vector2(-10,5))
-	spawn_ai(Vector2(30,0))
-	spawn_weapon(Vector2(5,5), Weapons.SMG)
-	spawn_weapon(Vector2(-15,5), Weapons.SHOTGUN)
-	spawn_weapon(Vector2(25,-5), Weapons.SNIPER)
+	
+	if default_camera != null:
+		default_camera.make_current()
+
+	setup_classic_game()
 
 	# move this somewhere else
 	for item in get_tree().get_nodes_in_group("items"):
@@ -159,3 +158,26 @@ func get_actors_and_gameitems_in_area(target_position: Vector3, distance: float)
 	var things = player_actors + ai_actors + get_tree().get_nodes_in_group("items")
 
 	return things.filter(func(a):return a != null).filter(func(a): return a.is_inside_tree()).filter(func(a): return target_position.distance_to(a.global_transform.origin) <= distance)
+
+func setup_classic_game():
+	spawn_player(Vector2(0,5))
+	spawn_ai(Vector2(-10,0))
+	spawn_ai(Vector2(-10,5))
+	spawn_ai(Vector2(30,0))
+	spawn_weapon(Vector2(5,5), Weapons.SMG)
+	spawn_weapon(Vector2(-15,5), Weapons.SHOTGUN)
+	spawn_weapon(Vector2(25,-5), Weapons.SNIPER)
+
+func setup_ai_only_game():
+	spawn_ai(Vector2(-10,0))
+	spawn_ai(Vector2(-10,5))
+	spawn_ai(Vector2(30,0))
+	spawn_weapon(Vector2(5,5), Weapons.SMG)
+	spawn_weapon(Vector2(-15,5), Weapons.SHOTGUN)
+	spawn_weapon(Vector2(25,-5), Weapons.SNIPER)
+
+func setup_player_only_game():
+	spawn_player(Vector2(0,5))
+	spawn_weapon(Vector2(5,5), Weapons.SMG)
+	spawn_weapon(Vector2(-15,5), Weapons.SHOTGUN)
+	spawn_weapon(Vector2(25,-5), Weapons.SNIPER)

@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://dcu6ldiv7dvu4" path="res://scenes/menus/settings_menu.tscn" id="7_cpqgh"]
 [ext_resource type="PackedScene" uid="uid://5jf6q7wspxek" path="res://scenes/menus/loading_screen.tscn" id="8_diy1m"]
 [ext_resource type="Script" path="res://scripts/menu.gd" id="9_1a2ev"]
+[ext_resource type="PackedScene" uid="uid://dr4nx3sep0nqf" path="res://scenes/transparent_overlay.tscn" id="10_7sbj5"]
 
 [node name="GameSceneRoot" type="Node"]
 process_mode = 3
@@ -17,6 +18,12 @@ script = ExtResource("1_17feb")
 
 [node name="GameScenes" type="Node" parent="."]
 process_mode = 1
+
+[node name="TransparentOverlay" parent="." instance=ExtResource("10_7sbj5")]
+process_mode = 3
+visible = false
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="GameHud" parent="." instance=ExtResource("2_7u6n0")]
 process_mode = 3

@@ -64,7 +64,7 @@ func _on_close_button_pressed():
 	get_tree().root.propagate_notification(NOTIFICATION_WM_CLOSE_REQUEST)
 
 func _on_resume_button_pressed():
-  toggle_pause_menu()
+	toggle_pause_menu()
 
 func _on_game_hud_pause_button_pressed():
 	toggle_pause_menu()

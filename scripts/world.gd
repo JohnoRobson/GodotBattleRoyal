@@ -21,6 +21,7 @@ func _ready():
 
 	set_camera_to_default()
 	setup_classic_game()
+	assign_default_camera_to_random_ai_actor()
 
 	# move this somewhere else
 	for item in get_tree().get_nodes_in_group("items"):
@@ -103,7 +104,10 @@ func spawn_weapon(spawn_position: Vector2, weapon_type: Weapons) -> Weapon:
 func _on_actor_killed(actor: Actor):
 	player_actors.erase(actor)
 	ai_actors.erase(actor)
-	
+
+	if default_camera != null and default_camera.is_ancestor_of(actor):
+		assign_default_camera_to_random_ai_actor()
+
 	# check for win condition
 	if get_win_condition_satisfied():
 		action_system.shut_down()
@@ -124,6 +128,11 @@ func get_closest_actor(from_position: Vector3, ignore: Actor = null) -> Actor:
 
 	# weird ternary
 	return actors.front() if !actors.is_empty() else null
+
+func get_random_ai_actor() -> Actor:
+	if ai_actors.is_empty():
+		return null
+	return ai_actors.pick_random()
 
 func get_closest_available_health(from_position: Vector3) -> GameItem:
 	var pickups = []
@@ -146,8 +155,19 @@ func get_closest_available_weapon(from_position: Vector3) -> GameItem:
 	return weapon_array.front() if !weapon_array.is_empty() else null
 
 func set_camera_to_default() -> void:
-	if default_camera != null:
-		default_camera.make_current()
+	if default_camera == null:
+		return;
+
+	default_camera.make_current()
+
+func assign_default_camera_to_random_ai_actor() -> void:
+	if default_camera == null:
+		return;
+	var ai_actor = get_random_ai_actor()
+	if ai_actor == null:
+		default_camera.reparent(self, false)
+	else:
+		default_camera.reparent(ai_actor, false)
 
 func _on_player_killed(_player: Actor):
 	set_camera_to_default()

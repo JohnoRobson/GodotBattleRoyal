@@ -1,9 +1,9 @@
 [gd_scene load_steps=3 format=3 uid="uid://pciev3jsxk36"]
 
-[ext_resource type="Script" path="res://scripts/hud.gd" id="1_ondyb"]
+[ext_resource type="Script" path="res://scripts/player_hud.gd" id="1_ondyb"]
 [ext_resource type="Script" path="res://scripts/components/inventory/inventory_ui.gd" id="2_hfa3h"]
 
-[node name="HUD" type="CanvasLayer"]
+[node name="PlayerHud" type="CanvasLayer"]
 script = ExtResource("1_ondyb")
 
 [node name="AmmoCount" type="Label" parent="."]
@@ -41,7 +41,3 @@ grow_vertical = 0
 size_flags_horizontal = 3
 columns = 6
 script = ExtResource("2_hfa3h")
-
-[node name="Reticule" type="ColorRect" parent="."]
-offset_right = 14.0
-offset_bottom = 14.0

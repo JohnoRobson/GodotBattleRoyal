@@ -18,10 +18,8 @@ signal game_loaded
 
 func _ready():
 	action_system.world = self
-	
-	if default_camera != null:
-		default_camera.make_current()
 
+	set_camera_to_default()
 	setup_classic_game()
 
 	# move this somewhere else
@@ -71,7 +69,6 @@ func spawn_player(spawn_position: Vector2):
 
 	inventory.emit_updates() # hack to get the ui to update on game start
 
-
 # Spawn AI actor and configure existing AI controller
 func spawn_ai(spawn_position: Vector2):
 	var actor: Actor = preload("res://scenes/ai_actor.tscn").instantiate()
@@ -108,9 +105,14 @@ func _on_actor_killed(actor: Actor):
 	ai_actors.erase(actor)
 	
 	# check for win condition
-	if player_actors.size() >= 1 and ai_actors.size() == 0:
+	if get_win_condition_satisfied():
 		action_system.shut_down()
 		game_won.emit()
+
+func get_win_condition_satisfied() -> bool:
+	if player_actors.size() >= 1 and ai_actors.size() == 0:
+		return true
+	return false
 
 func get_closest_actor(from_position: Vector3, ignore: Actor = null) -> Actor:
 	var actors = player_actors + ai_actors # Apparently you can concatenate arrays like this - MW 2023-05-15
@@ -143,7 +145,12 @@ func get_closest_available_weapon(from_position: Vector3) -> GameItem:
 
 	return weapon_array.front() if !weapon_array.is_empty() else null
 
+func set_camera_to_default() -> void:
+	if default_camera != null:
+		default_camera.make_current()
+
 func _on_player_killed(_player: Actor):
+	set_camera_to_default()
 	game_lost.emit()
 
 func return_item_to_world(item: GameItem, global_position_to_place_item: Vector3, global_rotation_to_place_item: Vector3):

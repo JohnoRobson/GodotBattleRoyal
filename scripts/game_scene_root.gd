@@ -41,6 +41,7 @@ func toggle_pause_menu():
 		get_tree().paused = false
 
 func _on_game_scene_game_lost():
+	$TransparentOverlay.show()
 	$MenuManager.open_death_menu()
 
 func _on_game_scene_game_won():

@@ -3,9 +3,9 @@ extends Factor
 
 # returns 0.0 to 1.0 based on how dangerous this actor's position is, based off of enemy actor and grenade proximity. 0.0 is safe, 1.0 is unsafe
 static func evaluate(factor_context: FactorContext) -> float:
-	const danger_radius: float = 30.0
+	const danger_radius: float = 10.0
 	const actor_weight = 0.4
-	const explosive_weight = 1.0
+	const explosive_weight = 4.0
 
 	var world = factor_context.world
 	var actor_position = factor_context.target_actor.global_position
@@ -31,7 +31,7 @@ static func evaluate(factor_context: FactorContext) -> float:
 		var distance_from_explosive = explosive.global_position.distance_to(actor_position)
 		# the further away, the lower the multiplier
 		var distance_multiplier = 1.0 - distance_from_explosive / danger_radius
-
+		
 		explosive_danger_score += explosive_weight * distance_multiplier
-
+	
 	return clampf(actor_danger_score + explosive_danger_score, 0.0, 1.0)

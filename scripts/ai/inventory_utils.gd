@@ -15,8 +15,8 @@ static func get_traits(inventory_data: InventoryData) -> Array[GameItem.ItemTrai
 	return trait_array
 
 # Checks the contents of the InventoryData and returns a list of ItemTraits from GameItems in it
-static func contains_trait(inventory_data: InventoryData, desired_trait: GameItem.ItemTrait) -> bool:
-	return inventory_data._slots.any(func(a): return _item_slot_has_trait(a, desired_trait))
+static func contains_trait(inventory_data: InventoryData, desired_traits: Array[GameItem.ItemTrait]) -> bool:
+	return inventory_data._slots.any(func(a): return _item_slot_has_traits(a, desired_traits))
 
 static func switch_to_empty_slot(inventory: Inventory) -> bool:
 	if !inventory.has_empty_slots():
@@ -36,27 +36,42 @@ static func switch_to_empty_slot(inventory: Inventory) -> bool:
 	return false
 
 static func switch_to_item_with_trait(inventory: Inventory, item_trait: GameItem.ItemTrait) -> bool:
-	if !inventory.has_empty_slots():
+	if inventory.is_empty():
 		return false
 	
-	var item_slot_with_trait_is_selected = _item_slot_has_trait(inventory.inventory_data._slots[inventory._selected_slot_index], item_trait)
+	var item_slot_with_trait_is_selected = _item_slot_has_traits(inventory.inventory_data._slots[inventory._selected_slot_index], [item_trait])
 	
 	if item_slot_with_trait_is_selected:
 		return true
 	
 	for number in range(0, inventory.inventory_data.number_of_slots()):
 		inventory.selected_slot_scrolled_up()
-		item_slot_with_trait_is_selected = _item_slot_has_trait(inventory.inventory_data._slots[inventory._selected_slot_index], item_trait)
+		item_slot_with_trait_is_selected = _item_slot_has_traits(inventory.inventory_data._slots[inventory._selected_slot_index], [item_trait])
 		if item_slot_with_trait_is_selected:
 			return true
 	
 	return false
 
-static func _item_slot_has_trait(slot: InventorySlotData, desired_trait: GameItem.ItemTrait) -> bool:
+static func _item_slot_has_traits(slot: InventorySlotData, desired_traits: Array[GameItem.ItemTrait]) -> bool:
 	if slot.is_empty():
 		return false
 	else:
-		for item_trait: GameItem.ItemTrait in slot.item.traits:
-			if item_trait == desired_trait:
-				return true
+		return desired_traits.all(func(a): return a in slot.item.traits)
+
+static func get_all_items_in_inventory(inventory: Inventory) -> Array[GameItem]:
+	var items: Array[GameItem] = []
+	for slot: InventorySlotData in inventory.inventory_data._slots:
+		if !slot.is_empty():
+			items.append(slot.item)
+	return items
+
+static func switch_to_item(inventory: Inventory, item: GameItem) -> bool:
+	var item_slot_with_trait_is_selected: bool = inventory.get_selected_item() == item
+	for number in range(0, inventory.inventory_data.number_of_slots()):
+		inventory.selected_slot_scrolled_up()
+		item_slot_with_trait_is_selected = inventory.get_selected_item() == item
+		if item_slot_with_trait_is_selected:
+			return true
+	
 	return false
+	

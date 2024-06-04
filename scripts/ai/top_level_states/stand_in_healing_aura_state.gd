@@ -46,9 +46,9 @@ func get_name() -> String:
 
 func evaluate(factor_context: FactorContext) -> float:
 	var health_factor: float = HealthFactor.evaluate(factor_context)
-	var closest_aura: GameItem = factor_context.world.get_closest_healing_aura(factor_context.target_position)
+	var _closest_aura: GameItem = factor_context.world.get_closest_healing_aura(factor_context.target_position)
 	
-	if closest_aura == null:
+	if _closest_aura == null:
 		return 0.0
 	
 	return clampf(health_factor * 2.0, 0.0, 1.0)

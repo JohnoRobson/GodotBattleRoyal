@@ -18,6 +18,9 @@ func has_empty_slots() -> bool:
 			return true
 	return false
 
+func is_empty() -> bool:
+	return _slots.all(func(slot): slot.is_empty())
+
 func get_item_at_index(index: int) -> GameItem:
 	if index > _slots.size() - 1 || index < 0:
 		return null

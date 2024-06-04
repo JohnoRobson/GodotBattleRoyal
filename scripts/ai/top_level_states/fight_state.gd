@@ -1,38 +1,65 @@
 class_name FightState extends State
 ## This state has a few goals:
-## 1.  move towards the current_movement_target
-## 2.  equip the best weapon for the current situation, currently, this would
-##     only take distance from the current_target into account
-## 3.  attack the current_target when there is a clear line of sight to the target
+## 1.  if the movement_override_target is set, then the state will make the actor
+##     move towards it, ignoring other behaviour and set the movement_state to MOVING_TOWARDS_MOVEMENT_OVERRIDE
+## 2.  switch to the best weapon for the current range
+## 3.  if the movement_override_target is not set, set the movement_state to MOVING_TOWARDS_ACTOR
+## 4.  if the movement_state is MOVING_TOWARDS_MOVEMENT_OVERRIDE, then move the actor towards it,
+##     otherwise attempt to maintain the optimal range for the current weapon
+## 5.  attack the current_target when there is a clear line of sight to the target
+
+const RANGE_THRESHOLD: float = 1.0
+
+const TICKS_BETWEEN_TARGET_CHANGE_CHECK: int = 60
+var tick_count_for_target_check: int = 0
+
+const MAX_WEAPON_RANGE_TO_CONSIDER: float = 50.0 # effective sniper range is like 200, you can't see further than like 50
+
 var current_target: Actor
+var movement_override_target: Vector3
 var current_movement_target: Vector3
-var movement: Movement
+var movement_state: Movement
+var current_controller: AiActorController
+var nav_agent: NavigationAgent3D
 
 enum Movement {
 	MOVING_TOWARDS_ACTOR,
-	MOVING_TOWARDS_MOVEMENT_TARGET
+	MOVING_TOWARDS_MOVEMENT_OVERRIDE
+}
+
+enum DirectionToMove {
+	TOWARDS_TARGET,
+	AWAY_FROM_TARGET,
+	STAY_STILL
 }
 
 func enter(controller: AiActorController):
+	current_controller = controller
+	nav_agent = controller.nav_agent
+	current_target = controller.world.get_closest_actor(controller.actor.global_position, controller.actor)
+	nav_agent.velocity_computed.connect(_on_velocity_computed)
 	# safety check to make sure the Actor has a weapon
 	if !_has_weapon(controller.actor):
 		controller.state_machine.change_state(DecisionMakingState.new())
 		return
 	else:
-		_equip_best_weapon(controller)
+		_equip_best_weapon_for_current_circumstance(controller)
 	
-	# if movement is MOVING_TOWARDS_MOVEMENT_TARGET, then the current_movement_target must be set
+	# if movement is MOVING_TOWARDS_MOVEMENT_OVERRIDE, then the current_movement_target must be set
 	# otherwise throw
-	if movement == null:
-		movement = Movement.MOVING_TOWARDS_ACTOR
+	if movement_state == null:
+		movement_state = Movement.MOVING_TOWARDS_ACTOR
 	
-	if movement == Movement.MOVING_TOWARDS_MOVEMENT_TARGET:
-		assert(current_movement_target != null)
-	
-	current_target = controller.world.get_closest_actor(controller.actor.global_position, controller.actor)
+	if movement_state == Movement.MOVING_TOWARDS_MOVEMENT_OVERRIDE:
+		assert(movement_override_target != null)
 
 func execute(controller: AiActorController):
-	current_target = controller.world.get_closest_actor(controller.actor.global_position, controller.actor)
+	# find target
+	tick_count_for_target_check += 1
+	if tick_count_for_target_check >= TICKS_BETWEEN_TARGET_CHANGE_CHECK:
+		tick_count_for_target_check = 0
+		current_target = controller.world.get_closest_actor(controller.actor.global_position, controller.actor)
+		_equip_best_weapon_for_current_circumstance(controller)
 	
 	# aiming and shooting
 	if current_target == null:
@@ -47,75 +74,125 @@ func execute(controller: AiActorController):
 			controller.set_is_reloading(true)
 		else:
 			controller.set_is_reloading(false)
-			
-		var is_in_range_and_pointing_at_target = (_score_weapon_in_current_context(weapon, controller.actor) >= 0.3
-			&& is_pointing_at_target(weapon, target_pos))
-		
-		controller.set_is_shooting(is_in_range_and_pointing_at_target)
+		var held_item = controller.actor.held_weapon
+		if held_item != null:
+			var item_is_grenade = [GameItem.ItemTrait.EXPLOSIVE, GameItem.ItemTrait.THROWABLE].all(func(a): return held_item.traits.has(a))
+			var weapon_score = _score_weapon_in_current_context(weapon, controller.actor)
+			var score_is_high_enough = weapon_score >= 0.3
+			if score_is_high_enough:
+				if item_is_grenade:
+					controller.set_is_shooting(_is_pointing_at_target(weapon, target_pos, 30))
+				elif _is_pointing_at_target(weapon, target_pos, 20):
+					controller.set_is_shooting(true)
+			else:
+				controller.set_is_shooting(false)
 
 func execute_physics(controller: AiActorController):
-	if current_target == null:
+	if !is_instance_valid(current_target) or current_target == null or !is_instance_valid(nav_agent):
 		controller.state_machine.change_state(DecisionMakingState.new())
+	
 	# movement
 	var movement_target: Vector3
-	match movement:
-		Movement.MOVING_TOWARDS_ACTOR:
-			movement_target = current_target.global_position
-		Movement.MOVING_TOWARDS_MOVEMENT_TARGET:
-			movement_target = current_movement_target
+	var current_global_position: Vector3 = controller.actor.global_position
+	var current_target_position: Vector3 = current_target.global_position
 	
-	controller.nav_agent.target_position = movement_target
+	match movement_state:
+		Movement.MOVING_TOWARDS_ACTOR:
+			var direction_to_move: DirectionToMove = _determine_direction_to_move(controller.actor)
+			match direction_to_move:
+				DirectionToMove.TOWARDS_TARGET:
+					movement_target = current_target_position
+				DirectionToMove.AWAY_FROM_TARGET:
+					var away_dir := (current_global_position - current_target_position).normalized()
+					movement_target = current_global_position + away_dir * 10.0
+				DirectionToMove.STAY_STILL:
+					controller.set_move_direction(Vector2())
+					return
+		Movement.MOVING_TOWARDS_MOVEMENT_OVERRIDE:
+			movement_target = movement_override_target
+	
+	nav_agent.target_position = movement_target
 	var current_location = controller.actor.global_position
 	var next_location = controller.nav_agent.get_next_path_position()
-	var dir = (next_location - current_location).normalized()
-	
-	var weapon = controller.actor.held_weapon
-	
-	match movement:
-		Movement.MOVING_TOWARDS_ACTOR:
-			var movement_score = _score_weapon_in_current_context(weapon, controller.actor)
-			#print(movement_score)
-			if movement_score <= 0.5:
-				controller.set_move_direction(Vector2(dir.x, dir.z))
-			else:
-				controller.set_move_direction(Vector2()) # arrived at destination
-			movement_target = current_target.global_position
-		Movement.MOVING_TOWARDS_MOVEMENT_TARGET:
-			movement_target = current_movement_target
-			controller.set_move_direction(Vector2(dir.x, dir.z))
+	var dir_to_move = (next_location - current_location).normalized()
+	if nav_agent.avoidance_enabled:
+			nav_agent.velocity = dir_to_move * controller.actor.speed
+	else:
+		controller.set_move_direction(Vector2(dir_to_move.x, dir_to_move.z))
 
 func exit(controller: AiActorController):
 	controller.set_move_direction(Vector2.ZERO)
+	controller.nav_agent.velocity_computed.disconnect(_on_velocity_computed)
 
 func get_name() -> String:
 	return "FightState"
 
 func _has_weapon(actor: Actor) -> bool:
-	return InventoryUtils.contains_trait(actor.weapon_inventory.inventory_data, GameItem.ItemTrait.FIREARM)
+	return InventoryUtils.contains_trait(actor.weapon_inventory.inventory_data, [GameItem.ItemTrait.FIREARM]) \
+	|| InventoryUtils.contains_trait(actor.weapon_inventory.inventory_data, [GameItem.ItemTrait.THROWABLE, GameItem.ItemTrait.EXPLOSIVE])
 
-func _equip_best_weapon(controller: AiActorController) -> void:
-	InventoryUtils.switch_to_item_with_trait(controller.actor.weapon_inventory, GameItem.ItemTrait.FIREARM)
+func _equip_best_weapon_for_current_circumstance(controller: AiActorController) -> void:
+	var items: Array[GameItem] = InventoryUtils.get_all_items_in_inventory(controller.actor.weapon_inventory)
+	var best_item: GameItem = null
+	var best_item_score: float = -1.0
+	for item: GameItem in items:
+		var score = _score_weapon_in_current_context(item, controller.actor)
+		if score > best_item_score:
+			best_item_score = score
+			best_item = item
+	
+	if best_item != null:
+		InventoryUtils.switch_to_item(controller.actor.weapon_inventory, best_item)
 
-func is_pointing_at_target(weapon: GameItem, target_pos_global: Vector3) -> bool:
-	var weapon_direction_local: Vector3 = weapon.to_global(Vector3.FORWARD)
-	var target_pos_local: Vector3 = target_pos_global - weapon.global_position
-	var dot_product = acos(weapon_direction_local.dot(target_pos_local))
-	return dot_product <= 10.0
+func _is_pointing_at_target(weapon: GameItem, target_pos_global: Vector3, degrees: float) -> bool:
+	var weapon_direction_local: Vector3 = (weapon.to_global(Vector3.FORWARD) - weapon.global_position).normalized()
+	var target_pos_local: Vector3 = (target_pos_global - weapon.global_position).normalized()
+	var angle = rad_to_deg(acos(weapon_direction_local.dot(target_pos_local)))
+	return angle <= degrees
 
 ## Returns a value between 0.0 and 1.0 inclusive that rates 
 ## how good the weapon is in the current context
-func _score_weapon_in_current_context(_weapon: Weapon, this_actor: Actor) -> float:
+func _score_weapon_in_current_context(game_item: GameItem, this_actor: Actor) -> float:
+	if game_item == null:
+		return 0.0
+	var item_is_weapon = game_item is Weapon
+	var item_is_grenade = [GameItem.ItemTrait.EXPLOSIVE, GameItem.ItemTrait.THROWABLE].all(func(a): return game_item.traits.has(a))
+	if !item_is_weapon and !item_is_grenade:
+		return 0.0
+	
 	var target_distance: float = current_target.global_position.distance_to(this_actor.global_position)
 	# clamp target_distance between 0 and 100 so that we have a known range to work with
 	target_distance = clampf(target_distance, 0.0, 100.0)
 	
-	var desired_distance: float = 20 # to be improved
+	var desired_distance: float = clampf(WeaponEvaluator.get_item_range(game_item), 0, MAX_WEAPON_RANGE_TO_CONSIDER)
 	
 	return clampf(1 - abs(desired_distance - target_distance) * 0.025, 0.0, 1.0)
+
+func _determine_direction_to_move(this_actor: Actor) -> DirectionToMove:
+	var current_weapon: GameItem = this_actor.held_weapon
+	
+	if current_weapon == null:
+		return DirectionToMove.AWAY_FROM_TARGET
+	
+	var item_range: float = clampf(WeaponEvaluator.get_item_range(current_weapon), 0, MAX_WEAPON_RANGE_TO_CONSIDER)
+	var target_distance: float = current_target.global_position.distance_to(this_actor.global_position)
+	
+	if item_range < target_distance - RANGE_THRESHOLD:
+		return DirectionToMove.TOWARDS_TARGET
+	elif target_distance + RANGE_THRESHOLD >= item_range and item_range >= target_distance - RANGE_THRESHOLD:
+		return DirectionToMove.STAY_STILL
+	else:
+		return DirectionToMove.AWAY_FROM_TARGET
+
+# used for nav agent collision avoidance
+func _on_velocity_computed(safe_velocity: Vector3):
+	var dir = safe_velocity.normalized()
+	if is_instance_valid(current_controller):
+		current_controller.set_move_direction(Vector2(dir.x, dir.z))
 
 func evaluate(factor_context: FactorContext) -> float:
 	var has_weapon: bool = _has_weapon(factor_context.target_actor)
 	if !has_weapon:
 		return 0.0
 	
-	return clampf(0.5 + DangerFactor.evaluate(factor_context) / 2.0, 0.0, 1.0)
+	return clampf(0.3 - DangerFactor.evaluate(factor_context) / 3.0, 0.0, 1.0)

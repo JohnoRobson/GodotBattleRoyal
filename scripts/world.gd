@@ -144,13 +144,13 @@ func get_closest_available_weapon(from_position: Vector3) -> GameItem:
 
 	return weapon_array.front() if !weapon_array.is_empty() else null
 
-func get_closest_item_with_trait(from_position: Vector3, item_trait: GameItem.ItemTrait) -> GameItem:
+func get_closest_item_with_traits(from_position: Vector3, item_traits: Array[GameItem.ItemTrait]) -> GameItem:
 	var items = []
 	
 	items.append_array(get_tree().get_nodes_in_group("healing"))
 	items.append_array(get_tree().get_nodes_in_group("weapons"))
 	items = items.filter(func(a): return a != null and !a.is_held and a.can_be_used)
-	items = items.filter(func(a): return a.traits.has(item_trait))
+	items = items.filter(func(a): return item_traits.all(func(b): return b in a.traits))
 	items.sort_custom(func(a, b): return from_position.distance_to(a.global_transform.origin) < from_position.distance_to(b.global_transform.origin))
 	
 	return items.front() if !items.is_empty() else null

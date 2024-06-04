@@ -108,3 +108,6 @@ func disconnect_remove_signal(item: GameItem):
 
 func has_empty_slots() -> bool:
 	return inventory_data.has_empty_slots()
+
+func is_empty() -> bool:
+	return inventory_data.is_empty()

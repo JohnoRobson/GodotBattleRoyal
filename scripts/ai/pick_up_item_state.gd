@@ -1,14 +1,17 @@
-class_name PickUpItemState
-extends State
+class_name PickUpItemState extends State
 
 var current_target: GameItem
 var picked_up_weapon_last_tick: bool = false
+var current_controller: AiActorController
+var nav_agent: NavigationAgent3D
 
 func _ready():
 	assert(current_target != null, "current target not set")
 
-func enter(_controller: AiActorController):
-	pass
+func enter(controller: AiActorController):
+	current_controller = controller
+	nav_agent = controller.nav_agent
+	current_controller.nav_agent.velocity_computed.connect(_on_velocity_computed)
 
 func execute(controller: AiActorController):
 	# make sure that the target can still be picked up
@@ -22,13 +25,16 @@ func execute_physics(controller: AiActorController):
 		controller.state_machine.change_state(DecisionMakingState.new())
 	elif (current_target != null && !current_target.is_held):
 		var target_pos = current_target.global_transform.origin
-		controller.nav_agent.target_position = target_pos
+		nav_agent.target_position = target_pos
 
 		#move
 		var current_location = controller.actor.global_transform.origin
-		var next_location = controller.nav_agent.get_next_path_position()
+		var next_location = nav_agent.get_next_path_position()
 		var dir = (next_location - current_location).normalized()
-		controller.set_move_direction(Vector2(dir.x, dir.z))
+		if nav_agent.avoidance_enabled:
+			nav_agent.velocity = dir * controller.actor.speed
+		else:
+			controller.set_move_direction(Vector2(dir.x, dir.z))
 		controller.set_aim_position(current_target.global_position)
 
 		var closest_item = controller.actor._item_pickup_manager.get_item_that_cursor_is_over_and_is_in_interaction_range()
@@ -41,6 +47,21 @@ func execute_physics(controller: AiActorController):
 func exit(controller: AiActorController):
 	controller.set_is_exchanging_weapon(false)
 	controller.set_move_direction(Vector2.ZERO)
+	controller.nav_agent.velocity_computed.disconnect(_on_velocity_computed)
 
 func get_name() -> String:
 	return "PickUpItemState"
+
+# used for nav agent collision avoidance
+func _on_velocity_computed(safe_velocity: Vector3):
+	var dir = safe_velocity.normalized()
+	current_controller.set_move_direction(Vector2(dir.x, dir.z))
+
+func can_be_interrupted_by(state: State) -> bool:
+	if state is FindWeaponState and current_target is Weapon:
+		return false
+	elif state is FindGrenadeState and current_target.has_trait(GameItem.ItemTrait.EXPLOSIVE):
+		return false
+	elif state is FindHealthState and current_target.has_trait(GameItem.ItemTrait.HEALING):
+		return false
+	return true

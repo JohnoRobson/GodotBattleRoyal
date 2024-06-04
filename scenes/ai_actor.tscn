@@ -7,6 +7,11 @@
 controller = NodePath("AiActorController")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." index="4"]
+avoidance_enabled = true
+height = 2.0
+radius = 0.7
+neighbor_distance = 10.0
+max_speed = 20.0
 
 [node name="AiActorController" type="Node3D" parent="." index="5" node_paths=PackedStringArray("actor", "nav_agent")]
 script = ExtResource("3_q60xr")

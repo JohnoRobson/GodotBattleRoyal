@@ -2,8 +2,13 @@ class_name FleeState
 extends State
 
 var position_to_flee_to: Vector3
+var current_controller: AiActorController
+var nav_agent: NavigationAgent3D
 
 func enter(controller: AiActorController):
+	current_controller = controller
+	nav_agent = controller.nav_agent
+	current_controller.nav_agent.velocity_computed.connect(_on_velocity_computed)
 	# run in a straight line away from the closest explosive or actor
 	var current_position  = controller.actor.global_position
 	var distance_to_check_for_actors_and_items = 20.0
@@ -34,7 +39,12 @@ func execute_physics(controller: AiActorController):
 	var current_location = controller.actor.global_transform.origin
 	var next_location = controller.nav_agent.get_next_path_position()
 	var dir = (next_location - current_location).normalized()
-	controller.set_move_direction(Vector2(dir.x, dir.z))
+	
+	if nav_agent.avoidance_enabled:
+		nav_agent.velocity = dir * controller.actor.speed
+	else:
+		controller.set_move_direction(Vector2(dir.x, dir.z))
+	
 	controller.set_aim_position(controller.actor.to_global(Vector3(dir.x * 100, 0, dir.z * 100)))
 
 	var target_distance: float = position_to_flee_to.distance_to(controller.actor.global_transform.origin)
@@ -43,12 +53,17 @@ func execute_physics(controller: AiActorController):
 
 func exit(controller: AiActorController):
 	controller.set_move_direction(Vector2.ZERO)
-	pass
+	controller.nav_agent.velocity_computed.disconnect(_on_velocity_computed)
 
 func get_name() -> String:
 	return "FleeState"
 
+# used for nav agent collision avoidance
+func _on_velocity_computed(safe_velocity: Vector3):
+	var dir = safe_velocity.normalized()
+	current_controller.set_move_direction(Vector2(dir.x, dir.z))
+
 func evaluate(factor_context: FactorContext) -> float:
-	var danger_factor: float = DangerFactor.evaluate(factor_context) / 2.0
+	var danger_factor: float = DangerFactor.evaluate(factor_context) / 1.4
 	var health_factor: float = HealthFactor.evaluate(factor_context) / 3.0
 	return clampf(danger_factor + health_factor, 0.0, 1.0)

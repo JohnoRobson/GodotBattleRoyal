@@ -108,7 +108,7 @@ func _on_actor_killed(actor: Actor):
 	ai_actors.erase(actor)
 	
 	# check for win condition
-	if player_actors.size() + ai_actors.size() == 1:
+	if player_actors.size() >= 1 and ai_actors.size() == 0:
 		action_system.shut_down()
 		game_won.emit()
 
@@ -144,7 +144,6 @@ func get_closest_available_weapon(from_position: Vector3) -> GameItem:
 	return weapon_array.front() if !weapon_array.is_empty() else null
 
 func _on_player_killed(_player: Actor):
-	action_system.shut_down()
 	game_lost.emit()
 
 func return_item_to_world(item: GameItem, global_position_to_place_item: Vector3, global_rotation_to_place_item: Vector3):

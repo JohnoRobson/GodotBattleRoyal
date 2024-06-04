@@ -10,10 +10,13 @@ func _ready():
 
 func clear_menus():
 	menus.clear()
+	$TransparentOverlay.hide()
 	handle_menu_visibility()
 
 func close_menu():
 	menus.pop_front()
+	if menus.is_empty():
+		$TransparentOverlay.hide()
 	handle_menu_visibility()
 
 func open_menu(menu:Menu):
@@ -24,11 +27,12 @@ func handle_menu_visibility():
 	for menu:Control in get_children():
 		if not menus.is_empty() and menus.front().name == menu.name:
 			menu.show()
-		else:
+		elif menu.name != 'TransparentOverlay':
 			menu.hide()
 
 func open_death_menu():
 	clear_menus()
+	$TransparentOverlay.show()
 	open_menu($DeathMenu)
 
 func open_win_menu():
@@ -37,6 +41,7 @@ func open_win_menu():
 
 func open_pause_menu():
 	clear_menus()
+	$TransparentOverlay.show()
 	open_menu($PauseMenu)
 
 func _on_start_game_button_pressed():

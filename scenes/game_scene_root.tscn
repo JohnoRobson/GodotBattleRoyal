@@ -19,19 +19,18 @@ script = ExtResource("1_17feb")
 [node name="GameScenes" type="Node" parent="."]
 process_mode = 1
 
-[node name="TransparentOverlay" parent="." instance=ExtResource("10_7sbj5")]
-process_mode = 3
-visible = false
-grow_horizontal = 2
-grow_vertical = 2
-
 [node name="GameHud" parent="." instance=ExtResource("2_7u6n0")]
 process_mode = 3
+layer = 0
 visible = false
 
 [node name="MenuManager" type="Node" parent="."]
 process_mode = 3
 script = ExtResource("2_je011")
+
+[node name="TransparentOverlay" parent="MenuManager" instance=ExtResource("10_7sbj5")]
+process_mode = 3
+visible = false
 
 [node name="PauseMenu" parent="MenuManager" instance=ExtResource("5_2wsfx")]
 process_mode = 3
@@ -65,6 +64,7 @@ script = ExtResource("9_1a2ev")
 [connection signal="return_to_title_button_pressed" from="MenuManager/PauseMenu" to="MenuManager" method="_on_return_to_title_button_pressed"]
 [connection signal="settings_button_pressed" from="MenuManager/PauseMenu" to="MenuManager" method="_on_settings_button_pressed"]
 [connection signal="start_game_button_pressed" from="MenuManager/PauseMenu" to="MenuManager" method="_on_start_game_button_pressed"]
+[connection signal="back_button_pressed" from="MenuManager/DeathMenu" to="MenuManager" method="_on_back_button_pressed"]
 [connection signal="return_to_title_button_pressed" from="MenuManager/DeathMenu" to="MenuManager" method="_on_return_to_title_button_pressed"]
 [connection signal="start_game_button_pressed" from="MenuManager/DeathMenu" to="MenuManager" method="_on_start_game_button_pressed"]
 [connection signal="return_to_title_button_pressed" from="MenuManager/WinMenu" to="MenuManager" method="_on_return_to_title_button_pressed"]

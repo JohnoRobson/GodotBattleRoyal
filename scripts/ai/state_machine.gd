@@ -23,7 +23,8 @@ func _process(_delta):
 		_decision_seconds_count = 0.0
 		var new_state = DecisionMaker.get_state_to_do(owner)
 
-		if current_state.get_name() != new_state.get_name():
+		if current_state.get_name() != new_state.get_name() and current_state.can_be_interrupted_by(new_state):
+			#print("switching from %s to %s" % [current_state.get_name(), new_state.get_name()])
 			change_state(new_state)
 	else:
 		_decision_seconds_count += _delta

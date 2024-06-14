@@ -13,7 +13,6 @@
 [sub_resource type="Resource" id="Resource_d0kh8"]
 script = ExtResource("3_ory47")
 damage = 10.0
-targets = Array[Node3D]([])
 actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
 
 [sub_resource type="Resource" id="Resource_n1606"]

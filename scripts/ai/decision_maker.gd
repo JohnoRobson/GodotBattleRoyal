@@ -1,38 +1,30 @@
 class_name DecisionMaker
 
-# things that can be done in the game:
-# 1.  moving
-# 2.  picking up items
-# 3.  using items
-#
-# actions that actors can do in the game:
-# 1.  running away
-# 2.  looting
-# 3.  healing
-# 4.  attacking
-#
-# rough priority of actions:
-# 1.  looting
-# 2.  attacking
-# 3.  running away
-# 4.  healing
-static func get_state_to_do(controller: AiActorController):
+static var top_level_states: Array[State] = [
+		FindGrenadeState.new(),
+		FindHealthState.new(),
+		FleeState.new(),
+		FightState.new(),
+		FindWeaponState.new(),
+		StandInHealingAuraState.new(),
+		UseHealthItemState.new()
+	]
+
+static func get_state_to_do(controller: AiActorController) -> State:
 	var factor_context: FactorContext = FactorContext.new(controller.world, controller.actor, controller.actor.global_position)
-	# 1. should we loot?
-	var loot_factor: float = LootFactor.evaluate(factor_context)
-	# 2. should we attack?
-	# 3. should we run away?
-	var danger_factor: float = DangerFactor.evaluate(factor_context)
-	# 4. should we heal?
-	var health_factor: float = HealthFactor.evaluate(factor_context)
-
-	if health_factor > 0.6 and controller.world.get_closest_available_health(controller.actor.global_transform.origin) != null:
-		return FindHealthState.new()
-
-	if loot_factor > 0.0 and controller.actor.held_weapon == null:
-		return FindWeaponState.new()
+	var highest_priority_state = top_level_states[0]
+	var highest_priority: float = 0.0
+	var print_str: String = "====\n"
 	
-	if danger_factor >= 1.0 or (danger_factor > 0.4 and health_factor > 0.3):
-		return FleeState.new()
-	
-	return FindEnemyState.new()
+	# loop through top level states and find out which one has the highest priority
+	for state in top_level_states:
+		var priority: float = state.evaluate(factor_context)
+		if priority > highest_priority:
+			highest_priority_state = state
+			highest_priority = priority
+		print_str = print_str + " %s : %s\n" % [state.get_name(), priority]
+	print_str = print_str + "===="
+	#print(print_str)
+
+	# return that state
+	return highest_priority_state

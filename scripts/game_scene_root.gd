@@ -1,5 +1,7 @@
 class_name GameSceneRoot extends Node
 
+var current_game_type: String = 'classic'
+
 func _process(_delta):
 	if Input.is_action_just_pressed("toggle_menu"):
 		if $GameScenes.get_child_count() >= 1:
@@ -13,12 +15,26 @@ func _notification(what):
 		get_tree().quit()
 
 # Load a new game scene, hide the UI, and unpause
-func start_game_scene(new_game_scene:PackedScene):
+func start_game_scene(new_game_scene:PackedScene, game_type: String):
 	var new_instantiated_game_scene = new_game_scene.instantiate()
 	new_instantiated_game_scene.game_lost.connect(_on_game_scene_game_lost)
 	new_instantiated_game_scene.game_won.connect(_on_game_scene_game_won)
 	new_instantiated_game_scene.game_loaded.connect(_on_game_scene_game_loaded)
 	$GameScenes.add_child(new_instantiated_game_scene)
+
+	if game_type != 'restart':
+		current_game_type = game_type
+
+	match current_game_type:
+		'classic':
+			new_instantiated_game_scene.setup_classic_game()
+		'ai':
+			new_instantiated_game_scene.setup_ai_only_game()
+		'sandbox':
+			new_instantiated_game_scene.setup_player_only_game()
+		_:
+			new_instantiated_game_scene.setup_classic_game()
+
 	get_tree().paused = false
 
 # Clear all current game scenes from the game scene root
@@ -50,9 +66,9 @@ func _on_game_scene_game_loaded():
 	$MenuManager.clear_menus()
 	$GameHud.show()
 
-func _on_start_game_button_pressed():
+func _on_start_game_button_pressed(game_type: String):
 	clear_game_scenes()
-	start_game_scene.call_deferred(load("res://scenes/scene.tscn"))
+	start_game_scene.call_deferred(load("res://scenes/scene.tscn"), game_type)
 
 func _on_return_to_title_button_pressed():
 	clear_game_scenes()

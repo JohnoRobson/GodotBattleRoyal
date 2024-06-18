@@ -1,7 +1,7 @@
 class_name MenuManager extends Node
 
-signal start_game_button_pressed
-signal return_to_title_button_pressed
+signal start_game_button_pressed(game_type: String)
+signal return_to_title_button_pressed()
 
 var menus: Array[Menu] = []
 
@@ -44,10 +44,10 @@ func open_pause_menu():
 	$TransparentOverlay.show()
 	open_menu($PauseMenu)
 
-func _on_start_game_button_pressed():
+func _on_start_game_button_pressed(game_type: String):
 	clear_menus()
 	open_menu($LoadingScreen)
-	start_game_button_pressed.emit()
+	start_game_button_pressed.emit(game_type)
 
 func _on_return_to_title_button_pressed():
 	clear_menus()

@@ -18,16 +18,7 @@ signal game_loaded
 
 func _ready():
 	action_system.world = self
-
 	set_camera_to_default()
-	setup_classic_game()
-	assign_default_camera_to_random_ai_actor()
-
-	# move this somewhere else
-	for item in get_tree().get_nodes_in_group("items"):
-		item.action_triggered.connect(action_system.action_triggered)
-
-	game_loaded.emit()
 
 func _process(_delta):
 	pass
@@ -45,6 +36,16 @@ func _init_actor(actor: Actor, spawn_position: Vector2):
 	actor.weapon_inventory.inventory_data = InventoryData.new()
 	for i in 3:
 		actor.weapon_inventory.inventory_data._slots.append(InventorySlotData.new())
+
+# To be run after a game setup function has been called
+func conclude_loading():
+	assign_default_camera_to_random_ai_actor()
+
+	# move this somewhere else
+	for item in get_tree().get_nodes_in_group("items"):
+		item.action_triggered.connect(action_system.action_triggered)
+
+	game_loaded.emit()
 
 # Spawn player actor and create new player controller
 func spawn_player(spawn_position: Vector2):
@@ -193,6 +194,7 @@ func setup_classic_game():
 	spawn_weapon(Vector2(5,5), Weapons.SMG)
 	spawn_weapon(Vector2(-15,5), Weapons.SHOTGUN)
 	spawn_weapon(Vector2(25,-5), Weapons.SNIPER)
+	conclude_loading()
 
 func setup_ai_only_game():
 	spawn_ai(Vector2(-10,0))
@@ -201,9 +203,11 @@ func setup_ai_only_game():
 	spawn_weapon(Vector2(5,5), Weapons.SMG)
 	spawn_weapon(Vector2(-15,5), Weapons.SHOTGUN)
 	spawn_weapon(Vector2(25,-5), Weapons.SNIPER)
+	conclude_loading()
 
 func setup_player_only_game():
 	spawn_player(Vector2(0,5))
 	spawn_weapon(Vector2(5,5), Weapons.SMG)
 	spawn_weapon(Vector2(-15,5), Weapons.SHOTGUN)
 	spawn_weapon(Vector2(25,-5), Weapons.SNIPER)
+	conclude_loading()

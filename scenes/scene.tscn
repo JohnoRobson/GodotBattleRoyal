@@ -30,10 +30,11 @@ albedo_color = Color(0.443137, 0.376471, 0.294118, 1)
 material = SubResource("StandardMaterial3D_bvpt3")
 size = Vector2(100, 100)
 
-[node name="World" type="Node3D" node_paths=PackedStringArray("effect_manager", "nav_region", "action_system")]
+[node name="World" type="Node3D" node_paths=PackedStringArray("effect_manager", "nav_region", "default_camera", "action_system")]
 script = ExtResource("1_h7cyw")
 effect_manager = NodePath("EffectManager")
 nav_region = NodePath("NavigationRegion3D")
+default_camera = NodePath("DefaultCamera")
 action_system = NodePath("ActionSystem")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
@@ -101,3 +102,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.1593, 0.773684, 3.77561)
 
 [node name="Cluster_Grenade" parent="." instance=ExtResource("10_h3423")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.618964, -0.679529)
+
+[node name="DefaultCamera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.559193, 0.829038, 0, -0.829038, 0.559193, 0, 13.4105, 10.5207)

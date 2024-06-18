@@ -58,5 +58,5 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 40
 text = "Return To Title"
 
-[connection signal="pressed" from="Restart Button" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="Restart Button" to="." method="_on_start_button_pressed" binds= ["restart"]]
 [connection signal="pressed" from="Return To Title Button" to="." method="_on_return_to_title_button_pressed"]

@@ -24,16 +24,7 @@ func start_game_scene(new_game_scene:PackedScene, game_type: String):
 
 	if game_type != 'restart':
 		current_game_type = game_type
-
-	match current_game_type:
-		'classic':
-			new_instantiated_game_scene.setup_classic_game()
-		'ai':
-			new_instantiated_game_scene.setup_ai_only_game()
-		'sandbox':
-			new_instantiated_game_scene.setup_player_only_game()
-		_:
-			new_instantiated_game_scene.setup_classic_game()
+	new_instantiated_game_scene.setup_game(current_game_type)
 
 	get_tree().paused = false
 

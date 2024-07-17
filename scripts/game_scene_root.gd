@@ -1,6 +1,9 @@
 class_name GameSceneRoot extends Node
 
-var current_game_type: String = 'classic'
+# Treat CLASSIC as the default game mode from the perspective of the game scene root
+var current_game_type:World.GameTypes  = World.GameTypes.CLASSIC
+
+var world_script = preload("res://scripts/world.gd")
 
 func _process(_delta):
 	if Input.is_action_just_pressed("toggle_menu"):
@@ -15,25 +18,17 @@ func _notification(what):
 		get_tree().quit()
 
 # Load a new game scene, hide the UI, and unpause
-func start_game_scene(new_game_scene:PackedScene, game_type: String):
+func start_game_scene(new_game_scene:PackedScene, game_type: World.GameTypes):
 	var new_instantiated_game_scene = new_game_scene.instantiate()
 	new_instantiated_game_scene.game_lost.connect(_on_game_scene_game_lost)
 	new_instantiated_game_scene.game_won.connect(_on_game_scene_game_won)
 	new_instantiated_game_scene.game_loaded.connect(_on_game_scene_game_loaded)
 	$GameScenes.add_child(new_instantiated_game_scene)
 
-	if game_type != 'restart':
+	if current_game_type != game_type:
 		current_game_type = game_type
 
-	match current_game_type:
-		'classic':
-			new_instantiated_game_scene.setup_classic_game()
-		'ai':
-			new_instantiated_game_scene.setup_ai_only_game()
-		'sandbox':
-			new_instantiated_game_scene.setup_player_only_game()
-		_:
-			new_instantiated_game_scene.setup_classic_game()
+	new_instantiated_game_scene.setup_game(game_type)
 
 	get_tree().paused = false
 
@@ -66,9 +61,13 @@ func _on_game_scene_game_loaded():
 	$MenuManager.clear_menus()
 	$GameHud.show()
 
-func _on_start_game_button_pressed(game_type: String):
+func _on_start_game_button_pressed(game_type: World.GameTypes):
 	clear_game_scenes()
 	start_game_scene.call_deferred(load("res://scenes/scene.tscn"), game_type)
+
+func _on_restart_game_button_pressed():
+	clear_game_scenes()
+	start_game_scene.call_deferred(load("res://scenes/scene.tscn"), current_game_type)
 
 func _on_return_to_title_button_pressed():
 	clear_game_scenes()

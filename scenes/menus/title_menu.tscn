@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cxtqrmnc7fwf"]
 
-[ext_resource type="Script" path="res://scripts/menu.gd" id="1_etaam"]
+[ext_resource type="Script" path="res://scripts/title_menu.gd" id="1_6fkqe"]
 
 [node name="TitleScreen" type="Control"]
 layout_mode = 3
@@ -9,7 +9,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_etaam")
+script = ExtResource("1_6fkqe")
 
 [node name="Title" type="Label" parent="."]
 layout_mode = 1
@@ -111,8 +111,5 @@ theme_override_font_sizes/font_size = 40
 text = "Close"
 metadata/_edit_use_anchors_ = true
 
-[connection signal="pressed" from="Start Classic Button" to="." method="_on_start_button_pressed" binds= ["classic"]]
-[connection signal="pressed" from="Start AI Only Button" to="." method="_on_start_button_pressed" binds= ["ai"]]
-[connection signal="pressed" from="Start Sandbox Button" to="." method="_on_start_button_pressed" binds= ["sandbox"]]
 [connection signal="pressed" from="Settings Button" to="." method="_on_settings_button_pressed"]
 [connection signal="pressed" from="Close Button" to="." method="_on_close_button_pressed"]

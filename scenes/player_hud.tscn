@@ -3,17 +3,25 @@
 [ext_resource type="Script" path="res://scripts/player_hud.gd" id="1_ondyb"]
 [ext_resource type="Script" path="res://scripts/components/inventory/inventory_ui.gd" id="2_hfa3h"]
 
-[node name="PlayerHud" type="CanvasLayer"]
+[node name="PlayerHud" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_ondyb")
 
 [node name="AmmoCount" type="Label" parent="."]
+layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -108.0
-offset_top = -41.0
+offset_left = -76.0
+offset_top = -43.0
+offset_right = -20.0
 grow_horizontal = 0
 grow_vertical = 0
 text = "Ammo:"
@@ -21,16 +29,19 @@ horizontal_alignment = 2
 vertical_alignment = 1
 
 [node name="Health" type="Label" parent="."]
+layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
+offset_left = 20.0
 offset_top = -43.0
-offset_right = 143.0
+offset_right = 163.0
 grow_vertical = 0
 text = "Health: 100"
 vertical_alignment = 1
 
 [node name="Inventory" type="GridContainer" parent="."]
+layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0

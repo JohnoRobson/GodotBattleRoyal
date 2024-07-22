@@ -6,10 +6,12 @@ class_name World extends Node3D
 @export var effect_manager: EffectManager
 
 @export var nav_region: NavigationRegion3D
+@export var default_camera: Camera3D
 
 @export var action_system: ActionSystem
 
 enum Weapons {SMG, SHOTGUN, SNIPER}
+enum GameTypes {AI, SANDBOX, CLASSIC}
 
 signal game_lost
 signal game_won
@@ -17,19 +19,7 @@ signal game_loaded
 
 func _ready():
 	action_system.world = self
-	spawn_player(Vector2(0,5))
-	spawn_ai(Vector2(-10,0))
-	spawn_ai(Vector2(-10,5))
-	spawn_ai(Vector2(30,0))
-	spawn_weapon(Vector2(5,5), Weapons.SMG)
-	spawn_weapon(Vector2(-15,5), Weapons.SHOTGUN)
-	spawn_weapon(Vector2(25,-5), Weapons.SNIPER)
-
-	# move this somewhere else
-	for item in get_tree().get_nodes_in_group("items"):
-		item.action_triggered.connect(action_system.action_triggered)
-
-	game_loaded.emit()
+	set_camera_to_default()
 
 func _process(_delta):
 	pass
@@ -47,6 +37,16 @@ func _init_actor(actor: Actor, spawn_position: Vector2):
 	actor.weapon_inventory.inventory_data = InventoryData.new()
 	for i in 3:
 		actor.weapon_inventory.inventory_data._slots.append(InventorySlotData.new())
+
+# To be run after a game setup function has been called
+func conclude_loading():
+	assign_default_camera_to_random_ai_actor()
+
+	# move this somewhere else
+	for item in get_tree().get_nodes_in_group("items"):
+		item.action_triggered.connect(action_system.action_triggered)
+
+	game_loaded.emit()
 
 # Spawn player actor and create new player controller
 func spawn_player(spawn_position: Vector2):
@@ -71,7 +71,6 @@ func spawn_player(spawn_position: Vector2):
 	inventory_ui.selected_slot_scrolled_down.connect(inventory.selected_slot_scrolled_down)
 
 	inventory.emit_updates() # hack to get the ui to update on game start
-
 
 # Spawn AI actor and configure existing AI controller
 func spawn_ai(spawn_position: Vector2):
@@ -107,11 +106,19 @@ func spawn_weapon(spawn_position: Vector2, weapon_type: Weapons) -> Weapon:
 func _on_actor_killed(actor: Actor):
 	player_actors.erase(actor)
 	ai_actors.erase(actor)
-	
+
+	if default_camera != null and default_camera.is_ancestor_of(actor):
+		assign_default_camera_to_random_ai_actor()
+
 	# check for win condition
-	if player_actors.size() + ai_actors.size() == 1:
+	if get_win_condition_satisfied():
 		action_system.shut_down()
 		game_won.emit()
+
+func get_win_condition_satisfied() -> bool:
+	if player_actors.size() >= 1 and ai_actors.size() == 0:
+		return true
+	return false
 
 func get_closest_actor(from_position: Vector3, ignore: Actor = null) -> Actor:
 	var actors = player_actors + ai_actors # Apparently you can concatenate arrays like this - MW 2023-05-15
@@ -123,6 +130,11 @@ func get_closest_actor(from_position: Vector3, ignore: Actor = null) -> Actor:
 
 	# weird ternary
 	return actors.front() if !actors.is_empty() else null
+
+func get_random_ai_actor() -> Actor:
+	if ai_actors.is_empty():
+		return null
+	return ai_actors.pick_random()
 
 func get_closest_available_health(from_position: Vector3) -> GameItem:
 	var pickups = []
@@ -144,8 +156,23 @@ func get_closest_available_weapon(from_position: Vector3) -> GameItem:
 
 	return weapon_array.front() if !weapon_array.is_empty() else null
 
+func set_camera_to_default() -> void:
+	if default_camera == null:
+		return;
+
+	default_camera.make_current()
+
+func assign_default_camera_to_random_ai_actor() -> void:
+	if default_camera == null:
+		return;
+	var ai_actor = get_random_ai_actor()
+	if ai_actor == null:
+		default_camera.reparent(self, false)
+	else:
+		default_camera.reparent(ai_actor, false)
+
 func _on_player_killed(_player: Actor):
-	action_system.shut_down()
+	set_camera_to_default()
 	game_lost.emit()
 
 func return_item_to_world(item: GameItem, global_position_to_place_item: Vector3, global_rotation_to_place_item: Vector3):
@@ -159,3 +186,21 @@ func get_actors_and_gameitems_in_area(target_position: Vector3, distance: float)
 	var things = player_actors + ai_actors + get_tree().get_nodes_in_group("items")
 
 	return things.filter(func(a):return a != null).filter(func(a): return a.is_inside_tree()).filter(func(a): return target_position.distance_to(a.global_transform.origin) <= distance)
+
+func setup_game(game_type: GameTypes):
+	spawn_weapon(Vector2(5,5), Weapons.SMG)
+	spawn_weapon(Vector2(-15,5), Weapons.SHOTGUN)
+	spawn_weapon(Vector2(25,-5), Weapons.SNIPER)
+	match game_type:
+		GameTypes.AI:
+			spawn_ai(Vector2(-10,0))
+			spawn_ai(Vector2(-10,5))
+			spawn_ai(Vector2(30,0))
+		GameTypes.SANDBOX:
+			spawn_player(Vector2(0,5))
+		GameTypes.CLASSIC, _:
+			spawn_player(Vector2(0,5))
+			spawn_ai(Vector2(-10,0))
+			spawn_ai(Vector2(-10,5))
+			spawn_ai(Vector2(30,0))
+	conclude_loading()

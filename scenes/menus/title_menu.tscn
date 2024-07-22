@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cxtqrmnc7fwf"]
 
-[ext_resource type="Script" path="res://scripts/menu.gd" id="1_etaam"]
+[ext_resource type="Script" path="res://scripts/title_menu.gd" id="1_6fkqe"]
 
 [node name="TitleScreen" type="Control"]
 layout_mode = 3
@@ -9,7 +9,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_etaam")
+script = ExtResource("1_6fkqe")
 
 [node name="Title" type="Label" parent="."]
 layout_mode = 1
@@ -29,7 +29,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Start Button" type="Button" parent="."]
+[node name="Start Classic Button" type="Button" parent="."]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.378681
@@ -43,7 +43,41 @@ offset_bottom = -0.0240479
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 40
-text = "Start"
+text = "Start Classic"
+metadata/_edit_use_anchors_ = true
+
+[node name="Start AI Only Button" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.657326
+anchor_top = 0.451691
+anchor_right = 0.909326
+anchor_bottom = 0.612692
+offset_left = -0.23999
+offset_top = 0.303955
+offset_right = 0.455933
+offset_bottom = -0.0240479
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 40
+text = "Start AI Only"
+metadata/_edit_use_anchors_ = true
+
+[node name="Start Sandbox Button" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0991667
+anchor_top = 0.451691
+anchor_right = 0.351167
+anchor_bottom = 0.612692
+offset_left = -0.23999
+offset_top = 0.303955
+offset_right = 0.455933
+offset_bottom = -0.0240479
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 40
+text = "Start Sandbox"
 metadata/_edit_use_anchors_ = true
 
 [node name="Settings Button" type="Button" parent="."]
@@ -77,6 +111,5 @@ theme_override_font_sizes/font_size = 40
 text = "Close"
 metadata/_edit_use_anchors_ = true
 
-[connection signal="pressed" from="Start Button" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="Settings Button" to="." method="_on_settings_button_pressed"]
 [connection signal="pressed" from="Close Button" to="." method="_on_close_button_pressed"]

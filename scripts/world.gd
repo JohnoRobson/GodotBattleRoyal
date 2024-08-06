@@ -122,7 +122,9 @@ func get_closest_actor(from_position: Vector3, ignore: Actor = null) -> Actor:
 	actors.sort_custom(func(a, b): return from_position.distance_to(a.global_transform.origin) < from_position.distance_to(b.global_transform.origin))
 
 	# weird ternary
-	return actors.front() if !actors.is_empty() else null
+	var closest_actor: Actor = actors.front() if !actors.is_empty() else null
+	#print("closest actor: %s, ignore: %s" % [closest_actor, ignore])
+	return closest_actor
 
 func get_closest_available_health(from_position: Vector3) -> GameItem:
 	var pickups = []

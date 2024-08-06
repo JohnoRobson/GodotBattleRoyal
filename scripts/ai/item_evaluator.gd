@@ -1,8 +1,8 @@
-class_name WeaponEvaluator
+class_name ItemEvaluator
 
 ## returns the max range of the GameItem, or -1 if it has no range
 ## (either the first raycast or the first throw range action in a GameItem)
-static func get_item_range(game_item: GameItem) -> float:
+static func get_item_range(game_item: GameItem, when_moving: bool) -> float:
 	var first_action: Action = game_item.action
 	
 	if game_item is Weapon:
@@ -17,7 +17,11 @@ static func get_item_range(game_item: GameItem) -> float:
 		var raycast_range: float = raycast_action.cast_range
 		
 		# calculate a reasonable range, taking inaccuracy into account 
-		var inaccuracy_degrees: float = (game_item as Weapon).stats.degrees_of_inaccuracy_stationary
+		var inaccuracy_degrees: float
+		if when_moving:
+			inaccuracy_degrees = (game_item as Weapon).stats.degrees_of_inaccuracy_moving
+		else:
+			inaccuracy_degrees = (game_item as Weapon).stats.degrees_of_inaccuracy_stationary
 		var max_allowable_inaccuracy_from_aimpoint: float = 4.0 # the opposite side of a right triangle
 		# sin(angle) = opposite / hypotenuse, therefor hypotenuse = opposite / sin(angle)
 		var calculated_max_range_including_inaccuracy: float = max_allowable_inaccuracy_from_aimpoint / sin(deg_to_rad(inaccuracy_degrees))

@@ -36,14 +36,13 @@ var _velocity_to_add: Vector3 = Vector3.ZERO
 signal actor_killed(me: Actor)
 signal weapon_swap(weapon: GameItem)
 
-func _move_direction(input_dir: Vector2):
-	movement_direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-
 func _aim_weapon():
 	var aim_position = controller.get_aim_position()
-	if !aim_position.is_equal_approx(Vector3.UP) and !aim_position.is_equal_approx(rotator.global_position):
+	var side_to_side_vector = Vector3(aim_position.x, rotator.global_position.y, aim_position.z)
+	
+	if !aim_position.is_equal_approx(Vector3.UP) and !side_to_side_vector.is_equal_approx(rotator.global_position):
 		# side to side rotation
-		rotator.look_at(Vector3(aim_position.x, rotator.global_position.y, aim_position.z), Vector3.UP)
+		rotator.look_at(side_to_side_vector, Vector3.UP)
 
 		# up and down rotation
 		if held_weapon != null:
@@ -88,6 +87,7 @@ func _physics_process(delta):
 		velocity.y -= gravity * delta
 
 	var movement_vel = (transform.basis * Vector3(controller.get_move_direction().x, 0, controller.get_move_direction().y)).normalized()
+	
 	if movement_vel:
 		velocity.x = movement_vel.x * speed
 		velocity.z = movement_vel.z * speed

@@ -5,7 +5,7 @@ var is_held: bool
 var can_be_used: bool
 @export var item_name: String = "Example Name"
 @export var action: Action
-@export var aim_function: AimFunction = null
+@export var aim_function: AimFunction = AimFunction.new() # use default aim function
 @export var traits: Array[ItemTrait] = []
 
 const DEFAULT_COLLISION_LAYER = 0b0100
@@ -58,16 +58,9 @@ func dispose_of_item():
 	item_used_up.emit()
 	queue_free()
 
-# returns a vector that points from the weapon to the target, in local space
-# Points straight ahead if no aim function is set
+# returns a vector in local space that points from the weapon to where the weapon should be pointing to hit the target
 func get_aim_vector(target_global_position: Vector3) -> Vector3:
-	var aim_direction = target_global_position - global_position
-	aim_direction = Vector3(aim_direction.x, 0.0, aim_direction.z)
-
-	if (aim_function != null):
-		aim_direction = aim_function.aim_angle(target_global_position, global_position)
-	
-	return aim_direction
+	return aim_function.aim_angle(target_global_position, global_position)
 
 func has_trait(item_trait: ItemTrait):
 	return traits.has(item_trait)

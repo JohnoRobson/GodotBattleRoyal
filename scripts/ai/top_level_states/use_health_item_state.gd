@@ -17,7 +17,7 @@ func execute(controller: AiActorController):
 	else:
 		controller.state_machine.change_state(DecisionMakingState.new())
 	
-	if medkit_pickup_routine_started:	
+	if medkit_pickup_routine_started:
 		# do nothing, you are holding a medkit
 		return
 

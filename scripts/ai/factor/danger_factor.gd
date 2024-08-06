@@ -3,7 +3,7 @@ extends Factor
 
 # returns 0.0 to 1.0 based on how dangerous this actor's position is, based off of enemy actor and grenade proximity. 0.0 is safe, 1.0 is unsafe
 static func evaluate(factor_context: FactorContext) -> float:
-	const danger_radius: float = 10.0
+	const danger_radius: float = 5.0
 	const actor_weight = 0.4
 	const explosive_weight = 4.0
 

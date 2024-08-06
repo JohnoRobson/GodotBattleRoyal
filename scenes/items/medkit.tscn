@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dh6uydtmtwo02"]
+[gd_scene load_steps=15 format=3 uid="uid://dh6uydtmtwo02"]
 
 [ext_resource type="PackedScene" uid="uid://bmkdhqo5v1fou" path="res://models/medkit.blend" id="1_d6ka3"]
 [ext_resource type="Script" path="res://scripts/items/game_item.gd" id="1_icxwt"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://scripts/action_system/actions/area.gd" id="3_w2ggo"]
 [ext_resource type="Script" path="res://scripts/action_system/actions/heal.gd" id="4_f30rl"]
 [ext_resource type="Script" path="res://scripts/action_system/actions/remove.gd" id="4_ysn67"]
+[ext_resource type="Script" path="res://scripts/items/aim_function.gd" id="7_xo5uo"]
 
 [sub_resource type="Resource" id="Resource_04dob"]
 script = ExtResource("3_085hd")
@@ -28,6 +29,9 @@ radius = 2.0
 targeted_actions = Array[Resource("res://scripts/action_system/actions/targeted_action.gd")]([SubResource("Resource_hkmx1")])
 actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([SubResource("Resource_04dob"), SubResource("Resource_kec32")])
 
+[sub_resource type="Resource" id="Resource_irte7"]
+script = ExtResource("7_xo5uo")
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_1e27m"]
 size = Vector3(1.03257, 0.513558, 1.03219)
 
@@ -35,6 +39,7 @@ size = Vector3(1.03257, 0.513558, 1.03219)
 script = ExtResource("1_icxwt")
 item_name = "Medkit"
 action = SubResource("Resource_bmy8g")
+aim_function = SubResource("Resource_irte7")
 traits = Array[int]([0, 4])
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]

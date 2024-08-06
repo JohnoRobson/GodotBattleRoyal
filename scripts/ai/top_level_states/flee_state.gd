@@ -29,6 +29,10 @@ func enter(controller: AiActorController):
 	
 	# flee in the opposite direction of the danger
 	position_to_flee_to = current_position + (-average_danger_direction_local).normalized() * 10.0
+	position_to_flee_to = Vector3(position_to_flee_to.x, current_position.y, position_to_flee_to.z)
+	
+	#print("flee pos: %s, curr pos: %s" % [position_to_flee_to, current_position])
+	
 	controller.nav_agent.target_position = position_to_flee_to
 
 func execute(_controller: AiActorController):
@@ -44,11 +48,12 @@ func execute_physics(controller: AiActorController):
 		nav_agent.velocity = dir * controller.actor.speed
 	else:
 		controller.set_move_direction(Vector2(dir.x, dir.z))
+	#controller.set_move_direction(Vector2(dir.x, dir.z))
 	
 	controller.set_aim_position(controller.actor.to_global(Vector3(dir.x * 100, 0, dir.z * 100)))
 
 	var target_distance: float = position_to_flee_to.distance_to(controller.actor.global_transform.origin)
-	if target_distance <= 3.0:
+	if target_distance <= 2.0:
 		controller.state_machine.change_state(DecisionMakingState.new())
 
 func exit(controller: AiActorController):

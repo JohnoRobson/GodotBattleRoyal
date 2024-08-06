@@ -8,7 +8,7 @@ class_name FightState extends State
 ##     otherwise attempt to maintain the optimal range for the current weapon
 ## 5.  attack the current_target when there is a clear line of sight to the target (wip) and when the weapon is aimed at the target	
 
-const RANGE_THRESHOLD: float = 5.0
+const RANGE_THRESHOLD: float = 3.0
 const TICKS_BETWEEN_TARGET_CHANGE_CHECK: int = 60
 const MAX_WEAPON_RANGE_TO_CONSIDER: float = 50.0 # effective sniper range is like 200, you can't see further than like 50
 const MIN_WEAPON_SCORE_TO_FIRE: float = 0.2
@@ -119,8 +119,7 @@ func execute_physics(controller: AiActorController):
 					var away_dir := -(current_target_position - current_global_position).normalized()
 					movement_target = current_global_position + away_dir * 2.0
 				DirectionToMove.STAY_STILL:
-					controller.set_move_direction(Vector2())
-					return
+					movement_target = controller.actor.global_position
 		Movement.MOVING_TOWARDS_MOVEMENT_OVERRIDE:
 			movement_target = movement_override_target
 	
@@ -202,7 +201,7 @@ func _determine_direction_to_move(this_actor: Actor) -> DirectionToMove:
 	# special case for very accurate weapons
 	if is_equal_approx(item_range_when_stationary, 50.0) and target_distance >= 15:
 		return DirectionToMove.STAY_STILL
-		
+	
 	# am I at a good range right now if I don't move? (stationary range)
 	if target_distance + RANGE_THRESHOLD >= item_range_when_stationary and item_range_when_stationary >= target_distance - RANGE_THRESHOLD:
 		return DirectionToMove.STAY_STILL

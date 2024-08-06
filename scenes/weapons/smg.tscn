@@ -39,7 +39,7 @@ size = Vector3(0.157325, 0.498044, 2.18281)
 
 [node name="Smg" type="RigidBody3D" groups=["items", "weapons"]]
 collision_layer = 4
-collision_mask = 3
+collision_mask = 15
 script = ExtResource("1_rrsjv")
 stats = SubResource("Resource_wjeax")
 item_name = "SMG"

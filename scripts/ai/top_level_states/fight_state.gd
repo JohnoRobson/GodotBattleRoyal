@@ -40,13 +40,8 @@ func enter(controller: AiActorController):
 	current_controller = controller
 	nav_agent = controller.nav_agent
 	acquire_and_set_target()
+	
 	nav_agent.velocity_computed.connect(_on_velocity_computed)
-	# safety check to make sure the Actor has a weapon
-	if !_has_weapon(controller.actor):
-		controller.state_machine.change_state(DecisionMakingState.new())
-		return
-	else:
-		_equip_best_weapon_for_current_circumstance(controller)
 	
 	# if movement is MOVING_TOWARDS_MOVEMENT_OVERRIDE, then the current_movement_target must be set
 	# otherwise throw
@@ -55,6 +50,17 @@ func enter(controller: AiActorController):
 	
 	if movement_state == Movement.MOVING_TOWARDS_MOVEMENT_OVERRIDE:
 		assert(movement_override_target != null)
+	
+	if current_target == null:
+		# can't switch back to decision making state, because that would cause a stack overflow
+		return
+	
+	# safety check to make sure the Actor has a weapon
+	if !_has_weapon(controller.actor):
+		controller.state_machine.change_state(DecisionMakingState.new())
+		return
+	else:
+		_equip_best_weapon_for_current_circumstance(controller)
 
 func execute(controller: AiActorController):
 	# find target

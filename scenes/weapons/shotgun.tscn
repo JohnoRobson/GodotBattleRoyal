@@ -46,7 +46,7 @@ size = Vector3(0.300564, 0.364884, 1.96176)
 
 [node name="Shotgun" type="RigidBody3D" groups=["items", "weapons"]]
 collision_layer = 4
-collision_mask = 3
+collision_mask = 15
 script = ExtResource("1_jqidy")
 stats = SubResource("Resource_urvxe")
 item_name = "Shotgun"

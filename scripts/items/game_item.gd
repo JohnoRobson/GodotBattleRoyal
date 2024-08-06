@@ -9,7 +9,7 @@ var can_be_used: bool
 @export var traits: Array[ItemTrait] = []
 
 const DEFAULT_COLLISION_LAYER = 0b0100
-const DEFAULT_COLLISION_MASK = 0b0111
+const DEFAULT_COLLISION_MASK = 0b1111
 
 signal item_updated()
 signal item_used_up()

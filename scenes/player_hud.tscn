@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://pciev3jsxk36"]
+[gd_scene load_steps=4 format=3 uid="uid://pciev3jsxk36"]
 
 [ext_resource type="Script" path="res://scripts/player_hud.gd" id="1_ondyb"]
 [ext_resource type="Script" path="res://scripts/components/inventory/inventory_ui.gd" id="2_hfa3h"]
+[ext_resource type="PackedScene" uid="uid://by5l67qs54kqb" path="res://scenes/process_visibility_sync.tscn" id="3_ombiq"]
 
 [node name="PlayerHud" type="Control"]
 layout_mode = 3
@@ -52,3 +53,5 @@ grow_vertical = 0
 size_flags_horizontal = 3
 columns = 6
 script = ExtResource("2_hfa3h")
+
+[node name="ProcessVisibilitySync" parent="." instance=ExtResource("3_ombiq")]

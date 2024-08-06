@@ -23,6 +23,7 @@ func start_game_scene(new_game_scene:PackedScene):
 
 # Clear all current game scenes from the game scene root
 func clear_game_scenes():
+	$GameHud.hide()
 	var game_scenes:Node = $GameScenes
 	for game_scene in game_scenes.get_children():
 		game_scenes.remove_child(game_scene)
@@ -49,6 +50,7 @@ func _on_game_scene_game_won():
 
 func _on_game_scene_game_loaded():
 	$MenuManager.clear_menus()
+	$GameHud.show()
 
 func _on_start_game_button_pressed():
 	clear_game_scenes()
@@ -57,3 +59,12 @@ func _on_start_game_button_pressed():
 func _on_return_to_title_button_pressed():
 	clear_game_scenes()
 	get_tree().paused = true
+
+func _on_close_button_pressed():
+	get_tree().root.propagate_notification(NOTIFICATION_WM_CLOSE_REQUEST)
+
+func _on_resume_button_pressed():
+	toggle_pause_menu()
+
+func _on_game_hud_pause_button_pressed():
+	toggle_pause_menu()

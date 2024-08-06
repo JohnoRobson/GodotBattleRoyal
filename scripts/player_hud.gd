@@ -1,6 +1,4 @@
-extends CanvasLayer
-
-class_name Hud
+class_name PlayerHud extends CanvasLayer
 
 @onready var ammo_count: Label = get_node("AmmoCount")
 @onready var health: Label = get_node("Health")

@@ -14,14 +14,14 @@ script = ExtResource("1_etaam")
 [node name="Title" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = -0.255208
-anchor_top = -0.0833333
-anchor_right = 0.244792
-anchor_bottom = -0.0833333
-offset_left = 394.0
-offset_top = 166.0
-offset_right = 761.0
-offset_bottom = 321.0
+anchor_left = 0.0965483
+anchor_top = 0.055716
+anchor_right = 0.914548
+anchor_bottom = 0.294716
+offset_left = -0.22361
+offset_top = -0.103981
+offset_right = 0.440308
+offset_bottom = 0.0240173
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 50
 text = "Battle Royal"
@@ -32,10 +32,10 @@ metadata/_edit_use_anchors_ = true
 [node name="Start Button" type="Button" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.370868
-anchor_top = 0.629161
-anchor_right = 0.622868
-anchor_bottom = 0.790161
+anchor_left = 0.378681
+anchor_top = 0.368358
+anchor_right = 0.630681
+anchor_bottom = 0.529358
 offset_left = -0.23999
 offset_top = 0.303955
 offset_right = 0.455933
@@ -46,23 +46,37 @@ theme_override_font_sizes/font_size = 40
 text = "Start"
 metadata/_edit_use_anchors_ = true
 
-[node name="Start Button" type="Button" parent="Start Button"]
+[node name="Settings Button" type="Button" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = -0.00261172
-anchor_top = -1.08946
-anchor_right = 1.00874
-anchor_bottom = -0.211307
-offset_left = -0.23999
-offset_top = 0.303955
-offset_right = 0.455933
-offset_bottom = -0.0240479
-grow_horizontal = 2
-grow_vertical = 2
+anchor_left = 0.378076
+anchor_top = 0.616827
+anchor_right = 0.629076
+anchor_bottom = 0.769827
+offset_left = -0.544006
+offset_top = 0.29599
+offset_right = 0.303955
+offset_bottom = 0.151978
 theme_override_font_sizes/font_size = 40
 text = "Settings
 "
 metadata/_edit_use_anchors_ = true
 
+[node name="Close Button" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.377153
+anchor_top = 0.787198
+anchor_right = 0.628153
+anchor_bottom = 0.940198
+offset_left = -0.480011
+offset_top = -0.104004
+offset_right = 0.36792
+offset_bottom = -0.248047
+theme_override_font_sizes/font_size = 40
+text = "Close"
+metadata/_edit_use_anchors_ = true
+
 [connection signal="pressed" from="Start Button" to="." method="_on_start_button_pressed"]
-[connection signal="pressed" from="Start Button/Start Button" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="Settings Button" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="Close Button" to="." method="_on_close_button_pressed"]

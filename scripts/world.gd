@@ -64,7 +64,7 @@ func spawn_player(spawn_position: Vector2):
 	actor.add_child(controller)
 	actor.set_camera_current()
 	
-	var inventory_ui: InventoryUI = actor.get_node("HUD/Inventory")
+	var inventory_ui: InventoryUI = actor.get_node("PlayerHud/Inventory")
 
 	var inventory: Inventory = actor.get_node("WeaponInventory")
 	inventory_ui.selected_slot_scrolled_up.connect(inventory.selected_slot_scrolled_up)

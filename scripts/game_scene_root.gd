@@ -27,7 +27,6 @@ func start_game_scene(new_game_scene:PackedScene, game_type: World.GameTypes):
 
 	if current_game_type != game_type:
 		current_game_type = game_type
-
 	new_instantiated_game_scene.setup_game(game_type)
 
 	get_tree().paused = false

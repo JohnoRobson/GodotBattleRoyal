@@ -4,6 +4,9 @@ signal selected_slot_scrolled_up
 signal selected_slot_scrolled_down
 var _slots: Array[InventorySlotUi] = []
 
+func _ready():
+	process_priority = -9999 # so that this can trigger inventory changes before the actor's process method is called
+
 func _process(_delta):
 	if Input.is_action_just_pressed("scroll_inventory_up"):
 		selected_slot_scrolled_up.emit()

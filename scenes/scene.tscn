@@ -36,6 +36,9 @@ effect_manager = NodePath("EffectManager")
 nav_region = NodePath("NavigationRegion3D")
 default_camera = NodePath("DefaultCamera")
 action_system = NodePath("ActionSystem")
+camera_zoom_speed = 0.32
+camera_max_distance = 35.0
+camera_min_distance = 4.0
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.648744, -0.49609, -0.577084, 0, -0.758316, 0.651887, -0.761006, -0.422908, -0.491954, 0, 5.96035, -1.18983)

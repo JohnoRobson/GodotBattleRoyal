@@ -206,15 +206,6 @@ func _determine_direction_to_move(this_actor: Actor) -> DirectionToMove:
 	else:
 		# should I close? (moving range)
 		return DirectionToMove.TOWARDS_TARGET
-	
-	## should I close? (moving range)
-	#if item_range_when_stationary < target_distance - RANGE_THRESHOLD:
-		#return DirectionToMove.TOWARDS_TARGET
-	#elif (target_distance + RANGE_THRESHOLD >= item_range_when_moving and item_range_when_moving >= target_distance - RANGE_THRESHOLD) \
-	#or (target_distance + RANGE_THRESHOLD >= item_range_when_stationary and item_range_when_stationary >= target_distance - RANGE_THRESHOLD):
-		#return DirectionToMove.STAY_STILL
-	#else:
-		#return DirectionToMove.AWAY_FROM_TARGET
 
 # used for nav agent collision avoidance
 func _on_velocity_computed(safe_velocity: Vector3):

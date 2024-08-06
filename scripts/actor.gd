@@ -57,6 +57,8 @@ func _process(_delta):
 		return
 	
 	cursor.global_position = controller.get_aim_position()
+	if (controller.is_exchanging_weapon()):
+		_try_to_exchange_weapon()
 	
 	if (_drop_weapon_cooldown_timer > 0.0):
 		_drop_weapon_cooldown_timer -= _delta
@@ -71,8 +73,6 @@ func _process(_delta):
 		held_weapon.reload()
 	if (held_weapon != null && held_weapon is Weapon):
 		held_weapon.set_is_moving(!controller.get_move_direction().is_zero_approx())
-	if (controller.is_exchanging_weapon()):
-		_try_to_exchange_weapon()
 	if (!controller.get_move_direction().is_zero_approx()):
 		actor_state = ActorState.WALKING
 		if animation_player.current_animation != "walking":

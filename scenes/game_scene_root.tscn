@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cbhy7lx4lnl1v"]
+[gd_scene load_steps=12 format=3 uid="uid://cbhy7lx4lnl1v"]
 
 [ext_resource type="Script" path="res://scripts/game_scene_root.gd" id="1_17feb"]
 [ext_resource type="PackedScene" uid="uid://8mmjpgw85cax" path="res://scenes/game_hud.tscn" id="2_7u6n0"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://dcu6ldiv7dvu4" path="res://scenes/menus/settings_menu.tscn" id="7_cpqgh"]
 [ext_resource type="PackedScene" uid="uid://5jf6q7wspxek" path="res://scenes/menus/loading_screen.tscn" id="8_diy1m"]
 [ext_resource type="Script" path="res://scripts/menu.gd" id="9_1a2ev"]
+[ext_resource type="PackedScene" uid="uid://dr4nx3sep0nqf" path="res://scenes/transparent_overlay.tscn" id="10_7sbj5"]
 
 [node name="GameSceneRoot" type="Node"]
 process_mode = 3
@@ -20,11 +21,16 @@ process_mode = 1
 
 [node name="GameHud" parent="." instance=ExtResource("2_7u6n0")]
 process_mode = 3
+layer = 0
 visible = false
 
 [node name="MenuManager" type="Node" parent="."]
 process_mode = 3
 script = ExtResource("2_je011")
+
+[node name="TransparentOverlay" parent="MenuManager" instance=ExtResource("10_7sbj5")]
+process_mode = 3
+visible = false
 
 [node name="PauseMenu" parent="MenuManager" instance=ExtResource("5_2wsfx")]
 process_mode = 3
@@ -52,14 +58,19 @@ visible = false
 script = ExtResource("9_1a2ev")
 
 [connection signal="pause_button_pressed" from="GameHud" to="." method="_on_game_hud_pause_button_pressed"]
+[connection signal="restart_game_button_pressed" from="MenuManager" to="." method="_on_restart_game_button_pressed"]
 [connection signal="return_to_title_button_pressed" from="MenuManager" to="." method="_on_return_to_title_button_pressed"]
 [connection signal="start_game_button_pressed" from="MenuManager" to="." method="_on_start_game_button_pressed"]
+[connection signal="restart_game_button_pressed" from="MenuManager/PauseMenu" to="MenuManager" method="_on_restart_game_button_pressed"]
 [connection signal="resume_button_pressed" from="MenuManager/PauseMenu" to="." method="_on_resume_button_pressed"]
 [connection signal="return_to_title_button_pressed" from="MenuManager/PauseMenu" to="MenuManager" method="_on_return_to_title_button_pressed"]
 [connection signal="settings_button_pressed" from="MenuManager/PauseMenu" to="MenuManager" method="_on_settings_button_pressed"]
 [connection signal="start_game_button_pressed" from="MenuManager/PauseMenu" to="MenuManager" method="_on_start_game_button_pressed"]
+[connection signal="back_button_pressed" from="MenuManager/DeathMenu" to="MenuManager" method="_on_back_button_pressed"]
+[connection signal="restart_game_button_pressed" from="MenuManager/DeathMenu" to="." method="_on_restart_game_button_pressed"]
 [connection signal="return_to_title_button_pressed" from="MenuManager/DeathMenu" to="MenuManager" method="_on_return_to_title_button_pressed"]
 [connection signal="start_game_button_pressed" from="MenuManager/DeathMenu" to="MenuManager" method="_on_start_game_button_pressed"]
+[connection signal="restart_game_button_pressed" from="MenuManager/WinMenu" to="MenuManager" method="_on_restart_game_button_pressed"]
 [connection signal="return_to_title_button_pressed" from="MenuManager/WinMenu" to="MenuManager" method="_on_return_to_title_button_pressed"]
 [connection signal="start_game_button_pressed" from="MenuManager/WinMenu" to="MenuManager" method="_on_start_game_button_pressed"]
 [connection signal="close_button_pressed" from="MenuManager/TitleMenu" to="." method="_on_close_button_pressed"]

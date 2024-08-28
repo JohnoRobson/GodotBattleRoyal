@@ -182,6 +182,11 @@ func _score_weapon_in_current_context(game_item: GameItem, this_actor: Actor) ->
 	var desired_distance: float = clampf(ItemEvaluator.get_item_range(game_item, false), 0, MAX_WEAPON_RANGE_TO_CONSIDER)
 	
 	var clamped_score = clampf(1 - abs(desired_distance - target_distance) * 0.025, 0.0, 1.0)
+	
+	# hack so that the actor can always fire their gun if they've decided to not move
+	if clamped_score < MIN_WEAPON_SCORE_TO_FIRE and _determine_direction_to_move(this_actor) == DirectionToMove.STAY_STILL:
+		return clampf(clamped_score + MIN_WEAPON_SCORE_TO_FIRE, 0.0, 1.0)
+	
 	return clamped_score
 
 func _determine_direction_to_move(this_actor: Actor) -> DirectionToMove:

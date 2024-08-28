@@ -1,8 +1,8 @@
 class_name NearbyExplosivesFactor
 extends Factor
 
-# returns 0.0 to 1.0 based on how dangerous this actor's position is based off grenade proximity. 0.0 is safe, 1.0 is unsafe
-static func evaluate(factor_context: FactorContext) -> float:
+# returns 0.0 to 1.0 based on how dangerous this actor's position is based off grenade proximity. 0.0 is safe, higher is unsafe
+static func calculate(factor_context: FactorContext) -> float:
 	const danger_radius: float = 5.0
 	const explosive_weight = 4.0
 
@@ -24,4 +24,4 @@ static func evaluate(factor_context: FactorContext) -> float:
 		
 		explosive_danger_score += explosive_weight * distance_multiplier
 	
-	return clampf(explosive_danger_score, 0.0, 1.0)
+	return explosive_danger_score

@@ -1,8 +1,8 @@
 class_name DangerFactor
 extends Factor
 
-# returns a score based on how dangerous this actor's position is, based off of enemy actor proximity. 0.0 is safe, higher is unsafe
-static func calculate(factor_context: FactorContext) -> float:
+# returns 0.0 to 1.0 based on how dangerous this actor's position is, based off of enemy actor proximity. 0.0 is safe, 1.0 is unsafe
+static func evaluate(factor_context: FactorContext) -> float:
 	const danger_radius: float = 5.0
 	const actor_weight = 0.4
 
@@ -24,4 +24,4 @@ static func calculate(factor_context: FactorContext) -> float:
 
 		actor_danger_score += actor_weight * distance_multiplier
 	
-	return actor_danger_score
+	return clampf(actor_danger_score, 0.0, 1.0)

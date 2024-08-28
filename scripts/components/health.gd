@@ -4,7 +4,6 @@ class_name Health
 
 var max_health: float = 100.0
 var current_health: float = 100.0
-var is_dead: bool = false # prevent the health_depleted signal from being sent more than once
 
 signal health_changed(old_value, new_value)
 signal health_depleted
@@ -13,10 +12,8 @@ func take_damage(amount: float):
 	var old_health = current_health
 	current_health -= amount
 
-	if current_health <= 0:
-		if !is_dead:
-			health_depleted.emit()
-			is_dead = true
+	if current_health <= 0 and old_health > 0:
+		health_depleted.emit()
 	elif current_health > max_health:
 		current_health = max_health
 		health_changed.emit(old_health, current_health)

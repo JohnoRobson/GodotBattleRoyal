@@ -142,8 +142,8 @@ func get_name() -> String:
 	return "FightState"
 
 func _has_weapon(actor: Actor) -> bool:
-	return InventoryUtils.contains_trait(actor.weapon_inventory.inventory_data, [GameItem.ItemTrait.FIREARM]) \
-	|| InventoryUtils.contains_trait(actor.weapon_inventory.inventory_data, [GameItem.ItemTrait.THROWABLE, GameItem.ItemTrait.EXPLOSIVE])
+	return InventoryUtils.contains_traits(actor.weapon_inventory.inventory_data, [GameItem.ItemTrait.FIREARM]) \
+	|| InventoryUtils.contains_traits(actor.weapon_inventory.inventory_data, [GameItem.ItemTrait.THROWABLE, GameItem.ItemTrait.EXPLOSIVE])
 
 func _equip_best_weapon_for_current_circumstance(controller: AiActorController) -> void:
 	var items: Array[GameItem] = InventoryUtils.get_all_items_in_inventory(controller.actor.weapon_inventory)

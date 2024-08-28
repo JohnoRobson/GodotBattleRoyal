@@ -24,6 +24,7 @@ signal game_loaded
 func _ready():
 	action_system.world = self
 	set_camera_to_default()
+	Logger.logging_level = Logger.LoggingLevel.TRACE
 
 func _process(_delta):
 	if Input.is_action_pressed("zoom_out"):

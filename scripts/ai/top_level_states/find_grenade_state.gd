@@ -4,8 +4,7 @@ func enter(_controller: AiActorController):
 	pass
 
 func execute(controller: AiActorController):
-	var find_item_state := FindItemState.new()
-	find_item_state.item_traits_to_find = [GameItem.ItemTrait.EXPLOSIVE, GameItem.ItemTrait.THROWABLE]
+	var find_item_state := FindItemState.new([GameItem.ItemTrait.EXPLOSIVE, GameItem.ItemTrait.THROWABLE])
 	controller.state_machine.change_state(find_item_state)
 
 func execute_physics(_controller: AiActorController):

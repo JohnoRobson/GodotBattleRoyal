@@ -1,12 +1,10 @@
-extends State
-class_name FindWeaponState
+class_name FindWeaponState extends State
 
 func enter(_controller: AiActorController):
 	pass
 
 func execute(controller: AiActorController):
-	var find_item_state := FindItemState.new()
-	find_item_state.item_traits_to_find = [ GameItem.ItemTrait.FIREARM ]
+	var find_item_state := FindItemState.new([ GameItem.ItemTrait.FIREARM ])
 	controller.state_machine.change_state(find_item_state)
 
 func execute_physics(_controller: AiActorController):

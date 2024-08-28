@@ -20,7 +20,7 @@ func get_name() -> String:
 
 func evaluate(factor_context: FactorContext) -> float:
 	var closest_health_item = factor_context.world.get_closest_available_health(factor_context.target_actor.global_transform.origin)
-	var has_health_item = InventoryUtils.contains_trait(factor_context.target_actor.weapon_inventory.inventory_data, [GameItem.ItemTrait.HEALING])
+	var has_health_item = InventoryUtils.contains_traits(factor_context.target_actor.weapon_inventory.inventory_data, [GameItem.ItemTrait.HEALING])
 	if has_health_item or closest_health_item == null:
 		return 0.0
 	

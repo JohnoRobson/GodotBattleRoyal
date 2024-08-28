@@ -228,7 +228,7 @@ func evaluate(factor_context: FactorContext) -> float:
 	if !has_weapon:
 		return 0.0
 	
-	return clampf(0.3 - DangerFactor.evaluate(factor_context) / 3.0, 0.0, 1.0)
+	return clampf(0.3 - Factors.evaluate_danger_factor(factor_context) / 3.0, 0.0, 1.0)
 
 func acquire_and_set_target() -> void:
 	var self_actor = current_controller.actor

@@ -45,7 +45,7 @@ func get_name() -> String:
 	return "StandInHealingAuraState"
 
 func evaluate(factor_context: FactorContext) -> float:
-	var health_factor: float = HealthFactor.evaluate(factor_context)
+	var health_factor: float = Factors.evaluate_health_factor(factor_context)
 	var _closest_aura: GameItem = factor_context.world.get_closest_healing_aura(factor_context.target_position)
 	
 	if _closest_aura == null:

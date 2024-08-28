@@ -23,6 +23,6 @@ func evaluate(factor_context: FactorContext) -> float:
 	if has_grenade or closest_grenade == null:
 		return 0.0
 	elif closest_grenade.global_position.distance_to(factor_context.target_actor.global_position) < 80:
-		return clampf(EquipmentFactor.evaluate(factor_context) - DangerFactor.evaluate(factor_context) / 4.0, 0.0, 1.0)
+		return clampf(Factors.evaluate_equipment_factor(factor_context) - Factors.evaluate_danger_factor(factor_context) / 4.0, 0.0, 1.0)
 	else:
 		return 0.0

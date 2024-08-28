@@ -69,7 +69,7 @@ func _on_velocity_computed(safe_velocity: Vector3):
 	current_controller.set_move_direction(Vector2(dir.x, dir.z))
 
 func evaluate(factor_context: FactorContext) -> float:
-	var danger_factor: float = DangerFactor.evaluate(factor_context) / 5.0
-	var explosives_factor: float = NearbyExplosivesFactor.evaluate(factor_context) / 1.0
-	var health_factor: float = HealthFactor.evaluate(factor_context) / 3.0
+	var danger_factor: float = Factors.evaluate_danger_factor(factor_context) / 5.0
+	var explosives_factor: float = Factors.evaluate_nearby_explosives_factor(factor_context) / 1.0
+	var health_factor: float = Factors.evaluate_health_factor(factor_context) / 3.0
 	return clampf(danger_factor + explosives_factor + health_factor, 0.0, 1.0)

@@ -22,5 +22,5 @@ func evaluate(factor_context: FactorContext) -> float:
 	if has_health_item or closest_health_item == null:
 		return 0.0
 	
-	var health_factor: float = HealthFactor.evaluate(factor_context) / 2.0
+	var health_factor: float = Factors.evaluate_health_factor(factor_context) / 2.0
 	return clampf(health_factor + 0.6, 0.0, 1.0)

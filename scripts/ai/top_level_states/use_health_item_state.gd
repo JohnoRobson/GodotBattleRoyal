@@ -40,7 +40,7 @@ func get_name() -> String:
 	return "UseHealthItemState"
 
 func evaluate(factor_context: FactorContext) -> float:
-	var health_factor: float = HealthFactor.evaluate(factor_context)
+	var health_factor: float = Factors.evaluate_health_factor(factor_context)
 	var is_health_nearby: bool = factor_context.world.get_closest_item_with_traits(factor_context.target_actor.global_transform.origin, [GameItem.ItemTrait.HEALING]) != null
 	var has_health_in_inventory: bool = InventoryUtils.contains_traits(factor_context.target_actor.weapon_inventory.inventory_data, [GameItem.ItemTrait.HEALING])
 	

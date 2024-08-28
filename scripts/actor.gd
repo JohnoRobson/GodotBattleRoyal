@@ -9,7 +9,6 @@ class_name Actor
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
-var movement_direction: Vector3 = Vector3.ZERO
 var actor_state: ActorState = ActorState.IDLE
 
 @onready var cursor: ActorCursor = get_node("ActorCursor")

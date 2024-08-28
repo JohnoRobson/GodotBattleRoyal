@@ -168,7 +168,7 @@ func _is_pointing_at_target(weapon: GameItem, target_pos_global: Vector3, degree
 ## Returns a value between 0.0 and 1.0 inclusive that rates 
 ## how good the weapon is in the current context
 func _score_weapon_in_current_context(game_item: GameItem, this_actor: Actor) -> float:
-	if game_item == null:
+	if game_item == null or this_actor == null:
 		return 0.0
 	var item_is_weapon = game_item is Weapon
 	var item_is_grenade = [GameItem.ItemTrait.EXPLOSIVE, GameItem.ItemTrait.THROWABLE].all(func(a): return game_item.traits.has(a))

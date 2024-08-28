@@ -4,6 +4,8 @@
 [ext_resource type="PackedScene" uid="uid://pciev3jsxk36" path="res://scenes/player_hud.tscn" id="2_5nlm8"]
 
 [node name="PlayerActor" instance=ExtResource("1_5pigh")]
+collision_mask = 11
+collision_priority = 10.0
 
 [node name="ItemInteractionArea" parent="ActorCursor" index="0"]
 show_pickup_text = false

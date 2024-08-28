@@ -57,10 +57,3 @@ func is_exchanging_weapon() -> bool:
 
 func set_is_exchanging_weapon(exchange: bool):
 	is_exchanging_weapon_bool = exchange
-
-func get_held_item_traits() -> Array[GameItem.ItemTrait]:
-	var held_item = actor.held_weapon
-	if held_item == null:
-		return []
-	else:
-		return held_item.traits

@@ -15,6 +15,9 @@ func exit(_controller: AiActorController):
 func get_name() -> String:
 	return "State"
 
+func equals(_comparison_state:State):
+	return get_name() == _comparison_state.get_name()
+
 func evaluate(_factor_context: FactorContext) -> float:
 	return 0.0
 

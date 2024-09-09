@@ -27,12 +27,12 @@ func _process(delta):
 		var states = DecisionMaker.get_states_to_do(owner)
 		var best_state = states[0]
 		
-		var last_state_is_the_same_as_new_best_state: bool = last_state != null and last_state.get_name() == best_state.get_name()
+		var last_state_is_the_same_as_new_best_state: bool = last_state != null and last_state.equals(best_state)
 		
 		if last_state_is_the_same_as_new_best_state and _state_switchback_count < _how_long_until_state_switchback_is_allowed:
 			best_state = states[1]
 
-		if current_state.get_name() != best_state.get_name() and current_state.can_be_interrupted_by(best_state):
+		if (!current_state.equals(best_state)) and current_state.can_be_interrupted_by(best_state):
 			#print("switching from %s to %s" % [current_state.get_name(), best_state.get_name()])
 			last_state = current_state
 			_state_switchback_count = 0

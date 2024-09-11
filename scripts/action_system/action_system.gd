@@ -27,7 +27,7 @@ func _process(delta):
 	frame_count += 1
 
 func action_triggered(action: Action, game_item: GameItem):
-	#print("action %s triggered at frame %s" % [Action.Name.keys()[action.action_name], frame_count])
+	Logger.trace("action %s triggered" % [Action.Name.keys()[action.action_name]])
 	var duplicated_action = action.duplicate(true)
 	var action_stack = ActionStack.new(game_item, self, world, _add_connections_to_action, duplicated_action)
 	action_stacks.append(action_stack)

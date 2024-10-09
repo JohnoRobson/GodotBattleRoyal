@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://cegel3cpoc2hy"]
+[gd_scene load_steps=18 format=3 uid="uid://cegel3cpoc2hy"]
 
 [ext_resource type="Script" path="res://scripts/items/weapon.gd" id="1_yfwc3"]
 [ext_resource type="Script" path="res://resources/weapon_type.gd" id="2_2q0du"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://scripts/action_system/actions/damage.gd" id="4_yf6im"]
 [ext_resource type="PackedScene" uid="uid://be4ixwniduwoc" path="res://scenes/effects/explosion.tscn" id="5_axjqf"]
 [ext_resource type="Script" path="res://scripts/action_system/actions/effect.gd" id="6_s0ive"]
+[ext_resource type="PackedScene" uid="uid://cc3xiyt074uge" path="res://scenes/reporter.tscn" id="10_iudkf"]
 
 [sub_resource type="Resource" id="Resource_hm74y"]
 script = ExtResource("2_2q0du")
@@ -66,3 +67,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00614242, -0.740711)
 shape = SubResource("BoxShape3D_j006u")
 
 [node name="sniper_rifle" parent="." instance=ExtResource("3_mylws")]
+
+[node name="Reporter" parent="." instance=ExtResource("10_iudkf")]
+_selected_variables = Array[String](["_current_ammo", "_reload_time_cooldown", "_current_state"])

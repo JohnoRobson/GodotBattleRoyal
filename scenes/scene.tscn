@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://b7e2n7bieo85i" path="res://scenes/items/grenade.tscn" id="9_kbf5b"]
 [ext_resource type="PackedScene" uid="uid://b5pidhuj5uftx" path="res://scenes/items/cluster_grenade.tscn" id="10_h3423"]
 [ext_resource type="PackedScene" uid="uid://duyn8iuxvvn4j" path="res://scenes/items/aoe_heal_grenade.tscn" id="10_j4gxa"]
+[ext_resource type="Script" path="res://scripts/reporter_manager.gd" id="11_4y74g"]
 [ext_resource type="PackedScene" uid="uid://cegel3cpoc2hy" path="res://scenes/weapons/sniper_rifle2.tscn" id="11_8a3v7"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_vvk85"]
@@ -33,10 +34,11 @@ size = Vector2(100, 100)
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_w1usq"]
 plane = Plane(1, 0, 0, 0)
 
-[node name="World" type="Node3D" node_paths=PackedStringArray("effect_manager", "nav_region", "default_camera", "action_system")]
+[node name="World" type="Node3D" node_paths=PackedStringArray("effect_manager", "reporter_manager", "nav_region", "default_camera", "action_system")]
 
 script = ExtResource("1_h7cyw")
 effect_manager = NodePath("EffectManager")
+reporter_manager = NodePath("ReporterManager")
 nav_region = NodePath("NavigationRegion3D")
 action_system = NodePath("ActionSystem")
 camera_zoom_speed = 0.32
@@ -109,6 +111,9 @@ skeleton = NodePath("../../..")
 script = ExtResource("5_8ff1g")
 effect_manager = NodePath("../EffectManager")
 
+[node name="ReporterManager" type="Node" parent="."]
+script = ExtResource("11_4y74g")
+
 [node name="Grenade" parent="." instance=ExtResource("9_kbf5b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.51115, 0.567462, 2.2995)
 
@@ -132,3 +137,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.618964, -0.679529)
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.559193, 0.829038, 0, -0.829038, 0.559193, 0, 13.4105, 10.5207)
+
+[node name="Control" type="Control" parent="."]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

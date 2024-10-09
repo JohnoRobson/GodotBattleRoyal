@@ -20,6 +20,7 @@ offset_left = 15.0
 offset_top = 13.0
 offset_right = 64.0
 offset_bottom = 57.0
+action_mode = 0
 text = "|||"
 
 [node name="ProcessVisibilitySync" parent="." instance=ExtResource("2_y0kys")]

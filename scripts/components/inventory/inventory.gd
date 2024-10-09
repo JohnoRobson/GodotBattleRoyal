@@ -105,3 +105,9 @@ func connect_remove_signal(item: GameItem):
 func disconnect_remove_signal(item: GameItem):
 	if item.remove_from_inventory_and_put_in_world.is_connected(remove_item_from_inventory_to_world):
 		item.remove_from_inventory_and_put_in_world.disconnect(remove_item_from_inventory_to_world)
+
+func has_empty_slots() -> bool:
+	return inventory_data.has_empty_slots()
+
+func is_empty() -> bool:
+	return inventory_data.is_empty()

@@ -12,7 +12,7 @@ func take_damage(amount: float):
 	var old_health = current_health
 	current_health -= amount
 
-	if current_health <= 0:
+	if current_health <= 0 and old_health > 0:
 		health_depleted.emit()
 	elif current_health > max_health:
 		current_health = max_health

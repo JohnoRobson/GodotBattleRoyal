@@ -2,6 +2,8 @@ extends Node3D
 
 class_name ActorController
 
+## Returns the position in global space that the controller is aiming at.
+## For players, this is the mouse position in global space.
 func get_aim_position() -> Vector3:
 	return Vector3.ZERO
 

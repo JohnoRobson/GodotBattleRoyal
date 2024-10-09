@@ -18,5 +18,5 @@ func set_show_interaction_text(_show: bool):
 	item_interact_text.visible = _show
 
 func _physics_process(_delta):
-	if game_item != null:
+	if game_item != null && game_item.is_inside_tree():
 		global_position = game_item.global_position + (Vector3.UP * 2)

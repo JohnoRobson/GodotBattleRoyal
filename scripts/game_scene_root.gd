@@ -23,6 +23,7 @@ func start_game_scene(new_game_scene:PackedScene, game_type: World.GameTypes):
 	new_instantiated_game_scene.game_lost.connect(_on_game_scene_game_lost)
 	new_instantiated_game_scene.game_won.connect(_on_game_scene_game_won)
 	new_instantiated_game_scene.game_loaded.connect(_on_game_scene_game_loaded)
+	new_instantiated_game_scene.pause_button_pressed.connect(_on_game_hud_pause_button_pressed)
 	$GameScenes.add_child(new_instantiated_game_scene)
 
 	if current_game_type != game_type:

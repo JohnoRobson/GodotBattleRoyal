@@ -24,6 +24,8 @@ signal game_lost
 signal game_won
 signal game_loaded
 
+signal pause_button_pressed
+
 func _ready():
 	action_system.world = self
 	world_camera.make_current()
@@ -249,3 +251,6 @@ func setup_game(game_type: GameTypes):
 			spawn_ai(Vector2(-10,5))
 			spawn_ai(Vector2(30,0))
 	conclude_loading()
+
+func _on_pause_button_pressed():
+	pause_button_pressed.emit()

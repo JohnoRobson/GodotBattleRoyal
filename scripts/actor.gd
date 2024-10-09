@@ -19,6 +19,7 @@ var actor_state: ActorState = ActorState.IDLE
 @onready var _item_pickup_manager: ItemPickupManager = get_node("ItemPickupManager")
 @onready var weapon_inventory: Inventory = get_node("WeaponInventory")
 @onready var animation_player: AnimationPlayer = get_node("AnimationPlayer")
+@onready var camera: Camera3D = get_node("Camera3D")
 
 @export var held_weapon: GameItem
 
@@ -184,5 +185,5 @@ func _on_weapon_inventory_inventory_changed(inventory_data: InventoryData, selec
 func _on_item_used_up():
 	held_weapon = null
 
-func set_camera_current():
-	$Camera3D.current = true
+func make_camera_current():
+	camera.make_current()

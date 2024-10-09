@@ -87,6 +87,8 @@ radius = 0.54374
 height = 2.03879
 
 [node name="Actor" type="CharacterBody3D" groups=["actors"]]
+collision_layer = 2
+collision_mask = 9
 script = ExtResource("1_ico6x")
 
 [node name="Health" parent="." instance=ExtResource("2_p7v67")]

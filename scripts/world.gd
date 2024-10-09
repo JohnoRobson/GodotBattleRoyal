@@ -2,11 +2,11 @@ class_name World extends Node3D
 
 @onready var player_actors: Array[Actor] = []
 @onready var ai_actors: Array[Actor] = []
+@onready var world_camera: Camera3D = get_node("Camera3D")
 
 @export var effect_manager: EffectManager
 
 @export var nav_region: NavigationRegion3D
-@export var default_camera: Camera3D
 
 @export var action_system: ActionSystem
 
@@ -23,8 +23,9 @@ signal game_loaded
 
 func _ready():
 	action_system.world = self
-	set_camera_to_default()
 	Logger.logging_level = Logger.LoggingLevel.TRACE
+	world_camera.make_current()
+
 
 func _process(_delta):
 	if Input.is_action_pressed("zoom_out"):
@@ -48,7 +49,6 @@ func _init_actor(actor: Actor, spawn_position: Vector2):
 
 # To be run after a game setup function has been called
 func conclude_loading():
-	assign_default_camera_to_random_ai_actor()
 
 	# move this somewhere else
 	for item in get_tree().get_nodes_in_group("items"):
@@ -87,7 +87,7 @@ func spawn_player(spawn_position: Vector2):
 	controller.set_script(controller_script)
 	actor.controller = controller
 	actor.add_child(controller)
-	actor.set_camera_current()
+	actor.make_camera_current()
 	
 	var inventory_ui: InventoryUI = actor.get_node("PlayerHud/Inventory")
 
@@ -131,9 +131,10 @@ func spawn_weapon(spawn_position: Vector2, weapon_type: Weapons) -> Weapon:
 func _on_actor_killed(actor: Actor):
 	player_actors.erase(actor)
 	ai_actors.erase(actor)
-
-	if default_camera != null and default_camera.is_ancestor_of(actor):
-		assign_default_camera_to_random_ai_actor()
+	
+	var current_camera = get_viewport().get_camera_3d()
+	if actor == current_camera.get_parent():
+		make_random_ai_camera_current()
 
 	# check for win condition
 	if get_win_condition_satisfied():
@@ -154,7 +155,9 @@ func get_closest_actor(from_position: Vector3, ignore: Actor = null) -> Actor:
 	actors.sort_custom(func(a, b): return from_position.distance_to(a.global_transform.origin) < from_position.distance_to(b.global_transform.origin))
 
 	# weird ternary
-	return actors.front() if !actors.is_empty() else null
+	var closest_actor: Actor = actors.front() if !actors.is_empty() else null
+	#print("closest actor: %s, ignore: %s" % [closest_actor, ignore])
+	return closest_actor
 
 func get_random_ai_actor() -> Actor:
 	if ai_actors.is_empty():
@@ -166,8 +169,8 @@ func get_closest_available_health(from_position: Vector3) -> GameItem:
 	pickups.append_array(get_tree().get_nodes_in_group("healing"))
 
 	# Filter returns the filtered array, but sort is in-place
-	pickups = pickups.filter(func(a): return a != null and !a.is_held)
-	pickups = pickups.filter(func(a): return a.item_name == "Medkit")
+	pickups = pickups.filter(func(a): return a != null and !a.is_held and a.can_be_used)
+	#pickups = pickups.filter(func(a): return a.item_name == "Medkit")
 	pickups.sort_custom(func(a, b): return from_position.distance_to(a.global_transform.origin) < from_position.distance_to(b.global_transform.origin))
 
 	return pickups.front() if !pickups.is_empty() else null
@@ -181,23 +184,37 @@ func get_closest_available_weapon(from_position: Vector3) -> GameItem:
 
 	return weapon_array.front() if !weapon_array.is_empty() else null
 
-func set_camera_to_default() -> void:
-	if default_camera == null:
-		return;
+func get_closest_item_with_traits(from_position: Vector3, item_traits: Array[GameItem.ItemTrait]) -> GameItem:
+	var items = []
+	
+	items.append_array(get_tree().get_nodes_in_group("healing"))
+	items.append_array(get_tree().get_nodes_in_group("weapons"))
+	items = items.filter(func(a): return a != null and !a.is_held and a.can_be_used)
+	items = items.filter(func(a): return item_traits.all(func(b): return b in a.traits))
+	items.sort_custom(func(a, b): return from_position.distance_to(a.global_transform.origin) < from_position.distance_to(b.global_transform.origin))
+	
+	return items.front() if !items.is_empty() else null
 
-	default_camera.make_current()
+# this is not good
+func get_closest_healing_aura(from_position: Vector3) -> GameItem:
+	var items = []
+	
+	items.append_array(get_tree().get_nodes_in_group("aoe"))
+	items = items.filter(func(a): return a != null and !a.is_held and !a.can_be_used)
+	items = items.filter(func(a): return a.traits.has(GameItem.ItemTrait.HEALING))
+	items.sort_custom(func(a, b): return from_position.distance_to(a.global_transform.origin) < from_position.distance_to(b.global_transform.origin))
+	
+	return items.front() if !items.is_empty() else null
 
-func assign_default_camera_to_random_ai_actor() -> void:
-	if default_camera == null:
-		return;
+func make_random_ai_camera_current() -> void:
 	var ai_actor = get_random_ai_actor()
-	if ai_actor == null:
-		default_camera.reparent(self, false)
-	else:
-		default_camera.reparent(ai_actor, false)
+	if ai_actor != null:
+		ai_actor.make_camera_current()
+	else: # on no more ai actors, set camera to world
+		world_camera.make_current()
 
 func _on_player_killed(_player: Actor):
-	set_camera_to_default()
+	make_random_ai_camera_current()
 	game_lost.emit()
 
 func return_item_to_world(item: GameItem, global_position_to_place_item: Vector3, global_rotation_to_place_item: Vector3):
@@ -221,6 +238,7 @@ func setup_game(game_type: GameTypes):
 			spawn_ai(Vector2(-10,0))
 			spawn_ai(Vector2(-10,5))
 			spawn_ai(Vector2(30,0))
+			make_random_ai_camera_current()
 		GameTypes.SANDBOX:
 			spawn_player(Vector2(0,5))
 		GameTypes.CLASSIC, _:

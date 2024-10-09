@@ -1,7 +1,9 @@
 extends Node
 
+@onready var parent: Node = get_parent()
+
 func _process(delta):
-	var player_hud = get_parent()
-	var player_hud_can_process = player_hud.can_process()
-	if player_hud_can_process != player_hud.is_visible():
-		player_hud.set_visible(player_hud_can_process)
+	var parent_can_process = parent.can_process()
+	var parent_is_visible = parent.is_visible()
+	if parent_can_process != parent_is_visible:
+		parent.set_visible(parent_can_process)

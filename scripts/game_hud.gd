@@ -1,6 +1,7 @@
-class_name GameHud extends CanvasLayer
+class_name GameHud extends Control
 
 signal pause_button_pressed
 
 func _on_pause_button_pressed():
-	pause_button_pressed.emit()
+	print("hello, World!")
+	# pause_button_pressed.emit()

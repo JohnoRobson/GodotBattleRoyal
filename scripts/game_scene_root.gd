@@ -33,7 +33,6 @@ func start_game_scene(new_game_scene:PackedScene, game_type: World.GameTypes):
 
 # Clear all current game scenes from the game scene root
 func clear_game_scenes():
-	$GameHud.hide()
 	var game_scenes:Node = $GameScenes
 	for game_scene in game_scenes.get_children():
 		game_scenes.remove_child(game_scene)
@@ -58,7 +57,6 @@ func _on_game_scene_game_won():
 
 func _on_game_scene_game_loaded():
 	$MenuManager.clear_menus()
-	$GameHud.show()
 
 func _on_start_game_button_pressed(game_type: World.GameTypes):
 	clear_game_scenes()

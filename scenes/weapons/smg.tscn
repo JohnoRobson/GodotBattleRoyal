@@ -39,12 +39,13 @@ size = Vector3(0.157325, 0.498044, 2.18281)
 
 [node name="Smg" type="RigidBody3D" groups=["items", "weapons"]]
 collision_layer = 4
-collision_mask = 3
+collision_mask = 15
 script = ExtResource("1_rrsjv")
 stats = SubResource("Resource_wjeax")
 item_name = "SMG"
 action = SubResource("Resource_yrey2")
 aim_function = SubResource("Resource_h3ab6")
+traits = Array[int]([2])
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.10401, -0.204375)

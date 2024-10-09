@@ -204,16 +204,6 @@ func get_closest_healing_aura(from_position: Vector3) -> GameItem:
 	
 	return items.front() if !items.is_empty() else null
 
-func set_camera_to_default() -> void:
-	if default_camera == null:
-		return;
-
-	default_camera.make_current()
-
-func assign_default_camera_to_random_ai_actor() -> void:
-	if default_camera == null:
-		return;
-
 func make_random_ai_camera_current() -> void:
 	var ai_actor = get_random_ai_actor()
 	if ai_actor != null:

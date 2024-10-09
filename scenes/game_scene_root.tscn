@@ -1,7 +1,6 @@
-[gd_scene load_steps=12 format=3 uid="uid://cbhy7lx4lnl1v"]
+[gd_scene load_steps=11 format=3 uid="uid://cbhy7lx4lnl1v"]
 
 [ext_resource type="Script" path="res://scripts/game_scene_root.gd" id="1_17feb"]
-[ext_resource type="PackedScene" uid="uid://8mmjpgw85cax" path="res://scenes/game_hud.tscn" id="2_7u6n0"]
 [ext_resource type="Script" path="res://scripts/menu_manager.gd" id="2_je011"]
 [ext_resource type="PackedScene" uid="uid://cxtqrmnc7fwf" path="res://scenes/menus/title_menu.tscn" id="2_nr3tc"]
 [ext_resource type="PackedScene" uid="uid://ccjq8nxyfnpl2" path="res://scenes/menus/win_menu.tscn" id="3_puocf"]
@@ -18,11 +17,6 @@ script = ExtResource("1_17feb")
 
 [node name="GameScenes" type="Node" parent="."]
 process_mode = 1
-
-[node name="GameHud" parent="." instance=ExtResource("2_7u6n0")]
-process_mode = 3
-layer = 0
-visible = false
 
 [node name="MenuManager" type="Node" parent="."]
 process_mode = 3
@@ -57,7 +51,6 @@ process_mode = 3
 visible = false
 script = ExtResource("9_1a2ev")
 
-[connection signal="pause_button_pressed" from="GameHud" to="." method="_on_game_hud_pause_button_pressed"]
 [connection signal="restart_game_button_pressed" from="MenuManager" to="." method="_on_restart_game_button_pressed"]
 [connection signal="return_to_title_button_pressed" from="MenuManager" to="." method="_on_return_to_title_button_pressed"]
 [connection signal="start_game_button_pressed" from="MenuManager" to="." method="_on_start_game_button_pressed"]

@@ -40,7 +40,7 @@ func _physics_process(_delta):
 	pass
 
 # Common actor initializations (player and AI)
-func _init_actor(actor: Actor, spawn_position: Vector2):
+func _init_actor(actor: Actor, spawn_position: Vector2, team: int):
 	# TODO: fix incorrect spawn location bug when spawning at (0,0)
 	actor.actor_killed.connect(_on_actor_killed)
 	
@@ -48,6 +48,7 @@ func _init_actor(actor: Actor, spawn_position: Vector2):
 	actor.set_global_position(Vector3(spawn_position.x, 0.0, spawn_position.y))
 	actor.weapon_inventory.return_item_to_world.connect(return_item_to_world)
 	actor.weapon_inventory.inventory_data = InventoryData.new()
+	actor.team = team
 	for i in 3:
 		actor.weapon_inventory.inventory_data._slots.append(InventorySlotData.new())
 
@@ -80,7 +81,7 @@ func move_camera(distance):
 # Spawn player actor and create new player controller
 func spawn_player(spawn_position: Vector2):
 	var actor: Actor = preload("res://scenes/player_actor.tscn").instantiate()
-	_init_actor(actor, spawn_position)
+	_init_actor(actor, spawn_position, 0)
 	player_actors.append(actor)
 	actor.actor_killed.connect(_on_player_killed)
 
@@ -102,9 +103,9 @@ func spawn_player(spawn_position: Vector2):
 	inventory.emit_updates() # hack to get the ui to update on game start
 
 # Spawn AI actor and configure existing AI controller
-func spawn_ai(spawn_position: Vector2):
+func spawn_ai(spawn_position: Vector2, team: int):
 	var actor: Actor = preload("res://scenes/ai_actor.tscn").instantiate()
-	_init_actor(actor, spawn_position)
+	_init_actor(actor, spawn_position, team)
 	ai_actors.append(actor)
 
 	# Configure AI controller
@@ -160,6 +161,12 @@ func get_closest_actor(from_position: Vector3, ignore: Array[Actor] = []) -> Act
 	var closest_actor: Actor = actors.front() if !actors.is_empty() else null
 	#print("closest actor: %s, ignore: %s" % [closest_actor, ignore])
 	return closest_actor
+
+func get_actor_team_members(target_actor: Actor) -> Array[Actor]:
+	var team_members = (player_actors + ai_actors).filter(func(actor): return target_actor.team == actor.team)
+
+	# include self
+	return team_members
 
 func get_random_ai_actor() -> Actor:
 	if ai_actors.is_empty():
@@ -237,17 +244,17 @@ func setup_game(game_type: GameTypes):
 	spawn_weapon(Vector2(25,-5), Weapons.SNIPER)
 	match game_type:
 		GameTypes.AI:
-			spawn_ai(Vector2(-10,0))
-			spawn_ai(Vector2(-10,5))
-			spawn_ai(Vector2(30,0))
+			spawn_ai(Vector2(-10,0), 1)
+			spawn_ai(Vector2(-10,5), 2)
+			spawn_ai(Vector2(30,0), 3)
 			make_random_ai_camera_current()
 		GameTypes.SANDBOX:
 			spawn_player(Vector2(0,5))
 		GameTypes.CLASSIC, _:
 			spawn_player(Vector2(0,5))
-			spawn_ai(Vector2(-10,0))
-			spawn_ai(Vector2(-10,5))
-			spawn_ai(Vector2(30,0))
+			spawn_ai(Vector2(-10,0), 1)
+			spawn_ai(Vector2(-10,5), 2)
+			spawn_ai(Vector2(30,0), 3)
 	conclude_loading()
 
 func _on_pause_button_pressed():

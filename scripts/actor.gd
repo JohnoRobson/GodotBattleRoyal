@@ -1,6 +1,4 @@
-extends CharacterBody3D
-
-class_name Actor
+class_name Actor extends CharacterBody3D
 
 @export var speed = 5.0
 @export var JUMP_VELOCITY = 4.5
@@ -15,6 +13,7 @@ var actor_state: ActorState = ActorState.IDLE
 @onready var rotator: Node3D = get_node("Rotator")
 @onready var weapon_base: Node3D = get_node("Rotator/Animatable/WeaponBase")
 @onready var health: Health = get_node("Health")
+
 @onready var item_pickup_area: ItemInteractionArea = get_node("ItemPickupArea")
 @onready var _item_pickup_manager: ItemPickupManager = get_node("ItemPickupManager")
 @onready var weapon_inventory: Inventory = get_node("WeaponInventory")
@@ -22,6 +21,7 @@ var actor_state: ActorState = ActorState.IDLE
 @onready var camera: Camera3D = get_node("Camera3D")
 
 @export var held_weapon: GameItem
+
 
 enum ActorState {
 	IDLE, WALKING, DEAD
@@ -32,6 +32,13 @@ var _drop_weapon_cooldown_time: float = 0.5
 var _drop_weapon_cooldown_timer: float = 0
 
 var _velocity_to_add: Vector3 = Vector3.ZERO
+
+# TODO: change this to an object to allow for team properties? - MW 2024-11-05
+var team: int :
+	set(value):
+		team = value
+	get:
+		return team
 
 signal actor_killed(me: Actor)
 signal weapon_swap(weapon: GameItem)

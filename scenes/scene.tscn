@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://6g0i5ehfdc2v"]
+[gd_scene load_steps=18 format=3 uid="uid://6g0i5ehfdc2v"]
 
 [ext_resource type="Script" path="res://scripts/world.gd" id="1_h7cyw"]
 [ext_resource type="PackedScene" uid="uid://biir0tlfdnimk" path="res://scenes/box.tscn" id="1_x50jp"]
@@ -36,7 +36,6 @@ size = Vector2(100, 100)
 plane = Plane(1, 0, 0, 0)
 
 [node name="World" type="Node3D" node_paths=PackedStringArray("effect_manager", "reporter_manager", "nav_region", "action_system")]
-
 script = ExtResource("1_h7cyw")
 effect_manager = NodePath("EffectManager")
 reporter_manager = NodePath("ReporterManager")
@@ -146,4 +145,3 @@ transform = Transform3D(1, 0, 0, 0, 0.559193, 0.829038, 0, -0.829038, 0.559193, 
 [node name="GameHud" parent="." instance=ExtResource("2_nby8c")]
 
 [connection signal="pause_button_pressed" from="GameHud" to="." method="_on_pause_button_pressed"]
-

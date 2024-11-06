@@ -4,6 +4,9 @@ class_name World extends Node3D
 @onready var ai_actors: Array[Actor] = []
 @onready var world_camera: Camera3D = get_node("Camera3D")
 
+@onready var actor_container: Node = get_node("ActorContainer")
+@onready var item_container: Node = get_node("ItemContainer")
+
 @export var effect_manager: EffectManager
 @export var reporter_manager: ReporterManager
 
@@ -27,6 +30,8 @@ enum GameTypes {AI, SANDBOX, CLASSIC}
 signal game_lost
 signal game_won
 signal game_loaded
+
+signal pause_button_pressed
 
 func _ready():
 	action_system.world = self
@@ -68,7 +73,8 @@ func _physics_process(_delta):
 func _init_actor(actor: Actor, spawn_position: Vector2):
 	# TODO: fix incorrect spawn location bug when spawning at (0,0)
 	actor.actor_killed.connect(_on_actor_killed)
-	add_child(actor)
+	
+	actor_container.add_child(actor)
 	actor.set_global_position(Vector3(spawn_position.x, 0.0, spawn_position.y))
 	actor.weapon_inventory.return_item_to_world.connect(return_item_to_world)
 	actor.weapon_inventory.inventory_data = InventoryData.new()
@@ -151,7 +157,7 @@ func spawn_weapon(spawn_position: Vector2, weapon_type: Weapons) -> Weapon:
 			return
 
 	weapon.on_firing.connect(effect_manager._on_actor_shoot)
-	add_child(weapon)
+	item_container.add_child(weapon)
 	weapon.set_global_position(Vector3(spawn_position.x, 5.0, spawn_position.y))
 	weapon.set_global_rotation_degrees(Vector3(0, 90, 0))
 	return weapon
@@ -248,7 +254,7 @@ func _on_player_killed(_player: Actor):
 func return_item_to_world(item: GameItem, global_position_to_place_item: Vector3, global_rotation_to_place_item: Vector3):
 	if item.get_parent() != null:
 		item.get_parent().remove_child(item)
-	add_child(item)
+	item_container.add_child(item)
 	item.global_position = global_position_to_place_item
 	item.rotation = global_rotation_to_place_item
 
@@ -275,3 +281,6 @@ func setup_game(game_type: GameTypes):
 			spawn_ai(Vector2(-10,5))
 			spawn_ai(Vector2(30,0))
 	conclude_loading()
+
+func _on_pause_button_pressed():
+	pause_button_pressed.emit()

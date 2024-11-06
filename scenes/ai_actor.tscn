@@ -18,10 +18,8 @@ script = ExtResource("3_q60xr")
 actor = NodePath("..")
 nav_agent = NodePath("../NavigationAgent3D")
 
-[node name="AIStateLabel3D" type="Label3D" parent="." index="10"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.28426, 0)
-billboard = 1
-text = "Test"
-
-[node name="Camera3D" type="Camera3D" parent="." index="12"]
+[node name="Camera3D" type="Camera3D" parent="." index="11"]
 transform = Transform3D(1, 0, 0, 0, 0.559193, 0.829038, 0, -0.829038, 0.559193, 0, 11.4105, 7.52074)
+
+[node name="Reporter" parent="." index="12"]
+_selected_variables = Array[String](["health", "held_weapon", "controller"])

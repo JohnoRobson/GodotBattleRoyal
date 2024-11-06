@@ -5,9 +5,15 @@ class_name ReporterManager extends Node
 # 2. show me all the nodes with reporters within a top-level node, such as the reporters within an Actor so that I can get information on one part of it
 # 3. get the report from a specific node
 
-func get_top_level_nodes_with_reporters() -> Array[Node]:
+func get_top_level_nodes_with_reporters_for_multiple_nodes(nodes_to_check: Array[Node]) -> Array[Node]:
+	var array: Array[Node] = []
+	for node in nodes_to_check:
+		array.append_array(get_top_level_nodes_with_reporters(node))
+	return array
+
+func get_top_level_nodes_with_reporters(node_to_check: Node) -> Array[Node]:
 	# get siblings
-	var sibling_nodes: Array[Node] = get_parent().get_children()
+	var sibling_nodes: Array[Node] = node_to_check.get_children()
 	sibling_nodes.erase(self)
 	
 	var nodes_with_reporters: Array[Node] = []

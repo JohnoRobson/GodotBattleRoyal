@@ -18,10 +18,6 @@ class_name World extends Node3D
 @export var camera_max_distance: float = 30
 @export var camera_min_distance: float = 5
 
-@onready var reporter_ui: Control = $Control
-
-var _reporter_labels: Array[Label] = []
-
 var current_focus: Actor
 
 enum Weapons {SMG, SHOTGUN, SNIPER}
@@ -43,28 +39,6 @@ func _process(_delta):
 		move_camera(camera_zoom_speed)
 	if Input.is_action_pressed("zoom_in"):
 		move_camera(-camera_zoom_speed)
-	
-	for node in _reporter_labels:
-		node.queue_free()
-	_reporter_labels.clear()
-	for node in reporter_manager.get_top_level_nodes_with_reporters():
-		var pos_2d = get_viewport().get_camera_3d().unproject_position(node.global_position)
-		var l: Label = Label.new()
-		l.text = "%s:%s" % [node.name, reporter_manager.get_report(node)]
-		reporter_ui.add_child(l)
-		l.position = pos_2d
-		_reporter_labels.append(l)
-		
-		var i = 1
-		for child_node in reporter_manager.get_all_nodes_with_reporters_within_node(node):
-			var l2: Label = Label.new()
-			l2.text = "%s:%s" % [child_node.name, reporter_manager.get_report(child_node)]
-			reporter_ui.add_child(l2)
-			l2.position = pos_2d + Vector2(50, 30 * i)
-			_reporter_labels.append(l2)
-			i += 1
-			
-		
 
 func _physics_process(_delta):
 	pass

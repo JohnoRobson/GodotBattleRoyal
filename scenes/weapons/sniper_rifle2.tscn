@@ -9,7 +9,7 @@
 [ext_resource type="Script" path="res://scripts/action_system/actions/damage.gd" id="4_yf6im"]
 [ext_resource type="PackedScene" uid="uid://be4ixwniduwoc" path="res://scenes/effects/explosion.tscn" id="5_axjqf"]
 [ext_resource type="Script" path="res://scripts/action_system/actions/effect.gd" id="6_s0ive"]
-[ext_resource type="PackedScene" uid="uid://cc3xiyt074uge" path="res://scenes/reporter.tscn" id="10_iudkf"]
+[ext_resource type="PackedScene" uid="uid://cc3xiyt074uge" path="res://scenes/components/reporter.tscn" id="10_iudkf"]
 
 [sub_resource type="Resource" id="Resource_hm74y"]
 script = ExtResource("2_2q0du")

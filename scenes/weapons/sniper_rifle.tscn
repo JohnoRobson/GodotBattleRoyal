@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://o0g0axyk2njf" path="res://models/sniper_rifle.blend" id="3_04if4"]
 [ext_resource type="Script" path="res://scripts/action_system/actions/damage.gd" id="4_harab"]
 [ext_resource type="Script" path="res://scripts/items/aim_function.gd" id="5_dtogy"]
-[ext_resource type="PackedScene" uid="uid://cc3xiyt074uge" path="res://scenes/reporter.tscn" id="7_b6l3f"]
+[ext_resource type="PackedScene" uid="uid://cc3xiyt074uge" path="res://scenes/components/reporter.tscn" id="7_b6l3f"]
 
 [sub_resource type="Resource" id="Resource_ort1h"]
 script = ExtResource("2_b577d")

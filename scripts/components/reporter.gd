@@ -35,6 +35,6 @@ func _get_value_for_node(variant):
 	if variant is int:
 		return variant
 	if variant is float:
-		return variant
+		return "%0.2f" % variant
 	
 	return variant.to_string()

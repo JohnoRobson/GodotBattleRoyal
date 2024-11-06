@@ -1,4 +1,4 @@
-class_name GameHud extends CanvasLayer
+class_name GameHud extends Control
 
 signal pause_button_pressed
 

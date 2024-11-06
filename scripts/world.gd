@@ -150,11 +150,9 @@ func get_win_condition_satisfied() -> bool:
 		return true
 	return false
 
-func get_closest_actor(from_position: Vector3, ignore: Actor = null) -> Actor:
-	var actors = player_actors + ai_actors # Apparently you can concatenate arrays like this - MW 2023-05-15
-
-	if ignore != null:
-		actors.erase(ignore)
+func get_closest_actor(from_position: Vector3, ignore: Array[Actor] = []) -> Actor:
+	# Inefficient? - MW 2024-11-05
+	var actors = (player_actors + ai_actors).filter(func(actor): return !ignore.has(actor))
 
 	actors.sort_custom(func(a, b): return from_position.distance_to(a.global_transform.origin) < from_position.distance_to(b.global_transform.origin))
 

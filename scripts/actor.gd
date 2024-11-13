@@ -21,7 +21,7 @@ var actor_state: ActorState = ActorState.IDLE
 @onready var camera: Camera3D = get_node("Camera3D")
 
 @export var held_weapon: GameItem
-
+@export var team: Team
 
 enum ActorState {
 	IDLE, WALKING, DEAD
@@ -32,13 +32,6 @@ var _drop_weapon_cooldown_time: float = 0.5
 var _drop_weapon_cooldown_timer: float = 0
 
 var _velocity_to_add: Vector3 = Vector3.ZERO
-
-# TODO: change this to an object to allow for team properties? - MW 2024-11-05
-var team: int :
-	set(value):
-		team = value
-	get:
-		return team
 
 signal actor_killed(me: Actor)
 signal weapon_swap(weapon: GameItem)

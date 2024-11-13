@@ -6,6 +6,7 @@ class_name World extends Node3D
 
 @onready var actor_container: Node = get_node("ActorContainer")
 @onready var item_container: Node = get_node("ItemContainer")
+@onready var team_container: Node = get_node("TeamContainer")
 
 @export var effect_manager: EffectManager
 
@@ -40,7 +41,7 @@ func _physics_process(_delta):
 	pass
 
 # Common actor initializations (player and AI)
-func _init_actor(actor: Actor, spawn_position: Vector2, team: int):
+func _init_actor(actor: Actor, spawn_position: Vector2):
 	# TODO: fix incorrect spawn location bug when spawning at (0,0)
 	actor.actor_killed.connect(_on_actor_killed)
 	
@@ -48,13 +49,11 @@ func _init_actor(actor: Actor, spawn_position: Vector2, team: int):
 	actor.set_global_position(Vector3(spawn_position.x, 0.0, spawn_position.y))
 	actor.weapon_inventory.return_item_to_world.connect(return_item_to_world)
 	actor.weapon_inventory.inventory_data = InventoryData.new()
-	actor.team = team
 	for i in 3:
 		actor.weapon_inventory.inventory_data._slots.append(InventorySlotData.new())
 
 # To be run after a game setup function has been called
 func conclude_loading():
-
 	# move this somewhere else
 	for item in get_tree().get_nodes_in_group("items"):
 		item.action_triggered.connect(action_system.action_triggered)
@@ -78,10 +77,15 @@ func move_camera(distance):
 
 	camera.transform.origin = new_position
 
+func create_team():
+	var team = Team.new()
+	team_container.add_child(team)
+	return team
+
 # Spawn player actor and create new player controller
-func spawn_player(spawn_position: Vector2):
+func spawn_player(spawn_position: Vector2) -> Actor:
 	var actor: Actor = preload("res://scenes/player_actor.tscn").instantiate()
-	_init_actor(actor, spawn_position, 0)
+	_init_actor(actor, spawn_position)
 	player_actors.append(actor)
 	actor.actor_killed.connect(_on_player_killed)
 
@@ -101,11 +105,13 @@ func spawn_player(spawn_position: Vector2):
 	inventory_ui.selected_slot_scrolled_down.connect(inventory.selected_slot_scrolled_down)
 
 	inventory.emit_updates() # hack to get the ui to update on game start
+	
+	return actor;
 
 # Spawn AI actor and configure existing AI controller
-func spawn_ai(spawn_position: Vector2, team: int):
+func spawn_ai(spawn_position: Vector2) -> Actor:
 	var actor: Actor = preload("res://scenes/ai_actor.tscn").instantiate()
-	_init_actor(actor, spawn_position, team)
+	_init_actor(actor, spawn_position)
 	ai_actors.append(actor)
 
 	# Configure AI controller
@@ -114,6 +120,8 @@ func spawn_ai(spawn_position: Vector2, team: int):
 	controller.world = self
 	controller.world_navmesh = nav_region
 	controller.state_machine = StateMachine.new(DecisionMakingState.new(), controller)
+	
+	return actor
 
 func spawn_weapon(spawn_position: Vector2, weapon_type: Weapons) -> Weapon:
 	var weapon: Weapon
@@ -244,17 +252,18 @@ func setup_game(game_type: GameTypes):
 	spawn_weapon(Vector2(25,-5), Weapons.SNIPER)
 	match game_type:
 		GameTypes.AI:
-			spawn_ai(Vector2(-10,0), 1)
-			spawn_ai(Vector2(-10,5), 2)
-			spawn_ai(Vector2(30,0), 3)
+			spawn_ai(Vector2(-10,0))
+			spawn_ai(Vector2(-10,5))
+			spawn_ai(Vector2(30,0))
 			make_random_ai_camera_current()
 		GameTypes.SANDBOX:
 			spawn_player(Vector2(0,5))
 		GameTypes.CLASSIC, _:
 			spawn_player(Vector2(0,5))
-			spawn_ai(Vector2(-10,0), 1)
-			spawn_ai(Vector2(-10,5), 2)
-			spawn_ai(Vector2(30,0), 3)
+			var ai_team = create_team()
+			ai_team.add_member(spawn_ai(Vector2(-10,0)))
+			ai_team.add_member(spawn_ai(Vector2(-10,5)))
+			ai_team.add_member(spawn_ai(Vector2(30,0)))
 	conclude_loading()
 
 func _on_pause_button_pressed():

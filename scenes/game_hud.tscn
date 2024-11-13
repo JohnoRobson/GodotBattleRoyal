@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://8mmjpgw85cax"]
 
 [ext_resource type="Script" path="res://scripts/game_hud.gd" id="1_aqifp"]
-[ext_resource type="PackedScene" path="res://scenes/process_visibility_sync.tscn" id="2_y0kys"]
+[ext_resource type="PackedScene" uid="uid://by5l67qs54kqb" path="res://scenes/process_visibility_sync.tscn" id="2_y0kys"]
 
 [node name="GameHud" type="Control"]
 layout_mode = 3

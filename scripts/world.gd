@@ -8,7 +8,6 @@ class_name World extends Node3D
 @onready var item_container: Node = get_node("ItemContainer")
 
 @export var effect_manager: EffectManager
-@export var reporter_manager: ReporterManager
 
 @export var nav_region: NavigationRegion3D
 

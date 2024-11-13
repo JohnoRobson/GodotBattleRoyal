@@ -8,7 +8,7 @@
 [ext_resource type="Script" path="res://scripts/item_interaction_area.gd" id="6_neovh"]
 [ext_resource type="Script" path="res://scripts/actor_cursor.gd" id="6_wh5i0"]
 [ext_resource type="Script" path="res://scripts/item_pickup_manager.gd" id="8_6j5c1"]
-[ext_resource type="PackedScene" uid="uid://cc3xiyt074uge" path="res://scenes/components/reporter.tscn" id="9_6wcgv"]
+[ext_resource type="PackedScene" uid="uid://cc3xiyt074uge" path="res://scenes/components/reporter/reporter.tscn" id="9_6wcgv"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_tsjx1"]
 height = 2.6
@@ -153,7 +153,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.00658, 0)
 shape = SubResource("CapsuleShape3D_vc8i0")
 
 [node name="Reporter" parent="." instance=ExtResource("9_6wcgv")]
-_selected_variables = Array[String](["health", "held_weapon"])
+selected_variables = Array[String](["health", "held_weapon"])
 
 [connection signal="health_depleted" from="Health" to="." method="_on_health_depleted"]
 [connection signal="inventory_changed" from="WeaponInventory" to="." method="_on_weapon_inventory_inventory_changed"]

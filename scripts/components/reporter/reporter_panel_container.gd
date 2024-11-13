@@ -1,6 +1,8 @@
 class_name ReporterPanelContainer extends PanelContainer
+## Holds ReporterContainers within itself to align them vertically
+## Handles turning the name of a node and the Dictionary returned by its Reporter into a visible ReporterContainer
 
-var reporter_container = preload("res://scenes/components/reporter_container.tscn")
+var reporter_container = preload("res://scenes/components/reporter/reporter_container.tscn")
 var last_added_container: ReporterContainer = null
 
 func add_panel(title: String, dict: Dictionary) -> void:

@@ -1,12 +1,14 @@
-[gd_scene load_steps=13 format=3 uid="uid://ugmvx4nxxjn2"]
+[gd_scene load_steps=15 format=3 uid="uid://ugmvx4nxxjn2"]
 
 [ext_resource type="Script" path="res://scripts/items/weapon.gd" id="1_rrsjv"]
 [ext_resource type="Script" path="res://resources/weapon_type.gd" id="2_7qbj6"]
+[ext_resource type="Script" path="res://scripts/action_system/actions/action.gd" id="3_g65r8"]
 [ext_resource type="Script" path="res://scripts/action_system/actions/raycast.gd" id="3_xaf80"]
 [ext_resource type="Script" path="res://scripts/action_system/actions/damage.gd" id="4_wk4t0"]
 [ext_resource type="Script" path="res://scripts/items/aim_function.gd" id="5_esgpq"]
+[ext_resource type="Script" path="res://scripts/action_system/actions/targeted_action.gd" id="5_wxc3x"]
 [ext_resource type="PackedScene" uid="uid://bn7hteceltg4k" path="res://models/gun01.blend" id="6_p326i"]
-[ext_resource type="PackedScene" uid="uid://cc3xiyt074uge" path="res://scenes/components/reporter.tscn" id="7_uvkiy"]
+[ext_resource type="PackedScene" uid="uid://cc3xiyt074uge" path="res://scenes/components/reporter/reporter.tscn" id="7_uvkiy"]
 
 [sub_resource type="Resource" id="Resource_wjeax"]
 script = ExtResource("2_7qbj6")
@@ -20,7 +22,7 @@ max_ammo = 30
 [sub_resource type="Resource" id="Resource_vox38"]
 script = ExtResource("4_wk4t0")
 damage = 10.0
-actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
+actions = Array[ExtResource("3_g65r8")]([])
 
 [sub_resource type="Resource" id="Resource_yrey2"]
 script = ExtResource("3_xaf80")
@@ -28,9 +30,9 @@ cast_collision_mask = 3
 cast_degrees_of_inaccuracy = null
 cast_start_position_local = Vector3(0, 0.042, -1.311)
 cast_range = 2000.0
-targeted_actions = Array[Resource("res://scripts/action_system/actions/targeted_action.gd")]([SubResource("Resource_vox38")])
-actions_to_apply_at_hit_location = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
-actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
+targeted_actions = Array[ExtResource("5_wxc3x")]([SubResource("Resource_vox38")])
+actions_to_apply_at_hit_location = Array[ExtResource("3_g65r8")]([])
+actions = Array[ExtResource("3_g65r8")]([])
 
 [sub_resource type="Resource" id="Resource_h3ab6"]
 script = ExtResource("5_esgpq")
@@ -55,4 +57,4 @@ shape = SubResource("BoxShape3D_j006u")
 [node name="gun01" parent="." instance=ExtResource("6_p326i")]
 
 [node name="Reporter" parent="." instance=ExtResource("7_uvkiy")]
-_selected_variables = Array[String](["_current_ammo", "_reload_time_cooldown", "_current_state"])
+selected_variables = Array[String](["_current_ammo", "_reload_time_cooldown", "_current_state"])

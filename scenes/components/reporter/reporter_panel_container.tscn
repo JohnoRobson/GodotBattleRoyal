@@ -1,8 +1,8 @@
 [gd_scene load_steps=2 format=3 uid="uid://diyp2334prmur"]
 
-[ext_resource type="Script" path="res://scripts/reporter_panel_container.gd" id="1_6ipgj"]
+[ext_resource type="Script" path="res://scripts/components/reporter/reporter_panel_container.gd" id="1_3naf4"]
 
 [node name="ReporterPanelContainer" type="PanelContainer"]
 offset_right = 90.0
 offset_bottom = 50.0
-script = ExtResource("1_6ipgj")
+script = ExtResource("1_3naf4")

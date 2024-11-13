@@ -22,4 +22,4 @@ nav_agent = NodePath("../NavigationAgent3D")
 transform = Transform3D(1, 0, 0, 0, 0.559193, 0.829038, 0, -0.829038, 0.559193, 0, 11.4105, 7.52074)
 
 [node name="Reporter" parent="." index="12"]
-_selected_variables = Array[String](["health", "held_weapon", "controller"])
+selected_variables = Array[String](["health", "held_weapon", "controller"])

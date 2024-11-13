@@ -1,15 +1,17 @@
-[gd_scene load_steps=18 format=3 uid="uid://cegel3cpoc2hy"]
+[gd_scene load_steps=20 format=3 uid="uid://cegel3cpoc2hy"]
 
 [ext_resource type="Script" path="res://scripts/items/weapon.gd" id="1_yfwc3"]
 [ext_resource type="Script" path="res://resources/weapon_type.gd" id="2_2q0du"]
+[ext_resource type="Script" path="res://scripts/action_system/actions/action.gd" id="3_hnpve"]
 [ext_resource type="Script" path="res://scripts/items/aim_function.gd" id="3_it5mn"]
 [ext_resource type="Script" path="res://scripts/action_system/actions/raycast.gd" id="3_j2bm5"]
 [ext_resource type="PackedScene" uid="uid://o0g0axyk2njf" path="res://models/sniper_rifle.blend" id="3_mylws"]
 [ext_resource type="Script" path="res://scripts/action_system/actions/area.gd" id="3_s16u3"]
 [ext_resource type="Script" path="res://scripts/action_system/actions/damage.gd" id="4_yf6im"]
+[ext_resource type="Script" path="res://scripts/action_system/actions/targeted_action.gd" id="5_7xci2"]
 [ext_resource type="PackedScene" uid="uid://be4ixwniduwoc" path="res://scenes/effects/explosion.tscn" id="5_axjqf"]
 [ext_resource type="Script" path="res://scripts/action_system/actions/effect.gd" id="6_s0ive"]
-[ext_resource type="PackedScene" uid="uid://cc3xiyt074uge" path="res://scenes/components/reporter.tscn" id="10_iudkf"]
+[ext_resource type="PackedScene" uid="uid://cc3xiyt074uge" path="res://scenes/components/reporter/reporter.tscn" id="10_iudkf"]
 
 [sub_resource type="Resource" id="Resource_hm74y"]
 script = ExtResource("2_2q0du")
@@ -23,18 +25,18 @@ max_ammo = 200
 [sub_resource type="Resource" id="Resource_tnhjj"]
 script = ExtResource("4_yf6im")
 damage = 60.0
-actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
+actions = Array[ExtResource("3_hnpve")]([])
 
 [sub_resource type="Resource" id="Resource_6kfxy"]
 script = ExtResource("3_s16u3")
 radius = 5.0
-targeted_actions = Array[Resource("res://scripts/action_system/actions/targeted_action.gd")]([SubResource("Resource_tnhjj")])
-actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
+targeted_actions = Array[ExtResource("5_7xci2")]([SubResource("Resource_tnhjj")])
+actions = Array[ExtResource("3_hnpve")]([])
 
 [sub_resource type="Resource" id="Resource_pooku"]
 script = ExtResource("6_s0ive")
 scene_to_spawn = ExtResource("5_axjqf")
-actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
+actions = Array[ExtResource("3_hnpve")]([])
 
 [sub_resource type="Resource" id="Resource_4cail"]
 script = ExtResource("3_j2bm5")
@@ -42,9 +44,9 @@ cast_collision_mask = 3
 cast_degrees_of_inaccuracy = Callable()
 cast_start_position_local = Vector3(0, 0.04, -2.397)
 cast_range = 20.0
-targeted_actions = Array[Resource("res://scripts/action_system/actions/targeted_action.gd")]([])
-actions_to_apply_at_hit_location = Array[Resource("res://scripts/action_system/actions/action.gd")]([SubResource("Resource_6kfxy"), SubResource("Resource_pooku")])
-actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
+targeted_actions = Array[ExtResource("5_7xci2")]([])
+actions_to_apply_at_hit_location = Array[ExtResource("3_hnpve")]([SubResource("Resource_6kfxy"), SubResource("Resource_pooku")])
+actions = Array[ExtResource("3_hnpve")]([])
 
 [sub_resource type="Resource" id="Resource_b3hob"]
 script = ExtResource("3_it5mn")
@@ -69,4 +71,4 @@ shape = SubResource("BoxShape3D_j006u")
 [node name="sniper_rifle" parent="." instance=ExtResource("3_mylws")]
 
 [node name="Reporter" parent="." instance=ExtResource("10_iudkf")]
-_selected_variables = Array[String](["_current_ammo", "_reload_time_cooldown", "_current_state"])
+selected_variables = Array[String](["_current_ammo", "_reload_time_cooldown", "_current_state"])

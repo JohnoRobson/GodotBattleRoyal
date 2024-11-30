@@ -22,7 +22,7 @@ offset_right = 171.0
 offset_bottom = 246.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 50
-text = "You won!"
+text = "Team wins!"
 horizontal_alignment = 1
 vertical_alignment = 1
 

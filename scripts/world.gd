@@ -155,9 +155,12 @@ func _on_actor_killed(actor: Actor):
 		game_won.emit()
 
 func get_win_condition_satisfied() -> bool:
-	if player_actors.size() >= 1 and ai_actors.size() == 0:
-		return true
-	return false
+	var actors = player_actors + ai_actors
+	var actor = actors.pop_front()
+	for other_actor in actors:
+		if other_actor.team != actor.team or other_actor.team == null:
+			return false
+	return true
 
 func get_closest_actor(from_position: Vector3, ignore: Array[Actor] = []) -> Actor:
 	# Inefficient? - MW 2024-11-05

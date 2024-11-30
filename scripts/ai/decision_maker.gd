@@ -1,9 +1,10 @@
 class_name DecisionMaker
 
 static func get_state_to_do(controller: AiActorController) -> State:
-	return get_states_to_do(controller)[0]
+	return get_states_to_do(controller)[0].state
 
-static func get_states_to_do(controller: AiActorController) -> Array[State]:
+## Returns a dictionary of states and their scores sorted from 1 to 0 inclusive
+static func get_states_to_do(controller: AiActorController) -> Array[StateEvaluation]:
 	var factor_context: FactorContext = FactorContext.new(controller.world, controller.actor, controller.actor.global_position)
 	var sorting_states: Dictionary = {}
 	var print_str: String = "====\n"
@@ -29,5 +30,11 @@ static func get_states_to_do(controller: AiActorController) -> Array[State]:
 	#print(print_str)
 	
 	sorted_states.sort_custom(func(a, b): return sorting_states[a] > sorting_states[b])
-	return sorted_states
+	
+	var return_array: Array[StateEvaluation] = []
+	
+	for state in sorted_states:
+		return_array.append(StateEvaluation.new(state, sorting_states[state]))
+	
+	return return_array
 	

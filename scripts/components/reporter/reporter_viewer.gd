@@ -10,7 +10,7 @@ func _process(delta: float) -> void:
 	_reporter_panel_containers.clear()
 	
 	# we need to sort the nodes so that their reporter panels are instanciated in order of their distance from the camera
-	var sort_by_distance = func (a, b):
+	var sort_by_distance = func(a, b):
 		var camera_position = get_viewport().get_camera_3d().global_position
 		var a_distance = camera_position.distance_to(a.global_position)
 		var b_distance = camera_position.distance_to(b.global_position)

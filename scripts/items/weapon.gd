@@ -14,6 +14,7 @@ enum WeaponState { CAN_FIRE, NO_AMMO, COOLDOWN, RELOADING }
 
 var _current_state: WeaponState = WeaponState.CAN_FIRE
 
+# used for drawing the raycast
 signal on_firing(start_position: Vector3, end_position: Vector3)
 signal update_ammo_ui(current_ammo: int, max_ammo: int)
 

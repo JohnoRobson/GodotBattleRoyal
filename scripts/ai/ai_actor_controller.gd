@@ -10,10 +10,12 @@ var aim_position: Vector3 = Vector3.ZERO
 var move_direction: Vector2 = Vector2.ZERO
 var is_shooting_bool: bool = false
 var is_reloading_bool: bool = false
-var current_target: Actor = null
 var is_exchanging_weapon_bool: bool = false
 
 @onready var state_label: Label3D = get_node("../AIStateLabel3D")
+
+func _ready():
+	process_priority = -99
 
 func _process(delta):
 	state_machine._process(delta)

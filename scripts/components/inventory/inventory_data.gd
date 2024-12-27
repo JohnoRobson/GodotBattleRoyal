@@ -6,14 +6,20 @@ extends Resource
 func is_item_in_inventory(item: GameItem) -> bool:
 	return _slots.any(func(a): return a.contains(item))
 
-func number_of_filled_slots() -> int:
+func number_of_slots() -> int:
 	return _slots.size()
+
+func number_of_filled_slots() -> int:
+	return _slots.filter(func(a): return !a.is_empty()).size()
 
 func has_empty_slots() -> bool:
 	for slot in _slots:
 		if slot.is_empty():
 			return true
 	return false
+
+func is_empty() -> bool:
+	return _slots.all(func(slot): slot.is_empty())
 
 func get_item_at_index(index: int) -> GameItem:
 	if index > _slots.size() - 1 || index < 0:

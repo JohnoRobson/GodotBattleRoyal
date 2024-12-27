@@ -23,6 +23,7 @@ func start_game_scene(new_game_scene:PackedScene, game_type: World.GameTypes):
 	new_instantiated_game_scene.game_lost.connect(_on_game_scene_game_lost)
 	new_instantiated_game_scene.game_won.connect(_on_game_scene_game_won)
 	new_instantiated_game_scene.game_loaded.connect(_on_game_scene_game_loaded)
+	new_instantiated_game_scene.pause_button_pressed.connect(_on_game_hud_pause_button_pressed)
 	$GameScenes.add_child(new_instantiated_game_scene)
 
 	if current_game_type != game_type:
@@ -33,7 +34,6 @@ func start_game_scene(new_game_scene:PackedScene, game_type: World.GameTypes):
 
 # Clear all current game scenes from the game scene root
 func clear_game_scenes():
-	$GameHud.hide()
 	var game_scenes:Node = $GameScenes
 	for game_scene in game_scenes.get_children():
 		game_scenes.remove_child(game_scene)
@@ -58,7 +58,6 @@ func _on_game_scene_game_won():
 
 func _on_game_scene_game_loaded():
 	$MenuManager.clear_menus()
-	$GameHud.show()
 
 func _on_start_game_button_pressed(game_type: World.GameTypes):
 	clear_game_scenes()

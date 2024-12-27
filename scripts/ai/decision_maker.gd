@@ -1,38 +1,33 @@
 class_name DecisionMaker
 
-# things that can be done in the game:
-# 1.  moving
-# 2.  picking up items
-# 3.  using items
-#
-# actions that actors can do in the game:
-# 1.  running away
-# 2.  looting
-# 3.  healing
-# 4.  attacking
-#
-# rough priority of actions:
-# 1.  looting
-# 2.  attacking
-# 3.  running away
-# 4.  healing
-static func get_state_to_do(controller: AiActorController):
+static func get_state_to_do(controller: AiActorController) -> State:
+	return get_states_to_do(controller)[0]
+
+static func get_states_to_do(controller: AiActorController) -> Array[State]:
 	var factor_context: FactorContext = FactorContext.new(controller.world, controller.actor, controller.actor.global_position)
-	# 1. should we loot?
-	var loot_factor: float = LootFactor.evaluate(factor_context)
-	# 2. should we attack?
-	# 3. should we run away?
-	var danger_factor: float = DangerFactor.evaluate(factor_context)
-	# 4. should we heal?
-	var health_factor: float = HealthFactor.evaluate(factor_context)
-
-	if health_factor > 0.6 and controller.world.get_closest_available_health(controller.actor.global_transform.origin) != null:
-		return FindHealthState.new()
-
-	if loot_factor > 0.0 and controller.actor.held_weapon == null:
-		return FindWeaponState.new()
+	var sorting_states: Dictionary = {}
+	var print_str: String = "====\n"
 	
-	if danger_factor >= 1.0 or (danger_factor > 0.4 and health_factor > 0.3):
-		return FleeState.new()
+	# has to be created on each call so that we don't share state's states with other states
+	var top_level_states: Array[State] = [
+		FindGrenadeState.new(),
+		FindHealthState.new(),
+		FleeState.new(),
+		FightState.new(),
+		FindWeaponState.new(),
+		StandInHealingAuraState.new(),
+		UseHealthItemState.new()
+	]
+	var sorted_states = top_level_states
 	
-	return FindEnemyState.new()
+	# loop through top level states and find out which one has the highest priority
+	for state in top_level_states:
+		var priority: float = state.evaluate(factor_context)
+		sorting_states[state] = priority
+		print_str = print_str + " %s : %s\n" % [state.get_name(), priority]
+	print_str = print_str + "===="
+	#print(print_str)
+	
+	sorted_states.sort_custom(func(a, b): return sorting_states[a] > sorting_states[b])
+	return sorted_states
+	

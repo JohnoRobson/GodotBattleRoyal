@@ -12,7 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://duyn8iuxvvn4j" path="res://scenes/items/aoe_heal_grenade.tscn" id="10_j4gxa"]
 [ext_resource type="PackedScene" uid="uid://cegel3cpoc2hy" path="res://scenes/weapons/sniper_rifle2.tscn" id="11_8a3v7"]
 [ext_resource type="PackedScene" uid="uid://calaly75s74jo" path="res://scenes/components/reporter/reporter_viewer.tscn" id="12_d7yvc"]
-[ext_resource type="Script" path="res://scenes/debug_ui.gd" id="12_hss2o"]
+[ext_resource type="Script" path="res://scripts/debug_ui.gd" id="12_hss2o"]
 [ext_resource type="Script" path="res://scripts/ai/inspector/ai_inspector.gd" id="13_chado"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_vvk85"]
@@ -211,9 +211,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "AI: etc
-test: test
-"
 clip_text = true
 
 [connection signal="pause_button_pressed" from="GameHud" to="." method="_on_pause_button_pressed"]

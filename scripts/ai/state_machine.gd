@@ -10,11 +10,12 @@ const _decision_seconds_check: float = 0.5
 var _decision_seconds_count: float = 0.0
 const _how_long_until_state_switchback_is_allowed: float = 4.0
 var _state_switchback_count: float = 0.0
+const _number_of_memory_frames_to_keep: int = 5
 
 func _init(_current_state: State, _owner: AiActorController):
 	current_state = _current_state
 	owner = _owner
-	previous_state_evaluations = StateEvaluationMemory.new(5)
+	previous_state_evaluations = StateEvaluationMemory.new(_number_of_memory_frames_to_keep)
 
 func change_state(new_state: State):
 	current_state.exit(owner)

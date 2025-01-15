@@ -1,11 +1,13 @@
-[gd_scene load_steps=21 format=3 uid="uid://duyn8iuxvvn4j"]
+[gd_scene load_steps=23 format=3 uid="uid://duyn8iuxvvn4j"]
 
 [ext_resource type="Script" path="res://scripts/items/game_item.gd" id="1_prsue"]
+[ext_resource type="Script" path="res://scripts/action_system/actions/action.gd" id="2_adjaq"]
 [ext_resource type="Script" path="res://scripts/action_system/actions/effect.gd" id="3_hvg2c"]
 [ext_resource type="PackedScene" uid="uid://bcp66a5dwpxmx" path="res://scenes/effects/heal.tscn" id="3_sb8ic"]
 [ext_resource type="Script" path="res://scripts/action_system/actions/heal.gd" id="4_3s8ed"]
 [ext_resource type="Script" path="res://scripts/action_system/actions/remove.gd" id="4_pnr7i"]
 [ext_resource type="Script" path="res://scripts/action_system/actions/area.gd" id="5_ycrsu"]
+[ext_resource type="Script" path="res://scripts/action_system/actions/targeted_action.gd" id="7_8or6m"]
 [ext_resource type="Script" path="res://scripts/action_system/actions/repeat_delay.gd" id="7_cbjcq"]
 [ext_resource type="Script" path="res://scripts/action_system/actions/timer.gd" id="7_t23rv"]
 [ext_resource type="Script" path="res://scripts/action_system/actions/throw.gd" id="8_8mss6"]
@@ -14,41 +16,41 @@
 
 [sub_resource type="Resource" id="Resource_6lsvq"]
 script = ExtResource("4_pnr7i")
-actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
+actions = Array[ExtResource("2_adjaq")]([])
 
 [sub_resource type="Resource" id="Resource_hsjmk"]
 script = ExtResource("3_hvg2c")
 scene_to_spawn = ExtResource("3_sb8ic")
-actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
+actions = Array[ExtResource("2_adjaq")]([])
 
 [sub_resource type="Resource" id="Resource_fqrnx"]
 script = ExtResource("4_3s8ed")
 healing = 5.0
-actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
+actions = Array[ExtResource("2_adjaq")]([])
 
 [sub_resource type="Resource" id="Resource_vlb7b"]
 script = ExtResource("5_ycrsu")
 radius = 5.0
-targeted_actions = Array[Resource("res://scripts/action_system/actions/targeted_action.gd")]([SubResource("Resource_fqrnx")])
-actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
+targeted_actions = Array[ExtResource("7_8or6m")]([SubResource("Resource_fqrnx")])
+actions = Array[ExtResource("2_adjaq")]([])
 
 [sub_resource type="Resource" id="Resource_jokeo"]
 script = ExtResource("7_cbjcq")
 countdown_in_seconds = 0.4
 number_of_times_to_activate = 10
-actions_to_perform = Array[Resource("res://scripts/action_system/actions/action.gd")]([SubResource("Resource_hsjmk"), SubResource("Resource_vlb7b")])
-actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([SubResource("Resource_6lsvq")])
+actions_to_perform = Array[ExtResource("2_adjaq")]([SubResource("Resource_hsjmk"), SubResource("Resource_vlb7b")])
+actions = Array[ExtResource("2_adjaq")]([SubResource("Resource_6lsvq")])
 
 [sub_resource type="Resource" id="Resource_51wv8"]
 script = ExtResource("7_t23rv")
 countdown_in_seconds = 1.0
-actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([SubResource("Resource_jokeo")])
+actions = Array[ExtResource("2_adjaq")]([SubResource("Resource_jokeo")])
 
 [sub_resource type="Resource" id="Resource_vnnrj"]
 script = ExtResource("8_8mss6")
 degrees_of_inaccuracy = 0.0
 force = 0.0
-actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([SubResource("Resource_51wv8")])
+actions = Array[ExtResource("2_adjaq")]([SubResource("Resource_51wv8")])
 
 [sub_resource type="Resource" id="Resource_8y2xw"]
 script = ExtResource("10_5saf0")

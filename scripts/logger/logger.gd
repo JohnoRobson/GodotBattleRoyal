@@ -3,7 +3,7 @@ class_name LoggerInterface extends Node
 # red, yellow, white, green
 enum LoggingLevel {ERROR, WARN, INFO, TRACE}
 
-var logging_level: LoggingLevel = LoggingLevel.TRACE
+var logging_level: LoggingLevel = LoggingLevel.INFO
 
 func log(level: LoggingLevel, message: String) -> void:
 	var msg: String = "[color=%s][%08d] %6s[/color] %s" % [_get_color_for_level(level), Engine.get_process_frames(), _get_level_name(level), message]

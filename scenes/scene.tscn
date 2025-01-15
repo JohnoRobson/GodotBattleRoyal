@@ -143,8 +143,6 @@ effect_manager = NodePath("../EffectManager")
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.559193, 0.829038, 0, -0.829038, 0.559193, 0, 13.4105, 10.5207)
 
-[node name="GameHud" parent="." instance=ExtResource("2_nby8c")]
-
 [node name="DebugUI" type="SplitContainer" parent="."]
 visible = false
 anchors_preset = 15
@@ -212,5 +210,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 clip_text = true
+
+[node name="GameHud" parent="." instance=ExtResource("2_nby8c")]
 
 [connection signal="pause_button_pressed" from="GameHud" to="." method="_on_pause_button_pressed"]

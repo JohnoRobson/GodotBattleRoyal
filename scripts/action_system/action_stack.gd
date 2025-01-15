@@ -31,7 +31,7 @@ func perform(delta: float):
 	while there_are_completable_actions and !is_canceled:
 		var current_action_is_completed: bool
 		
-		#print("performing action %s" % Action.Name.keys()[current_node.action.action_name])
+		Logger.trace("performing action %s" % Action.Name.keys()[current_node.action.action_name])
 		current_action_is_completed = current_node.action.perform(delta, current_node)
 		
 		if current_action_is_completed:

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cc3xiyt074uge"]
+
+[ext_resource type="Script" path="res://scripts/components/reporter/reporter.gd" id="1_a6wfl"]
+
+[node name="Reporter" type="Node" groups=["reporters"]]
+script = ExtResource("1_a6wfl")

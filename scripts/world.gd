@@ -18,6 +18,8 @@ class_name World extends Node3D
 @export var camera_max_distance: float = 30
 @export var camera_min_distance: float = 5
 
+var current_focus: Actor
+
 enum Weapons {SMG, SHOTGUN, SNIPER}
 enum GameTypes {AI, SANDBOX, CLASSIC}
 
@@ -29,6 +31,7 @@ signal pause_button_pressed
 
 func _ready():
 	action_system.world = self
+	Logger.logging_level = Logger.LoggingLevel.INFO
 	world_camera.make_current()
 
 func _process(_delta):

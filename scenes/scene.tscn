@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://6g0i5ehfdc2v"]
+[gd_scene load_steps=21 format=3 uid="uid://6g0i5ehfdc2v"]
 
 [ext_resource type="Script" path="res://scripts/world.gd" id="1_h7cyw"]
 [ext_resource type="PackedScene" uid="uid://biir0tlfdnimk" path="res://scenes/box.tscn" id="1_x50jp"]
@@ -11,6 +11,9 @@
 [ext_resource type="PackedScene" uid="uid://b5pidhuj5uftx" path="res://scenes/items/cluster_grenade.tscn" id="10_h3423"]
 [ext_resource type="PackedScene" uid="uid://duyn8iuxvvn4j" path="res://scenes/items/aoe_heal_grenade.tscn" id="10_j4gxa"]
 [ext_resource type="PackedScene" uid="uid://cegel3cpoc2hy" path="res://scenes/weapons/sniper_rifle2.tscn" id="11_8a3v7"]
+[ext_resource type="PackedScene" uid="uid://calaly75s74jo" path="res://scenes/components/reporter/reporter_viewer.tscn" id="12_d7yvc"]
+[ext_resource type="Script" path="res://scripts/debug_ui.gd" id="12_hss2o"]
+[ext_resource type="Script" path="res://scripts/ai/inspector/ai_inspector.gd" id="13_chado"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_vvk85"]
 vertices = PackedVector3Array(-30.5, 0.499999, -49.5, -49.5, 0.499999, -49.5, -49.5, 0.499999, -38.75, -30.5, 0.499999, -49.5, -49.5, 0.499999, -38.75, -49.5, 0.499999, -28, -49.5, 0.499999, -6.5, -12.25, 0.499999, -6.5, -12.25, 0.499999, -7.25, -30.5, 0.499999, -49.5, -49.5, 0.499999, -28, -49.5, 0.499999, -17.25, -49.5, 0.499999, -6.5, -12.25, 0.499999, -7.25, -11.25, 0.499999, -7.5, -11.25, 0.499999, -49.5, -30.5, 0.499999, -49.5, -49.5, 0.499999, -17.25, 0.75, 0.499999, -3, 9, 0.499999, -5, 9, 0.499999, -6.5, -10, 0.499999, -7.25, -10, 0.499999, -5.75, -0.5, 0.499999, -3, -0.5, 0.499999, -49.5, -11.25, 0.499999, -49.5, -11.25, 0.499999, -7.5, -10, 0.499999, -7.25, 9, 0.499999, -6.5, 10.25, 0.499999, -6.75, 10.25, 0.499999, -49.5, -0.5, 0.499999, -49.5, -11.25, 0.499999, -7.5, 49.5, 0.499999, -38.75, 49.5, 0.499999, -49.5, 29.75, 0.499999, -49.5, 49.5, 0.499999, -27.75, 49.5, 0.499999, -38.75, 29.75, 0.499999, -49.5, 49.5, 0.499999, -16.75, 49.5, 0.499999, -27.75, 29.75, 0.499999, -49.5, 10.25, 0.499999, -49.5, 10.25, 0.499999, -6.75, 11, 0.499999, -6.75, 11, 0.499999, -6.75, 11.25, 0.499999, -5.75, 49.5, 0.499999, -5.75, 49.5, 0.499999, -16.75, -20.5, 0.499999, 14.75, -19, 0.499999, 14.75, -12.25, 0.499999, -5.75, -12.25, 0.499999, -6.5, -49.5, 0.499999, -6.5, -49.5, 0.499999, 4.5, -49.5, 0.499999, 15.75, -20.75, 0.499999, 15.75, -20.5, 0.499999, 14.75, -49.5, 0.499999, 4.5, -19, 0.499999, 14.75, -18.5, 0.499999, 15.25, -11.75, 0.499999, -5.25, -12.25, 0.499999, -5.75, 14.5, 0.499999, 17.75, 14.5, 0.499999, 17, 11.25, 0.499999, 13.75, -1, 0.499999, -2.75, -0.5, 0.499999, -3, -10, 0.499999, -5.75, -10.25, 0.499999, -5.25, -11.75, 0.499999, -5.25, -18.5, 0.499999, 15.25, -18.5, 0.499999, 16.75, 14.5, 0.499999, 17.75, 11.25, 0.499999, 13.75, -1, 0.499999, -1, -1, 0.499999, -1, -1, 0.499999, -2.75, -10.25, 0.499999, -5.25, -11.75, 0.499999, -5.25, -18.5, 0.499999, 16.75, -19, 0.499999, 17, 14.5, 0.499999, 17.75, 11.25, 0.499999, 13.75, 0.5, 0.499999, -0.75, -1, 0.499999, -1, 11.25, 0.499999, -5, 15, 0.499999, 16.5, 16.5, 0.499999, 16.5, 11.25, 0.499999, -5.75, 11.25, 0.499999, -5, 16.5, 0.499999, 16.5, 16.75, 0.499999, 17.5, 49.5, 0.499999, 5.75, 49.5, 0.499999, -5.75, 16.75, 0.499999, 17.5, 49.5, 0.499999, 17.5, 49.5, 0.499999, 5.75, 9, 0.499999, -5, 0.75, 0.499999, -3, 1.25, 0.499999, -2.75, 9.25, 0.499999, -4.5, 9, 0.499999, -5, 1.25, 0.499999, -2.75, 1.25, 0.499999, -1.25, 9.25, 0.499999, -4.5, 1.25, 0.499999, -1.25, 0.5, 0.499999, -0.75, 11.25, 0.499999, 13.75, 10.75, 0.499999, -4.5, 11.25, 0.499999, 13.75, 14.5, 0.499999, 17, 15, 0.499999, 16.5, 11.25, 0.499999, -5, 10.75, 0.499999, -4.5, -49.5, 0.499999, 32.5, -49.5, 0.499999, 49.5, -34.5, 0.499999, 49.5, -20.75, 0.499999, 16.75, -20.75, 0.499999, 15.75, -49.5, 0.499999, 15.75, -19.5, 0.499999, 17, -20.75, 0.499999, 16.75, -49.5, 0.499999, 15.75, -49.5, 0.499999, 32.5, -34.5, 0.499999, 49.5, -19.5, 0.499999, 49.5, 15.5, 0.499999, 49.5, 15.5, 0.499999, 18.75, 14.5, 0.499999, 18.5, -2, 0.499999, 49.5, -19, 0.499999, 17, -19.5, 0.499999, 17, -19.5, 0.499999, 49.5, -2, 0.499999, 49.5, 14.5, 0.499999, 18.5, 14.5, 0.499999, 17.75, 32.5, 0.499999, 49.5, 49.5, 0.499999, 49.5, 49.5, 0.499999, 33.5, 16.5, 0.499999, 18.75, 15.5, 0.499999, 18.75, 15.5, 0.499999, 49.5, 16.75, 0.499999, 17.5, 16.5, 0.499999, 18.75, 15.5, 0.499999, 49.5, 32.5, 0.499999, 49.5, 49.5, 0.499999, 33.5, 49.5, 0.499999, 17.5)
@@ -33,6 +36,9 @@ size = Vector2(100, 100)
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_w1usq"]
 plane = Plane(1, 0, 0, 0)
+
+[sub_resource type="LabelSettings" id="LabelSettings_jyuhe"]
+font_size = 31
 
 [node name="World" type="Node3D" node_paths=PackedStringArray("effect_manager", "nav_region", "action_system")]
 script = ExtResource("1_h7cyw")
@@ -138,6 +144,74 @@ effect_manager = NodePath("../EffectManager")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.559193, 0.829038, 0, -0.829038, 0.559193, 0, 13.4105, 10.5207)
+
+[node name="DebugUI" type="SplitContainer" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+split_offset = 35
+dragger_visibility = 1
+vertical = true
+script = ExtResource("12_hss2o")
+
+[node name="Header" type="Panel" parent="DebugUI"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="DebugUI/Header"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "//// DEBUG MODE ////"
+label_settings = SubResource("LabelSettings_jyuhe")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Debug" type="Control" parent="DebugUI"]
+layout_mode = 2
+
+[node name="ReporterViewer" parent="DebugUI/Debug" node_paths=PackedStringArray("nodes_whose_children_to_check") instance=ExtResource("12_d7yvc")]
+layout_mode = 1
+offset_left = -12.0
+offset_right = -12.0
+nodes_whose_children_to_check = [NodePath("../../../ActorContainer"), NodePath("../../../ItemContainer")]
+
+[node name="AiInspector" type="Control" parent="DebugUI/Debug" node_paths=PackedStringArray("world")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -12.0
+offset_right = -12.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("13_chado")
+world = NodePath("../../..")
+
+[node name="Panel" type="Panel" parent="DebugUI/Debug/AiInspector"]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -280.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="DebugUI/Debug/AiInspector/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+clip_text = true
 
 [node name="GameHud" parent="." instance=ExtResource("2_nby8c")]
 

@@ -20,11 +20,11 @@ func execute(controller: AiActorController):
 		controller.state_machine.change_state(DecisionMakingState.new())
 
 func execute_physics(controller: AiActorController):
-	if (picked_up_weapon_last_tick):
+	if picked_up_weapon_last_tick && _current_target.is_held:
 		picked_up_weapon_last_tick = false
 		controller.set_is_exchanging_weapon(false)
 		controller.state_machine.change_state(DecisionMakingState.new())
-	elif (_current_target != null && !_current_target.is_held):
+	elif _current_target != null && !_current_target.is_held:
 		var target_pos = _current_target.global_transform.origin
 		nav_agent.target_position = target_pos
 

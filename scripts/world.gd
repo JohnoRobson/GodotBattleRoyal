@@ -60,6 +60,8 @@ func conclude_loading():
 	# move this somewhere else
 	for item in get_tree().get_nodes_in_group("items"):
 		item.action_triggered.connect(action_system.action_triggered)
+	
+	_init_outlines()
 
 	game_loaded.emit()
 
@@ -265,12 +267,25 @@ func setup_game(game_type: GameTypes):
 		GameTypes.SANDBOX:
 			spawn_player(Vector2(0,5))
 		GameTypes.CLASSIC, _:
-			spawn_player(Vector2(0,5))
+			var player_team = create_team()
+			player_team.add_member(spawn_player(Vector2(0,5)))
+			player_team.add_member(spawn_ai(Vector2(-30, 10)))
 			var ai_team = create_team()
 			ai_team.add_member(spawn_ai(Vector2(-10,0)))
 			ai_team.add_member(spawn_ai(Vector2(-10,5)))
 			ai_team.add_member(spawn_ai(Vector2(30,0)))
+			
 	conclude_loading()
 
 func _on_pause_button_pressed():
 	pause_button_pressed.emit()
+
+func _init_outlines():
+	# assumes one player actor, update to controlled character if multiplayer is implemented
+	var player = player_actors[0]
+	player.set_outline_color(Color(255, 255, 255, 1))
+	for ai_actor in ai_actors:
+		if (ai_actor.team == null or ai_actor.team != player.team):
+			ai_actor.set_outline_color(Color(255, 0, 0))
+		else:
+			ai_actor.set_outline_color(Color(0, 255, 0))

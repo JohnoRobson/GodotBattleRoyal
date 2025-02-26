@@ -12,6 +12,7 @@ var actor_state: ActorState = ActorState.IDLE
 @onready var cursor: ActorCursor = get_node("ActorCursor")
 @onready var rotator: Node3D = get_node("Rotator")
 @onready var weapon_base: Node3D = get_node("Rotator/Animatable/WeaponBase")
+@onready var actor_body: Node3D = get_node("Rotator/Animatable/ActorBody")
 @onready var health: Health = get_node("Health")
 
 @onready var item_pickup_area: ItemInteractionArea = get_node("ItemPickupArea")
@@ -187,3 +188,8 @@ func _on_item_used_up():
 
 func make_camera_current():
 	camera.make_current()
+
+func set_outline_color(color: Color):
+	var active_material = actor_body.get_active_material(0)
+	var active_next_pass = active_material.next_pass
+	active_next_pass.set_shader_parameter('outline_color', color)

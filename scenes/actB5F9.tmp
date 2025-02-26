@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://8ijx2rjjx2jg"]
+[gd_scene load_steps=24 format=3 uid="uid://8ijx2rjjx2jg"]
 
 [ext_resource type="Script" path="res://scripts/actor.gd" id="1_ico6x"]
 [ext_resource type="PackedScene" uid="uid://bo23y3eikvkx8" path="res://scenes/components/health.tscn" id="2_p7v67"]
@@ -11,6 +11,7 @@
 [ext_resource type="Shader" path="res://outline.gdshader" id="8_d7xh7"]
 [ext_resource type="PackedScene" uid="uid://cc3xiyt074uge" path="res://scenes/components/reporter/reporter.tscn" id="9_6wcgv"]
 [ext_resource type="Shader" path="res://actor.gdshader" id="9_gi2lv"]
+[ext_resource type="Script" path="res://scenes/foo.gd" id="10_qx5ms"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_tsjx1"]
 height = 2.6
@@ -80,20 +81,17 @@ _data = {
 }
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_i4k2l"]
-resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("8_d7xh7")
 shader_parameter/outline_color = Color(1, 1, 1, 1)
 shader_parameter/outline_width = 2.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8qyd3"]
-resource_local_to_scene = true
 render_priority = 0
 next_pass = SubResource("ShaderMaterial_i4k2l")
 shader = ExtResource("9_gi2lv")
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_ie7wx"]
-resource_local_to_scene = true
 material = SubResource("ShaderMaterial_8qyd3")
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mj10y"]
@@ -147,10 +145,11 @@ autoplay = "idle"
 
 [node name="Animatable" type="Node3D" parent="Rotator"]
 
-[node name="ActorBody" type="MeshInstance3D" parent="Rotator/Animatable"]
+[node name="Body" type="MeshInstance3D" parent="Rotator/Animatable"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = SubResource("CapsuleMesh_ie7wx")
 skeleton = NodePath("../../..")
+script = ExtResource("10_qx5ms")
 
 [node name="WeaponBase" type="Node3D" parent="Rotator/Animatable"]
 transform = Transform3D(0.997564, 0.0697565, 0, -0.0697565, 0.997564, 0, 0, 0, 1, 0.0751962, 1.07536, -0.803629)

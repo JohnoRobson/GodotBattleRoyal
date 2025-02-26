@@ -282,8 +282,11 @@ func _on_pause_button_pressed():
 
 func _init_outlines():
 	# assumes one player actor, update to controlled character if multiplayer is implemented
-	var player = player_actors[0]
-	player.set_outline_color(Color(255, 255, 255, 1))
+	var player = null
+	if (player_actors.size() > 0):
+		player = player_actors[0]
+		player.set_outline_color(Color(255, 255, 255, 1))
+
 	for ai_actor in ai_actors:
 		if (ai_actor.team == null or ai_actor.team != player.team):
 			ai_actor.set_outline_color(Color(255, 0, 0))

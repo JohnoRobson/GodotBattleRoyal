@@ -129,7 +129,6 @@ autoplay = "idle"
 [node name="Rotator" type="Node3D" parent="."]
 
 [node name="Animatable" type="Node3D" parent="Rotator"]
-transform = Transform3D(0.997564, -0.0697565, 0, 0.0697565, 0.997564, 0, 0, 0, 1, 0, 0.0520184, 0)
 
 [node name="Body" type="MeshInstance3D" parent="Rotator/Animatable"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

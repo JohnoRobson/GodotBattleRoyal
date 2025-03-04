@@ -16,6 +16,7 @@ class_name World extends Node3D
 @export var camera_zoom_speed: float = 0.27
 @export var camera_max_distance: float = 30
 @export var camera_min_distance: float = 5
+@export var actor_inventory_size: int = 5
 
 var current_focus: Actor
 
@@ -49,10 +50,10 @@ func _init_actor(actor: Actor, spawn_position: Vector2):
 	
 	actor_container.add_child(actor)
 	actor.set_global_position(Vector3(spawn_position.x, 0.0, spawn_position.y))
-	actor.weapon_inventory.return_item_to_world.connect(return_item_to_world)
-	actor.weapon_inventory.inventory_data = InventoryData.new()
-	for i in 3:
-		actor.weapon_inventory.inventory_data._slots.append(InventorySlotData.new())
+	actor.inventory.return_item_to_world.connect(return_item_to_world)
+	actor.inventory.inventory_data = InventoryData.new()
+	for i in actor_inventory_size:
+		actor.inventory.inventory_data._slots.append(InventorySlotData.new())
 
 # To be run after a game setup function has been called
 func conclude_loading():
@@ -129,7 +130,7 @@ func spawn_weapon(spawn_position: Vector2, weapon_type: Weapons) -> Weapon:
 		_:
 			return
 
-	weapon.on_firing.connect(effect_manager._on_actor_shoot)
+	#weapon.on_firing.connect(effect_manager._on_actor_shoot)
 	item_container.add_child(weapon)
 	weapon.set_global_position(Vector3(spawn_position.x, 5.0, spawn_position.y))
 	weapon.set_global_rotation_degrees(Vector3(0, 90, 0))

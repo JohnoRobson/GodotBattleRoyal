@@ -111,3 +111,11 @@ func has_empty_slots() -> bool:
 
 func is_empty() -> bool:
 	return inventory_data.is_empty()
+
+func subtract_item_matching(filter: Callable) -> GameItem:
+	var item_subtracted: GameItem = inventory_data.subtract_item_matching(filter)
+
+	if item_subtracted != null:
+		inventory_changed.emit(inventory_data, _selected_slot_index)
+	
+	return item_subtracted

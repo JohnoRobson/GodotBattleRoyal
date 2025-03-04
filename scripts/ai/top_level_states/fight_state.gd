@@ -142,11 +142,11 @@ func get_name() -> String:
 	return "FightState"
 
 func _has_weapon(actor: Actor) -> bool:
-	return InventoryUtils.contains_traits(actor.weapon_inventory.inventory_data, [GameItem.ItemTrait.FIREARM]) \
-	|| InventoryUtils.contains_traits(actor.weapon_inventory.inventory_data, [GameItem.ItemTrait.THROWABLE, GameItem.ItemTrait.EXPLOSIVE])
+	return InventoryUtils.contains_traits(actor.inventory.inventory_data, [GameItem.ItemTrait.FIREARM]) \
+	|| InventoryUtils.contains_traits(actor.inventory.inventory_data, [GameItem.ItemTrait.THROWABLE, GameItem.ItemTrait.EXPLOSIVE])
 
 func _equip_best_weapon_for_current_circumstance(controller: AiActorController) -> void:
-	var items: Array[GameItem] = InventoryUtils.get_all_items_in_inventory(controller.actor.weapon_inventory)
+	var items: Array[GameItem] = InventoryUtils.get_all_items_in_inventory(controller.actor.inventory)
 	var best_item: GameItem = null
 	var best_item_score: float = -1.0
 	for item: GameItem in items:
@@ -156,7 +156,7 @@ func _equip_best_weapon_for_current_circumstance(controller: AiActorController) 
 			best_item = item
 	
 	if best_item != null:
-		InventoryUtils.switch_to_item(controller.actor.weapon_inventory, best_item)
+		InventoryUtils.switch_to_item(controller.actor.inventory, best_item)
 
 func _is_pointing_at_target(weapon: GameItem, target_pos_global: Vector3, degrees: float) -> bool:
 	var weapon_direction_local: Vector3 = (weapon.to_global(Vector3.FORWARD) - weapon.global_position).normalized()

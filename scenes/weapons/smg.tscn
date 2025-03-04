@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://ugmvx4nxxjn2"]
+[gd_scene load_steps=16 format=3 uid="uid://ugmvx4nxxjn2"]
 
 [ext_resource type="Script" uid="uid://vsp3e77w8akl" path="res://scripts/items/weapon.gd" id="1_rrsjv"]
 [ext_resource type="Script" uid="uid://cny8218iblb03" path="res://resources/weapon_type.gd" id="2_7qbj6"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://84fm2ncce57u" path="res://scripts/action_system/actions/damage.gd" id="4_wk4t0"]
 [ext_resource type="Script" uid="uid://bxnfrlbrlvn8o" path="res://scripts/items/aim_function.gd" id="5_esgpq"]
 [ext_resource type="Script" uid="uid://dn5gjvki5gaab" path="res://scripts/action_system/actions/targeted_action.gd" id="5_wxc3x"]
+[ext_resource type="PackedScene" uid="uid://bmyj2xa8k2yeo" path="res://scenes/items/smg_ammo.tscn" id="3_0qj8u"]
 [ext_resource type="PackedScene" uid="uid://bn7hteceltg4k" path="res://models/gun01.blend" id="6_p326i"]
 [ext_resource type="PackedScene" uid="uid://cc3xiyt074uge" path="res://scenes/components/reporter/reporter.tscn" id="7_uvkiy"]
 
@@ -17,7 +18,8 @@ degrees_of_inaccuracy_stationary = 6.0
 degrees_of_inaccuracy_moving = 12.0
 weapon_reload_time_seconds = 1.0
 number_of_shots_per_fire = 1
-max_ammo = 30
+ammo_category = 1
+starting_ammo = ExtResource("3_0qj8u")
 
 [sub_resource type="Resource" id="Resource_vox38"]
 script = ExtResource("4_wk4t0")
@@ -57,4 +59,4 @@ shape = SubResource("BoxShape3D_j006u")
 [node name="gun01" parent="." instance=ExtResource("6_p326i")]
 
 [node name="Reporter" parent="." instance=ExtResource("7_uvkiy")]
-selected_variables = Array[String](["_current_ammo", "_reload_time_cooldown", "_current_state"])
+selected_variables = Array[String](["_ammo", "_reload_time_cooldown", "_current_state"])

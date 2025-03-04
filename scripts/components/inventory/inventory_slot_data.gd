@@ -1,7 +1,11 @@
 class_name InventorySlotData
 extends Resource
 
-@export var stack_size: int
+@export var stack_size: int:
+	set(value):
+		stack_size = clamp(value, 0, 255)
+		if stack_size == 0:
+			item = null
 var item: GameItem :
 	get:
 		return item
@@ -10,7 +14,7 @@ var item: GameItem :
 			item.item_used_up.disconnect(_remove_item)
 		if value != null:
 			value.item_used_up.connect(_remove_item)
-		if value == null:
+		if value == null && stack_size != 0:
 			stack_size = 0
 		item = value
 

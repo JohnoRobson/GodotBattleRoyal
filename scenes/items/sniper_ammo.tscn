@@ -1,0 +1,31 @@
+[gd_scene load_steps=8 format=3 uid="uid://ctf3x6yunrqua"]
+
+[ext_resource type="Script" path="res://scripts/items/ammo.gd" id="1_nk2gd"]
+[ext_resource type="Script" path="res://resources/ammo_type.gd" id="2_tthy4"]
+[ext_resource type="Script" path="res://scripts/items/aim_function.gd" id="3_4w2rm"]
+
+[sub_resource type="Resource" id="Resource_3rxsa"]
+script = ExtResource("2_tthy4")
+ammo_in_full_magazine = 5
+ammo_category = 3
+
+[sub_resource type="Resource" id="Resource_3hixn"]
+script = ExtResource("3_4w2rm")
+
+[sub_resource type="BoxMesh" id="BoxMesh_oxmlu"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8wsgy"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[node name="SniperAmmo" type="RigidBody3D"]
+script = ExtResource("1_nk2gd")
+ammo_type = SubResource("Resource_3rxsa")
+item_name = "Sniper Ammo"
+aim_function = SubResource("Resource_3hixn")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_oxmlu")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_8wsgy")

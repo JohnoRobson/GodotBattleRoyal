@@ -1,27 +1,28 @@
-[gd_scene load_steps=13 format=3 uid="uid://cvwfiql117y18"]
+[gd_scene load_steps=14 format=3 uid="uid://cvwfiql117y18"]
 
-[ext_resource type="Script" path="res://scripts/items/game_item.gd" id="1_vejvr"]
+[ext_resource type="Script" uid="uid://cm6je8qb83lpt" path="res://scripts/items/game_item.gd" id="1_vejvr"]
 [ext_resource type="PackedScene" uid="uid://b7e2n7bieo85i" path="res://scenes/items/grenade.tscn" id="2_a4xo7"]
-[ext_resource type="Script" path="res://scripts/action_system/actions/create.gd" id="3_gr3sa"]
-[ext_resource type="Script" path="res://scripts/action_system/actions/remove.gd" id="4_2oape"]
-[ext_resource type="Script" path="res://scripts/action_system/actions/throw.gd" id="4_gavhw"]
-[ext_resource type="Script" path="res://scripts/items/trajectory_aim_function.gd" id="6_6sgsf"]
+[ext_resource type="Script" uid="uid://b4gq3cdvwyn3" path="res://scripts/action_system/actions/action.gd" id="2_ufxyh"]
+[ext_resource type="Script" uid="uid://bjmrmi340jux3" path="res://scripts/action_system/actions/create.gd" id="3_gr3sa"]
+[ext_resource type="Script" uid="uid://bsda1l7y1x07u" path="res://scripts/action_system/actions/remove.gd" id="4_2oape"]
+[ext_resource type="Script" uid="uid://dbfrvrqfw0s7a" path="res://scripts/action_system/actions/throw.gd" id="4_gavhw"]
+[ext_resource type="Script" uid="uid://cwpo562i1iy5d" path="res://scripts/items/trajectory_aim_function.gd" id="6_6sgsf"]
 [ext_resource type="PackedScene" uid="uid://bmkdhqo5v1fou" path="res://models/medkit.blend" id="7_avang"]
 
 [sub_resource type="Resource" id="Resource_eolp6"]
 script = ExtResource("3_gr3sa")
 game_item_to_create = ExtResource("2_a4xo7")
-actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
+actions = Array[ExtResource("2_ufxyh")]([])
 
 [sub_resource type="Resource" id="Resource_6ti37"]
 script = ExtResource("4_2oape")
-actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([])
+actions = Array[ExtResource("2_ufxyh")]([])
 
 [sub_resource type="Resource" id="Resource_agqvs"]
 script = ExtResource("4_gavhw")
 degrees_of_inaccuracy = 1.0
 force = 15.0
-actions = Array[Resource("res://scripts/action_system/actions/action.gd")]([SubResource("Resource_eolp6"), SubResource("Resource_6ti37")])
+actions = Array[ExtResource("2_ufxyh")]([SubResource("Resource_eolp6"), SubResource("Resource_6ti37")])
 
 [sub_resource type="Resource" id="Resource_w2uwj"]
 script = ExtResource("6_6sgsf")

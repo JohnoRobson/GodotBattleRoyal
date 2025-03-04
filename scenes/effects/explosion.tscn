@@ -1,6 +1,6 @@
 [gd_scene load_steps=16 format=3 uid="uid://be4ixwniduwoc"]
 
-[ext_resource type="Script" path="res://scripts/effects/delete_after_time.gd" id="1_0t3nk"]
+[ext_resource type="Script" uid="uid://d135t3c6tb101" path="res://scripts/effects/delete_after_time.gd" id="1_0t3nk"]
 [ext_resource type="Texture2D" uid="uid://dhjvlnmigxbli" path="res://sprites/whitePuff00.png" id="2_55axh"]
 
 [sub_resource type="Gradient" id="Gradient_ec0ju"]
@@ -18,16 +18,16 @@ point_count = 2
 curve = SubResource("Curve_o6c6f")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_df4de"]
+angle_min = -720.0
+angle_max = 720.0
 direction = Vector3(0, 1, 0)
 spread = 60.0
-gravity = Vector3(0, -3, 0)
 initial_velocity_min = 2.0
 initial_velocity_max = 4.0
 angular_velocity_min = -100.0
 angular_velocity_max = 100.0
+gravity = Vector3(0, -3, 0)
 damping_max = 3.0
-angle_min = -720.0
-angle_max = 720.0
 scale_min = 0.0
 scale_max = 5.0
 scale_curve = SubResource("CurveTexture_tx8xq")
@@ -56,14 +56,14 @@ colors = PackedColorArray(0, 0, 0, 1, 0.303233, 0.303233, 0.303233, 1, 0, 0, 0, 
 gradient = SubResource("Gradient_xnubb")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_j412q"]
+angle_min = -720.0
+angle_max = 720.0
 direction = Vector3(0, 1, 0)
 spread = 40.0
 initial_velocity_min = 5.0
 initial_velocity_max = 20.0
 angular_velocity_min = -100.0
 angular_velocity_max = 100.0
-angle_min = -720.0
-angle_max = 720.0
 scale_min = 0.1
 scale_max = 0.3
 color_ramp = SubResource("GradientTexture1D_hsymx")

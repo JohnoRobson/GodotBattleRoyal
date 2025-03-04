@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://calaly75s74jo"]
 
-[ext_resource type="Script" path="res://scripts/components/reporter/reporter_viewer.gd" id="1_h1t2q"]
+[ext_resource type="Script" uid="uid://dqh04gedhv80c" path="res://scripts/components/reporter/reporter_viewer.gd" id="1_h1t2q"]
 
 [node name="ReporterViewer" type="Control" node_paths=PackedStringArray("nodes_whose_children_to_check")]
 process_mode = 3

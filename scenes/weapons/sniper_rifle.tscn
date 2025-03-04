@@ -1,9 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://smivmtkbm1yv"]
+[gd_scene load_steps=16 format=3 uid="uid://smivmtkbm1yv"]
 
 [ext_resource type="Script" path="res://scripts/items/weapon.gd" id="1_x56va"]
 [ext_resource type="Script" path="res://resources/weapon_type.gd" id="2_b577d"]
 [ext_resource type="Script" path="res://scripts/action_system/actions/raycast.gd" id="3_3q72a"]
 [ext_resource type="PackedScene" uid="uid://o0g0axyk2njf" path="res://models/sniper_rifle.blend" id="3_04if4"]
+[ext_resource type="PackedScene" uid="uid://ctf3x6yunrqua" path="res://scenes/items/sniper_ammo.tscn" id="3_7ftwa"]
 [ext_resource type="Script" path="res://scripts/action_system/actions/action.gd" id="3_7m51w"]
 [ext_resource type="Script" path="res://scripts/action_system/actions/damage.gd" id="4_harab"]
 [ext_resource type="Script" path="res://scripts/items/aim_function.gd" id="5_dtogy"]
@@ -17,7 +18,8 @@ degrees_of_inaccuracy_stationary = 1.0
 degrees_of_inaccuracy_moving = 60.0
 weapon_reload_time_seconds = 5.0
 number_of_shots_per_fire = 1
-max_ammo = 2
+ammo_category = 3
+starting_ammo = ExtResource("3_7ftwa")
 
 [sub_resource type="Resource" id="Resource_n63ao"]
 script = ExtResource("4_harab")
@@ -57,4 +59,4 @@ shape = SubResource("BoxShape3D_j006u")
 [node name="sniper_rifle" parent="." instance=ExtResource("3_04if4")]
 
 [node name="Reporter" parent="." instance=ExtResource("7_b6l3f")]
-selected_variables = Array[String](["_current_ammo", "_reload_time_cooldown", "_current_state"])
+selected_variables = Array[String](["_ammo", "_reload_time_cooldown", "_current_state"])

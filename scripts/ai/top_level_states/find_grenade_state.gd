@@ -18,7 +18,7 @@ func get_name() -> String:
 
 func evaluate(factor_context: FactorContext) -> float:
 	var has_grenade = InventoryUtils\
-	.contains_traits(factor_context.target_actor.weapon_inventory.inventory_data, [GameItem.ItemTrait.THROWABLE, GameItem.ItemTrait.EXPLOSIVE])
+	.contains_traits(factor_context.target_actor.inventory.inventory_data, [GameItem.ItemTrait.THROWABLE, GameItem.ItemTrait.EXPLOSIVE])
 	var closest_grenade = factor_context.world.get_closest_item_with_traits(factor_context.target_actor.global_transform.origin, [GameItem.ItemTrait.THROWABLE, GameItem.ItemTrait.EXPLOSIVE])
 	if has_grenade or closest_grenade == null:
 		return 0.0

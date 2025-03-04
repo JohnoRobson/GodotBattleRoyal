@@ -17,6 +17,6 @@ func get_name() -> String:
 	return "FindWeaponState"
 
 func evaluate(factor_context: FactorContext) -> float:
-	var has_weapon = InventoryUtils.contains_traits(factor_context.target_actor.weapon_inventory.inventory_data, [GameItem.ItemTrait.FIREARM])
+	var has_weapon = InventoryUtils.contains_traits(factor_context.target_actor.inventory.inventory_data, [GameItem.ItemTrait.FIREARM])
 	var weapons_exist_that_can_be_picked_up = factor_context.world.get_closest_available_weapon(factor_context.target_actor.global_position)
 	return 0.0 if has_weapon or !weapons_exist_that_can_be_picked_up else 0.8

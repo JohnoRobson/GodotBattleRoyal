@@ -13,7 +13,7 @@ func enter(_controller: AiActorController):
 func execute(controller: AiActorController):
 	var closest_item_with_trait = controller.world.get_closest_item_with_traits(controller.actor.global_position, _item_traits_to_find)
 	
-	if closest_item_with_trait != null and controller.actor.weapon_inventory.has_empty_slots():
+	if closest_item_with_trait != null and controller.actor.inventory.has_empty_slots():
 		var pick_up_item_state = PickUpItemState.new(closest_item_with_trait)
 		#pick_up_item_state.current_target = closest_item_with_trait
 		controller.state_machine.change_state(pick_up_item_state)

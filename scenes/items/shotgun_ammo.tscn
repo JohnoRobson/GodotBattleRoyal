@@ -1,0 +1,31 @@
+[gd_scene load_steps=8 format=3 uid="uid://dl5ndjyse3vea"]
+
+[ext_resource type="Script" path="res://scripts/items/ammo.gd" id="1_u7uch"]
+[ext_resource type="Script" path="res://resources/ammo_type.gd" id="2_mrcrd"]
+[ext_resource type="Script" path="res://scripts/items/aim_function.gd" id="3_jig0b"]
+
+[sub_resource type="Resource" id="Resource_3rxsa"]
+script = ExtResource("2_mrcrd")
+ammo_in_full_magazine = 8
+ammo_category = 2
+
+[sub_resource type="Resource" id="Resource_w5nbt"]
+script = ExtResource("3_jig0b")
+
+[sub_resource type="BoxMesh" id="BoxMesh_oxmlu"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8wsgy"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[node name="ShotgunAmmo" type="RigidBody3D"]
+script = ExtResource("1_u7uch")
+ammo_type = SubResource("Resource_3rxsa")
+item_name = "Shotgun Ammo"
+aim_function = SubResource("Resource_w5nbt")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_oxmlu")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_8wsgy")

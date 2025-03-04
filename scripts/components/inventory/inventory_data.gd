@@ -81,3 +81,23 @@ func swap_items(item_outside_inventory: GameItem, item_inside_inventory: GameIte
 	# this shouldn't happen
 	push_error("Failed to swap an item from an inventory after confirming it was inside the inventory")
 	return false
+
+func get_slots_matching(filter: Callable) -> Array:
+	var slots_matching_filter: Array[InventorySlotData]
+
+	for slot in _slots:
+		if filter.call(slot.item):
+			slots_matching_filter.append(slot)
+	
+	return slots_matching_filter
+
+func subtract_item_matching(filter: Callable) -> GameItem:
+	var matching_slots: Array[InventorySlotData] = get_slots_matching(filter)
+
+	if matching_slots.is_empty():
+		return null
+	
+	var first_slot_matching_the_filter := matching_slots[0]
+	var item = first_slot_matching_the_filter.item
+	first_slot_matching_the_filter.stack_size -= 1
+	return item

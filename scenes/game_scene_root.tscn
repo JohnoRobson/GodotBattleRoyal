@@ -1,14 +1,14 @@
 [gd_scene load_steps=11 format=3 uid="uid://cbhy7lx4lnl1v"]
 
-[ext_resource type="Script" path="res://scripts/game_scene_root.gd" id="1_17feb"]
-[ext_resource type="Script" path="res://scripts/menu_manager.gd" id="2_je011"]
+[ext_resource type="Script" uid="uid://b15awsqgru5l0" path="res://scripts/game_scene_root.gd" id="1_17feb"]
+[ext_resource type="Script" uid="uid://clq1rmt6qlq16" path="res://scripts/menu_manager.gd" id="2_je011"]
 [ext_resource type="PackedScene" uid="uid://cxtqrmnc7fwf" path="res://scenes/menus/title_menu.tscn" id="2_nr3tc"]
 [ext_resource type="PackedScene" uid="uid://ccjq8nxyfnpl2" path="res://scenes/menus/win_menu.tscn" id="3_puocf"]
 [ext_resource type="PackedScene" uid="uid://c6odqg6a2357w" path="res://scenes/menus/death_menu.tscn" id="4_ruoo4"]
 [ext_resource type="PackedScene" uid="uid://baekuelowkltt" path="res://scenes/menus/pause_menu.tscn" id="5_2wsfx"]
 [ext_resource type="PackedScene" uid="uid://dcu6ldiv7dvu4" path="res://scenes/menus/settings_menu.tscn" id="7_cpqgh"]
 [ext_resource type="PackedScene" uid="uid://5jf6q7wspxek" path="res://scenes/menus/loading_screen.tscn" id="8_diy1m"]
-[ext_resource type="Script" path="res://scripts/menu.gd" id="9_1a2ev"]
+[ext_resource type="Script" uid="uid://q2ppkugsela0" path="res://scripts/menu.gd" id="9_1a2ev"]
 [ext_resource type="PackedScene" uid="uid://dr4nx3sep0nqf" path="res://scenes/transparent_overlay.tscn" id="10_7sbj5"]
 
 [node name="GameSceneRoot" type="Node"]

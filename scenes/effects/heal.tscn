@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://bcp66a5dwpxmx"]
 
-[ext_resource type="Script" path="res://scripts/effects/delete_after_time.gd" id="1_qaw65"]
+[ext_resource type="Script" uid="uid://d135t3c6tb101" path="res://scripts/effects/delete_after_time.gd" id="1_qaw65"]
 [ext_resource type="Texture2D" uid="uid://d4jh1e63obb0x" path="res://sprites/cross.png" id="2_bl42n"]
 
 [sub_resource type="Curve" id="Curve_f2emq"]

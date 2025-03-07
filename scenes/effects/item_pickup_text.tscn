@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bnxbntxcpfjv"]
 
-[ext_resource type="Script" path="res://scripts/effects/item_pickup_text.gd" id="1_sfrn6"]
+[ext_resource type="Script" uid="uid://c3i0xh0yb37vg" path="res://scripts/effects/item_pickup_text.gd" id="1_sfrn6"]
 
 [node name="ItemPickupText" type="Node3D"]
 script = ExtResource("1_sfrn6")

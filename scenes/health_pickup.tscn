@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://dtp6ge4k538q"]
 
-[ext_resource type="Script" path="res://scripts/health_pickup.gd" id="1_hfjgn"]
+[ext_resource type="Script" uid="uid://dfinvqo4pu1ls" path="res://scripts/health_pickup.gd" id="1_hfjgn"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_wbtdo"]
 

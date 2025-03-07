@@ -51,9 +51,10 @@ func toggle_pause_menu():
 func _on_game_scene_game_lost():
 	$MenuManager.open_death_menu()
 
-func _on_game_scene_game_won():
+func _on_game_scene_game_won(winner: Team):
 	clear_game_scenes()
-	$MenuManager.open_win_menu()
+	
+	$MenuManager.open_win_menu(winner)
 	get_tree().paused = true
 
 func _on_game_scene_game_loaded():

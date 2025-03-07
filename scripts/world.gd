@@ -24,7 +24,7 @@ enum Weapons {SMG, SHOTGUN, SNIPER}
 enum GameTypes {AI, SANDBOX, CLASSIC}
 
 signal game_lost
-signal game_won
+signal game_won(winner: Team)
 signal game_loaded
 
 signal pause_button_pressed
@@ -155,17 +155,18 @@ func _on_actor_killed(actor: Actor):
 		make_random_ai_camera_current()
 
 	# check for win condition
-	if get_win_condition_satisfied():
+	var winner = get_winner()
+	if winner != null:
 		action_system.shut_down()
-		game_won.emit()
+		game_won.emit(winner)
 
-func get_win_condition_satisfied() -> bool:
+func get_winner() -> Team:
 	var actors = player_actors + ai_actors
 	var actor = actors.pop_front()
 	for other_actor in actors:
 		if other_actor.team != actor.team or other_actor.team == null:
-			return false
-	return true
+			return null
+	return actor.team
 
 func get_closest_actor(from_position: Vector3, ignore: Array[Actor] = []) -> Actor:
 	# Inefficient? - MW 2024-11-05

@@ -8,9 +8,13 @@ func _init():
 	var name_generator = NameGenerator.new()
 	display_name = name_generator.generate_team_name()
 
-func add_member(new_member:Actor):
-	members.append(new_member)
-	new_member.team = self
+func add_member(member:Actor):
+	members.append(member)
+	member.team = self
+
+func remove_member(member:Actor):
+	members.erase(member)
+	member.team = null
 
 func get_members():
 	return members

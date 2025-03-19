@@ -90,10 +90,9 @@ func create_team():
 # Spawn player actor and create new player controller
 func spawn_player(spawn_position: Vector2) -> Actor:
 	var actor: Actor = preload("res://scenes/player_actor.tscn").instantiate()
-	_init_actor(actor, spawn_position)
 	player_actors.append(actor)
-	actor.actor_killed.connect(_on_player_killed)
-
+	_init_actor(actor, spawn_position)
+	
 	# Add player controller
 	var controller = Node3D.new()
 	var controller_script = preload("res://scripts/player_actor_controller.gd")
@@ -147,8 +146,12 @@ func spawn_weapon(spawn_position: Vector2, weapon_type: Weapons) -> Weapon:
 	return weapon
 
 func _on_actor_killed(actor: Actor):
-	player_actors.erase(actor)
-	ai_actors.erase(actor)
+	var player_died = false
+	if player_actors.find(actor) != -1: # does not support multiple players
+		player_actors.erase(actor)
+		player_died = true
+	else:
+		ai_actors.erase(actor)
 	
 	var current_camera = get_viewport().get_camera_3d()
 	if actor == current_camera.get_parent():
@@ -159,6 +162,9 @@ func _on_actor_killed(actor: Actor):
 	if winner != null:
 		action_system.shut_down()
 		game_won.emit(winner)
+	elif player_died:
+		make_random_ai_camera_current()
+		game_lost.emit()
 
 func get_winner() -> Team:
 	var actors = player_actors + ai_actors
@@ -238,10 +244,6 @@ func make_random_ai_camera_current() -> void:
 		ai_actor.make_camera_current()
 	else: # on no more ai actors, set camera to world
 		world_camera.make_current()
-
-func _on_player_killed(_player: Actor):
-	make_random_ai_camera_current()
-	game_lost.emit()
 
 func return_item_to_world(item: GameItem, global_position_to_place_item: Vector3, global_rotation_to_place_item: Vector3):
 	if item.get_parent() != null:

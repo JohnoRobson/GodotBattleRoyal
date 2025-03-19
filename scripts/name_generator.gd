@@ -1,7 +1,7 @@
 class_name NameGenerator extends Object
 
-# One for each letter, missing A I U V X Y
 var adjectives = [
+	"Active",
 	"Brutal",
 	"Callous",
 	"Dainty",
@@ -9,6 +9,7 @@ var adjectives = [
 	"Fast",
 	"Gaudy",
 	"Hardy",
+	"Ignorant",
 	"Jolly",
 	"Klutzy",
 	"Lanky",
@@ -20,24 +21,39 @@ var adjectives = [
 	"Ragged",
 	"Stoic",
 	"Tainted",
+	"Utmost",
+	"Valiant",
 	"Waning",
+	"Yappy",
 	"Zesty"
 ]
 
-# One for each letter, missing I K L M N O P Q R S U X Y Z
 var nouns = [
-	"Arborist",
-	"Botanist",
-	"Coroner",
-	"Dentist",
-	"Entomologist",
-	"Ferrier",
-	"Guard",
-	"Heckler",
-	"Jailer",
-	"Teacher",
+	"Actor",
+	"Baker",
+	"Chefs",
+	"Doctor",
+	"Engineer",
+	"Farmer",
+	"Guide",
+	"Harpist",
+	"Intern",
+	"Janitor",
+	"Kinesiologist",
+	"Lawyer",
+	"Manager",
+	"Nurse",
+	"Optician",
+	"Pilot",
+	"Quarterback",
+	"Reporter",
+	"Sailor",
+	"Tailor",
+	"Undertaker",
 	"Vlogger",
-	"Wanderer"
+	"Waiter",
+	"Yodeler",
+	"Zookeeper"
 ]
 
 func generate_team_name() -> String:

@@ -136,6 +136,24 @@ func spawn_weapon(spawn_position: Vector2, weapon_type: Weapons) -> Weapon:
 	weapon.set_global_rotation_degrees(Vector3(0, 90, 0))
 	return weapon
 
+func spawn_ammo(spawn_position: Vector2, weapon_type: Weapons) -> Ammo:
+	var ammo: Ammo
+	match weapon_type:
+		Weapons.SHOTGUN:
+			ammo = preload("res://scenes/items/shotgun_ammo.tscn").instantiate()
+		Weapons.SMG:
+			ammo = preload("res://scenes/items/smg_ammo.tscn").instantiate()
+		Weapons.SNIPER:
+			ammo = preload("res://scenes/items/sniper_ammo.tscn").instantiate()
+		_:
+			return
+
+	#weapon.on_firing.connect(effect_manager._on_actor_shoot)
+	item_container.add_child(ammo)
+	ammo.set_global_position(Vector3(spawn_position.x, 5.0, spawn_position.y))
+	ammo.set_global_rotation_degrees(Vector3(0, 90, 0))
+	return ammo
+
 func _on_actor_killed(actor: Actor):
 	player_actors.erase(actor)
 	ai_actors.erase(actor)
@@ -239,8 +257,11 @@ func get_actors_and_gameitems_in_area(target_position: Vector3, distance: float)
 
 func setup_game(game_type: GameTypes):
 	spawn_weapon(Vector2(5,5), Weapons.SMG)
+	spawn_ammo(Vector2(5,5), Weapons.SMG)
 	spawn_weapon(Vector2(-15,5), Weapons.SHOTGUN)
+	spawn_ammo(Vector2(-15,5), Weapons.SHOTGUN)
 	spawn_weapon(Vector2(25,-5), Weapons.SNIPER)
+	spawn_ammo(Vector2(25,-5), Weapons.SNIPER)
 	match game_type:
 		GameTypes.AI:
 			spawn_ai(Vector2(-10,0))

@@ -7,6 +7,7 @@ var can_be_used: bool
 @export var action: Action
 @export var aim_function: AimFunction = AimFunction.new() # use default aim function
 @export var traits: Array[ItemTrait] = []
+@export_range(1, 64) var max_stack_size: int = 1
 
 const DEFAULT_COLLISION_LAYER = 0b0100
 const DEFAULT_COLLISION_MASK = 0b1111

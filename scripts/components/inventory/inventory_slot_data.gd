@@ -1,30 +1,35 @@
 class_name InventorySlotData
 extends Resource
 
-@export var stack_size: int:
-	set(value):
-		stack_size = clamp(value, 0, 255)
-		if stack_size == 0:
-			item = null
-var item: GameItem :
-	get:
-		return item
-	set(value):
-		if !is_empty() and item.item_used_up.is_connected(_remove_item):
-			item.item_used_up.disconnect(_remove_item)
-		if value != null:
-			value.item_used_up.connect(_remove_item)
-		if value == null && stack_size != 0:
-			stack_size = 0
-		item = value
+var _items: Array[GameItem]
+
+func push_item(item: GameItem) -> bool:
+	if item == null:
+		return false
+	if _items.size() >= item.max_stack_size:
+		return false
+	if !_items.is_empty() and !contains(item):
+		return false
+	
+	item.item_used_up.connect(pop_item)
+	_items.push_back(item)
+	return true
+
+func pop_item() -> GameItem:
+	var item: GameItem = null if _items.is_empty() else _items.pop_back()
+	if item != null and item.item_used_up.is_connected(pop_item):
+		item.item_used_up.disconnect(pop_item)
+	return item
+
+func get_item() -> GameItem:
+	return _items[_items.size() - 1] if !_items.is_empty() else null
 
 func is_empty() -> bool:
-	return item == null
+	return _items.is_empty()
 
 func contains(_item: GameItem) -> bool:
-	return (item == null && _item == null) || item == _item
+	var item = get_item()
+	return (item != null && _item != null) && _item.item_name == item.item_name && _item.traits.size() == item.traits.size() && _item.traits.all(func(a): return a in item.traits)
 
-# used for the item_used_up callback. Just set the item to null if you want to remove an item from a slot
-func _remove_item() -> void:
-	item = null
-	stack_size = 0
+func number_of_items() -> int:
+	return _items.size()

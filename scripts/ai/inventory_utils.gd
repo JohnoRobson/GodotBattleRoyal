@@ -4,7 +4,7 @@ class_name InventoryUtils
 static func get_traits(inventory_data: InventoryData) -> Array[GameItem.ItemTrait]:
 	# throw the traits into a dict acting as a set
 	var traits_in_inventory = {}
-	var items_in_inventory = inventory_data._slots.map(func(a): return a.item).filter(func(a): return a != null)
+	var items_in_inventory = inventory_data._slots.filter(func(a): return !a.is_empty()).map(func(a): return a.get_item())
 	for item: GameItem in items_in_inventory:
 		for item_trait: GameItem.ItemTrait in item.traits:
 			traits_in_inventory[item_trait] = true
@@ -56,13 +56,13 @@ static func _item_slot_has_traits(slot: InventorySlotData, desired_traits: Array
 	if slot.is_empty():
 		return false
 	else:
-		return desired_traits.all(func(a): return a in slot.item.traits)
+		return desired_traits.all(func(a): return a in slot.get_item().traits)
 
 static func get_all_items_in_inventory(inventory: Inventory) -> Array[GameItem]:
 	var items: Array[GameItem] = []
 	for slot: InventorySlotData in inventory.inventory_data._slots:
 		if !slot.is_empty():
-			items.append(slot.item)
+			items.append(slot.get_item())
 	return items
 
 static func switch_to_item(inventory: Inventory, item: GameItem) -> bool:

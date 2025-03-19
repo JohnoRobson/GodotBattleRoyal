@@ -25,34 +25,29 @@ func get_item_at_index(index: int) -> GameItem:
 	if index > _slots.size() - 1 || index < 0:
 		return null
 
-	return _slots[index].item
+	return _slots[index].get_item()
 
 func is_slot_at_index_empty(slot_index: int) -> bool:
 	if slot_index < 0 or slot_index > _slots.size() - 1:
 		return false
-	return _slots[slot_index].item == null
+	return _slots[slot_index].is_empty()
 
 func add_item_at_index(item: GameItem, slot_index: int) -> bool:
 	if !is_slot_at_index_empty(slot_index):
 		return false
 	
-	_slots[slot_index].item = item
-
-	return true
+	return _slots[slot_index].push_item(item)
 
 func add_item(item: GameItem) -> bool:
-	if !has_empty_slots():
-		return false
-	
-	# add item to first empty slot
+	var added_item: bool = false
+
 	for slot in _slots:
-		if slot.is_empty():
-			slot.item = item
-			return true
+		var did_add_item = slot.push_item(item)
+		if did_add_item:
+			added_item = true
+			break
 	
-	# this shouldn't happen
-	push_error("Failed to add an item to an inventory after confirming it had space for it")
-	return false
+	return added_item
 
 func remove_item(item: GameItem) -> bool:
 	if !is_item_in_inventory(item):
@@ -61,7 +56,7 @@ func remove_item(item: GameItem) -> bool:
 	for i in _slots.size():
 		var slot = _slots[i]
 		if slot.contains(item):
-			slot.item = null
+			slot.pop_item()
 			return true
 	
 	# this shouldn't happen
@@ -72,21 +67,22 @@ func swap_items(item_outside_inventory: GameItem, item_inside_inventory: GameIte
 	if !(!is_item_in_inventory(item_outside_inventory) and is_item_in_inventory(item_inside_inventory)):
 		return false
 	
-	for i in _slots.size():
-		var slot = _slots[i]
+	for slot in _slots:
 		if slot.contains(item_inside_inventory):
-			slot.item = item_outside_inventory
+			# empty the slot into the world
+			slot.pop_item()
+			slot.push_item(item_outside_inventory)
 			return true
 	
 	# this shouldn't happen
 	push_error("Failed to swap an item from an inventory after confirming it was inside the inventory")
 	return false
 
-func get_slots_matching(filter: Callable) -> Array:
+func get_slots_matching(filter: Callable) -> Array[InventorySlotData]:
 	var slots_matching_filter: Array[InventorySlotData]
 
 	for slot in _slots:
-		if filter.call(slot.item):
+		if filter.call(slot.get_item()):
 			slots_matching_filter.append(slot)
 	
 	return slots_matching_filter
@@ -98,6 +94,4 @@ func subtract_item_matching(filter: Callable) -> GameItem:
 		return null
 	
 	var first_slot_matching_the_filter := matching_slots[0]
-	var item = first_slot_matching_the_filter.item
-	first_slot_matching_the_filter.stack_size -= 1
-	return item
+	return first_slot_matching_the_filter.pop_item()

@@ -18,3 +18,18 @@ func remove_member(member:Actor):
 
 func get_members():
 	return members
+
+func get_average_location():
+	var accumulated_position = Vector3.ZERO
+	for actor in members:
+		if is_instance_valid(actor):
+			accumulated_position += actor.global_position
+	return accumulated_position / members.size()
+
+func get_average_health():
+	var number_of_actors = members.size()
+	var accumulated_health = 0
+	for actor in members:
+		if is_instance_valid(actor):
+			accumulated_health += actor.health.current_health
+	return accumulated_health / members.size()

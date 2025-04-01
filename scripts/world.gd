@@ -169,9 +169,14 @@ func _on_actor_killed(actor: Actor):
 func get_winner() -> Team:
 	var actors = player_actors + ai_actors
 	var actor = actors.pop_front()
+
+	if actor == null:
+		return Team.new("Noone") # noone wins
+
 	for other_actor in actors:
 		if other_actor.team != actor.team or other_actor.team == null:
 			return null
+
 	return actor.team
 
 func get_closest_actor(from_position: Vector3, ignore: Array[Actor] = []) -> Actor:

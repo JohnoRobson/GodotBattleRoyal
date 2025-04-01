@@ -4,9 +4,12 @@ class_name Team extends Node
 
 var display_name: String
 
-func _init():
-	var name_generator = NameGenerator.new()
-	display_name = name_generator.generate_team_name()
+func _init(given_name = null):
+	if given_name == null:
+		var name_generator = NameGenerator.new()
+		display_name = name_generator.generate_team_name()
+	else:
+		display_name = given_name
 
 func add_member(member:Actor):
 	members.append(member)

@@ -31,7 +31,7 @@ var adjectives = [
 var nouns = [
 	"Actor",
 	"Baker",
-	"Chefs",
+	"Chef",
 	"Doctor",
 	"Engineer",
 	"Farmer",
@@ -59,4 +59,4 @@ var nouns = [
 func generate_team_name() -> String:
 	var adjective = adjectives.pick_random()
 	var noun = nouns.pick_random()
-	return "%s %ss" % [adjective, noun]
+	return "Team %s %ss" % [adjective, noun]

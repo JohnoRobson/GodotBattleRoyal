@@ -2,6 +2,7 @@ class_name World extends Node3D
 
 @onready var player_actors: Array[Actor] = []
 @onready var ai_actors: Array[Actor] = []
+@onready var teams: Array[Team] = []
 @onready var world_camera: Camera3D = get_node("Camera3D")
 
 @onready var actor_container: Node = get_node("ActorContainer")
@@ -82,8 +83,8 @@ func move_camera(distance):
 
 	camera.transform.origin = new_position
 
-func create_team():
-	var team = Team.new()
+func create_team() -> Team:
+	var team: Team = Team.new()
 	team_container.add_child(team)
 	return team
 
@@ -145,8 +146,8 @@ func spawn_weapon(spawn_position: Vector2, weapon_type: Weapons) -> Weapon:
 	weapon.set_global_rotation_degrees(Vector3(0, 90, 0))
 	return weapon
 
-func _on_actor_killed(actor: Actor):
-	var player_died = false
+func _on_actor_killed(actor: Actor) -> void:
+	var player_died: bool = false
 	if player_actors.find(actor) != -1: # does not support multiple players
 		player_actors.erase(actor)
 		player_died = true
@@ -158,7 +159,7 @@ func _on_actor_killed(actor: Actor):
 		make_random_ai_camera_current()
 
 	# check for win condition
-	var winner = get_winner()
+	var winner: Team = get_winner()
 	if winner != null:
 		action_system.shut_down()
 		game_won.emit(winner)
@@ -167,8 +168,8 @@ func _on_actor_killed(actor: Actor):
 		game_lost.emit()
 
 func get_winner() -> Team:
-	var actors = player_actors + ai_actors
-	var actor = actors.pop_front()
+	var actors: Array[Actor] = player_actors + ai_actors
+	var actor: Actor = actors.pop_front()
 
 	if actor == null:
 		return Team.new("Noone") # noone wins
@@ -189,12 +190,6 @@ func get_closest_actor(from_position: Vector3, ignore: Array[Actor] = []) -> Act
 	var closest_actor: Actor = actors.front() if !actors.is_empty() else null
 	#print("closest actor: %s, ignore: %s" % [closest_actor, ignore])
 	return closest_actor
-
-func get_actor_team_members(target_actor: Actor) -> Array[Actor]:
-	var team_members = (player_actors + ai_actors).filter(func(actor): return target_actor.team == actor.team)
-
-	# include self
-	return team_members
 
 func get_random_ai_actor() -> Actor:
 	if ai_actors.is_empty():
@@ -275,10 +270,10 @@ func setup_game(game_type: GameTypes):
 		GameTypes.SANDBOX:
 			spawn_player(Vector2(0,5))
 		GameTypes.CLASSIC, _:
-			var player_team = create_team()
+			var player_team: Team = create_team()
 			player_team.add_member(spawn_player(Vector2(0,5)))
 			player_team.add_member(spawn_ai(Vector2(-30, 10)))
-			var ai_team = create_team()
+			var ai_team: Team = create_team()
 			ai_team.add_member(spawn_ai(Vector2(-10,0)))
 			ai_team.add_member(spawn_ai(Vector2(-10,5)))
 			ai_team.add_member(spawn_ai(Vector2(30,0)))
@@ -288,9 +283,9 @@ func setup_game(game_type: GameTypes):
 func _on_pause_button_pressed():
 	pause_button_pressed.emit()
 
-func _init_outlines():
+func _init_outlines() -> void:
 	# assumes one player actor, update to controlled character if multiplayer is implemented
-	var player = null
+	var player: Actor = null
 	if (player_actors.size() > 0):
 		player = player_actors[0]
 		player.set_outline_color(Color(255, 255, 255, 1))

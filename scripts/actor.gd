@@ -191,5 +191,8 @@ func make_camera_current():
 
 func set_outline_color(color: Color):
 	var active_material = actor_body.get_active_material(0)
+
+	assert(active_material.next_pass != null, "actor material missing next pass")
+
 	var active_next_pass = active_material.next_pass
 	active_next_pass.set_shader_parameter('outline_color', color)

@@ -2,11 +2,12 @@ class_name FightState extends State
 ## This state has a few goals:
 ## 1.  if the movement_override_target is set, then the state will make the actor
 ##     move towards it, ignoring other behaviour and set the movement_state to MOVING_TOWARDS_MOVEMENT_OVERRIDE
-## 2.  switch to the best weapon for the current range
-## 3.  if the movement_override_target is not set, set the movement_state to MOVING_TOWARDS_ACTOR
-## 4.  if the movement_state is MOVING_TOWARDS_MOVEMENT_OVERRIDE, then move the actor towards it,
+## 2.  switch to the best weapon for the current range that has ammo, either in the magazine or in the inventory
+## 3.  reload the weapon if it is out of ammo
+## 4.  if the movement_override_target is not set, set the movement_state to MOVING_TOWARDS_ACTOR
+## 5.  if the movement_state is MOVING_TOWARDS_MOVEMENT_OVERRIDE, then move the actor towards it,
 ##     otherwise attempt to maintain the optimal range for the current weapon
-## 5.  attack the current_target when there is a clear line of sight to the target (wip) and when the weapon is aimed at the target	
+## 6.  attack the current_target when there is a clear line of sight to the target (wip) and when the weapon is aimed at the target	
 
 const RANGE_THRESHOLD: float = 3.0
 const TICKS_BETWEEN_TARGET_CHANGE_CHECK: int = 60
@@ -174,6 +175,14 @@ func _score_weapon_in_current_context(game_item: GameItem, this_actor: Actor) ->
 	var item_is_grenade = [GameItem.ItemTrait.EXPLOSIVE, GameItem.ItemTrait.THROWABLE].all(func(a): return game_item.traits.has(a))
 	if !item_is_weapon and !item_is_grenade:
 		return 0.0
+	
+	# adjust weapon score for ammo
+	if item_is_weapon:
+		var weapon_ammo_category = (game_item as Weapon).stats.ammo_category
+		var weapon_has_ammo_in_magazine: bool = (game_item as Weapon)._ammo != null and (game_item as Weapon)._ammo.current_ammo_in_magazine > 0
+		var ammo_for_weapon_in_inventory: Array[GameItem] = InventoryUtils.get_all_ammo_of_category(this_actor.inventory, weapon_ammo_category)
+		if !weapon_has_ammo_in_magazine and ammo_for_weapon_in_inventory.size() == 0:
+			return 0.0
 	
 	var target_distance: float = current_target.global_position.distance_to(this_actor.global_position)
 	# clamp target_distance between 0 and 100 so that we have a known range to work with

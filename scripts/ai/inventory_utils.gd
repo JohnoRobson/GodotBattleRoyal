@@ -75,3 +75,11 @@ static func switch_to_item(inventory: Inventory, item: GameItem) -> bool:
 	
 	return false
 	
+static func get_all_weapons(inventory: Inventory) -> Array[GameItem]:
+	var items: Array[GameItem] = get_all_items_in_inventory(inventory)
+	return items.filter(func(a): return a.traits.has(GameItem.ItemTrait.FIREARM))
+
+static func get_all_ammo_of_category(inventory: Inventory, ammo_category: AmmoType.AmmoCategory) -> Array[GameItem]:
+	var items: Array[GameItem] = get_all_items_in_inventory(inventory)
+	var ammo: Array[GameItem] = items.filter(func(a): return a.traits.has(GameItem.ItemTrait.AMMO)).filter(func(a): return (a as Ammo).ammo_type.ammo_category == ammo_category)
+	return ammo

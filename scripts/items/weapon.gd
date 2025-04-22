@@ -12,10 +12,9 @@ var _is_moving: bool = false
 
 enum WeaponState { CAN_FIRE, NO_AMMO, COOLDOWN, RELOADING }
 
-var _current_state: WeaponState = WeaponState.CAN_FIRE
+var _current_state: WeaponState = WeaponState.NO_AMMO
 
 signal update_ammo_ui(current_ammo: int, max_ammo: int)
-#signal on_firing(start_position: Vector3, end_position: Vector3)
 
 func _ready():
 	# big hack, but it works for now
@@ -53,7 +52,6 @@ func reload(inventory: Inventory) -> bool:
 # fires the weapon, if it can
 func fire():
 	if _current_state == WeaponState.CAN_FIRE and _ammo != null:
-		#_ammo.current_ammo_in_magazine = _ammo.current_ammo_in_magazine - 1
 		_ammo.current_ammo_in_magazine -= 1
 		update_ammo_ui.emit(_ammo.current_ammo_in_magazine, _ammo.ammo_type.ammo_in_full_magazine)
 

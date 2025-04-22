@@ -221,6 +221,18 @@ func get_closest_item_with_traits(from_position: Vector3, item_traits: Array[Gam
 	
 	return items.front() if !items.is_empty() else null
 
+func get_closest_ammo_of_category(from_position: Vector3, ammo_category: AmmoType.AmmoCategory) -> GameItem:
+	var items = []
+	
+	items.append_array(get_tree().get_nodes_in_group("ammo"))
+
+	items = items.filter(func(a): return a != null and !a.is_held and a.can_be_used)
+	items = items.filter(func(a): return a.traits.any(func(b): return b == GameItem.ItemTrait.AMMO))
+	items = items.filter(func(a: Ammo): return a.ammo_type.ammo_category == ammo_category)
+
+	items.sort_custom(func(a, b): return from_position.distance_to(a.global_transform.origin) < from_position.distance_to(b.global_transform.origin))
+	return items.front() if !items.is_empty() else null
+
 # this is not good
 func get_closest_healing_aura(from_position: Vector3) -> GameItem:
 	var items = []

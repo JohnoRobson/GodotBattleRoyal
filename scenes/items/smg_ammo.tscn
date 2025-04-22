@@ -18,11 +18,12 @@ size = Vector3(0.5, 0.5, 0.5)
 [sub_resource type="BoxShape3D" id="BoxShape3D_8wsgy"]
 size = Vector3(0.5, 0.5, 0.5)
 
-[node name="SmgAmmo" type="RigidBody3D"]
+[node name="SmgAmmo" type="RigidBody3D" groups=["ammo"]]
 script = ExtResource("1_t3j4s")
 ammo_type = SubResource("Resource_3rxsa")
 item_name = "SMG Ammo"
 aim_function = SubResource("Resource_qsp6j")
+traits = Array[int]([5])
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_oxmlu")

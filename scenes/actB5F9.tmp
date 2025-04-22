@@ -1,16 +1,17 @@
-[gd_scene load_steps=23 format=3 uid="uid://8ijx2rjjx2jg"]
+[gd_scene load_steps=24 format=3 uid="uid://8ijx2rjjx2jg"]
 
-[ext_resource type="Script" uid="uid://dlni0o2bjgbpe" path="res://scripts/actor.gd" id="1_ico6x"]
+[ext_resource type="Script" path="res://scripts/actor.gd" id="1_ico6x"]
 [ext_resource type="PackedScene" uid="uid://bo23y3eikvkx8" path="res://scenes/components/health.tscn" id="2_p7v67"]
 [ext_resource type="PackedScene" uid="uid://c84gaytdidxmh" path="res://scenes/components/hurtbox.tscn" id="3_fje2p"]
 [ext_resource type="PackedScene" uid="uid://n83y00tgwxqq" path="res://scenes/components/inventory.tscn" id="4_o631a"]
 [ext_resource type="PackedScene" uid="uid://dumh7vbmxg6lo" path="res://scenes/components/item_interaction_area.tscn" id="4_yx5h3"]
-[ext_resource type="Script" uid="uid://bcpercg6hj653" path="res://scripts/item_interaction_area.gd" id="6_neovh"]
-[ext_resource type="Script" uid="uid://d1e50amdd6gfg" path="res://scripts/actor_cursor.gd" id="6_wh5i0"]
-[ext_resource type="Script" uid="uid://cdl8k6rr6nimk" path="res://scripts/item_pickup_manager.gd" id="8_6j5c1"]
-[ext_resource type="Shader" uid="uid://borfq5vp6inq0" path="res://outline.gdshader" id="8_d7xh7"]
+[ext_resource type="Script" path="res://scripts/item_interaction_area.gd" id="6_neovh"]
+[ext_resource type="Script" path="res://scripts/actor_cursor.gd" id="6_wh5i0"]
+[ext_resource type="Script" path="res://scripts/item_pickup_manager.gd" id="8_6j5c1"]
+[ext_resource type="Shader" path="res://outline.gdshader" id="8_d7xh7"]
 [ext_resource type="PackedScene" uid="uid://cc3xiyt074uge" path="res://scenes/components/reporter/reporter.tscn" id="9_6wcgv"]
-[ext_resource type="Shader" uid="uid://bswlomw8rgpyy" path="res://actor.gdshader" id="9_gi2lv"]
+[ext_resource type="Shader" path="res://actor.gdshader" id="9_gi2lv"]
+[ext_resource type="Script" path="res://scenes/foo.gd" id="10_qx5ms"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_tsjx1"]
 height = 2.6
@@ -74,26 +75,23 @@ tracks/1/keys = PackedFloat32Array(0, 1, 0, 0, -0.0348995, 0.999391, 0.5, 1, 0, 
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_b1yqc"]
 _data = {
-&"dead": SubResource("Animation_v1yfk"),
-&"idle": SubResource("Animation_ao4vw"),
-&"walking": SubResource("Animation_eo8gu")
+"dead": SubResource("Animation_v1yfk"),
+"idle": SubResource("Animation_ao4vw"),
+"walking": SubResource("Animation_eo8gu")
 }
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_i4k2l"]
-resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("8_d7xh7")
 shader_parameter/outline_color = Color(1, 1, 1, 1)
 shader_parameter/outline_width = 2.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8qyd3"]
-resource_local_to_scene = true
 render_priority = 0
 next_pass = SubResource("ShaderMaterial_i4k2l")
 shader = ExtResource("9_gi2lv")
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_ie7wx"]
-resource_local_to_scene = true
 material = SubResource("ShaderMaterial_8qyd3")
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mj10y"]
@@ -139,7 +137,7 @@ item_area_cursor = NodePath("../ActorCursor/ItemInteractionArea")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-&"": SubResource("AnimationLibrary_b1yqc")
+"": SubResource("AnimationLibrary_b1yqc")
 }
 autoplay = "idle"
 
@@ -147,10 +145,11 @@ autoplay = "idle"
 
 [node name="Animatable" type="Node3D" parent="Rotator"]
 
-[node name="ActorBody" type="MeshInstance3D" parent="Rotator/Animatable"]
+[node name="Body" type="MeshInstance3D" parent="Rotator/Animatable"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = SubResource("CapsuleMesh_ie7wx")
 skeleton = NodePath("../../..")
+script = ExtResource("10_qx5ms")
 
 [node name="WeaponBase" type="Node3D" parent="Rotator/Animatable"]
 transform = Transform3D(0.997564, 0.0697565, 0, -0.0697565, 0.997564, 0, 0, 0, 1, 0.0751962, 1.07536, -0.803629)

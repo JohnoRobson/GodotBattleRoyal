@@ -1,6 +1,4 @@
-extends CharacterBody3D
-
-class_name Actor
+class_name Actor extends CharacterBody3D
 
 @export var speed = 5.0
 @export var JUMP_VELOCITY = 4.5
@@ -14,7 +12,9 @@ var actor_state: ActorState = ActorState.IDLE
 @onready var cursor: ActorCursor = get_node("ActorCursor")
 @onready var rotator: Node3D = get_node("Rotator")
 @onready var weapon_base: Node3D = get_node("Rotator/Animatable/WeaponBase")
+@onready var actor_body: Node3D = get_node("Rotator/Animatable/ActorBody")
 @onready var health: Health = get_node("Health")
+
 @onready var item_pickup_area: ItemInteractionArea = get_node("ItemPickupArea")
 @onready var _item_pickup_manager: ItemPickupManager = get_node("ItemPickupManager")
 @onready var weapon_inventory: Inventory = get_node("WeaponInventory")
@@ -22,6 +22,7 @@ var actor_state: ActorState = ActorState.IDLE
 @onready var camera: Camera3D = get_node("Camera3D")
 
 @export var held_weapon: GameItem
+@export var team: Team
 
 enum ActorState {
 	IDLE, WALKING, DEAD
@@ -187,3 +188,11 @@ func _on_item_used_up():
 
 func make_camera_current():
 	camera.make_current()
+
+func set_outline_color(color: Color):
+	var active_material = actor_body.get_active_material(0)
+
+	assert(active_material.next_pass != null, "actor material missing next pass")
+
+	var active_next_pass = active_material.next_pass
+	active_next_pass.set_shader_parameter('outline_color', color)

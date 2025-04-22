@@ -2,7 +2,6 @@ class_name World extends Node3D
 
 @onready var player_actors: Array[Actor] = []
 @onready var ai_actors: Array[Actor] = []
-@onready var teams: Array[Team] = []
 @onready var world_camera: Camera3D = get_node("Camera3D")
 
 @onready var actor_container: Node = get_node("ActorContainer")

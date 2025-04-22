@@ -5,7 +5,6 @@ class_name Team extends Node
 var display_name: String
 
 func _init(given_name:String = "") -> void:
-	var foo:Object = null
 	if given_name == "": # team name cannot be empty
 		var name_generator = NameGenerator.new()
 		display_name = name_generator.generate_team_name()

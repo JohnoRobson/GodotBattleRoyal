@@ -15,6 +15,7 @@ enum WeaponState { CAN_FIRE, NO_AMMO, COOLDOWN, RELOADING }
 var _current_state: WeaponState = WeaponState.NO_AMMO
 
 signal update_ammo_ui(current_ammo: int, max_ammo: int)
+#signal on_firing(start_position: Vector3, end_position: Vector3)
 
 func _ready():
 	# big hack, but it works for now

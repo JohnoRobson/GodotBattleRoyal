@@ -31,7 +31,7 @@ func is_shooting() -> bool:
 	return is_shooting_bool
 
 func set_aim_position(new_aim_position: Vector3):
-	var tween: Tween = get_tree().create_tween()
+	var tween: Tween = get_tree().create_tween().bind_node(self)
 	tween.tween_property(self, "aim_position", new_aim_position, 0.25)
 
 func set_move_direction(dir: Vector2):

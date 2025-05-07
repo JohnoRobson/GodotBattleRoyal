@@ -154,6 +154,11 @@ func spawn_ammo(spawn_position: Vector2, weapon_type: Weapons) -> Ammo:
 	ammo.set_global_rotation_degrees(Vector3(0, 90, 0))
 	return ammo
 
+func spawn_weapon_and_ammo(spawn_position: Vector2, weapon_type: Weapons) -> void:
+	spawn_weapon(spawn_position, weapon_type)
+	spawn_ammo(spawn_position + Vector2(1,0), weapon_type)
+	spawn_ammo(spawn_position + Vector2(-1,0), weapon_type)
+
 func _on_actor_killed(actor: Actor):
 	player_actors.erase(actor)
 	ai_actors.erase(actor)
@@ -268,12 +273,9 @@ func get_actors_and_gameitems_in_area(target_position: Vector3, distance: float)
 	return things.filter(func(a):return a != null).filter(func(a): return a.is_inside_tree()).filter(func(a): return target_position.distance_to(a.global_transform.origin) <= distance)
 
 func setup_game(game_type: GameTypes):
-	spawn_weapon(Vector2(5,5), Weapons.SMG)
-	spawn_ammo(Vector2(5,5), Weapons.SMG)
-	spawn_weapon(Vector2(-15,5), Weapons.SHOTGUN)
-	spawn_ammo(Vector2(-15,5), Weapons.SHOTGUN)
-	spawn_weapon(Vector2(25,-5), Weapons.SNIPER)
-	spawn_ammo(Vector2(25,-5), Weapons.SNIPER)
+	spawn_weapon_and_ammo(Vector2(5,5), Weapons.SMG)
+	spawn_weapon_and_ammo(Vector2(-15,5), Weapons.SHOTGUN)
+	spawn_weapon_and_ammo(Vector2(25,-5), Weapons.SNIPER)
 	match game_type:
 		GameTypes.AI:
 			spawn_ai(Vector2(-10,0))

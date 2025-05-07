@@ -241,9 +241,13 @@ func evaluate(factor_context: FactorContext) -> float:
 
 func acquire_and_set_target() -> void:
 	var self_actor = current_controller.actor
-	var new_target = current_controller.world.get_closest_actor(self_actor.global_position, self_actor)
-	#print("current actor: %s new target: %s" % [self_actor, new_target])
+
+	var team_members:Array[Actor] = [self_actor]
+	if (self_actor.team != null):
+		team_members = self_actor.team.get_members()
+
+	var new_target = current_controller.world.get_closest_actor(self_actor.global_position, team_members)
+	# print("current actor: %s new target: %s" % [self_actor, new_target])
 	assert(new_target != self_actor)
 	assert(!is_same(new_target, self_actor))
 	current_target = new_target
-	

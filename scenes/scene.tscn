@@ -55,6 +55,8 @@ camera_min_distance = 4.0
 
 [node name="ActorContainer" type="Node" parent="."]
 
+[node name="TeamContainer" type="Node" parent="."]
+
 [node name="ItemContainer" type="Node" parent="."]
 
 [node name="AoeHealGrenade" parent="ItemContainer" instance=ExtResource("10_j4gxa")]

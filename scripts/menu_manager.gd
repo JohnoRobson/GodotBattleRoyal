@@ -36,8 +36,9 @@ func open_death_menu():
 	$TransparentOverlay.show()
 	open_menu($DeathMenu)
 
-func open_win_menu():
+func open_win_menu(winner: Team):
 	clear_menus()
+	$WinMenu.set_winner(winner)
 	open_menu($WinMenu)
 
 func open_pause_menu():

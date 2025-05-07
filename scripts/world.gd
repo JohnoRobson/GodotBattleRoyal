@@ -6,6 +6,7 @@ class_name World extends Node3D
 
 @onready var actor_container: Node = get_node("ActorContainer")
 @onready var item_container: Node = get_node("ItemContainer")
+@onready var team_container: Node = get_node("TeamContainer")
 
 @export var effect_manager: EffectManager
 
@@ -24,7 +25,7 @@ enum Weapons {SMG, SHOTGUN, SNIPER}
 enum GameTypes {AI, SANDBOX, CLASSIC}
 
 signal game_lost
-signal game_won
+signal game_won(winner: Team)
 signal game_loaded
 
 signal pause_button_pressed
@@ -57,10 +58,11 @@ func _init_actor(actor: Actor, spawn_position: Vector2):
 
 # To be run after a game setup function has been called
 func conclude_loading():
-
 	# move this somewhere else
 	for item in get_tree().get_nodes_in_group("items"):
 		item.action_triggered.connect(action_system.action_triggered)
+	
+	_init_outlines()
 
 	game_loaded.emit()
 
@@ -81,13 +83,17 @@ func move_camera(distance):
 
 	camera.transform.origin = new_position
 
-# Spawn player actor and create new player controller
-func spawn_player(spawn_position: Vector2):
-	var actor: Actor = preload("res://scenes/player_actor.tscn").instantiate()
-	_init_actor(actor, spawn_position)
-	player_actors.append(actor)
-	actor.actor_killed.connect(_on_player_killed)
+func create_team() -> Team:
+	var team: Team = Team.new()
+	team_container.add_child(team)
+	return team
 
+# Spawn player actor and create new player controller
+func spawn_player(spawn_position: Vector2) -> Actor:
+	var actor: Actor = preload("res://scenes/player_actor.tscn").instantiate()
+	player_actors.append(actor)
+	_init_actor(actor, spawn_position)
+	
 	# Add player controller
 	var controller = Node3D.new()
 	var controller_script = preload("res://scripts/player_actor_controller.gd")
@@ -104,9 +110,11 @@ func spawn_player(spawn_position: Vector2):
 	inventory_ui.selected_slot_scrolled_down.connect(inventory.selected_slot_scrolled_down)
 
 	inventory.emit_updates() # hack to get the ui to update on game start
+	
+	return actor;
 
 # Spawn AI actor and configure existing AI controller
-func spawn_ai(spawn_position: Vector2):
+func spawn_ai(spawn_position: Vector2) -> Actor:
 	var actor: Actor = preload("res://scenes/ai_actor.tscn").instantiate()
 	_init_actor(actor, spawn_position)
 	ai_actors.append(actor)
@@ -117,6 +125,8 @@ func spawn_ai(spawn_position: Vector2):
 	controller.world = self
 	controller.world_navmesh = nav_region
 	controller.state_machine = StateMachine.new(DecisionMakingState.new(), controller)
+	
+	return actor
 
 func spawn_weapon(spawn_position: Vector2, weapon_type: Weapons) -> Weapon:
 	var weapon: Weapon
@@ -159,29 +169,43 @@ func spawn_weapon_and_ammo(spawn_position: Vector2, weapon_type: Weapons) -> voi
 	spawn_ammo(spawn_position + Vector2(1,0), weapon_type)
 	spawn_ammo(spawn_position + Vector2(-1,0), weapon_type)
 
-func _on_actor_killed(actor: Actor):
-	player_actors.erase(actor)
-	ai_actors.erase(actor)
+func _on_actor_killed(actor: Actor) -> void:
+	var player_died: bool = false
+	if player_actors.find(actor) != -1: # does not support multiple players
+		player_actors.erase(actor)
+		player_died = true
+	else:
+		ai_actors.erase(actor)
 	
 	var current_camera = get_viewport().get_camera_3d()
 	if actor == current_camera.get_parent():
 		make_random_ai_camera_current()
 
 	# check for win condition
-	if get_win_condition_satisfied():
+	var winner: Team = get_winner()
+	if winner != null:
 		action_system.shut_down()
-		game_won.emit()
+		game_won.emit(winner)
+	elif player_died:
+		make_random_ai_camera_current()
+		game_lost.emit()
 
-func get_win_condition_satisfied() -> bool:
-	if player_actors.size() >= 1 and ai_actors.size() == 0:
-		return true
-	return false
+func get_winner() -> Team:
+	var actors: Array[Actor] = player_actors + ai_actors
+	var actor: Actor = actors.pop_front()
 
-func get_closest_actor(from_position: Vector3, ignore: Actor = null) -> Actor:
-	var actors = player_actors + ai_actors # Apparently you can concatenate arrays like this - MW 2023-05-15
+	if actor == null:
+		return Team.new("Noone") # noone wins
 
-	if ignore != null:
-		actors.erase(ignore)
+	for other_actor in actors:
+		if other_actor.team != actor.team or other_actor.team == null:
+			return null
+
+	return actor.team
+
+func get_closest_actor(from_position: Vector3, ignore: Array[Actor] = []) -> Actor:
+	# Inefficient? - MW 2024-11-05
+	var actors = (player_actors + ai_actors).filter(func(actor): return !ignore.has(actor))
 
 	actors.sort_custom(func(a, b): return from_position.distance_to(a.global_transform.origin) < from_position.distance_to(b.global_transform.origin))
 
@@ -256,10 +280,6 @@ func make_random_ai_camera_current() -> void:
 	else: # on no more ai actors, set camera to world
 		world_camera.make_current()
 
-func _on_player_killed(_player: Actor):
-	make_random_ai_camera_current()
-	game_lost.emit()
-
 func return_item_to_world(item: GameItem, global_position_to_place_item: Vector3, global_rotation_to_place_item: Vector3):
 	if item.get_parent() != null:
 		item.get_parent().remove_child(item)
@@ -285,11 +305,28 @@ func setup_game(game_type: GameTypes):
 		GameTypes.SANDBOX:
 			spawn_player(Vector2(0,5))
 		GameTypes.CLASSIC, _:
-			spawn_player(Vector2(0,5))
-			spawn_ai(Vector2(-10,0))
-			spawn_ai(Vector2(-10,5))
-			spawn_ai(Vector2(30,0))
+			var player_team: Team = create_team()
+			player_team.add_member(spawn_player(Vector2(0,5)))
+			player_team.add_member(spawn_ai(Vector2(-30, 10)))
+			var ai_team: Team = create_team()
+			ai_team.add_member(spawn_ai(Vector2(-10,0)))
+			ai_team.add_member(spawn_ai(Vector2(-10,5)))
+			ai_team.add_member(spawn_ai(Vector2(30,0)))
+			
 	conclude_loading()
 
 func _on_pause_button_pressed():
 	pause_button_pressed.emit()
+
+func _init_outlines() -> void:
+	# assumes one player actor, update to controlled character if multiplayer is implemented
+	var player: Actor = null
+	if (player_actors.size() > 0):
+		player = player_actors[0]
+		player.set_outline_color(Color(255, 255, 255, 1))
+
+	for ai_actor in ai_actors:
+		if (ai_actor.team == null or ai_actor.team != player.team):
+			ai_actor.set_outline_color(Color(255, 0, 0))
+		else:
+			ai_actor.set_outline_color(Color(0, 255, 0))

@@ -8,7 +8,7 @@ func enter(controller: AiActorController):
 
 func execute(controller: AiActorController):
 	#var closest_health_in_world = controller.world.get_closest_item_with_traits(controller.actor.global_transform.origin, [GameItem.ItemTrait.HEALING])
-	var health_in_inventory = InventoryUtils.switch_to_item_with_trait(controller.actor.weapon_inventory, GameItem.ItemTrait.HEALING)
+	var health_in_inventory = InventoryUtils.switch_to_item_with_trait(controller.actor.inventory, GameItem.ItemTrait.HEALING)
 	
 	if health_in_inventory:
 		medkit_pickup_routine_started = true
@@ -40,7 +40,7 @@ func get_name() -> String:
 	return "UseHealthItemState"
 
 func evaluate(factor_context: FactorContext) -> float:
-	var has_health_in_inventory: bool = InventoryUtils.contains_traits(factor_context.target_actor.weapon_inventory.inventory_data, [GameItem.ItemTrait.HEALING])
+	var has_health_in_inventory: bool = InventoryUtils.contains_traits(factor_context.target_actor.inventory.inventory_data, [GameItem.ItemTrait.HEALING])
 	
 	if has_health_in_inventory:
 		var health_factor: float = Factors.evaluate_health_factor(factor_context)

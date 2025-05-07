@@ -17,6 +17,7 @@ class_name World extends Node3D
 @export var camera_zoom_speed: float = 0.27
 @export var camera_max_distance: float = 30
 @export var camera_min_distance: float = 5
+@export var actor_inventory_size: int = 5
 
 var current_focus: Actor
 
@@ -50,10 +51,10 @@ func _init_actor(actor: Actor, spawn_position: Vector2):
 	
 	actor_container.add_child(actor)
 	actor.set_global_position(Vector3(spawn_position.x, 0.0, spawn_position.y))
-	actor.weapon_inventory.return_item_to_world.connect(return_item_to_world)
-	actor.weapon_inventory.inventory_data = InventoryData.new()
-	for i in 3:
-		actor.weapon_inventory.inventory_data._slots.append(InventorySlotData.new())
+	actor.inventory.return_item_to_world.connect(return_item_to_world)
+	actor.inventory.inventory_data = InventoryData.new()
+	for i in actor_inventory_size:
+		actor.inventory.inventory_data._slots.append(InventorySlotData.new())
 
 # To be run after a game setup function has been called
 func conclude_loading():
@@ -139,11 +140,34 @@ func spawn_weapon(spawn_position: Vector2, weapon_type: Weapons) -> Weapon:
 		_:
 			return
 
-	weapon.on_firing.connect(effect_manager._on_actor_shoot)
+	#weapon.on_firing.connect(effect_manager._on_actor_shoot)
 	item_container.add_child(weapon)
 	weapon.set_global_position(Vector3(spawn_position.x, 5.0, spawn_position.y))
 	weapon.set_global_rotation_degrees(Vector3(0, 90, 0))
 	return weapon
+
+func spawn_ammo(spawn_position: Vector2, weapon_type: Weapons) -> Ammo:
+	var ammo: Ammo
+	match weapon_type:
+		Weapons.SHOTGUN:
+			ammo = preload("res://scenes/items/shotgun_ammo.tscn").instantiate()
+		Weapons.SMG:
+			ammo = preload("res://scenes/items/smg_ammo.tscn").instantiate()
+		Weapons.SNIPER:
+			ammo = preload("res://scenes/items/sniper_ammo.tscn").instantiate()
+		_:
+			return
+
+	#weapon.on_firing.connect(effect_manager._on_actor_shoot)
+	item_container.add_child(ammo)
+	ammo.set_global_position(Vector3(spawn_position.x, 5.0, spawn_position.y))
+	ammo.set_global_rotation_degrees(Vector3(0, 90, 0))
+	return ammo
+
+func spawn_weapon_and_ammo(spawn_position: Vector2, weapon_type: Weapons) -> void:
+	spawn_weapon(spawn_position, weapon_type)
+	spawn_ammo(spawn_position + Vector2(1,0), weapon_type)
+	spawn_ammo(spawn_position + Vector2(-1,0), weapon_type)
 
 func _on_actor_killed(actor: Actor) -> void:
 	var player_died: bool = false
@@ -226,6 +250,18 @@ func get_closest_item_with_traits(from_position: Vector3, item_traits: Array[Gam
 	
 	return items.front() if !items.is_empty() else null
 
+func get_closest_ammo_of_category(from_position: Vector3, ammo_category: AmmoType.AmmoCategory) -> GameItem:
+	var items = []
+	
+	items.append_array(get_tree().get_nodes_in_group("ammo"))
+
+	items = items.filter(func(a): return a != null and !a.is_held and a.can_be_used)
+	items = items.filter(func(a): return a.traits.any(func(b): return b == GameItem.ItemTrait.AMMO))
+	items = items.filter(func(a: Ammo): return a.ammo_type.ammo_category == ammo_category)
+
+	items.sort_custom(func(a, b): return from_position.distance_to(a.global_transform.origin) < from_position.distance_to(b.global_transform.origin))
+	return items.front() if !items.is_empty() else null
+
 # this is not good
 func get_closest_healing_aura(from_position: Vector3) -> GameItem:
 	var items = []
@@ -257,9 +293,9 @@ func get_actors_and_gameitems_in_area(target_position: Vector3, distance: float)
 	return things.filter(func(a):return a != null).filter(func(a): return a.is_inside_tree()).filter(func(a): return target_position.distance_to(a.global_transform.origin) <= distance)
 
 func setup_game(game_type: GameTypes):
-	spawn_weapon(Vector2(5,5), Weapons.SMG)
-	spawn_weapon(Vector2(-15,5), Weapons.SHOTGUN)
-	spawn_weapon(Vector2(25,-5), Weapons.SNIPER)
+	spawn_weapon_and_ammo(Vector2(5,5), Weapons.SMG)
+	spawn_weapon_and_ammo(Vector2(-15,5), Weapons.SHOTGUN)
+	spawn_weapon_and_ammo(Vector2(25,-5), Weapons.SNIPER)
 	match game_type:
 		GameTypes.AI:
 			spawn_ai(Vector2(-10,0))

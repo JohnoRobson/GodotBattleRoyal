@@ -17,7 +17,7 @@ var actor_state: ActorState = ActorState.IDLE
 
 @onready var item_pickup_area: ItemInteractionArea = get_node("ItemPickupArea")
 @onready var _item_pickup_manager: ItemPickupManager = get_node("ItemPickupManager")
-@onready var weapon_inventory: Inventory = get_node("WeaponInventory")
+@onready var inventory: Inventory = get_node("WeaponInventory")
 @onready var animation_player: AnimationPlayer = get_node("AnimationPlayer")
 @onready var camera: Camera3D = get_node("Camera3D")
 
@@ -69,9 +69,9 @@ func _process(_delta):
 			held_weapon.fire()
 		else:
 			held_weapon.use_item(self)
-		weapon_inventory.emit_updates()
-	if (controller.is_reloading() && held_weapon != null):
-		held_weapon.reload()
+		inventory.emit_updates()
+	if (controller.is_reloading() && held_weapon != null && held_weapon is Weapon):
+		held_weapon.reload(inventory)
 	if (held_weapon != null && held_weapon is Weapon):
 		held_weapon.set_is_moving(!controller.get_move_direction().is_zero_approx())
 	if (!controller.get_move_direction().is_zero_approx()):
@@ -129,15 +129,15 @@ func _try_to_exchange_weapon():
 
 	# pick up
 	if held_weapon == null && closest_weapon != null:
-		weapon_inventory.add_item_to_inventory_from_world(closest_weapon)
+		inventory.add_item_to_inventory_from_world(closest_weapon)
 
 	# drop
 	elif held_weapon != null && closest_weapon == null:
-		weapon_inventory.remove_item_from_inventory_to_world(held_weapon)
+		inventory.remove_item_from_inventory_to_world(held_weapon)
 
 	# swap
 	elif held_weapon != null && closest_weapon != null:
-		weapon_inventory.swap_item_from_world_to_inventory(closest_weapon, held_weapon)
+		inventory.swap_item_from_world_to_inventory(closest_weapon, held_weapon)
 	
 	_drop_weapon_cooldown_timer = _drop_weapon_cooldown_time
 	# not holding a weapon and there are no weapons nearby

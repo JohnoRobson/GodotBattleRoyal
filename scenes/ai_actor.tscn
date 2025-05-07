@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://8d70c6yghhwe"]
 
 [ext_resource type="PackedScene" uid="uid://8ijx2rjjx2jg" path="res://scenes/actor.tscn" id="1_jfaud"]
-[ext_resource type="Script" uid="uid://cv4pvv5klahih" path="res://scripts/ai/ai_actor_controller.gd" id="3_q60xr"]
+[ext_resource type="Script" uid="uid://cw0yjvsnkeqwe" path="res://scripts/ai/ai_actor_controller.gd" id="3_q60xr"]
 [ext_resource type="Shader" uid="uid://borfq5vp6inq0" path="res://outline.gdshader" id="3_v03im"]
 [ext_resource type="Shader" uid="uid://bswlomw8rgpyy" path="res://actor.gdshader" id="4_dhvnc"]
 

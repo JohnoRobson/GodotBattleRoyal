@@ -109,7 +109,7 @@ func spawn_player(spawn_position: Vector2) -> Actor:
 	inventory_ui.selected_slot_scrolled_up.connect(inventory.selected_slot_scrolled_up)
 	inventory_ui.selected_slot_scrolled_down.connect(inventory.selected_slot_scrolled_down)
 
-	inventory.emit_updates() # hack to get the ui to update on game start
+	inventory.emit_updates_for_active_item() # hack to get the ui to update on game start
 	
 	return actor;
 

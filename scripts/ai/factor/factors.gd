@@ -79,4 +79,3 @@ static func evaluate_nearby_explosives_factor(factor_context: FactorContext) -> 
 		explosive_danger_score += explosive_weight * distance_multiplier
 	
 	return clamp_result(explosive_danger_score)
-

@@ -35,6 +35,12 @@ func _process(delta):
 		WeaponState.RELOADING:
 			_apply_weapon_reload(delta)
 
+func does_slot_contain_compatible_ammo(slot: InventorySlotData) -> bool:
+	var item_in_slot: GameItem = slot.get_item()
+	if item_in_slot == null or !(item_in_slot is Ammo):
+		return false
+	return (item_in_slot as Ammo).ammo_type.ammo_category == stats.ammo_category
+
 # attempts to start the reload process. returns false if there is no ammo to reload with
 func reload(inventory: Inventory) -> bool:
 	# return if we are already in the process of reloading
@@ -42,7 +48,7 @@ func reload(inventory: Inventory) -> bool:
 		return true
 
 	# check inventory for ammo of the right type if it exists, take the first one found and delete it, then start the reload process
-	var ammo_in_inventory: GameItem = inventory.subtract_item_matching(func(a): return a != null and a is Ammo and (a as Ammo).ammo_type.ammo_category == stats.ammo_category)
+	var ammo_in_inventory: GameItem = inventory.subtract_item_matching(func(a): return does_slot_contain_compatible_ammo(a))
 	if ammo_in_inventory != null:
 		_reload_time_cooldown = stats.weapon_reload_time_seconds
 		_current_state = WeaponState.RELOADING

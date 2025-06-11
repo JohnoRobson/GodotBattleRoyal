@@ -3,7 +3,7 @@ extends Resource
 
 @export var _slots: Array[InventorySlotData] = []
 
-func is_item_in_inventory(item: GameItem) -> bool:
+func is_equivalent_item_in_inventory(item: GameItem) -> bool:
 	return _slots.any(func(a): return a.contains(item))
 
 func number_of_slots() -> int:
@@ -27,15 +27,7 @@ func get_item_at_index(index: int) -> GameItem:
 
 	return _slots[index].get_item()
 
-func is_slot_at_index_empty(slot_index: int) -> bool:
-	if slot_index < 0 or slot_index > _slots.size() - 1:
-		return false
-	return _slots[slot_index].is_empty()
-
 func add_item_at_index(item: GameItem, slot_index: int) -> bool:
-	if !is_slot_at_index_empty(slot_index):
-		return false
-	
 	return _slots[slot_index].push_item(item)
 
 func add_item(item: GameItem) -> bool:
@@ -50,7 +42,7 @@ func add_item(item: GameItem) -> bool:
 	return added_item
 
 func remove_item(item: GameItem) -> bool:
-	if !is_item_in_inventory(item):
+	if !is_equivalent_item_in_inventory(item):
 		return false
 
 	for i in _slots.size():
@@ -64,7 +56,13 @@ func remove_item(item: GameItem) -> bool:
 	return false
 
 func swap_items(item_outside_inventory: GameItem, item_inside_inventory: GameItem) -> bool:
-	if !(!is_item_in_inventory(item_outside_inventory) and is_item_in_inventory(item_inside_inventory)):
+	var is_outside_item_outside_inventory: bool = !is_equivalent_item_in_inventory(item_outside_inventory)
+	var is_inside_item_inside_inventory: bool = is_equivalent_item_in_inventory(item_inside_inventory)
+
+	if !is_outside_item_outside_inventory and !is_inside_item_inside_inventory:
+		return false
+
+	if is_outside_item_outside_inventory and !is_inside_item_inside_inventory:
 		return false
 	
 	for slot in _slots:
@@ -82,7 +80,8 @@ func get_slots_matching(filter: Callable) -> Array[InventorySlotData]:
 	var slots_matching_filter: Array[InventorySlotData]
 
 	for slot in _slots:
-		if filter.call(slot.get_item()):
+		var test = filter.call(slot)
+		if test:
 			slots_matching_filter.append(slot)
 	
 	return slots_matching_filter
@@ -95,3 +94,11 @@ func subtract_item_matching(filter: Callable) -> GameItem:
 	
 	var first_slot_matching_the_filter := matching_slots[0]
 	return first_slot_matching_the_filter.pop_item()
+
+func get_index_of_slot(slot: InventorySlotData) -> int:
+	for i in range(0, _slots.size()):
+		if (_slots[i] == slot):
+			return i
+	
+	push_error("Failed to find the index of a slot")
+	return 0

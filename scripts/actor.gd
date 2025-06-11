@@ -69,7 +69,7 @@ func _process(_delta):
 			held_weapon.fire()
 		else:
 			held_weapon.use_item(self)
-		inventory.emit_updates()
+		inventory.emit_updates_for_active_item()
 	if (controller.is_reloading() && held_weapon != null && held_weapon is Weapon):
 		held_weapon.reload(inventory)
 	if (held_weapon != null && held_weapon is Weapon):
@@ -128,18 +128,18 @@ func _try_to_exchange_weapon():
 	var closest_weapon: GameItem = _item_pickup_manager.get_item_that_cursor_is_over_and_is_in_interaction_range()
 
 	# pick up
-	if held_weapon == null && closest_weapon != null:
-		inventory.add_item_to_inventory_from_world(closest_weapon)
+	var did_pick_up_item = inventory.add_item_to_inventory_from_world(closest_weapon)
 
 	# drop
-	elif held_weapon != null && closest_weapon == null:
+	if !did_pick_up_item && held_weapon != null && closest_weapon == null:
 		inventory.remove_item_from_inventory_to_world(held_weapon)
 
 	# swap
-	elif held_weapon != null && closest_weapon != null:
+	elif !did_pick_up_item && held_weapon != null && closest_weapon != null:
 		inventory.swap_item_from_world_to_inventory(closest_weapon, held_weapon)
 	
 	_drop_weapon_cooldown_timer = _drop_weapon_cooldown_time
+
 	# not holding a weapon and there are no weapons nearby
 	return
 
@@ -166,7 +166,11 @@ func unequip_weapon():
 
 	held_weapon = null
 
-func _on_weapon_inventory_inventory_changed(inventory_data: InventoryData, selected_slot_index: int):
+func _on_weapon_inventory_inventory_changed(inventory_data: InventoryData, selected_slot_index: int, changed_slot_index: int):
+	if selected_slot_index != changed_slot_index:
+		# there was a change to the inventory, but it didn't change the active item so ignore the change
+		return
+
 	var item_in_selected_slot: GameItem = inventory_data.get_item_at_index(selected_slot_index)
 
 	if (held_weapon == item_in_selected_slot):

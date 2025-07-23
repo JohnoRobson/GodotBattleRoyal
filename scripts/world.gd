@@ -21,7 +21,7 @@ class_name World extends Node3D
 
 var current_focus: Actor
 
-enum Weapons {SMG, SHOTGUN, SNIPER}
+enum Weapons {SMG, SHOTGUN, SNIPER, COOL}
 enum GameTypes {AI, SANDBOX, CLASSIC}
 
 signal game_lost
@@ -137,6 +137,8 @@ func spawn_weapon(spawn_position: Vector2, weapon_type: Weapons) -> Weapon:
 			weapon = preload("res://scenes/weapons/smg.tscn").instantiate()
 		Weapons.SNIPER:
 			weapon = preload("res://scenes/weapons/sniper_rifle.tscn").instantiate()
+		Weapons.COOL:
+			weapon = preload("res://scenes/weapons/sniper_rifle2.tscn").instantiate()
 		_:
 			return
 
@@ -155,6 +157,8 @@ func spawn_ammo(spawn_position: Vector2, weapon_type: Weapons) -> Ammo:
 			ammo = preload("res://scenes/items/smg_ammo.tscn").instantiate()
 		Weapons.SNIPER:
 			ammo = preload("res://scenes/items/sniper_ammo.tscn").instantiate()
+		Weapons.COOL:
+			ammo = preload("res://scenes/items/cool_ammo.tscn").instantiate()
 		_:
 			return
 
@@ -296,6 +300,7 @@ func setup_game(game_type: GameTypes):
 	spawn_weapon_and_ammo(Vector2(5,5), Weapons.SMG)
 	spawn_weapon_and_ammo(Vector2(-15,5), Weapons.SHOTGUN)
 	spawn_weapon_and_ammo(Vector2(25,-5), Weapons.SNIPER)
+	spawn_weapon_and_ammo(Vector2(1,13), Weapons.COOL)
 	match game_type:
 		GameTypes.AI:
 			spawn_ai(Vector2(-10,0))

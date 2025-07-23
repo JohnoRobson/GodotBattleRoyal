@@ -17,6 +17,7 @@ static func get_states_to_do(controller: AiActorController) -> Array[StateEvalua
 	
 	# has to be created on each call so that we don't share state's states with other states
 	var top_level_states: Array[State] = [
+		FindAmmoState.new(),
 		FindGrenadeState.new(),
 		FindHealthState.new(),
 		FleeState.new(),

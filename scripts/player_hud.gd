@@ -2,7 +2,7 @@ class_name PlayerHud extends Control
 
 @onready var ammo_count: Label = get_node("AmmoCount")
 @onready var health: Label = get_node("Health")
-@onready var inventory: InventoryUI = get_node("Inventory")
+@onready var inventory_ui: InventoryUI = get_node("Inventory")
 
 var current_weapon: GameItem = null
 
@@ -20,9 +20,12 @@ func _on_weapon_swap(game_item):
 	if game_item is Weapon:
 		current_weapon = game_item
 		current_weapon.update_ammo_ui.connect(on_update_ammo)
-		on_update_ammo(game_item._current_ammo, game_item.stats.max_ammo)
+		if game_item._ammo != null:
+			on_update_ammo(game_item._ammo.current_ammo_in_magazine, game_item._ammo.ammo_type.ammo_in_full_magazine)
+		else:
+			on_update_ammo(0, 0)
 	else:
 		on_update_ammo(0, 0)
 
-func _on_inventory_changed(inventory_data: InventoryData, selected_slot_index: int):
-	inventory._on_inventory_changed(inventory_data, selected_slot_index)
+func _on_inventory_changed(inventory_data: InventoryData, selected_slot_index: int, changed_slot_index: int):
+	inventory_ui._on_inventory_changed(inventory_data, selected_slot_index, changed_slot_index)

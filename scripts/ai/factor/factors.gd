@@ -30,9 +30,9 @@ static func evaluate_danger_factor(factor_context: FactorContext) -> float:
 
 ## returns 0.0 to 1.0 based off of how poorly-equipped the actor is, with 0.0 being a full inventory and 1.0 being empty or not having a weapon
 static func evaluate_equipment_factor(factor_context: FactorContext) -> float:
-	var number_of_items_in_inventory = factor_context.target_actor.weapon_inventory.number_of_filled_slots()
-	var size_of_inventory = factor_context.target_actor.weapon_inventory.inventory_data.number_of_slots()
-	var traits_in_inventory = InventoryUtils.get_traits(factor_context.target_actor.weapon_inventory.inventory_data)
+	var number_of_items_in_inventory = factor_context.target_actor.inventory.number_of_filled_slots()
+	var size_of_inventory = factor_context.target_actor.inventory.inventory_data.number_of_slots()
+	var traits_in_inventory = InventoryUtils.get_traits(factor_context.target_actor.inventory.inventory_data)
 	
 	if !(traits_in_inventory.has(GameItem.ItemTrait.FIREARM) || traits_in_inventory.has(GameItem.ItemTrait.EXPLOSIVE)):
 		# a weapon of some kind is required!
@@ -79,4 +79,3 @@ static func evaluate_nearby_explosives_factor(factor_context: FactorContext) -> 
 		explosive_danger_score += explosive_weight * distance_multiplier
 	
 	return clamp_result(explosive_danger_score)
-

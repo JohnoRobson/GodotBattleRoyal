@@ -13,7 +13,7 @@ func _process(_delta):
 	if Input.is_action_just_pressed("scroll_inventory_down"):
 		selected_slot_scrolled_down.emit()
 
-func _on_inventory_changed(inventory_data: InventoryData, selected_slot_index: int):
+func _on_inventory_changed(inventory_data: InventoryData, selected_slot_index: int, _changed_slot_index: int):
 	_slots = []
 	for child in get_children():
 		child.queue_free()

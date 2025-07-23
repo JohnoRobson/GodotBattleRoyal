@@ -56,13 +56,9 @@ func remove_item(item: GameItem) -> bool:
 	return false
 
 func swap_items(item_outside_inventory: GameItem, item_inside_inventory: GameItem) -> bool:
-	var is_outside_item_outside_inventory: bool = !is_equivalent_item_in_inventory(item_outside_inventory)
 	var is_inside_item_inside_inventory: bool = is_equivalent_item_in_inventory(item_inside_inventory)
 
-	if !is_outside_item_outside_inventory and !is_inside_item_inside_inventory:
-		return false
-
-	if is_outside_item_outside_inventory and !is_inside_item_inside_inventory:
+	if !is_inside_item_inside_inventory:
 		return false
 	
 	for slot in _slots:

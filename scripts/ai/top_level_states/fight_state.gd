@@ -80,13 +80,13 @@ func execute(controller: AiActorController):
 		
 		controller.set_aim_position(target_pos + AIM_OFFSET_TO_HIT_MIDDLE_OF_ACTOR)
 		
-		var weapon = controller.actor.held_weapon
+		var weapon = controller.actor.get_held_item()
 		
 		if weapon != null && weapon is Weapon && weapon.empty_and_can_reload():
 			controller.set_is_reloading(true)
 		else:
 			controller.set_is_reloading(false)
-		var held_item = controller.actor.held_weapon
+		var held_item = weapon
 		if held_item != null:
 			var item_is_grenade = [GameItem.ItemTrait.EXPLOSIVE, GameItem.ItemTrait.THROWABLE].all(func(a): return held_item.traits.has(a))
 			var weapon_score = _score_weapon_in_current_context(weapon, controller.actor)
@@ -199,7 +199,7 @@ func _score_weapon_in_current_context(game_item: GameItem, this_actor: Actor) ->
 	return clamped_score
 
 func _determine_direction_to_move(this_actor: Actor) -> DirectionToMove:
-	var current_weapon: GameItem = this_actor.held_weapon
+	var current_weapon: GameItem = this_actor.get_held_item()
 	
 	if current_weapon == null:
 		return DirectionToMove.AWAY_FROM_TARGET

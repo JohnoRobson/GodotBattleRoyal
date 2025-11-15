@@ -21,7 +21,6 @@ var actor_state: ActorState = ActorState.IDLE
 @onready var animation_player: AnimationPlayer = get_node("AnimationPlayer")
 @onready var camera: Camera3D = get_node("Camera3D")
 
-@export var held_weapon: GameItem
 @export var team: Team
 
 enum ActorState {
@@ -46,6 +45,7 @@ func _aim_weapon():
 		rotator.look_at(side_to_side_vector, Vector3.UP)
 
 		# up and down rotation
+		var held_weapon = inventory.get_one_item_in_selected_slot()
 		if held_weapon != null:
 			var angle_vector = held_weapon.get_aim_vector(aim_position)
 			weapon_base.look_at(to_global(angle_vector) + (weapon_base.global_position - global_position), Vector3.UP)
@@ -63,13 +63,15 @@ func _process(_delta):
 	
 	if (_drop_weapon_cooldown_timer > 0.0):
 		_drop_weapon_cooldown_timer -= _delta
+
 	_aim_weapon()
+
+	var held_weapon = inventory.get_one_item_in_selected_slot()
 	if (controller.is_shooting() && held_weapon != null):
 		if held_weapon is Weapon:
 			held_weapon.fire()
 		else:
 			held_weapon.use_item(self)
-		inventory.emit_updates_for_active_item()
 	if (controller.is_reloading() && held_weapon != null && held_weapon is Weapon):
 		held_weapon.reload(inventory)
 	if (held_weapon != null && held_weapon is Weapon):
@@ -105,6 +107,7 @@ func _physics_process(delta):
 	move_and_slide()
 
 func _on_health_depleted():
+	var held_weapon = inventory.get_one_item_in_selected_slot()
 	if held_weapon != null:
 		var weapon_position = held_weapon.global_position
 		var weapon_rotation = held_weapon.global_rotation
@@ -124,6 +127,8 @@ func _on_hurtbox_was_hit(amount, _hit_position_global, hit_normalized_direction)
 func _try_to_exchange_weapon():
 	if (_drop_weapon_cooldown_timer > 0.0):
 		return
+	
+	var held_weapon = inventory.get_one_item_in_selected_slot()
 
 	var closest_weapon: GameItem = _item_pickup_manager.get_item_that_cursor_is_over_and_is_in_interaction_range()
 
@@ -144,51 +149,37 @@ func _try_to_exchange_weapon():
 	return
 
 func equip_weapon(weapon: GameItem):
-	held_weapon = weapon
+	var held_weapon = inventory.get_one_item_in_selected_slot()
 	if held_weapon.get_parent() != null:
 		held_weapon.get_parent().remove_child(held_weapon)
 	weapon_base.add_child(held_weapon)
 	held_weapon.position = Vector3.ZERO
 	held_weapon.rotation = Vector3.ZERO
 	held_weapon.is_held = true
-	if held_weapon.item_used_up.is_connected(_on_item_used_up):
-		held_weapon.item_used_up.disconnect(_on_item_used_up)
-	held_weapon.item_used_up.connect(_on_item_used_up)
 	if weapon is Weapon:
 		weapon_swap.emit(weapon)
 
-func unequip_weapon():
-	if held_weapon.get_parent() != null:
-		held_weapon.get_parent().remove_child(held_weapon)
-	
-	if held_weapon.item_used_up.is_connected(_on_item_used_up):
-		held_weapon.item_used_up.disconnect(_on_item_used_up)
+func unequip_weapon(slot_index: int):
+	var items = inventory.get_all_items_in_slot(slot_index)
+	for item in items:
+		if item != null and item.get_parent() != null:
+			item.get_parent().remove_child(item)
 
-	held_weapon = null
-
+# Called by the inventory when it changes, for example, when switching slots or picking up/dropping items
 func _on_weapon_inventory_inventory_changed(inventory_data: InventoryData, selected_slot_index: int, changed_slot_index: int):
-	if selected_slot_index != changed_slot_index:
-		# there was a change to the inventory, but it didn't change the active item so ignore the change
-		return
-
 	var item_in_selected_slot: GameItem = inventory_data.get_item_at_index(selected_slot_index)
-
-	if (held_weapon == item_in_selected_slot):
-		return # do nothing, nothing has changed
+	var item_in_previous_slot: GameItem = inventory_data.get_item_at_index(changed_slot_index)
 	
-	if held_weapon != null and item_in_selected_slot != null:
-		unequip_weapon()
+	if item_in_previous_slot != null and item_in_selected_slot != null:
+		unequip_weapon(changed_slot_index)
 		equip_weapon(item_in_selected_slot)
 	
 	if item_in_selected_slot != null:
 		equip_weapon(item_in_selected_slot)
 	else:
-		unequip_weapon()
+		unequip_weapon(changed_slot_index)
 	
-	weapon_swap.emit(held_weapon)
-
-func _on_item_used_up():
-	held_weapon = null
+	weapon_swap.emit(item_in_selected_slot)
 
 func make_camera_current():
 	camera.make_current()
@@ -200,3 +191,6 @@ func set_outline_color(color: Color):
 
 	var active_next_pass = active_material.next_pass
 	active_next_pass.set_shader_parameter('outline_color', color)
+
+func get_held_item() -> GameItem:
+	return inventory.get_one_item_in_selected_slot()

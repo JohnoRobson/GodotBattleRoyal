@@ -169,7 +169,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.00658, 0)
 shape = SubResource("CapsuleShape3D_vc8i0")
 
 [node name="Reporter" parent="." instance=ExtResource("9_6wcgv")]
-selected_variables = Array[String](["health", "held_weapon"])
+selected_variables = Array[String](["health"])
 
 [connection signal="health_depleted" from="Health" to="." method="_on_health_depleted"]
 [connection signal="inventory_changed" from="WeaponInventory" to="." method="_on_weapon_inventory_inventory_changed"]

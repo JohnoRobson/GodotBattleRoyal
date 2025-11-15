@@ -1,5 +1,18 @@
 class_name Actor extends CharacterBody3D
 
+static func init_player_actor():
+	var actor: Actor = load("res://scenes/player_actor.tscn").instantiate()
+
+	# Add player controller
+	var controller = Node3D.new()
+	var controller_script = preload("res://scripts/player_actor_controller.gd")
+	controller.name = "PlayerActorController"
+	controller.set_script(controller_script)
+	actor.controller = controller
+	actor.add_child(controller)
+
+	return actor
+
 @export var speed = 5.0
 @export var JUMP_VELOCITY = 4.5
 @export var controller: ActorController = ActorController.new()

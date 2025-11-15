@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://bqbyywwu3it4d"]
+
+[ext_resource type="Script" uid="uid://doh15scwcllh8" path="res://scripts/spawner.gd" id="1_auhge"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2vbf6"]
+albedo_color = Color(0.0980392, 1, 0.0901961, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_2vbf6"]
+material = SubResource("StandardMaterial3D_2vbf6")
+top_radius = 0.3
+bottom_radius = 0.0
+height = 3.0
+
+[node name="Spawn" type="Node3D" groups=["spawners"]]
+script = ExtResource("1_auhge")
+
+[node name="IndicatorMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.003, -1.5, 0.007)
+mesh = SubResource("CylinderMesh_2vbf6")

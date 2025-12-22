@@ -22,14 +22,14 @@ static func switch_to_empty_slot(inventory: Inventory) -> bool:
 	if !inventory.has_empty_slots():
 		return false
 	
-	var empty_slot_is_selected = inventory.get_selected_item() == null
+	var empty_slot_is_selected = inventory.get_one_item_in_selected_slot() == null
 	
 	if empty_slot_is_selected:
 		return true
 	
 	for number in range(0, inventory.inventory_data.number_of_slots()):
 		inventory.selected_slot_scrolled_up()
-		empty_slot_is_selected = inventory.get_selected_item() == null
+		empty_slot_is_selected = inventory.get_one_item_in_selected_slot() == null
 		if empty_slot_is_selected:
 			return true
 	
@@ -66,10 +66,10 @@ static func get_all_items_in_inventory(inventory: Inventory) -> Array[GameItem]:
 	return items
 
 static func switch_to_item(inventory: Inventory, item: GameItem) -> bool:
-	var item_slot_with_trait_is_selected: bool = inventory.get_selected_item() == item
+	var item_slot_with_trait_is_selected: bool = inventory.get_one_item_in_selected_slot() == item
 	for number in range(0, inventory.inventory_data.number_of_slots()):
 		inventory.selected_slot_scrolled_up()
-		item_slot_with_trait_is_selected = inventory.get_selected_item() == item
+		item_slot_with_trait_is_selected = inventory.get_one_item_in_selected_slot() == item
 		if item_slot_with_trait_is_selected:
 			return true
 	

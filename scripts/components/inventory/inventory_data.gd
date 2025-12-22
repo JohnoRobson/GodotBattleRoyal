@@ -27,6 +27,12 @@ func get_item_at_index(index: int) -> GameItem:
 
 	return _slots[index].get_item()
 
+func get_all_items_at_index(index: int) -> Array[GameItem]:
+	if index > _slots.size() - 1 || index < 0:
+		return []
+
+	return _slots[index]._items
+
 func add_item_at_index(item: GameItem, slot_index: int) -> bool:
 	return _slots[slot_index].push_item(item)
 
@@ -53,23 +59,6 @@ func remove_item(item: GameItem) -> bool:
 	
 	# this shouldn't happen
 	push_error("Failed to remove an item from an inventory after confirming it was inside the inventory")
-	return false
-
-func swap_items(item_outside_inventory: GameItem, item_inside_inventory: GameItem) -> bool:
-	var is_inside_item_inside_inventory: bool = is_equivalent_item_in_inventory(item_inside_inventory)
-
-	if !is_inside_item_inside_inventory:
-		return false
-	
-	for slot in _slots:
-		if slot.contains(item_inside_inventory):
-			# empty the slot into the world
-			slot.pop_item()
-			slot.push_item(item_outside_inventory)
-			return true
-	
-	# this shouldn't happen
-	push_error("Failed to swap an item from an inventory after confirming it was inside the inventory")
 	return false
 
 func get_slots_matching(filter: Callable) -> Array[InventorySlotData]:

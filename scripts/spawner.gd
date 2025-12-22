@@ -7,7 +7,7 @@ func _ready():
 	hide()
 	global_spawn_position = self.calculate_spawn_position()
 
-func calculate_spawn_position():
+func calculate_spawn_position() -> Vector3:
 	var cast_start_position_local: Vector3 = Vector3.ZERO
 	var cast_range: float = 10.0
 	var cast_collision_mask: int = 0b0001 # 0001 world, 0010 actor

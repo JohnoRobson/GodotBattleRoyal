@@ -76,9 +76,9 @@ func remove_item_from_inventory_to_world(item: GameItem) -> bool:
 	return true
 
 func swap_item_from_world_to_inventory(world_item: GameItem, inventory_item: GameItem) -> bool:
-	var is_inside_item_inside_inventory: bool = inventory_data.is_equivalent_item_in_inventory(inventory_item)
+	var is_inventory_item_inside_inventory: bool = inventory_data.is_equivalent_item_in_inventory(inventory_item)
 	
-	if !is_inside_item_inside_inventory:
+	if !is_inventory_item_inside_inventory:
 		push_error("Failed to swap an item from an inventory")
 		return false
 	

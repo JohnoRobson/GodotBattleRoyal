@@ -74,7 +74,7 @@ static func switch_to_item(inventory: Inventory, item: GameItem) -> bool:
 			return true
 	
 	return false
-	
+
 static func get_all_weapons(inventory: Inventory) -> Array[GameItem]:
 	var items: Array[GameItem] = get_all_items_in_inventory(inventory)
 	return items.filter(func(a): return a.traits.has(GameItem.ItemTrait.FIREARM))

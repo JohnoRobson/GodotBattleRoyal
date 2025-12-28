@@ -24,7 +24,7 @@ func get_mouse_position_in_3d() -> Vector3:
 	var query = PhysicsRayQueryParameters3D.create(ray_origin, ray_end, CAMERA_RAYCAST_COLLISION_MASK)
 	query.exclude = [get_parent()] # exclude the actor so that you can get things on the other side of the actor
 	var result = space_state.intersect_ray(query)
-
+	
 	if (result.has("position")):
 		return result["position"]
 	else:

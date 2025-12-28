@@ -13,7 +13,7 @@ signal return_item_to_world(item: GameItem, global_position_to_place_item: Vecto
 func _add_item_to_inventory_if_it_is_stackable_and_there_is_space(item: GameItem) -> bool:
 	if item == null or item.max_stack_size <= 1:
 		return false
-
+	
 	# find slots with the item and free space
 	var matching_slots_with_free_space: Array[InventorySlotData] = inventory_data.get_slots_matching(func(a): return a.contains(item) and a.number_of_items() < item.max_stack_size)
 	# add the item to the slot if you can
@@ -41,7 +41,7 @@ func _add_item_to_inventory_if_it_is_stackable_and_there_is_space(item: GameItem
 		_emit_updates(_selected_slot_index)
 		connect_remove_signal(item)
 		return true
-
+	
 	return false
 
 ## Either adds the item to the selected slot, or if it's stackable and another slot has an instance of the item in it with free space then it adds the item to that slot
@@ -64,15 +64,15 @@ func remove_item_from_inventory_to_world(item: GameItem) -> bool:
 	
 	var item_global_position = item.global_position
 	var item_global_rotation = item.global_rotation
-
+	
 	if item.get_parent() != null:
 		item.get_parent().remove_child(item)
-
+	
 	item.is_held = false
 	_emit_updates(_selected_slot_index)
 	return_item_to_world.emit(item, item_global_position, item_global_rotation)
 	disconnect_remove_signal(item)
-
+	
 	return true
 
 func swap_item_from_world_to_inventory(world_item: GameItem, inventory_item: GameItem) -> bool:
@@ -84,7 +84,7 @@ func swap_item_from_world_to_inventory(world_item: GameItem, inventory_item: Gam
 	
 	var world_global_position = world_item.global_position
 	var world_global_rotation = world_item.global_rotation
-
+	
 	for slot in inventory_data._slots:
 		if slot.contains(inventory_item):
 			var points: Array[Vector3] = get_radially_symmetrical_points(world_global_position, slot._items.size(), 2.0)
@@ -97,7 +97,7 @@ func swap_item_from_world_to_inventory(world_item: GameItem, inventory_item: Gam
 				disconnect_remove_signal(item)
 			slot.push_item(world_item)
 			break
-
+	
 	if world_item.get_parent() != null:
 		world_item.get_parent().remove_child(world_item)
 	
@@ -105,7 +105,7 @@ func swap_item_from_world_to_inventory(world_item: GameItem, inventory_item: Gam
 	
 	_emit_updates(_selected_slot_index)
 	connect_remove_signal(world_item)
-
+	
 	return true
 
 func get_radially_symmetrical_points(position: Vector3, number_of_points: int, radius: float) -> Array[Vector3]:
@@ -136,26 +136,26 @@ func get_all_items_in_slot(index: int) -> Array[GameItem]:
 
 func selected_slot_scrolled_up() -> void:
 	var previous_slot_index = _selected_slot_index
-
+	
 	if inventory_data._slots.size() <= 1:
 		_selected_slot_index = 0
 	elif _selected_slot_index == inventory_data._slots.size() - 1:
 		_selected_slot_index = 0
 	else:
 		_selected_slot_index += 1
-
+	
 	_emit_updates(previous_slot_index)
 
 func selected_slot_scrolled_down() -> void:
 	var previous_slot_index = _selected_slot_index
-
+	
 	if inventory_data._slots.size() <= 1:
 		_selected_slot_index = 0
 	elif _selected_slot_index == 0:
 		_selected_slot_index = inventory_data._slots.size() - 1
 	else:
 		_selected_slot_index -= 1
-
+	
 	_emit_updates(previous_slot_index)
 
 func emit_updates_for_active_item():
@@ -180,7 +180,7 @@ func is_empty() -> bool:
 
 func subtract_item_matching(filter: Callable) -> GameItem:
 	var item_subtracted: GameItem = inventory_data.subtract_item_matching(filter)
-
+	
 	if item_subtracted != null:
 		_emit_updates(_selected_slot_index)
 	

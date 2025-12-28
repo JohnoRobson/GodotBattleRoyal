@@ -44,4 +44,3 @@ static func get_states_to_do(controller: AiActorController) -> Array[StateEvalua
 		return_array.append(StateEvaluation.new(state, sorting_states[state]))
 	
 	return return_array
-	

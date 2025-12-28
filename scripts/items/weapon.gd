@@ -46,7 +46,7 @@ func reload(inventory: Inventory) -> bool:
 	# return if we are already in the process of reloading
 	if _current_state == WeaponState.RELOADING:
 		return true
-
+	
 	# check inventory for ammo of the right type if it exists, take the first one found and delete it, then start the reload process
 	var ammo_in_inventory: GameItem = inventory.subtract_item_matching(func(a): return does_slot_contain_compatible_ammo(a))
 	if ammo_in_inventory != null:
@@ -61,7 +61,7 @@ func fire():
 	if _current_state == WeaponState.CAN_FIRE and _ammo != null:
 		_ammo.current_ammo_in_magazine -= 1
 		update_ammo_ui.emit(_ammo.current_ammo_in_magazine, _ammo.ammo_type.ammo_in_full_magazine)
-
+		
 		# apply cooldown
 		_weapon_cooldown_in_seconds = 1.0 / _fire_rate_per_second
 		_current_state = WeaponState.COOLDOWN

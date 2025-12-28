@@ -13,5 +13,5 @@ func perform(_delta: float, item_node: ActionStack.ItemNode) -> bool:
 	for i in number_of_times_to_repeat:
 		var action = action_to_repeat.duplicate(true)
 		item_node.child_nodes.append(ActionStack.ItemNode.new(action, item_node.game_item, item_node))
-
+	
 	return true

@@ -13,9 +13,9 @@ var dist = 0.0
 func _ready():
 	dist = start.distance_to(end) / 2
 	mesh.size = Vector3(starting_width, starting_width, dist)
-
+	
 	var q = (end - start).normalized() / 2
-
+	
 	look_at_from_position(start + q, end)
 
 func _process(delta):

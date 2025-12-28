@@ -22,15 +22,15 @@ func perform(_delta: float, _item_node: ActionStack.ItemNode) -> bool:
 		var timer: ActionTimer = ActionTimer.new()
 		timer.countdown_in_seconds = countdown_in_seconds * (i) + 1
 		timer.actions = duplicated_actions
-
+		
 		# do weird array type casting trick
 		var timer_array: Array[ActionTimer] = []
 		timer_array.append(timer)
 		var timer_array2: Array[Action] = []
 		timer_array2.assign(timer_array)
-
+		
 		timer_array3.append_array(timer_array2)
-
+		
 		if i == number_of_times_to_activate - 1:
 			# add child actions to final timer
 			timer.actions.append_array(actions)

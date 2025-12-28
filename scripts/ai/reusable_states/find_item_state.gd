@@ -12,15 +12,14 @@ enum SearchType {
 func _init(item_traits_to_find: Array[GameItem.ItemTrait] = [], ammo_types_to_find: Array[AmmoType.AmmoCategory] = []):
 	assert(item_traits_to_find != null or item_traits_to_find != null, "item_trait_to_find or item_traits_to_find was not set!")
 	assert(!(!item_traits_to_find.is_empty() and !ammo_types_to_find.is_empty()), "Cannot search for both items and ammo")
-
+	
 	if !item_traits_to_find.is_empty():
 		_search_type = SearchType.SEARCHING_FOR_ITEM
 	else:
 		_search_type = SearchType.SEARCHING_FOR_AMMO
-
+	
 	_item_traits_to_find = item_traits_to_find
 	_ammo_types_to_find = ammo_types_to_find
-	
 
 func enter(_controller: AiActorController):
 	pass
@@ -55,7 +54,7 @@ func exit(_controller: AiActorController):
 
 func get_name() -> String:
 	var traits_string = ""
-
+	
 	if _search_type == SearchType.SEARCHING_FOR_ITEM:
 		for item_trait: GameItem.ItemTrait in _item_traits_to_find:
 			traits_string += GameItem.ItemTrait.keys()[item_trait] + " Item, "

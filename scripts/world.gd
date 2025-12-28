@@ -63,7 +63,7 @@ func conclude_loading():
 		item.action_triggered.connect(action_system.action_triggered)
 	
 	_init_outlines()
-
+	
 	game_loaded.emit()
 
 func move_camera(distance):
@@ -80,7 +80,7 @@ func move_camera(distance):
 		var excess_distance = distance_from_origin - camera_min_distance
 		var adjusted_distance = distance + excess_distance
 		new_position = camera.transform.origin + forward_vector * adjusted_distance
-
+	
 	camera.transform.origin = new_position
 
 func create_team() -> Team:
@@ -91,45 +91,45 @@ func create_team() -> Team:
 func get_random_unused_actor_spawn_location() -> Vector3:
 	var actor_spawners: Array[Node] = get_tree().get_nodes_in_group("spawners")
 	var unused_actor_spawners = actor_spawners.filter(func(s): return !s.used)
-
+	
 	assert(unused_actor_spawners.size() >= 1, "Insufficient actor spawners")
-
+	
 	var random_unused_actor_spawner = unused_actor_spawners.pick_random()
 	random_unused_actor_spawner.used = true
-
+	
 	return random_unused_actor_spawner.global_spawn_position
 
 # Spawn player actor and create new player controller
 func spawn_player() -> Actor:
 	assert(player_actors.size() == 0, "Only one player supported")
-
+	
 	var actor: Actor = Actor.init_player_actor()
 	player_actors.append(actor)
-
+	
 	var spawn_position = get_random_unused_actor_spawn_location()
 	_init_actor(actor, spawn_position)
-
+	
 	actor.make_camera_current()
 	
 	var inventory_ui: InventoryUI = actor.get_node("PlayerHud/Inventory")
-
+	
 	var inventory: Inventory = actor.get_node("WeaponInventory")
 	inventory_ui.selected_slot_scrolled_up.connect(inventory.selected_slot_scrolled_up)
 	inventory_ui.selected_slot_scrolled_down.connect(inventory.selected_slot_scrolled_down)
-
+	
 	inventory.emit_updates_for_active_item() # hack to get the ui to update on game start
-
+	
 	return actor;
 
 # Spawn AI actor and configure existing AI controller
 func spawn_ai() -> Actor:
 	var actor: Actor = preload("res://scenes/ai_actor.tscn").instantiate()
-
+	
 	var spawn_position = get_random_unused_actor_spawn_location()
 	_init_actor(actor, spawn_position)
-
+	
 	ai_actors.append(actor)
-
+	
 	# Configure AI controller
 	var controller: AiActorController = actor.controller
 	controller.actor = actor
@@ -152,7 +152,7 @@ func spawn_weapon(spawn_position: Vector2, weapon_type: Weapons) -> Weapon:
 			weapon = preload("res://scenes/weapons/sniper_rifle2.tscn").instantiate()
 		_:
 			return
-
+	
 	#weapon.on_firing.connect(effect_manager._on_actor_shoot)
 	item_container.add_child(weapon)
 	weapon.set_global_position(Vector3(spawn_position.x, 5.0, spawn_position.y))
@@ -172,7 +172,7 @@ func spawn_ammo(spawn_position: Vector2, weapon_type: Weapons) -> Ammo:
 			ammo = preload("res://scenes/items/cool_ammo.tscn").instantiate()
 		_:
 			return
-
+	
 	#weapon.on_firing.connect(effect_manager._on_actor_shoot)
 	item_container.add_child(ammo)
 	ammo.set_global_position(Vector3(spawn_position.x, 5.0, spawn_position.y))
@@ -208,10 +208,10 @@ func _on_actor_killed(actor: Actor) -> void:
 func get_winner() -> Team:
 	var actors: Array[Actor] = player_actors + ai_actors
 	var actor: Actor = actors.pop_front()
-
+	
 	if actor == null:
 		return Team.new("Noone") # noone wins
-
+	
 	for other_actor in actors:
 		if other_actor.team != actor.team or other_actor.team == null:
 			return null
@@ -221,9 +221,9 @@ func get_winner() -> Team:
 func get_closest_actor(from_position: Vector3, ignore: Array[Actor] = []) -> Actor:
 	# Inefficient? - MW 2024-11-05
 	var actors = (player_actors + ai_actors).filter(func(actor): return !ignore.has(actor))
-
+	
 	actors.sort_custom(func(a, b): return from_position.distance_to(a.global_transform.origin) < from_position.distance_to(b.global_transform.origin))
-
+	
 	# weird ternary
 	var closest_actor: Actor = actors.front() if !actors.is_empty() else null
 	#print("closest actor: %s, ignore: %s" % [closest_actor, ignore])
@@ -233,25 +233,25 @@ func get_random_ai_actor() -> Actor:
 	if ai_actors.is_empty():
 		return null
 	return ai_actors.pick_random()
-
+	
 func get_closest_available_health(from_position: Vector3) -> GameItem:
 	var pickups = []
 	pickups.append_array(get_tree().get_nodes_in_group("healing"))
-
+	
 	# Filter returns the filtered array, but sort is in-place
 	pickups = pickups.filter(func(a): return a != null and !a.is_held and a.can_be_used)
 	#pickups = pickups.filter(func(a): return a.item_name == "Medkit")
 	pickups.sort_custom(func(a, b): return from_position.distance_to(a.global_transform.origin) < from_position.distance_to(b.global_transform.origin))
-
+	
 	return pickups.front() if !pickups.is_empty() else null
 
 func get_closest_available_weapon(from_position: Vector3) -> GameItem:
 	var weapon_array = []
 	weapon_array.append_array(get_tree().get_nodes_in_group("weapons"))
-
+	
 	weapon_array.sort_custom(func(a, b): return from_position.distance_to(a.global_transform.origin) < from_position.distance_to(b.global_transform.origin))
 	weapon_array = weapon_array.filter(func(a): return !a.is_held && a.can_be_used)
-
+	
 	return weapon_array.front() if !weapon_array.is_empty() else null
 
 func get_closest_item_with_traits(from_position: Vector3, item_traits: Array[GameItem.ItemTrait]) -> GameItem:
@@ -269,11 +269,11 @@ func get_closest_ammo_of_category(from_position: Vector3, ammo_category: AmmoTyp
 	var items = []
 	
 	items.append_array(get_tree().get_nodes_in_group("ammo"))
-
+	
 	items = items.filter(func(a): return a != null and !a.is_held and a.can_be_used)
 	items = items.filter(func(a): return a.traits.any(func(b): return b == GameItem.ItemTrait.AMMO))
 	items = items.filter(func(a: Ammo): return a.ammo_type.ammo_category == ammo_category)
-
+	
 	items.sort_custom(func(a, b): return from_position.distance_to(a.global_transform.origin) < from_position.distance_to(b.global_transform.origin))
 	return items.front() if !items.is_empty() else null
 
@@ -304,7 +304,7 @@ func return_item_to_world(item: GameItem, global_position_to_place_item: Vector3
 
 func get_actors_and_gameitems_in_area(target_position: Vector3, distance: float) -> Array:
 	var things = player_actors + ai_actors + get_tree().get_nodes_in_group("items")
-
+	
 	return things.filter(func(a):return a != null).filter(func(a): return a.is_inside_tree()).filter(func(a): return target_position.distance_to(a.global_transform.origin) <= distance)
 
 func setup_game(game_type: GameTypes):
@@ -340,7 +340,7 @@ func _init_outlines() -> void:
 	if (player_actors.size() > 0):
 		player = player_actors[0]
 		player.set_outline_color(Color(255, 255, 255, 1))
-
+	
 	for ai_actor in ai_actors:
 		if (ai_actor.team == null or ai_actor.team != player.team):
 			ai_actor.set_outline_color(Color(255, 0, 0))

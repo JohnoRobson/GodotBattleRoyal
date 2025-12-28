@@ -11,6 +11,6 @@ func _ready():
 
 func _process(delta):
 	_lifetime_remaining -= delta
-
+	
 	if _lifetime_remaining <= 0.0:
 		queue_free()

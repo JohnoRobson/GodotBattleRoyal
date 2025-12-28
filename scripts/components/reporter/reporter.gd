@@ -25,7 +25,7 @@ func get_report() -> Dictionary:
 		var name = entry["name"]
 		if selected_variables.has(name):
 			new_list[name] = _get_value_for_node(get_parent().get(name))
-		
+	
 	return new_list
 
 # Converts a variant into a string, formatted where appropriate

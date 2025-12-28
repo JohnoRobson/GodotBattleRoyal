@@ -2,7 +2,7 @@ class_name Actor extends CharacterBody3D
 
 static func init_player_actor():
 	var actor: Actor = load("res://scenes/player_actor.tscn").instantiate()
-
+	
 	# Add player controller
 	var controller = Node3D.new()
 	var controller_script = preload("res://scripts/player_actor_controller.gd")
@@ -10,7 +10,7 @@ static func init_player_actor():
 	controller.set_script(controller_script)
 	actor.controller = controller
 	actor.add_child(controller)
-
+	
 	return actor
 
 @export var speed = 5.0
@@ -56,7 +56,7 @@ func _aim_weapon():
 	if !aim_position.is_equal_approx(Vector3.UP) and !side_to_side_vector.is_equal_approx(rotator.global_position):
 		# side to side rotation
 		rotator.look_at(side_to_side_vector, Vector3.UP)
-
+		
 		# up and down rotation
 		var held_weapon = inventory.get_one_item_in_selected_slot()
 		if held_weapon != null:
@@ -76,9 +76,9 @@ func _process(_delta):
 	
 	if (_drop_weapon_cooldown_timer > 0.0):
 		_drop_weapon_cooldown_timer -= _delta
-
+	
 	_aim_weapon()
-
+	
 	var held_weapon = inventory.get_one_item_in_selected_slot()
 	if (controller.is_shooting() && held_weapon != null):
 		if held_weapon is Weapon:
@@ -101,7 +101,7 @@ func _physics_process(delta):
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y -= gravity * delta
-
+	
 	var movement_vel = (transform.basis * Vector3(controller.get_move_direction().x, 0, controller.get_move_direction().y)).normalized()
 	
 	if movement_vel:
@@ -111,12 +111,12 @@ func _physics_process(delta):
 		# friction
 		velocity.x = move_toward(velocity.x, 0, speed)
 		velocity.z = move_toward(velocity.z, 0, speed)
-
+	
 	# velocity from getting shot
 	velocity += _velocity_to_add * delta
 	# zero out the velocity_to_add, as it has been added
 	_velocity_to_add = Vector3.ZERO
-
+	
 	move_and_slide()
 
 func _on_health_depleted():
@@ -142,22 +142,22 @@ func _try_to_exchange_weapon():
 		return
 	
 	var held_weapon = inventory.get_one_item_in_selected_slot()
-
+	
 	var closest_weapon: GameItem = _item_pickup_manager.get_item_that_cursor_is_over_and_is_in_interaction_range()
-
+	
 	# pick up
 	var did_pick_up_item = inventory.add_item_to_inventory_from_world(closest_weapon)
-
+	
 	# drop
 	if !did_pick_up_item && held_weapon != null && closest_weapon == null:
 		inventory.remove_item_from_inventory_to_world(held_weapon)
-
+	
 	# swap
 	elif !did_pick_up_item && held_weapon != null && closest_weapon != null:
 		inventory.swap_item_from_world_to_inventory(closest_weapon, held_weapon)
 	
 	_drop_weapon_cooldown_timer = _drop_weapon_cooldown_time
-
+	
 	# not holding a weapon and there are no weapons nearby
 	return
 
@@ -199,9 +199,9 @@ func make_camera_current():
 
 func set_outline_color(color: Color):
 	var active_material = actor_body.get_active_material(0)
-
+	
 	assert(active_material.next_pass != null, "actor material missing next pass")
-
+	
 	var active_next_pass = active_material.next_pass
 	active_next_pass.set_shader_parameter('outline_color', color)
 

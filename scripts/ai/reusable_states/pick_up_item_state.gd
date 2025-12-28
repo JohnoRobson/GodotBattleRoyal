@@ -27,7 +27,7 @@ func execute_physics(controller: AiActorController):
 	elif _current_target != null && !_current_target.is_held:
 		var target_pos = _current_target.global_transform.origin
 		nav_agent.target_position = target_pos
-
+		
 		#move
 		var current_location = controller.actor.global_transform.origin
 		var next_location = nav_agent.get_next_path_position()
@@ -37,7 +37,7 @@ func execute_physics(controller: AiActorController):
 		else:
 			controller.set_move_direction(Vector2(dir.x, dir.z))
 		controller.set_aim_position(_current_target.global_position)
-
+		
 		var closest_item = controller.actor._item_pickup_manager.get_item_that_cursor_is_over_and_is_in_interaction_range()
 		if closest_item == _current_target:
 			if !InventoryUtils.switch_to_empty_slot(controller.actor.inventory):

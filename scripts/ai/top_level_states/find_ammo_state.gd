@@ -23,9 +23,9 @@ func get_name() -> String:
 func evaluate(factor_context: FactorContext) -> float:
 	# find weapons that the actor has
 	var weapons: Array[GameItem] = InventoryUtils.get_all_weapons(factor_context.target_actor.inventory)
-
+	
 	var has_acceptable_amount_of_ammo_for_weapon: bool = false
-
+	
 	# find out how much ammo the actor has for those weapons
 	var weapons_and_number_of_reloads_per_weapon: Dictionary[Weapon, int] = {}
 	for weapon: Weapon in weapons:
@@ -33,7 +33,7 @@ func evaluate(factor_context: FactorContext) -> float:
 		weapons_and_number_of_reloads_per_weapon[weapon] = number_of_ammo_in_inventory
 		if number_of_ammo_in_inventory >= acceptable_number_of_reloads_for_a_weapon:
 			has_acceptable_amount_of_ammo_for_weapon = true
-
+	
 	if weapons.is_empty():
 		return 0.0
 	else:

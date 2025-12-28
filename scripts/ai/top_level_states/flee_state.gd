@@ -12,16 +12,16 @@ func enter(controller: AiActorController):
 	# run in a straight line away from the closest explosive or actor
 	var current_position  = controller.actor.global_position
 	var distance_to_check_for_actors_and_items = 20.0
-
+	
 	var nearby_things: Array = controller.world.get_actors_and_gameitems_in_area(current_position, distance_to_check_for_actors_and_items).filter(func(a): return a != controller.actor)
 	var nearby_actors: Array = nearby_things.filter(func(a): return a is Actor)
 	var nearby_active_explosives: Array = nearby_things.filter(func(a): return a is GameItem).filter(func(a): return a.has_trait(GameItem.ItemTrait.EXPLOSIVE) and !a.can_be_used and !a.is_held)
-
+	
 	var average_danger_direction_local = Vector3()
 	for actor in nearby_actors:
 		var local_dir = (actor.global_position - current_position).normalized()
 		average_danger_direction_local += local_dir
-
+	
 	for explosive in nearby_active_explosives:
 		# the multiplier is to skew the direction of the danger in this direction, so that there's a better chance of the actor running away from this
 		var local_dir = (explosive.global_position - current_position).normalized() * 2.0

@@ -36,7 +36,7 @@ func perform(delta: float):
 		
 		if current_action_is_completed:
 			uncompleted_top_level_nodes.remove_at(uncompleted_node_index)
-
+			
 			if current_node.action.has_children() or !current_node.child_nodes.is_empty():
 				# add the current_action's children to the actions to complete and set up ItemNodes for them
 				# reverse ordered for loop so that the insert puts the new nodes in the order as viewed in the editor
@@ -86,7 +86,7 @@ class ItemNode:
 	var parentNode: ItemNode # is null if we are the root
 	var data: Dictionary = {}
 	var child_nodes: Array[ItemNode] = []
-
+	
 	func _init(_action: Action, _game_item: GameItem, _parentNode: ItemNode):
 		action = _action
 		game_item = _game_item

@@ -36,7 +36,7 @@ func get_average_location() -> Vector3:
 func get_average_health() -> int:
 	if members.size() == 0:
 		return 0
-
+	
 	var accumulated_health = 0
 	for actor in members:
 		if is_instance_valid(actor):

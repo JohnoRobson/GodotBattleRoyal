@@ -25,11 +25,11 @@ func start_game_scene(new_game_scene:PackedScene, game_type: World.GameTypes):
 	new_instantiated_game_scene.game_loaded.connect(_on_game_scene_game_loaded)
 	new_instantiated_game_scene.pause_button_pressed.connect(_on_game_hud_pause_button_pressed)
 	$GameScenes.add_child(new_instantiated_game_scene)
-
+	
 	if current_game_type != game_type:
 		current_game_type = game_type
 	new_instantiated_game_scene.setup_game(game_type)
-
+	
 	get_tree().paused = false
 
 # Clear all current game scenes from the game scene root

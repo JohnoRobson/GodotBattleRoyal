@@ -1,4 +1,5 @@
-class_name Spawner extends Node3D
+class_name Spawner
+extends Node3D
 
 var global_spawn_position: Vector3
 var used: bool = false

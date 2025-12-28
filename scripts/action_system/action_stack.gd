@@ -1,6 +1,5 @@
 class_name ActionStack
 extends Node
-
 # This represents a tree of actions. Each individual instance of an action tree being performed is represented by an ActionStack.
 # The ActionStack handles action tree state along with keeping track of the game item the action is linked to.
 

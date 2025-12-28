@@ -1,7 +1,6 @@
 class_name DecisionMakingState
 extends State
 
-
 func enter(controller: AiActorController):
 	controller.state_machine.change_state(DecisionMaker.get_state_to_do(controller))
 

@@ -1,6 +1,5 @@
 class_name ActionRepeatDelay
 extends Action
-
 # Performs its child actions all at once, repeatedly with a delay between each time it activates them all
 
 @export var countdown_in_seconds: float = 1.0

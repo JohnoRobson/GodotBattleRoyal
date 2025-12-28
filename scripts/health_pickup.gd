@@ -1,6 +1,5 @@
-extends Node3D
-
 class_name HealthPickup
+extends Node3D
 
 @export var indicator: MeshInstance3D
 @export var area: Area3D

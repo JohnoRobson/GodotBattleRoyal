@@ -1,4 +1,5 @@
-class_name World extends Node3D
+class_name World
+extends Node3D
 
 @onready var player_actors: Array[Actor] = []
 @onready var ai_actors: Array[Actor] = []

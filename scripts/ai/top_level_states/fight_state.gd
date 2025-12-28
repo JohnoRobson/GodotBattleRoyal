@@ -1,4 +1,5 @@
-class_name FightState extends State
+class_name FightState
+extends State
 ## This state has a few goals:
 ## 1.  if the movement_override_target is set, then the state will make the actor
 ##     move towards it, ignoring other behaviour and set the movement_state to MOVING_TOWARDS_MOVEMENT_OVERRIDE

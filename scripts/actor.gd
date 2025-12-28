@@ -1,4 +1,5 @@
-class_name Actor extends CharacterBody3D
+class_name Actor
+extends CharacterBody3D
 
 static func init_player_actor():
 	var actor: Actor = load("res://scenes/player_actor.tscn").instantiate()

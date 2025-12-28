@@ -1,6 +1,5 @@
-extends Node3D
-
 class_name ActorController
+extends Node3D
 
 ## Returns the position in global space that the controller is aiming at.
 ## For players, this is the mouse position in global space.

@@ -1,4 +1,6 @@
-class_name ReporterViewer extends Control
+class_name ReporterViewer
+extends Control
+
 @export var nodes_whose_children_to_check: Array[Node]
 var _reporter_panel_containers: Array[ReporterPanelContainer] = []
 

@@ -1,6 +1,5 @@
-extends Node3D
-
 class_name ItemPickupText
+extends Node3D
 
 var game_item: GameItem
 @onready var item_name_text: Label3D = get_node("ItemNameText")

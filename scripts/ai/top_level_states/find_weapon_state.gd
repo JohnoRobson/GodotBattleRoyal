@@ -1,4 +1,5 @@
-class_name FindWeaponState extends State
+class_name FindWeaponState
+extends State
 
 func enter(_controller: AiActorController):
 	pass

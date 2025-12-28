@@ -1,6 +1,5 @@
-extends Node3D
-
 class_name EffectManager
+extends Node3D
 
 var bullet_effect = preload("res://scenes/effects/bullet_effect.tscn")
 

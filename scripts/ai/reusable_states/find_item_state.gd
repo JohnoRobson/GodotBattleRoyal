@@ -1,4 +1,5 @@
-class_name FindItemState extends State
+class_name FindItemState
+extends State
 
 var _item_traits_to_find: Array[GameItem.ItemTrait]
 var _ammo_types_to_find: Array[AmmoType.AmmoCategory]

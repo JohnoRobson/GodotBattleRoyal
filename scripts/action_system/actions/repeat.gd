@@ -1,6 +1,5 @@
 class_name ActionRepeat
 extends Action
-
 # Repeats the its action_to_repeat a number of times
 
 @export var number_of_times_to_repeat: int = 1

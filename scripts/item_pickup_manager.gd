@@ -1,8 +1,8 @@
+class_name ItemPickupManager
 extends Node
 
 # This class is for both displaying the correct ItemPickupText and filtering which items in an
 # Actor's ItemInteractionArea should be picked up when the command to pick an item up is called
-class_name ItemPickupManager
 
 @export var item_area_actor: ItemInteractionArea
 @export var item_area_cursor: ItemInteractionArea

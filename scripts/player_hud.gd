@@ -1,4 +1,5 @@
-class_name PlayerHud extends Control
+class_name PlayerHud
+extends Control
 
 @onready var ammo_count: Label = get_node("AmmoCount")
 @onready var health: Label = get_node("Health")

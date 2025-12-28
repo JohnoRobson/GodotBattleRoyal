@@ -1,6 +1,5 @@
-extends PanelContainer
-
 class_name InventorySlotUi
+extends PanelContainer
 
 @onready var label: Label = get_node("Label")
 @onready var outline: ReferenceRect = $Outline

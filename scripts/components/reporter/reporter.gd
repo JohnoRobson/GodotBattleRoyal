@@ -1,4 +1,5 @@
-class_name Reporter extends Node
+class_name Reporter
+extends Node
 ## Returns a Dictionary of values from its parent node's variables whose names match its selected_variables values
 ## Also handles transforming certain objects into informative string values, such as a Health node into 90/100
 ## if 90 is the current health and 100 is the max health.

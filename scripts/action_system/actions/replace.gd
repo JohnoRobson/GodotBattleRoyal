@@ -1,6 +1,5 @@
 class_name ActionReplace
 extends Action
-
 # Replaces the current game item with the replacement_game_item
 
 @export var replacement_game_item: PackedScene

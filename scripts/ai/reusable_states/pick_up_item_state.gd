@@ -1,4 +1,5 @@
-class_name PickUpItemState extends State
+class_name PickUpItemState
+extends State
 
 var _current_target: GameItem
 var picked_up_weapon_last_tick: bool = false

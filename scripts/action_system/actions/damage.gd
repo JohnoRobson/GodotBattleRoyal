@@ -1,6 +1,5 @@
 class_name ActionDamage
 extends TargetedAction
-
 # Does damage to an actor
 
 @export var damage: float = 1.0

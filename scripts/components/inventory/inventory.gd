@@ -1,8 +1,8 @@
+class_name Inventory
+extends Node3D
 # An inventory can hold a number of GameItems.
 # It has methods for adding them to the inventory from the world
 # and removing them from the inventory, placing them back in the world.
-class_name Inventory
-extends Node3D
 
 @export var inventory_data: InventoryData
 var _selected_slot_index: int = 0

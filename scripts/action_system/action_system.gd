@@ -1,6 +1,5 @@
 class_name ActionSystem
 extends Node
-
 # This handles performing the actions, along with setting up signals for them.
 # Actions should not be called directly, but instead passed to a ActionSystem where it will convert them to an ActionStack and perform them until they are completed.
 

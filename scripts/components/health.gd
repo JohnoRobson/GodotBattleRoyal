@@ -1,6 +1,5 @@
-extends Node
-
 class_name Health
+extends Node
 
 var max_health: float = 100.0
 var current_health: float = 100.0

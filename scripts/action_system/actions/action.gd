@@ -1,6 +1,5 @@
 class_name Action
 extends Resource
-
 # Represents a thing that a game item can do
 # Actions should not be called directly, but instead passed to a ActionSystem
 

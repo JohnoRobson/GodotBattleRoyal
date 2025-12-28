@@ -1,6 +1,5 @@
 class_name ActionTimer
 extends Action
-
 # Performs its child actions after countdown_in_seconds seconds
 
 @export var countdown_in_seconds: float = 1.0

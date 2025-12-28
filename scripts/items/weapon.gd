@@ -1,6 +1,5 @@
-extends GameItem
-
 class_name Weapon
+extends GameItem
 
 @export var stats: WeaponType
 @onready var _fire_rate_per_second = stats.fire_rate_per_minute / 60

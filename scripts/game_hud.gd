@@ -1,4 +1,5 @@
-class_name GameHud extends Control
+class_name GameHud 
+extends Control
 
 signal pause_button_pressed
 

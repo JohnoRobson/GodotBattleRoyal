@@ -1,4 +1,5 @@
 class_name StateEvaluationMemory
+
 var _max_number_of_evaluation_frames: int = 5
 ## _state_evaluations is an Array[Array[StateEvaluation]]
 var _state_evaluations: Array[Array]

@@ -1,6 +1,5 @@
 class_name ActionRaycast
 extends Action
-
 # Makes a raycast forwards, (-Z local), and applies TargetedActions to Actors via their Hurtboxes, and Actions to the point that was hit
 
 @export var cast_collision_mask: int = 0b0011

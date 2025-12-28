@@ -1,6 +1,5 @@
-extends Area3D
-
 class_name Hurtbox
+extends Area3D
 
 @export var health: Health
 

@@ -1,4 +1,5 @@
-class_name GameSceneRoot extends Node
+class_name GameSceneRoot
+extends Node
 
 # Treat CLASSIC as the default game mode from the perspective of the game scene root
 var current_game_type:World.GameTypes  = World.GameTypes.CLASSIC

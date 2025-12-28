@@ -1,4 +1,5 @@
 class_name StateEvaluation
+
 var state: State
 var score: float
 

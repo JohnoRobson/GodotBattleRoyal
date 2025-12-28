@@ -1,4 +1,5 @@
-class_name InventoryUI extends GridContainer
+class_name InventoryUI
+extends GridContainer
 
 signal selected_slot_scrolled_up
 signal selected_slot_scrolled_down

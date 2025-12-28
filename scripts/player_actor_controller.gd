@@ -1,4 +1,5 @@
-class_name PlayerActorController extends ActorController
+class_name PlayerActorController
+extends ActorController
 
 @onready var aim_position = Vector3.ZERO
 @onready var move_direction = Vector2.ZERO

@@ -1,4 +1,5 @@
-class_name MenuManager extends Node
+class_name MenuManager
+extends Node
 
 signal start_game_button_pressed(game_type: World.GameTypes)
 signal restart_game_button_pressed()

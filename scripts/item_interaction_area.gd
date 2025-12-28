@@ -1,6 +1,5 @@
-extends Area3D
-
 class_name ItemInteractionArea
+extends Area3D
 
 @export var show_pickup_text: bool = false
 @export var show_any_text: bool = false

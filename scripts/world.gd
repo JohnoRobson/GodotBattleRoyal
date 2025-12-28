@@ -32,7 +32,7 @@ signal pause_button_pressed
 
 func _ready():
 	action_system.world = self
-	Logger.logging_level = Logger.LoggingLevel.INFO
+	RoyalLogger.logging_level = RoyalLogger.LoggingLevel.INFO
 	world_camera.make_current()
 
 func _process(_delta):

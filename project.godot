@@ -12,12 +12,12 @@ config_version=5
 
 config/name="Battle_Royal"
 run/main_scene="res://scenes/game_scene_root.tscn"
-config/features=PackedStringArray("4.4", "Forward Plus")
+config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://sprites/icon.svg"
 
 [autoload]
 
-Logger="*res://scripts/logger/logger.gd"
+RoyalLogger="*res://scripts/logger/logger.gd"
 
 [input]
 

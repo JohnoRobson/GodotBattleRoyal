@@ -158,7 +158,7 @@ func selected_slot_scrolled_down() -> void:
 	
 	_emit_updates(previous_slot_index)
 
-func emit_updates_for_active_item():
+func emit_updates_for_active_item() -> void:
 	inventory_changed.emit(inventory_data, _selected_slot_index, _selected_slot_index)
 
 func _emit_updates(changed_slot_index: int):

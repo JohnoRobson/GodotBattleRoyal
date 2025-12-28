@@ -1,5 +1,5 @@
-extends Resource
 class_name WeaponType
+extends Resource
 
 @export_range(0.0, 1200.0, 1.0) var fire_rate_per_minute: float
 @export_range(0.0, 180.0, 0.5) var degrees_of_inaccuracy_stationary: float
@@ -9,6 +9,6 @@ class_name WeaponType
 @export var ammo_category: AmmoType.AmmoCategory
 @export var starting_ammo: Resource
 
-func _ready():
-    assert(ammo_category != null)
-    assert(starting_ammo != null)
+func _ready() -> void:
+	assert(ammo_category != null)
+	assert(starting_ammo != null)

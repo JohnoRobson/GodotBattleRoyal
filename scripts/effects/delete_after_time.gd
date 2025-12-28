@@ -5,10 +5,10 @@ extends Node3D
 
 var _lifetime_remaining: float
 
-func _ready():
+func _ready() -> void:
 	_lifetime_remaining = lifetime_seconds
 
-func _process(delta):
+func _process(delta) -> void:
 	_lifetime_remaining -= delta
 	
 	if _lifetime_remaining <= 0.0:

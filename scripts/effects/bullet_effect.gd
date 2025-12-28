@@ -9,7 +9,7 @@ var starting_width = 0.05
 var width = starting_width
 var dist = 0.0
 
-func _ready():
+func _ready() -> void:
 	dist = start.distance_to(end) / 2
 	mesh.size = Vector3(starting_width, starting_width, dist)
 	
@@ -17,7 +17,7 @@ func _ready():
 	
 	look_at_from_position(start + q, end)
 
-func _process(delta):
+func _process(delta) -> void:
 	lifetime_seconds -= delta
 	width -= delta * starting_width
 	mesh.size = Vector3(width, width, start.distance_to(end))

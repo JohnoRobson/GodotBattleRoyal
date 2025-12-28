@@ -11,7 +11,7 @@ extends Action
 
 signal on_raycast(start_position_global: Vector3, end_position_global: Vector3)
 
-func _init():
+func _init() -> void:
 	action_name = self.Name.RAYCAST
 
 func perform(_delta: float, item_node: ActionStack.ItemNode) -> bool:

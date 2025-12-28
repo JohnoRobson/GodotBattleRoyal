@@ -10,5 +10,5 @@ func get_items_in_area() -> Array[GameItem]:
 	typed_game_item_array.assign(untyped_array_of_items_in_area) # have to do it like this in order to return a typed array
 	return typed_game_item_array
 
-func item_is_in_area(item: GameItem):
+func item_is_in_area(item: GameItem) -> bool:
 	return get_items_in_area().has(item)

@@ -8,30 +8,30 @@ extends Node3D
 var seconds_until_respawn: float = 0
 var health_is_available: bool
 
-func _ready():
+func _ready() -> void:
 	health_is_available = true
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(delta) -> void:
 	if (!health_is_available):
 		seconds_until_respawn -= delta
 		if (seconds_until_respawn <= 0.0):
 			enable_health_pickup()
 
-func enable_health_pickup():
+func enable_health_pickup() -> void:
 	seconds_until_respawn = 0
 	health_is_available = true
 	indicator.show()
 
-func disable_health_pickup(actor: Actor):
+func disable_health_pickup(actor: Actor) -> void:
 	seconds_until_respawn = respawn_time_in_seconds
 	health_is_available = false
 	indicator.hide()
 	actor.health.take_damage(-healing)
 
-func _on_area_3d_body_entered(body: Node3D):
+func _on_area_3d_body_entered(body: Node3D) -> void:
 	if (body.is_in_group("actors")):
 		disable_health_pickup(body)
 
-func _on_area_3d_area_entered(_area: Area3D):
+func _on_area_3d_area_entered(_area: Area3D) -> void:
 	pass

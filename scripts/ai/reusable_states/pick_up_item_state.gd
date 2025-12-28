@@ -6,21 +6,21 @@ var picked_up_weapon_last_tick: bool = false
 var current_controller: AiActorController
 var nav_agent: NavigationAgent3D
 
-func _init(current_target: GameItem):
+func _init(current_target: GameItem) -> void:
 	assert(current_target != null, "current target not set")
 	_current_target = current_target
 
-func enter(controller: AiActorController):
+func enter(controller: AiActorController) -> void:
 	current_controller = controller
 	nav_agent = controller.nav_agent
 	current_controller.nav_agent.velocity_computed.connect(_on_velocity_computed)
 
-func execute(controller: AiActorController):
+func execute(controller: AiActorController) -> void:
 	# make sure that the target can still be picked up
 	if _current_target.is_held:
 		controller.state_machine.change_state(DecisionMakingState.new())
 
-func execute_physics(controller: AiActorController):
+func execute_physics(controller: AiActorController) -> void:
 	if picked_up_weapon_last_tick && _current_target.is_held:
 		picked_up_weapon_last_tick = false
 		controller.set_is_exchanging_weapon(false)
@@ -46,7 +46,7 @@ func execute_physics(controller: AiActorController):
 			controller.set_is_exchanging_weapon(true)
 			picked_up_weapon_last_tick = true
 
-func exit(controller: AiActorController):
+func exit(controller: AiActorController) -> void:
 	controller.set_is_exchanging_weapon(false)
 	controller.set_move_direction(Vector2.ZERO)
 	controller.nav_agent.velocity_computed.disconnect(_on_velocity_computed)
@@ -55,7 +55,7 @@ func get_name() -> String:
 	return "PickUpItemState"
 
 # used for nav agent collision avoidance
-func _on_velocity_computed(safe_velocity: Vector3):
+func _on_velocity_computed(safe_velocity: Vector3) -> void:
 	var dir = safe_velocity.normalized()
 	current_controller.set_move_direction(Vector2(dir.x, dir.z))
 

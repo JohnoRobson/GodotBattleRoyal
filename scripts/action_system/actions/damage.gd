@@ -4,7 +4,7 @@ extends TargetedAction
 
 @export var damage: float = 1.0
 
-func _init():
+func _init() -> void:
 	action_name = self.Name.DAMAGE
 
 func perform(_delta: float, item_node: ActionStack.ItemNode) -> bool:

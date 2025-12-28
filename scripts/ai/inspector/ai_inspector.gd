@@ -9,7 +9,7 @@ const CAMERA_RAYCAST_COLLISION_MASK = 0b0111
 
 var _selected_ai: AiActorController
 
-func _process(_delta: float):
+func _process(_delta: float) -> void:
 	if _selected_ai and is_instance_valid(_selected_ai):
 		panel.show()
 		var text = _selected_ai.name + "\n"
@@ -21,7 +21,7 @@ func _process(_delta: float):
 	else:
 		panel.hide()
 
-func _input(event):
+func _input(event) -> void:
 	# Mouse in viewport coordinates.
 	if event is InputEventMouseButton:
 		_selected_ai = get_ai_clicked_on()

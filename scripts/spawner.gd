@@ -4,7 +4,7 @@ extends Node3D
 var global_spawn_position: Vector3
 var used: bool = false
 
-func _ready():
+func _ready() -> void:
 	hide()
 	global_spawn_position = self.calculate_spawn_position()
 

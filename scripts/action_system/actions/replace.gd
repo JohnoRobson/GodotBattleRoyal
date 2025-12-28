@@ -4,7 +4,7 @@ extends Action
 
 @export var replacement_game_item: PackedScene
 
-func _init():
+func _init() -> void:
 	action_name = self.Name.REPLACE
 
 func perform(_delta: float, item_node: ActionStack.ItemNode) -> bool:

@@ -13,13 +13,13 @@ var is_shooting_bool: bool = false
 var is_reloading_bool: bool = false
 var is_exchanging_weapon_bool: bool = false
 
-func _ready():
+func _ready() -> void:
 	process_priority = -99
 
-func _process(delta):
+func _process(delta) -> void:
 	state_machine._process(delta)
 
-func _physics_process(delta):
+func _physics_process(delta) -> void:
 	state_machine._physics_process(delta)
 
 func get_aim_position() -> Vector3:
@@ -31,27 +31,27 @@ func get_move_direction() -> Vector2:
 func is_shooting() -> bool:
 	return is_shooting_bool
 
-func set_aim_position(new_aim_position: Vector3):
+func set_aim_position(new_aim_position: Vector3) -> void:
 	var tween: Tween = get_tree().create_tween().bind_node(self)
 	tween.tween_property(self, "aim_position", new_aim_position, 0.25)
 
-func set_move_direction(dir: Vector2):
+func set_move_direction(dir: Vector2) -> void:
 	if (dir.is_normalized()):
 		move_direction = dir
 	else:
 		move_direction = dir.normalized()
 
-func set_is_shooting(shoot: bool):
+func set_is_shooting(shoot: bool) -> void:
 	is_shooting_bool = shoot
 
 func is_reloading() -> bool:
 	return is_reloading_bool
 
-func set_is_reloading(reload: bool):
+func set_is_reloading(reload: bool) -> void:
 	is_reloading_bool = reload
 
 func is_exchanging_weapon() -> bool:
 	return is_exchanging_weapon_bool
 
-func set_is_exchanging_weapon(exchange: bool):
+func set_is_exchanging_weapon(exchange: bool) -> void:
 	is_exchanging_weapon_bool = exchange

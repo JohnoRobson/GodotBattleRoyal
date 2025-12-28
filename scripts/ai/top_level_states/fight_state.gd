@@ -38,7 +38,7 @@ enum DirectionToMove {
 	STAY_STILL
 }
 
-func enter(controller: AiActorController):
+func enter(controller: AiActorController) -> void:
 	current_controller = controller
 	nav_agent = controller.nav_agent
 	acquire_and_set_target()
@@ -64,7 +64,7 @@ func enter(controller: AiActorController):
 	else:
 		_equip_best_weapon_for_current_circumstance(controller)
 
-func execute(controller: AiActorController):
+func execute(controller: AiActorController) -> void:
 	# find target
 	tick_count_for_target_check += 1
 	if tick_count_for_target_check >= TICKS_BETWEEN_TARGET_CHANGE_CHECK:
@@ -100,7 +100,7 @@ func execute(controller: AiActorController):
 			else:
 				controller.set_is_shooting(false)
 
-func execute_physics(controller: AiActorController):
+func execute_physics(controller: AiActorController) -> void:
 	if !is_instance_valid(current_target) or current_target == null or !is_instance_valid(nav_agent):
 		controller.state_machine.change_state(DecisionMakingState.new())
 		return
@@ -134,7 +134,7 @@ func execute_physics(controller: AiActorController):
 	else:
 		controller.set_move_direction(Vector2(dir_to_move.x, dir_to_move.z))
 
-func exit(controller: AiActorController):
+func exit(controller: AiActorController) -> void:
 	controller.set_move_direction(Vector2.ZERO)
 	controller.set_is_shooting(false)
 	controller.set_is_reloading(false)
@@ -228,7 +228,7 @@ func _determine_direction_to_move(this_actor: Actor) -> DirectionToMove:
 		return DirectionToMove.TOWARDS_TARGET
 
 # used for nav agent collision avoidance
-func _on_velocity_computed(safe_velocity: Vector3):
+func _on_velocity_computed(safe_velocity: Vector3) -> void:
 	var dir = safe_velocity.normalized()
 	if is_instance_valid(current_controller):
 		current_controller.set_move_direction(Vector2(dir.x, dir.z))

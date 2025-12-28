@@ -4,7 +4,7 @@ var _max_number_of_evaluation_frames: int = 5
 ## _state_evaluations is an Array[Array[StateEvaluation]]
 var _state_evaluations: Array[Array]
 
-func _init(number_of_evaluation_frames_to_store: int):
+func _init(number_of_evaluation_frames_to_store: int) -> void:
 	assert(number_of_evaluation_frames_to_store > 0)
 	_max_number_of_evaluation_frames = number_of_evaluation_frames_to_store
 

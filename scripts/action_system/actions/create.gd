@@ -4,7 +4,7 @@ extends Action
 
 @export var game_item_to_create: Resource
 
-func _init():
+func _init() -> void:
 	action_name = self.Name.CREATE
 
 func perform(_delta: float, item_node: ActionStack.ItemNode) -> bool:

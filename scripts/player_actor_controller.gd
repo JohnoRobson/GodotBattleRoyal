@@ -6,7 +6,7 @@ extends ActorController
 
 const CAMERA_RAYCAST_COLLISION_MASK = 0b0111
 
-func _process(_delta):
+func _process(_delta) -> void:
 	aim_position = get_mouse_position_in_3d()
 	move_direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 

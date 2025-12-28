@@ -5,14 +5,14 @@ var is_standing_in_healing_aura: bool = false
 var closest_aura: GameItem = null
 var ticks_since_entered_aura: int = 0
 
-func enter(controller: AiActorController):
+func enter(controller: AiActorController) -> void:
 	closest_aura = controller.world.get_closest_healing_aura(controller.actor.global_position)
 
-func execute(controller: AiActorController):
+func execute(controller: AiActorController) -> void:
 	if closest_aura == null or controller.actor.health.is_max_health():
 		controller.state_machine.change_state(DecisionMakingState.new())
 
-func execute_physics(controller: AiActorController):
+func execute_physics(controller: AiActorController) -> void:
 	if !is_instance_valid(closest_aura) or !is_instance_valid(controller.actor) or controller.actor.health.is_max_health():
 		controller.state_machine.change_state(DecisionMakingState.new())
 		return
@@ -35,7 +35,7 @@ func execute_physics(controller: AiActorController):
 	if ticks_since_entered_aura > 60:
 		controller.state_machine.change_state(DecisionMakingState.new())
 
-func exit(controller: AiActorController):
+func exit(controller: AiActorController) -> void:
 	is_standing_in_healing_aura = false
 	closest_aura = null
 	ticks_since_entered_aura = 0

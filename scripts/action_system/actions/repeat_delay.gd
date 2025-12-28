@@ -6,7 +6,7 @@ extends Action
 @export var number_of_times_to_activate: int = 1
 @export var actions_to_perform: Array[Action] = []
 
-func _init():
+func _init() -> void:
 	action_name = self.Name.REPEATDELAY
 
 func perform(_delta: float, _item_node: ActionStack.ItemNode) -> bool:

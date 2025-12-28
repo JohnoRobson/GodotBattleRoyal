@@ -5,7 +5,7 @@ extends Action
 @export var number_of_times_to_repeat: int = 1
 @export var action_to_repeat: Action
 
-func _init():
+func _init() -> void:
 	action_name = self.Name.REPEAT
 
 func perform(_delta: float, item_node: ActionStack.ItemNode) -> bool:

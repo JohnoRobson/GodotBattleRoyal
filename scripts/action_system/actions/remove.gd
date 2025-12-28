@@ -2,7 +2,7 @@ class_name ActionRemove
 extends Action
 # Removes the parent game item
 
-func _init():
+func _init() -> void:
 	action_name = self.Name.REMOVE
 
 func perform(_delta: float, item_node: ActionStack.ItemNode) -> bool:

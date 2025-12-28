@@ -5,7 +5,7 @@ var position_to_flee_to: Vector3
 var current_controller: AiActorController
 var nav_agent: NavigationAgent3D
 
-func enter(controller: AiActorController):
+func enter(controller: AiActorController) -> void:
 	current_controller = controller
 	nav_agent = controller.nav_agent
 	current_controller.nav_agent.velocity_computed.connect(_on_velocity_computed)
@@ -35,10 +35,10 @@ func enter(controller: AiActorController):
 	
 	controller.nav_agent.target_position = position_to_flee_to
 
-func execute(_controller: AiActorController):
+func execute(_controller: AiActorController) -> void:
 	pass
 
-func execute_physics(controller: AiActorController):
+func execute_physics(controller: AiActorController) -> void:
 	#move
 	var current_location = controller.actor.global_transform.origin
 	var next_location = controller.nav_agent.get_next_path_position()
@@ -56,7 +56,7 @@ func execute_physics(controller: AiActorController):
 	if target_distance <= 2.0:
 		controller.state_machine.change_state(DecisionMakingState.new())
 
-func exit(controller: AiActorController):
+func exit(controller: AiActorController) -> void:
 	controller.set_move_direction(Vector2.ZERO)
 	controller.nav_agent.velocity_computed.disconnect(_on_velocity_computed)
 
@@ -64,7 +64,7 @@ func get_name() -> String:
 	return "FleeState"
 
 # used for nav agent collision avoidance
-func _on_velocity_computed(safe_velocity: Vector3):
+func _on_velocity_computed(safe_velocity: Vector3) -> void:
 	var dir = safe_velocity.normalized()
 	current_controller.set_move_direction(Vector2(dir.x, dir.z))
 

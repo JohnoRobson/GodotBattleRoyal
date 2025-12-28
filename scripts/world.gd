@@ -31,22 +31,22 @@ signal game_loaded
 
 signal pause_button_pressed
 
-func _ready():
+func _ready() -> void:
 	action_system.world = self
 	RoyalLogger.logging_level = RoyalLogger.LoggingLevel.INFO
 	world_camera.make_current()
 
-func _process(_delta):
+func _process(_delta) -> void:
 	if Input.is_action_pressed("zoom_out"):
 		move_camera(camera_zoom_speed)
 	if Input.is_action_pressed("zoom_in"):
 		move_camera(-camera_zoom_speed)
 
-func _physics_process(_delta):
+func _physics_process(_delta) -> void:
 	pass
 
 # Common actor initializations (player and AI)
-func _init_actor(actor: Actor, spawn_position: Vector3):
+func _init_actor(actor: Actor, spawn_position: Vector3) -> void:
 	# TODO: fix incorrect spawn location bug when spawning at (0,0)
 	actor.actor_killed.connect(_on_actor_killed)
 	
@@ -58,7 +58,7 @@ func _init_actor(actor: Actor, spawn_position: Vector3):
 		actor.inventory.inventory_data._slots.append(InventorySlotData.new())
 
 # To be run after a game setup function has been called
-func conclude_loading():
+func conclude_loading() -> void:
 	# move this somewhere else
 	for item in get_tree().get_nodes_in_group("items"):
 		item.action_triggered.connect(action_system.action_triggered)
@@ -67,7 +67,7 @@ func conclude_loading():
 	
 	game_loaded.emit()
 
-func move_camera(distance):
+func move_camera(distance) -> void:
 	var camera: Camera3D = get_viewport().get_camera_3d()
 	var forward_vector = -camera.transform.basis.z
 	var new_position = camera.transform.origin + forward_vector * distance
@@ -196,7 +196,7 @@ func _on_actor_killed(actor: Actor) -> void:
 	var current_camera = get_viewport().get_camera_3d()
 	if actor == current_camera.get_parent():
 		make_random_ai_camera_current()
-
+	
 	# check for win condition
 	var winner: Team = get_winner()
 	if winner != null:
@@ -216,7 +216,7 @@ func get_winner() -> Team:
 	for other_actor in actors:
 		if other_actor.team != actor.team or other_actor.team == null:
 			return null
-
+	
 	return actor.team
 
 func get_closest_actor(from_position: Vector3, ignore: Array[Actor] = []) -> Actor:
@@ -234,7 +234,7 @@ func get_random_ai_actor() -> Actor:
 	if ai_actors.is_empty():
 		return null
 	return ai_actors.pick_random()
-	
+
 func get_closest_available_health(from_position: Vector3) -> GameItem:
 	var pickups = []
 	pickups.append_array(get_tree().get_nodes_in_group("healing"))
@@ -296,7 +296,7 @@ func make_random_ai_camera_current() -> void:
 	else: # on no more ai actors, set camera to world
 		world_camera.make_current()
 
-func return_item_to_world(item: GameItem, global_position_to_place_item: Vector3, global_rotation_to_place_item: Vector3):
+func return_item_to_world(item: GameItem, global_position_to_place_item: Vector3, global_rotation_to_place_item: Vector3) -> void:
 	if item.get_parent() != null:
 		item.get_parent().remove_child(item)
 	item_container.add_child(item)
@@ -308,7 +308,7 @@ func get_actors_and_gameitems_in_area(target_position: Vector3, distance: float)
 	
 	return things.filter(func(a):return a != null).filter(func(a): return a.is_inside_tree()).filter(func(a): return target_position.distance_to(a.global_transform.origin) <= distance)
 
-func setup_game(game_type: GameTypes):
+func setup_game(game_type: GameTypes) -> void:
 	spawn_weapon_and_ammo(Vector2(5,5), Weapons.SMG)
 	spawn_weapon_and_ammo(Vector2(-15,5), Weapons.SHOTGUN)
 	spawn_weapon_and_ammo(Vector2(25,-5), Weapons.SNIPER)
@@ -329,10 +329,10 @@ func setup_game(game_type: GameTypes):
 			ai_team.add_member(spawn_ai())
 			ai_team.add_member(spawn_ai())
 			ai_team.add_member(spawn_ai())
-			
+	
 	conclude_loading()
 
-func _on_pause_button_pressed():
+func _on_pause_button_pressed() -> void:
 	pause_button_pressed.emit()
 
 func _init_outlines() -> void:

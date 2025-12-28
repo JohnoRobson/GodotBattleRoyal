@@ -1,7 +1,7 @@
 class_name Actor
 extends CharacterBody3D
 
-static func init_player_actor():
+static func init_player_actor() -> Actor:
 	var actor: Actor = load("res://scenes/player_actor.tscn").instantiate()
 	
 	# Add player controller
@@ -50,7 +50,7 @@ var _velocity_to_add: Vector3 = Vector3.ZERO
 signal actor_killed(me: Actor)
 signal weapon_swap(weapon: GameItem)
 
-func _aim_weapon():
+func _aim_weapon() -> void:
 	var aim_position = controller.get_aim_position()
 	var side_to_side_vector = Vector3(aim_position.x, rotator.global_position.y, aim_position.z)
 	
@@ -64,7 +64,7 @@ func _aim_weapon():
 			var angle_vector = held_weapon.get_aim_vector(aim_position)
 			weapon_base.look_at(to_global(angle_vector) + (weapon_base.global_position - global_position), Vector3.UP)
 
-func _process(_delta):
+func _process(_delta) -> void:
 	if (actor_state == ActorState.DEAD):
 		if (!animation_player.is_playing()): # death animation is over, remove actor
 			actor_killed.emit(self)
@@ -98,7 +98,7 @@ func _process(_delta):
 		actor_state = ActorState.IDLE
 		animation_player.play("idle")
 
-func _physics_process(delta):
+func _physics_process(delta) -> void:
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y -= gravity * delta
@@ -120,7 +120,7 @@ func _physics_process(delta):
 	
 	move_and_slide()
 
-func _on_health_depleted():
+func _on_health_depleted() -> void:
 	var held_weapon = inventory.get_one_item_in_selected_slot()
 	if held_weapon != null:
 		var weapon_position = held_weapon.global_position
@@ -134,11 +134,11 @@ func _on_health_depleted():
 	actor_state = ActorState.DEAD
 	animation_player.play("dead")
 
-func _on_hurtbox_was_hit(amount, _hit_position_global, hit_normalized_direction):
+func _on_hurtbox_was_hit(amount, _hit_position_global, hit_normalized_direction) -> void:
 	_velocity_to_add += hit_normalized_direction * amount * 100.0 * Vector3(1,0,1)
 
 # this is for picking up, dropping, or swapping weapons
-func _try_to_exchange_weapon():
+func _try_to_exchange_weapon() -> void:
 	if (_drop_weapon_cooldown_timer > 0.0):
 		return
 	
@@ -162,7 +162,7 @@ func _try_to_exchange_weapon():
 	# not holding a weapon and there are no weapons nearby
 	return
 
-func equip_weapon(weapon: GameItem):
+func equip_weapon(weapon: GameItem) -> void:
 	var held_weapon = inventory.get_one_item_in_selected_slot()
 	if held_weapon.get_parent() != null:
 		held_weapon.get_parent().remove_child(held_weapon)
@@ -173,14 +173,14 @@ func equip_weapon(weapon: GameItem):
 	if weapon is Weapon:
 		weapon_swap.emit(weapon)
 
-func unequip_weapon(slot_index: int):
+func unequip_weapon(slot_index: int) -> void:
 	var items = inventory.get_all_items_in_slot(slot_index)
 	for item in items:
 		if item != null and item.get_parent() != null:
 			item.get_parent().remove_child(item)
 
 # Called by the inventory when it changes, for example, when switching slots or picking up/dropping items
-func _on_weapon_inventory_inventory_changed(inventory_data: InventoryData, selected_slot_index: int, changed_slot_index: int):
+func _on_weapon_inventory_inventory_changed(inventory_data: InventoryData, selected_slot_index: int, changed_slot_index: int) -> void:
 	var item_in_selected_slot: GameItem = inventory_data.get_item_at_index(selected_slot_index)
 	var item_in_previous_slot: GameItem = inventory_data.get_item_at_index(changed_slot_index)
 	
@@ -195,10 +195,10 @@ func _on_weapon_inventory_inventory_changed(inventory_data: InventoryData, selec
 	
 	weapon_swap.emit(item_in_selected_slot)
 
-func make_camera_current():
+func make_camera_current() -> void:
 	camera.make_current()
 
-func set_outline_color(color: Color):
+func set_outline_color(color: Color) -> void:
 	var active_material = actor_body.get_active_material(0)
 	
 	assert(active_material.next_pass != null, "actor material missing next pass")

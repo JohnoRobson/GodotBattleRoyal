@@ -26,7 +26,7 @@ func get_members() -> Array[Actor]:
 func get_average_location() -> Vector3:
 	if members.size() == 0:
 		return Vector3.ZERO
-
+	
 	var accumulated_position = Vector3.ZERO
 	for actor in members:
 		if is_instance_valid(actor):

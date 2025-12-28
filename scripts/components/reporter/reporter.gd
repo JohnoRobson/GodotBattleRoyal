@@ -30,9 +30,9 @@ func get_report() -> Dictionary:
 	return new_list
 
 # Converts a variant into a string, formatted where appropriate
-func _get_value_for_node(variant):
+func _get_value_for_node(variant) -> String:
 	if variant == null:
-		return variant
+		return ""
 	if variant is Health:
 		return "%s/%s" % [(variant as Health).current_health, (variant as Health).max_health]
 	if variant is GameItem:
@@ -40,7 +40,7 @@ func _get_value_for_node(variant):
 	if variant is AiActorController:
 		return "State: %s" % [(variant as AiActorController).state_machine.current_state.get_name()]
 	if variant is int:
-		return variant
+		return str(variant)
 	if variant is float:
 		return "%0.2f" % variant
 	if variant is Action:

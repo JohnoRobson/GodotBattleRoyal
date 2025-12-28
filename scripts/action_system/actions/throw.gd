@@ -5,7 +5,7 @@ extends Action
 @export var degrees_of_inaccuracy: float = 1.0
 @export var force: float = 1
 
-func _init():
+func _init() -> void:
 	action_name = self.Name.THROW
 
 func perform(_delta: float, item_node: ActionStack.ItemNode) -> bool:

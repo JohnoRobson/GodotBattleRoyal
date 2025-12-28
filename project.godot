@@ -17,7 +17,7 @@ config/icon="res://sprites/icon.svg"
 
 [autoload]
 
-Logger="*res://scripts/logger/logger.gd"
+RoyalLogger="*res://scripts/logger/logger.gd"
 
 [input]
 

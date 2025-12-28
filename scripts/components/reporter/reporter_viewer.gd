@@ -75,7 +75,7 @@ func get_report(node: Node) -> Dictionary:
 	for child in node.get_children():
 		if child is Reporter:
 			return (child as Reporter).get_report()
-	Logger.error("Reporter not found in %s" % [ node ])
+	RoyalLogger.error("Reporter not found in %s" % [ node ])
 	return {}
 
 func _has_reporter(node: Node) -> bool:

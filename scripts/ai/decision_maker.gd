@@ -3,7 +3,7 @@ class_name DecisionMaker
 static func get_state_to_do(controller: AiActorController) -> State:
 	var state_evaluations := get_states_to_do(controller)
 	if state_evaluations.is_empty():
-		Logger.error("No valid state evaluations found.")
+		RoyalLogger.error("No valid state evaluations found.")
 		assert(false, "No valid state evaluations found.")
 		return State.new() # this should not ever get returned
 	else:

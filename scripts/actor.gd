@@ -5,12 +5,12 @@ static func init_player_actor() -> Actor:
 	var actor: Actor = load("res://scenes/player_actor.tscn").instantiate()
 	
 	# Add player controller
-	var controller = Node3D.new()
+	var new_controller = Node3D.new()
 	var controller_script = preload("res://scripts/player_actor_controller.gd")
-	controller.name = "PlayerActorController"
-	controller.set_script(controller_script)
-	actor.controller = controller
-	actor.add_child(controller)
+	new_controller.name = "PlayerActorController"
+	new_controller.set_script(controller_script)
+	actor.controller = new_controller
+	actor.add_child(new_controller)
 	
 	return actor
 

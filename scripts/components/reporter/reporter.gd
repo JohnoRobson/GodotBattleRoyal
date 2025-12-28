@@ -23,9 +23,9 @@ func get_report() -> Dictionary:
 	_validate_selected_variables(list)
 	var new_list = {}
 	for entry in list:
-		var name = entry["name"]
-		if selected_variables.has(name):
-			new_list[name] = _get_value_for_node(get_parent().get(name))
+		var entry_name = entry["name"]
+		if selected_variables.has(entry_name):
+			new_list[entry_name] = _get_value_for_node(get_parent().get(entry_name))
 	
 	return new_list
 

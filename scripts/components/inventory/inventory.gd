@@ -26,6 +26,7 @@ func _add_item_to_inventory_if_it_is_stackable_and_there_is_space(item: GameItem
 		
 		item.is_held = true
 		_emit_updates(_selected_slot_index)
+		connect_remove_signal(item)
 		return true
 	elif has_empty_slots():
 		# else if there are empty slots, just throw it in
@@ -38,6 +39,7 @@ func _add_item_to_inventory_if_it_is_stackable_and_there_is_space(item: GameItem
 		
 		item.is_held = true
 		_emit_updates(_selected_slot_index)
+		connect_remove_signal(item)
 		return true
 	
 	return false
@@ -50,6 +52,7 @@ func add_item_to_inventory_from_world(item: GameItem) -> bool:
 		
 		item.is_held = true
 		_emit_updates(_selected_slot_index)
+		connect_remove_signal(item)
 		return true
 	
 	return _add_item_to_inventory_if_it_is_stackable_and_there_is_space(item)
@@ -69,6 +72,7 @@ func remove_item_from_inventory_to_world(item: GameItem) -> bool:
 	_emit_updates(_selected_slot_index)
 	return_item_to_world.emit(item, item_global_position, item_global_rotation)
 	
+	disconnect_remove_signal(item)
 	return true
 
 func swap_item_from_world_to_inventory(world_item: GameItem, inventory_item: GameItem) -> bool:
@@ -90,6 +94,7 @@ func swap_item_from_world_to_inventory(world_item: GameItem, inventory_item: Gam
 				item.is_held = false
 				return_item_to_world.emit(item, points[index], world_global_rotation)
 				index += 1
+				disconnect_remove_signal(item)
 			slot.push_item(world_item)
 			break
 	
@@ -100,6 +105,7 @@ func swap_item_from_world_to_inventory(world_item: GameItem, inventory_item: Gam
 	
 	_emit_updates(_selected_slot_index)
 	
+	connect_remove_signal(world_item)
 	return true
 
 func get_radially_symmetrical_points(point: Vector3, number_of_points: int) -> Array[Vector3]:
@@ -157,6 +163,14 @@ func emit_updates_for_active_item() -> void:
 
 func _emit_updates(changed_slot_index: int):
 	inventory_changed.emit(inventory_data, _selected_slot_index, changed_slot_index)
+
+func connect_remove_signal(item: GameItem) -> void:
+	if !item.remove_from_inventory_and_put_in_world.is_connected(remove_item_from_inventory_to_world):
+		item.remove_from_inventory_and_put_in_world.connect(remove_item_from_inventory_to_world)
+
+func disconnect_remove_signal(item: GameItem) -> void:
+	if item.remove_from_inventory_and_put_in_world.is_connected(remove_item_from_inventory_to_world):
+		item.remove_from_inventory_and_put_in_world.disconnect(remove_item_from_inventory_to_world)
 
 func has_empty_slots() -> bool:
 	return inventory_data.has_empty_slots()

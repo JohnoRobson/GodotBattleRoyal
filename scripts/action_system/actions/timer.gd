@@ -1,12 +1,11 @@
 class_name ActionTimer
 extends Action
-
 # Performs its child actions after countdown_in_seconds seconds
 
 @export var countdown_in_seconds: float = 1.0
 const timer_key = "TIMER"
 
-func _init():
+func _init() -> void:
 	action_name = self.Name.TIMER
 
 func perform(delta: float, item_node: ActionStack.ItemNode) -> bool:

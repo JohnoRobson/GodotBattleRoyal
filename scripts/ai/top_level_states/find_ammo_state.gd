@@ -1,20 +1,21 @@
-class_name FindAmmoState extends State
+class_name FindAmmoState
+extends State
 
 const acceptable_number_of_reloads_for_a_weapon: int = 1
 
 var _ammo_category_to_find: AmmoType.AmmoCategory
 
-func enter(_controller: AiActorController):
+func enter(_controller: AiActorController) -> void:
 	pass
 
-func execute(controller: AiActorController):
+func execute(controller: AiActorController) -> void:
 	var find_item_state := FindItemState.new([], [_ammo_category_to_find])
 	controller.state_machine.change_state(find_item_state)
 
-func execute_physics(_controller: AiActorController):
+func execute_physics(_controller: AiActorController) -> void:
 	pass
 
-func exit(_controller: AiActorController):
+func exit(_controller: AiActorController) -> void:
 	pass
 
 func get_name() -> String:
@@ -23,9 +24,9 @@ func get_name() -> String:
 func evaluate(factor_context: FactorContext) -> float:
 	# find weapons that the actor has
 	var weapons: Array[GameItem] = InventoryUtils.get_all_weapons(factor_context.target_actor.inventory)
-
+	
 	var has_acceptable_amount_of_ammo_for_weapon: bool = false
-
+	
 	# find out how much ammo the actor has for those weapons
 	var weapons_and_number_of_reloads_per_weapon: Dictionary[Weapon, int] = {}
 	for weapon: Weapon in weapons:
@@ -33,7 +34,7 @@ func evaluate(factor_context: FactorContext) -> float:
 		weapons_and_number_of_reloads_per_weapon[weapon] = number_of_ammo_in_inventory
 		if number_of_ammo_in_inventory >= acceptable_number_of_reloads_for_a_weapon:
 			has_acceptable_amount_of_ammo_for_weapon = true
-
+	
 	if weapons.is_empty():
 		return 0.0
 	else:

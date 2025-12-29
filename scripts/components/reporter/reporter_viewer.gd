@@ -1,8 +1,10 @@
-class_name ReporterViewer extends Control
+class_name ReporterViewer
+extends Control
+
 @export var nodes_whose_children_to_check: Array[Node]
 var _reporter_panel_containers: Array[ReporterPanelContainer] = []
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	# remove the panels from last tick because they may have moved or their reporters may have been destroyed
 	# swap this out for panel reuse if this is too much of a perfomance hit
 	for reporter_panel_container in _reporter_panel_containers:
@@ -21,7 +23,6 @@ func _process(delta: float) -> void:
 	
 	# instantiate the panels
 	for node in nodes_to_sort:
-		var reporter_position = node.global_position
 		var pos_2d = get_viewport().get_camera_3d().unproject_position(node.global_position)
 		var reporter_panel_container = preload("res://scenes/components/reporter/reporter_panel_container.tscn").instantiate()
 		add_child(reporter_panel_container)

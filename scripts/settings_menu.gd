@@ -1,1 +1,2 @@
-class_name SettingsMenu extends Menu
+class_name SettingsMenu
+extends Menu

@@ -1,11 +1,12 @@
-class_name PlayerActorController extends ActorController
+class_name PlayerActorController
+extends ActorController
 
 @onready var aim_position = Vector3.ZERO
 @onready var move_direction = Vector2.ZERO
 
 const CAMERA_RAYCAST_COLLISION_MASK = 0b0111
 
-func _process(_delta):
+func _process(_delta) -> void:
 	aim_position = get_mouse_position_in_3d()
 	move_direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 
@@ -24,7 +25,7 @@ func get_mouse_position_in_3d() -> Vector3:
 	var query = PhysicsRayQueryParameters3D.create(ray_origin, ray_end, CAMERA_RAYCAST_COLLISION_MASK)
 	query.exclude = [get_parent()] # exclude the actor so that you can get things on the other side of the actor
 	var result = space_state.intersect_ray(query)
-
+	
 	if (result.has("position")):
 		return result["position"]
 	else:

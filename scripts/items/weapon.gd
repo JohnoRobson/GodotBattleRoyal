@@ -1,6 +1,5 @@
-extends GameItem
-
 class_name Weapon
+extends GameItem
 
 @export var stats: WeaponType
 @onready var _fire_rate_per_second = stats.fire_rate_per_minute / 60
@@ -17,14 +16,14 @@ var _current_state: WeaponState = WeaponState.NO_AMMO
 signal update_ammo_ui(current_ammo: int, max_ammo: int)
 #signal on_firing(start_position: Vector3, end_position: Vector3)
 
-func _ready():
+func _ready() -> void:
 	# big hack, but it works for now
 	if (action is ActionRaycast):
 		(action as ActionRaycast).cast_degrees_of_inaccuracy = get_degrees_of_inaccuracy
 	elif (action is ActionRepeat and action.action_to_repeat != null and action.action_to_repeat is ActionRaycast):
 		(action.action_to_repeat as ActionRaycast).cast_degrees_of_inaccuracy = get_degrees_of_inaccuracy
 
-func _process(delta):
+func _process(delta) -> void:
 	match _current_state:
 		WeaponState.CAN_FIRE:
 			pass
@@ -46,7 +45,7 @@ func reload(inventory: Inventory) -> bool:
 	# return if we are already in the process of reloading
 	if _current_state == WeaponState.RELOADING:
 		return true
-
+	
 	# check inventory for ammo of the right type if it exists, take the first one found and delete it, then start the reload process
 	var ammo_in_inventory: GameItem = inventory.subtract_item_matching(func(a): return does_slot_contain_compatible_ammo(a))
 	if ammo_in_inventory != null:
@@ -57,11 +56,11 @@ func reload(inventory: Inventory) -> bool:
 	return false
 
 # fires the weapon, if it can
-func fire():
+func fire() -> void:
 	if _current_state == WeaponState.CAN_FIRE and _ammo != null:
 		_ammo.current_ammo_in_magazine -= 1
 		update_ammo_ui.emit(_ammo.current_ammo_in_magazine, _ammo.ammo_type.ammo_in_full_magazine)
-
+		
 		# apply cooldown
 		_weapon_cooldown_in_seconds = 1.0 / _fire_rate_per_second
 		_current_state = WeaponState.COOLDOWN
@@ -70,7 +69,7 @@ func fire():
 func get_degrees_of_inaccuracy() -> float:
 	return stats.degrees_of_inaccuracy_moving if _is_moving else stats.degrees_of_inaccuracy_stationary
 
-func _apply_weapon_cooldown(delta: float):
+func _apply_weapon_cooldown(delta: float) -> void:
 	_weapon_cooldown_in_seconds -= delta
 	if _weapon_cooldown_in_seconds < 0.0:
 		_weapon_cooldown_in_seconds = 0.0
@@ -79,7 +78,7 @@ func _apply_weapon_cooldown(delta: float):
 		else:
 			_current_state = WeaponState.NO_AMMO
 
-func _apply_weapon_reload(delta: float):
+func _apply_weapon_reload(delta: float) -> void:
 	_reload_time_cooldown -= delta
 	if _reload_time_cooldown <= 0.0:
 		_reload_time_cooldown = 0.0
@@ -92,5 +91,5 @@ func empty_and_can_reload() -> bool:
 	return _current_state == WeaponState.NO_AMMO
 
 # used by the actor holding the weapon to toggle the movement penalty for accuracy
-func set_is_moving(is_moving: bool):
+func set_is_moving(is_moving: bool) -> void:
 	_is_moving = is_moving

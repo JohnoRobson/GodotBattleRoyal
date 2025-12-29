@@ -24,13 +24,13 @@ func is_empty() -> bool:
 func get_item_at_index(index: int) -> GameItem:
 	if index > _slots.size() - 1 || index < 0:
 		return null
-
+	
 	return _slots[index].get_item()
 
 func get_all_items_at_index(index: int) -> Array[GameItem]:
 	if index > _slots.size() - 1 || index < 0:
 		return []
-
+	
 	return _slots[index]._items
 
 func add_item_at_index(item: GameItem, slot_index: int) -> bool:
@@ -38,7 +38,7 @@ func add_item_at_index(item: GameItem, slot_index: int) -> bool:
 
 func add_item(item: GameItem) -> bool:
 	var added_item: bool = false
-
+	
 	for slot in _slots:
 		var did_add_item = slot.push_item(item)
 		if did_add_item:
@@ -50,7 +50,7 @@ func add_item(item: GameItem) -> bool:
 func remove_item(item: GameItem) -> bool:
 	if !is_equivalent_item_in_inventory(item):
 		return false
-
+	
 	for i in _slots.size():
 		var slot = _slots[i]
 		if slot.contains(item):
@@ -63,7 +63,7 @@ func remove_item(item: GameItem) -> bool:
 
 func get_slots_matching(filter: Callable) -> Array[InventorySlotData]:
 	var slots_matching_filter: Array[InventorySlotData]
-
+	
 	for slot in _slots:
 		var test = filter.call(slot)
 		if test:
@@ -73,7 +73,7 @@ func get_slots_matching(filter: Callable) -> Array[InventorySlotData]:
 
 func subtract_item_matching(filter: Callable) -> GameItem:
 	var matching_slots: Array[InventorySlotData] = get_slots_matching(filter)
-
+	
 	if matching_slots.is_empty():
 		return null
 	

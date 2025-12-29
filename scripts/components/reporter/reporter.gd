@@ -1,4 +1,5 @@
-class_name Reporter extends Node
+class_name Reporter
+extends Node
 ## Returns a Dictionary of values from its parent node's variables whose names match its selected_variables values
 ## Also handles transforming certain objects into informative string values, such as a Health node into 90/100
 ## if 90 is the current health and 100 is the max health.
@@ -22,16 +23,16 @@ func get_report() -> Dictionary:
 	_validate_selected_variables(list)
 	var new_list = {}
 	for entry in list:
-		var name = entry["name"]
-		if selected_variables.has(name):
-			new_list[name] = _get_value_for_node(get_parent().get(name))
-		
+		var entry_name = entry["name"]
+		if selected_variables.has(entry_name):
+			new_list[entry_name] = _get_value_for_node(get_parent().get(entry_name))
+	
 	return new_list
 
 # Converts a variant into a string, formatted where appropriate
-func _get_value_for_node(variant):
+func _get_value_for_node(variant) -> String:
 	if variant == null:
-		return variant
+		return ""
 	if variant is Health:
 		return "%s/%s" % [(variant as Health).current_health, (variant as Health).max_health]
 	if variant is GameItem:
@@ -39,7 +40,7 @@ func _get_value_for_node(variant):
 	if variant is AiActorController:
 		return "State: %s" % [(variant as AiActorController).state_machine.current_state.get_name()]
 	if variant is int:
-		return variant
+		return str(variant)
 	if variant is float:
 		return "%0.2f" % variant
 	if variant is Action:

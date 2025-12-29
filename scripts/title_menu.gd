@@ -1,6 +1,7 @@
-class_name TitleMenu extends Menu
+class_name TitleMenu
+extends Menu
 
-func _ready():
+func _ready() -> void:
 	var start_classic_button:Button = self.get_node("Start Classic Button")
 	if start_classic_button != null:
 		start_classic_button.pressed.connect(_on_start_button_pressed.bind(World.GameTypes.CLASSIC))

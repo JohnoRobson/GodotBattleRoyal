@@ -1,4 +1,5 @@
-class_name FindItemState extends State
+class_name FindItemState
+extends State
 
 var _item_traits_to_find: Array[GameItem.ItemTrait]
 var _ammo_types_to_find: Array[AmmoType.AmmoCategory]
@@ -9,23 +10,22 @@ enum SearchType {
 	SEARCHING_FOR_AMMO
 }
 
-func _init(item_traits_to_find: Array[GameItem.ItemTrait] = [], ammo_types_to_find: Array[AmmoType.AmmoCategory] = []):
+func _init(item_traits_to_find: Array[GameItem.ItemTrait] = [], ammo_types_to_find: Array[AmmoType.AmmoCategory] = []) -> void:
 	assert(item_traits_to_find != null or item_traits_to_find != null, "item_trait_to_find or item_traits_to_find was not set!")
 	assert(!(!item_traits_to_find.is_empty() and !ammo_types_to_find.is_empty()), "Cannot search for both items and ammo")
-
+	
 	if !item_traits_to_find.is_empty():
 		_search_type = SearchType.SEARCHING_FOR_ITEM
 	else:
 		_search_type = SearchType.SEARCHING_FOR_AMMO
-
+	
 	_item_traits_to_find = item_traits_to_find
 	_ammo_types_to_find = ammo_types_to_find
-	
 
-func enter(_controller: AiActorController):
+func enter(_controller: AiActorController) -> void:
 	pass
 
-func execute(controller: AiActorController):
+func execute(controller: AiActorController) -> void:
 	if _search_type == SearchType.SEARCHING_FOR_ITEM:
 		var closest_item_with_trait = controller.world.get_closest_item_with_traits(controller.actor.global_position, _item_traits_to_find)
 		
@@ -47,15 +47,15 @@ func execute(controller: AiActorController):
 		return
 
 
-func execute_physics(_controller: AiActorController):
+func execute_physics(_controller: AiActorController) -> void:
 	pass
 
-func exit(_controller: AiActorController):
+func exit(_controller: AiActorController) -> void:
 	pass
 
 func get_name() -> String:
 	var traits_string = ""
-
+	
 	if _search_type == SearchType.SEARCHING_FOR_ITEM:
 		for item_trait: GameItem.ItemTrait in _item_traits_to_find:
 			traits_string += GameItem.ItemTrait.keys()[item_trait] + " Item, "

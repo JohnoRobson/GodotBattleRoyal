@@ -1,4 +1,5 @@
-class_name LoggerInterface extends Node
+class_name LoggerInterface
+extends Node
 
 # red, yellow, white, green
 enum LoggingLevel {ERROR, WARN, INFO, TRACE}
@@ -15,10 +16,10 @@ func error(message: String) -> void:
 
 func warn(message: String) -> void:
 	self.log(LoggingLevel.WARN, message)
-	
+
 func info(message: String) -> void:
 	self.log(LoggingLevel.INFO, message)
-	
+
 func trace(message: String) -> void:
 	self.log(LoggingLevel.TRACE, message)
 

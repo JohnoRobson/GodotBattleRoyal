@@ -65,4 +65,3 @@ static func raycast_search(action: Action, current_depth: int, max_depth: int) -
 			return result
 	
 	return null
-	

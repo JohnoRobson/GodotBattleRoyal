@@ -1,19 +1,20 @@
-class_name InventoryUI extends GridContainer
+class_name InventoryUI
+extends GridContainer
 
 signal selected_slot_scrolled_up
 signal selected_slot_scrolled_down
 var _slots: Array[InventorySlotUi] = []
 
-func _ready():
+func _ready() -> void:
 	process_priority = -9999 # so that this can trigger inventory changes before the actor's process method is called
 
-func _process(_delta):
+func _process(_delta) -> void:
 	if Input.is_action_just_pressed("scroll_inventory_up"):
 		selected_slot_scrolled_up.emit()
 	if Input.is_action_just_pressed("scroll_inventory_down"):
 		selected_slot_scrolled_down.emit()
 
-func _on_inventory_changed(inventory_data: InventoryData, selected_slot_index: int, _changed_slot_index: int):
+func _on_inventory_changed(inventory_data: InventoryData, selected_slot_index: int, _changed_slot_index: int) -> void:
 	_slots = []
 	for child in get_children():
 		child.queue_free()

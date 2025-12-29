@@ -1,16 +1,17 @@
-class_name FindHealthState extends State
+class_name FindHealthState
+extends State
 
-func enter(_controller: AiActorController):
+func enter(_controller: AiActorController) -> void:
 	pass
 
-func execute(controller: AiActorController):
+func execute(controller: AiActorController) -> void:
 	var find_item_state := FindItemState.new([ GameItem.ItemTrait.HEALING ])
 	controller.state_machine.change_state(find_item_state)
 
-func execute_physics(_controller: AiActorController):
+func execute_physics(_controller: AiActorController) -> void:
 	pass
 
-func exit(_controller: AiActorController):
+func exit(_controller: AiActorController) -> void:
 	pass
 
 func get_name() -> String:

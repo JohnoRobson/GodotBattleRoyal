@@ -1,12 +1,11 @@
 class_name ActionArea
 extends Action
-
 # Applys a TargetedAction to actors and game items in an area
 
 @export var radius: float = 1.0
 @export var targeted_actions: Array[TargetedAction] = []
 
-func _init():
+func _init() -> void:
 	action_name = self.Name.AREA
 
 func perform(_delta: float, item_node: ActionStack.ItemNode) -> bool:
@@ -21,7 +20,7 @@ func perform(_delta: float, item_node: ActionStack.ItemNode) -> bool:
 	# do weird array type casting trick
 	var action_array: Array[Action] = []
 	action_array.assign(targeted_actions)
-
+	
 	# put the targeted actions at the front of the actions for the action system to perform so that they resolve before any child actions
 	actions = action_array + actions
 	return true

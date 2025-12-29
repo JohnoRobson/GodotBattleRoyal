@@ -1,7 +1,8 @@
 class_name StateEvaluation
+
 var state: State
 var score: float
 
-func _init(state: State, score: float):
-	self.state = state
-	self.score = score
+func _init(for_state: State, with_score: float) -> void:
+	self.state = for_state
+	self.score = with_score

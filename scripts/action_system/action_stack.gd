@@ -1,6 +1,5 @@
 class_name ActionStack
 extends Node
-
 # This represents a tree of actions. Each individual instance of an action tree being performed is represented by an ActionStack.
 # The ActionStack handles action tree state along with keeping track of the game item the action is linked to.
 
@@ -11,7 +10,7 @@ var callable_for_actions: Callable
 var world: World
 var is_canceled: bool
 
-func _init(_root_game_item: GameItem, _action_system: ActionSystem, _world: World, _callable_for_actions: Callable, _first_action: Action):
+func _init(_root_game_item: GameItem, _action_system: ActionSystem, _world: World, _callable_for_actions: Callable, _first_action: Action) -> void:
 	root_game_item = _root_game_item
 	action_system = _action_system
 	world = _world
@@ -21,7 +20,7 @@ func _init(_root_game_item: GameItem, _action_system: ActionSystem, _world: Worl
 	callable_for_actions.call(_first_action)
 	is_canceled = false
 
-func perform(delta: float):
+func perform(delta: float) -> void:
 	if uncompleted_top_level_nodes.is_empty():
 		return
 	var there_are_completable_actions = true
@@ -36,7 +35,7 @@ func perform(delta: float):
 		
 		if current_action_is_completed:
 			uncompleted_top_level_nodes.remove_at(uncompleted_node_index)
-
+			
 			if current_node.action.has_children() or !current_node.child_nodes.is_empty():
 				# add the current_action's children to the actions to complete and set up ItemNodes for them
 				# reverse ordered for loop so that the insert puts the new nodes in the order as viewed in the editor
@@ -86,8 +85,8 @@ class ItemNode:
 	var parentNode: ItemNode # is null if we are the root
 	var data: Dictionary = {}
 	var child_nodes: Array[ItemNode] = []
-
-	func _init(_action: Action, _game_item: GameItem, _parentNode: ItemNode):
+	
+	func _init(_action: Action, _game_item: GameItem, _parentNode: ItemNode) -> void:
 		action = _action
 		game_item = _game_item
 		parentNode = _parentNode

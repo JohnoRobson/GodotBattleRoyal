@@ -26,12 +26,12 @@ enum ItemTrait {
 	AMMO
 }
 
-func _init():
+func _init() -> void:
 	is_held = false
 	can_be_used = true
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
+func _ready() -> void:
 	freeze_mode = RigidBody3D.FREEZE_MODE_STATIC
 	# exists on the "Items" layer
 	collision_layer = DEFAULT_COLLISION_LAYER
@@ -40,10 +40,10 @@ func _ready():
 	freeze = is_held
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
+func _process(_delta) -> void:
 	pass
 
-func _physics_process(_delta):
+func _physics_process(_delta) -> void:
 	if is_held:
 		freeze = true
 		collision_layer = 0b0000
@@ -51,12 +51,12 @@ func _physics_process(_delta):
 		freeze = false
 		collision_layer = DEFAULT_COLLISION_LAYER
 
-func use_item(_actor: Actor):
+func use_item(_actor: Actor) -> void:
 	if can_be_used:
 		action_triggered.emit(action, self)
 		item_updated.emit()
 
-func dispose_of_item():
+func dispose_of_item() -> void:
 	item_used_up.emit()
 	queue_free()
 
@@ -64,5 +64,5 @@ func dispose_of_item():
 func get_aim_vector(target_global_position: Vector3) -> Vector3:
 	return aim_function.aim_angle(target_global_position, global_position)
 
-func has_trait(item_trait: ItemTrait):
+func has_trait(item_trait: ItemTrait) -> bool:
 	return traits.has(item_trait)

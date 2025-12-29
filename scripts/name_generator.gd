@@ -1,4 +1,5 @@
-class_name NameGenerator extends Object
+class_name NameGenerator
+extends Object
 
 var adjectives = [
 	"Active",

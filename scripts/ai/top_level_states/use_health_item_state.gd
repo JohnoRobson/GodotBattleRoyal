@@ -1,12 +1,13 @@
-class_name UseHealthItemState extends State
+class_name UseHealthItemState
+extends State
 
 var medkit_pickup_countdown: int = -1
 var medkit_pickup_routine_started: bool = false
 
-func enter(controller: AiActorController):
+func enter(controller: AiActorController) -> void:
 	controller.set_aim_position(controller.actor.global_position)
 
-func execute(controller: AiActorController):
+func execute(controller: AiActorController) -> void:
 	#var closest_health_in_world = controller.world.get_closest_item_with_traits(controller.actor.global_transform.origin, [GameItem.ItemTrait.HEALING])
 	var health_in_inventory = InventoryUtils.switch_to_item_with_trait(controller.actor.inventory, GameItem.ItemTrait.HEALING)
 	
@@ -20,7 +21,7 @@ func execute(controller: AiActorController):
 		# do nothing, you are holding a medkit
 		return
 
-func execute_physics(controller: AiActorController):
+func execute_physics(controller: AiActorController) -> void:
 	if medkit_pickup_routine_started and medkit_pickup_countdown > 0:
 		medkit_pickup_countdown -= 1
 		# health has been picked up
@@ -30,7 +31,7 @@ func execute_physics(controller: AiActorController):
 		controller.set_is_shooting(false)
 		controller.state_machine.change_state(DecisionMakingState.new())
 
-func exit(controller: AiActorController):
+func exit(controller: AiActorController) -> void:
 	controller.set_move_direction(Vector2.ZERO)
 	controller.set_is_exchanging_weapon(false)
 	controller.set_is_shooting(false)

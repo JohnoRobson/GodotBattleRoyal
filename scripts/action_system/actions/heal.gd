@@ -1,11 +1,10 @@
 class_name ActionHeal
 extends TargetedAction
-
 # Heals an actor
 
 @export var healing: float = 1.0
 
-func _init():
+func _init() -> void:
 	action_name = self.Name.HEAL
 
 func perform(_delta: float, _item_node: ActionStack.ItemNode) -> bool:

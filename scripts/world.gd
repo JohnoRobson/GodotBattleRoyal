@@ -302,6 +302,7 @@ func return_item_to_world(item: GameItem, global_position_to_place_item: Vector3
 	item_container.add_child(item)
 	item.global_position = global_position_to_place_item
 	item.rotation = global_rotation_to_place_item
+	item.is_held = false
 
 func get_actors_and_gameitems_in_area(target_position: Vector3, distance: float) -> Array:
 	var things = player_actors + ai_actors + get_tree().get_nodes_in_group("items")

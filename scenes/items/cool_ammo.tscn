@@ -24,7 +24,7 @@ ammo_type = SubResource("Resource_3rxsa")
 item_name = "Cool Ammo"
 aim_function = SubResource("Resource_b4nqi")
 traits = Array[int]([5])
-max_stack_size = 2
+max_stack_size = 4
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1715226071]
 mesh = SubResource("BoxMesh_oxmlu")

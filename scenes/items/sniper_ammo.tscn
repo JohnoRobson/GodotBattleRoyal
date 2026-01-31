@@ -24,6 +24,7 @@ ammo_type = SubResource("Resource_3rxsa")
 item_name = "Sniper Ammo"
 aim_function = SubResource("Resource_3hixn")
 traits = Array[int]([5])
+max_stack_size = 4
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_oxmlu")

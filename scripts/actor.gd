@@ -143,7 +143,7 @@ func _try_to_exchange_weapon() -> void:
 	
 	# drop
 	if !did_pick_up_item && held_weapon != null && closest_weapon == null:
-		inventory.remove_item_from_inventory_to_world(held_weapon, held_weapon.global_position, held_weapon.global_rotation)
+		inventory.remove_item_from_inventory_to_world(held_weapon, held_weapon.global_position, Vector3(0, 90, 0))
 	
 	# swap
 	elif !did_pick_up_item && held_weapon != null && closest_weapon != null:
@@ -161,7 +161,7 @@ func equip_weapon(weapon: GameItem) -> void:
 	weapon_base.add_child(held_weapon)
 	held_weapon.position = Vector3.ZERO
 	held_weapon.rotation = Vector3.ZERO
-	held_weapon.is_held = true
+	held_weapon.state = GameItem.ItemState.HELD
 	if weapon is Weapon:
 		weapon_swap.emit(weapon)
 

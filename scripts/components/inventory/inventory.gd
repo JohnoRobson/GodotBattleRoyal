@@ -24,7 +24,7 @@ func _add_item_to_inventory_if_it_is_stackable_and_there_is_space(item: GameItem
 		if item.get_parent() != null:
 			item.get_parent().remove_child(item)
 		
-		item.is_held = true
+		item.state = GameItem.ItemState.HELD
 		_emit_updates(_selected_slot_index)
 		connect_remove_signal(item)
 		return true
@@ -37,7 +37,7 @@ func _add_item_to_inventory_if_it_is_stackable_and_there_is_space(item: GameItem
 		if item.get_parent() != null:
 			item.get_parent().remove_child(item)
 		
-		item.is_held = true
+		item.state = GameItem.ItemState.HELD
 		_emit_updates(_selected_slot_index)
 		connect_remove_signal(item)
 		return true
@@ -50,7 +50,7 @@ func add_item_to_inventory_from_world(item: GameItem) -> bool:
 		if item.get_parent() != null:
 			item.get_parent().remove_child(item)
 		
-		item.is_held = true
+		item.state = GameItem.ItemState.HELD
 		_emit_updates(_selected_slot_index)
 		connect_remove_signal(item)
 		return true
@@ -66,9 +66,12 @@ func remove_item_from_inventory_to_world(item: GameItem, item_global_position: V
 	if item.get_parent() != null:
 		item.get_parent().remove_child(item)
 	
-	item.is_held = false
 	_emit_updates(_selected_slot_index)
-	return_item_to_world.emit(item, item_global_position, item_global_rotation)
+	
+	# make it appear on the ground
+	var new_position = RaycastUtils.get_position_on_the_ground(self, item_global_position)
+	new_position = ItemUtils.get_position_to_be_on_ground(item, new_position);
+	return_item_to_world.emit(item, new_position, item_global_rotation)
 	
 	disconnect_remove_signal(item)
 	return true
@@ -82,14 +85,15 @@ func swap_item_from_world_to_inventory(world_item: GameItem, inventory_item: Gam
 		return false
 	
 	var world_global_position = world_item.global_position
-	var world_global_rotation = world_item.global_rotation
 	
 	for slot in inventory_data._slots:
 		if slot.contains(inventory_item):
-			var points: Array[Vector3] = get_radially_symmetrical_points(world_global_position, slot._items.size(), 1.5)
+			var points: Array[Vector3] = VectorUtils.get_radially_symmetrical_points(world_global_position, slot._items.size(), 1.5)
 			var index = 0;
 			while !slot.is_empty():
-				remove_item_from_inventory_to_world(slot.get_item(), points[index], Vector3.ZERO)
+				var new_item_position = RaycastUtils.get_position_on_the_ground(self, points[index] + Vector3.UP * 1)
+				new_item_position = ItemUtils.get_position_to_be_on_ground(slot.get_item(), new_item_position);
+				remove_item_from_inventory_to_world(slot.get_item(), new_item_position, Vector3(0, 90, 0))
 				index += 1
 			slot.push_item(world_item)
 			break
@@ -97,7 +101,7 @@ func swap_item_from_world_to_inventory(world_item: GameItem, inventory_item: Gam
 	if world_item.get_parent() != null:
 		world_item.get_parent().remove_child(world_item)
 	
-	world_item.is_held = true
+	world_item.state = GameItem.ItemState.HELD
 	
 	_emit_updates(_selected_slot_index)
 	
@@ -110,27 +114,15 @@ func drop_all_items_into_world(world_position: Vector3):
 	for slot: InventorySlotData in inventory_data._slots:
 		total_items += slot.number_of_items()
 	
-	var points: Array[Vector3] = get_radially_symmetrical_points(world_position, total_items, 1.5)
+	var points: Array[Vector3] = VectorUtils.get_radially_symmetrical_points(world_position, total_items, 1.5)
 	
 	var current_index = 0
 	for slot: InventorySlotData in inventory_data._slots:
 		while !slot.is_empty():
-			remove_item_from_inventory_to_world(slot.get_item(), points[current_index], Vector3.ZERO)
+			var new_item_position = RaycastUtils.get_position_in_direction_and_on_the_ground(self, world_position, points[current_index])
+			new_item_position = ItemUtils.get_position_to_be_on_ground(slot.get_item(), new_item_position);
+			remove_item_from_inventory_to_world(slot.get_item(), new_item_position, Vector3(0, 90, 0))
 			current_index += 1
-
-func get_radially_symmetrical_points(point: Vector3, number_of_points: int, radius: float) -> Array[Vector3]:
-	if number_of_points == 1:
-		return [point]
-	
-	var points: Array[Vector3] = []
-	
-	var dist = (2 * PI) / number_of_points
-	
-	for i in range(0, number_of_points):
-		var dir = Vector3(sin(dist * i), 0.0, cos(dist * i)) * radius
-		points.append(point + dir)
-	
-	return points
 
 func number_of_filled_slots() -> int:
 	return inventory_data.number_of_filled_slots()

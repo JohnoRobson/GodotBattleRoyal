@@ -4,7 +4,7 @@ extends ActorController
 @onready var aim_position = Vector3.ZERO
 @onready var move_direction = Vector2.ZERO
 
-const CAMERA_RAYCAST_COLLISION_MASK = 0b0111
+const CAMERA_RAYCAST_COLLISION_MASK = 0b0011
 
 func _process(_delta) -> void:
 	aim_position = get_mouse_position_in_3d()

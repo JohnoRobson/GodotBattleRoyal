@@ -1,16 +1,16 @@
-[gd_scene load_steps=2 format=3 uid="uid://bnxbntxcpfjv"]
+[gd_scene format=3 uid="uid://bnxbntxcpfjv"]
 
 [ext_resource type="Script" uid="uid://c3i0xh0yb37vg" path="res://scripts/effects/item_pickup_text.gd" id="1_sfrn6"]
 
-[node name="ItemPickupText" type="Node3D"]
+[node name="ItemPickupText" type="Node3D" unique_id=95548998]
 script = ExtResource("1_sfrn6")
 
-[node name="ItemNameText" type="Label3D" parent="."]
+[node name="ItemNameText" type="Label3D" parent="." unique_id=1279309137]
 billboard = 1
 text = "Example"
 font_size = 64
 
-[node name="ItemInteractText" type="Label3D" parent="."]
+[node name="ItemInteractText" type="Label3D" parent="." unique_id=11625236]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.418421, 0)
 billboard = 1
 text = "Pickup (G)"

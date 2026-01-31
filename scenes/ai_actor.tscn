@@ -1,47 +1,47 @@
-[gd_scene load_steps=8 format=3 uid="uid://8d70c6yghhwe"]
+[gd_scene format=3 uid="uid://8d70c6yghhwe"]
 
 [ext_resource type="PackedScene" uid="uid://8ijx2rjjx2jg" path="res://scenes/actor.tscn" id="1_jfaud"]
 [ext_resource type="Script" uid="uid://cw0yjvsnkeqwe" path="res://scripts/ai/ai_actor_controller.gd" id="3_q60xr"]
 [ext_resource type="Shader" uid="uid://borfq5vp6inq0" path="res://outline.gdshader" id="3_v03im"]
 [ext_resource type="Shader" uid="uid://bswlomw8rgpyy" path="res://actor.gdshader" id="4_dhvnc"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_eb4ia"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_v03im"]
 resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("3_v03im")
 shader_parameter/outline_color = Color(1, 1, 1, 1)
 shader_parameter/outline_width = 2.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_vthd2"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dhvnc"]
 resource_local_to_scene = true
 render_priority = 0
-next_pass = SubResource("ShaderMaterial_eb4ia")
+next_pass = SubResource("ShaderMaterial_v03im")
 shader = ExtResource("4_dhvnc")
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_8lh2m"]
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_eb4ia"]
 resource_local_to_scene = true
-material = SubResource("ShaderMaterial_vthd2")
+material = SubResource("ShaderMaterial_dhvnc")
 
-[node name="AiActor" node_paths=PackedStringArray("controller") instance=ExtResource("1_jfaud")]
+[node name="AiActor" unique_id=71779919 node_paths=PackedStringArray("controller") instance=ExtResource("1_jfaud")]
 controller = NodePath("AiActorController")
 
-[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." index="4"]
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." index="4" unique_id=977445675]
 avoidance_enabled = true
 height = 2.0
 radius = 0.7
 neighbor_distance = 10.0
 max_speed = 20.0
 
-[node name="AiActorController" type="Node3D" parent="." index="5" node_paths=PackedStringArray("actor", "nav_agent")]
+[node name="AiActorController" type="Node3D" parent="." index="5" unique_id=1639792229 node_paths=PackedStringArray("actor", "nav_agent")]
 script = ExtResource("3_q60xr")
 actor = NodePath("..")
 nav_agent = NodePath("../NavigationAgent3D")
 
-[node name="ActorBody" parent="Rotator/Animatable" index="0"]
-mesh = SubResource("CapsuleMesh_8lh2m")
+[node name="ActorBody" parent="Rotator/Animatable" parent_id_path=PackedInt32Array(1842591485) index="0" unique_id=1631406986]
+mesh = SubResource("CapsuleMesh_eb4ia")
 
-[node name="Camera3D" type="Camera3D" parent="." index="11"]
+[node name="Camera3D" type="Camera3D" parent="." index="11" unique_id=1493429382]
 transform = Transform3D(1, 0, 0, 0, 0.559193, 0.829038, 0, -0.829038, 0.559193, 0, 11.4105, 7.52074)
 
-[node name="Reporter" parent="." index="12"]
+[node name="Reporter" parent="." index="12" unique_id=638539368]
 selected_variables = Array[String](["health", "controller"])

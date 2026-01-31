@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://cvbn5h3knqxi6"]
+[gd_scene format=3 uid="uid://cvbn5h3knqxi6"]
 
 [ext_resource type="Script" uid="uid://cm6je8qb83lpt" path="res://scripts/items/game_item.gd" id="1_rf4ni"]
 [ext_resource type="Script" uid="uid://b4gq3cdvwyn3" path="res://scripts/action_system/actions/action.gd" id="2_tslv4"]
@@ -6,11 +6,10 @@
 
 [sub_resource type="Resource" id="Resource_lgd5o"]
 script = ExtResource("6_lk8ut")
-actions = Array[ExtResource("2_tslv4")]([])
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_x3p14"]
 
-[node name="TemporaryGameItem" type="RigidBody3D"]
+[node name="TemporaryGameItem" type="RigidBody3D" unique_id=113434322]
 collision_layer = 0
 collision_mask = 0
 mass = 0.1
@@ -18,7 +17,7 @@ script = ExtResource("1_rf4ni")
 item_name = "TempGameItem"
 action = SubResource("Resource_lgd5o")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2025026802]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0224871, -0.0310805)
 shape = SubResource("SphereShape3D_x3p14")
 disabled = true

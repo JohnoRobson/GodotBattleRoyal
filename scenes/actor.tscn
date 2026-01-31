@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://8ijx2rjjx2jg"]
+[gd_scene format=3 uid="uid://8ijx2rjjx2jg"]
 
 [ext_resource type="Script" uid="uid://dlni0o2bjgbpe" path="res://scripts/actor.gd" id="1_ico6x"]
 [ext_resource type="PackedScene" uid="uid://bo23y3eikvkx8" path="res://scenes/components/health.tscn" id="2_p7v67"]
@@ -104,71 +104,69 @@ height = 1.98225
 radius = 0.54374
 height = 2.03879
 
-[node name="Actor" type="CharacterBody3D" groups=["actors"]]
+[node name="Actor" type="CharacterBody3D" unique_id=694231252 groups=["actors"]]
 collision_layer = 2
 collision_mask = 9
 script = ExtResource("1_ico6x")
 
-[node name="Health" parent="." instance=ExtResource("2_p7v67")]
+[node name="Health" parent="." unique_id=1262103620 instance=ExtResource("2_p7v67")]
 
-[node name="ItemPickupArea" parent="." instance=ExtResource("4_yx5h3")]
+[node name="ItemPickupArea" parent="." unique_id=1835568476 instance=ExtResource("4_yx5h3")]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="ItemPickupArea"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ItemPickupArea" unique_id=505261749]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.26897, 0)
 shape = SubResource("CylinderShape3D_tsjx1")
 
-[node name="WeaponInventory" parent="." instance=ExtResource("4_o631a")]
+[node name="WeaponInventory" parent="." unique_id=203530671 instance=ExtResource("4_o631a")]
 
-[node name="ActorCursor" type="Node3D" parent="."]
+[node name="ActorCursor" type="Node3D" parent="." unique_id=2050517233]
 script = ExtResource("6_wh5i0")
 
-[node name="ItemInteractionArea" type="Area3D" parent="ActorCursor"]
+[node name="ItemInteractionArea" type="Area3D" parent="ActorCursor" unique_id=1744172435]
 collision_layer = 0
 collision_mask = 4
 script = ExtResource("6_neovh")
 show_pickup_text = true
 show_any_text = true
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="ActorCursor/ItemInteractionArea"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ActorCursor/ItemInteractionArea" unique_id=731577566]
 shape = SubResource("SphereShape3D_ndhlx")
 
-[node name="ItemPickupManager" type="Node" parent="." node_paths=PackedStringArray("item_area_actor", "item_area_cursor")]
+[node name="ItemPickupManager" type="Node" parent="." unique_id=1049587795 node_paths=PackedStringArray("item_area_actor", "item_area_cursor")]
 script = ExtResource("8_6j5c1")
 item_area_actor = NodePath("../ItemPickupArea")
 item_area_cursor = NodePath("../ActorCursor/ItemInteractionArea")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_b1yqc")
-}
-autoplay = "idle"
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1635603863]
+libraries/ = SubResource("AnimationLibrary_b1yqc")
+autoplay = &"idle"
 
-[node name="Rotator" type="Node3D" parent="."]
+[node name="Rotator" type="Node3D" parent="." unique_id=336382816]
 
-[node name="Animatable" type="Node3D" parent="Rotator"]
+[node name="Animatable" type="Node3D" parent="Rotator" unique_id=1842591485]
 
-[node name="ActorBody" type="MeshInstance3D" parent="Rotator/Animatable"]
+[node name="ActorBody" type="MeshInstance3D" parent="Rotator/Animatable" unique_id=1631406986]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = SubResource("CapsuleMesh_ie7wx")
 skeleton = NodePath("../../..")
 
-[node name="WeaponBase" type="Node3D" parent="Rotator/Animatable"]
+[node name="WeaponBase" type="Node3D" parent="Rotator/Animatable" unique_id=598891806]
 transform = Transform3D(0.997564, 0.0697565, 0, -0.0697565, 0.997564, 0, 0, 0, 1, 0.0751962, 1.07536, -0.803629)
 
-[node name="ActorCollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="ActorCollisionShape3D" type="CollisionShape3D" parent="." unique_id=230935866]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_mj10y")
 
-[node name="Hurtbox" parent="." node_paths=PackedStringArray("health") instance=ExtResource("3_fje2p")]
+[node name="Hurtbox" parent="." unique_id=473221605 node_paths=PackedStringArray("health") instance=ExtResource("3_fje2p")]
 collision_layer = 2
 collision_mask = 2
 health = NodePath("../Health")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox" unique_id=1241094185]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.00658, 0)
 shape = SubResource("CapsuleShape3D_vc8i0")
 
-[node name="Reporter" parent="." instance=ExtResource("9_6wcgv")]
+[node name="Reporter" parent="." unique_id=638539368 instance=ExtResource("9_6wcgv")]
 selected_variables = Array[String](["health"])
 
 [connection signal="health_depleted" from="Health" to="." method="_on_health_depleted"]

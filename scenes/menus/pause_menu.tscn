@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://baekuelowkltt"]
+[gd_scene format=3 uid="uid://baekuelowkltt"]
 
 [ext_resource type="Script" uid="uid://q2ppkugsela0" path="res://scripts/menu.gd" id="1_y3k26"]
 
-[node name="PauseScreen" type="Control"]
+[node name="PauseScreen" type="Control" unique_id=1945521680]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,7 +11,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_y3k26")
 
-[node name="Title" type="Label" parent="."]
+[node name="Title" type="Label" parent="." unique_id=88025142]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -26,7 +26,7 @@ text = "Paused"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Restart Button" type="Button" parent="."]
+[node name="Restart Button" type="Button" parent="." unique_id=285885939]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -42,7 +42,7 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 40
 text = "Restart"
 
-[node name="Return To Title Button" type="Button" parent="."]
+[node name="Return To Title Button" type="Button" parent="." unique_id=119167616]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -58,7 +58,7 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 40
 text = "Return To Title"
 
-[node name="Settings Button" type="Button" parent="."]
+[node name="Settings Button" type="Button" parent="." unique_id=813724172]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -74,7 +74,7 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 40
 text = "Settings"
 
-[node name="Resume Button" type="Button" parent="."]
+[node name="Resume Button" type="Button" parent="." unique_id=576241898]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5

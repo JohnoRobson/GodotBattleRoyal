@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://ugmvx4nxxjn2"]
+[gd_scene format=3 uid="uid://ugmvx4nxxjn2"]
 
 [ext_resource type="Script" uid="uid://vsp3e77w8akl" path="res://scripts/items/weapon.gd" id="1_rrsjv"]
 [ext_resource type="Script" uid="uid://cny8218iblb03" path="res://resources/weapon_type.gd" id="2_7qbj6"]
@@ -24,17 +24,13 @@ starting_ammo = ExtResource("3_0qj8u")
 [sub_resource type="Resource" id="Resource_vox38"]
 script = ExtResource("4_wk4t0")
 damage = 10.0
-actions = Array[ExtResource("3_g65r8")]([])
 
 [sub_resource type="Resource" id="Resource_yrey2"]
 script = ExtResource("3_xaf80")
-cast_collision_mask = 3
 cast_degrees_of_inaccuracy = null
 cast_start_position_local = Vector3(0, 0.042, -1.311)
 cast_range = 2000.0
 targeted_actions = Array[ExtResource("5_wxc3x")]([SubResource("Resource_vox38")])
-actions_to_apply_at_hit_location = Array[ExtResource("3_g65r8")]([])
-actions = Array[ExtResource("3_g65r8")]([])
 
 [sub_resource type="Resource" id="Resource_h3ab6"]
 script = ExtResource("5_esgpq")
@@ -42,7 +38,7 @@ script = ExtResource("5_esgpq")
 [sub_resource type="BoxShape3D" id="BoxShape3D_j006u"]
 size = Vector3(0.157325, 0.498044, 2.18281)
 
-[node name="Smg" type="RigidBody3D" groups=["items", "weapons"]]
+[node name="Smg" type="RigidBody3D" unique_id=2050950426 groups=["items", "weapons"]]
 collision_layer = 4
 collision_mask = 15
 script = ExtResource("1_rrsjv")
@@ -52,11 +48,11 @@ action = SubResource("Resource_yrey2")
 aim_function = SubResource("Resource_h3ab6")
 traits = Array[int]([2])
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1202525302]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.10401, -0.204375)
 shape = SubResource("BoxShape3D_j006u")
 
-[node name="gun01" parent="." instance=ExtResource("6_p326i")]
+[node name="gun01" parent="." unique_id=1479081598 instance=ExtResource("6_p326i")]
 
-[node name="Reporter" parent="." instance=ExtResource("7_uvkiy")]
+[node name="Reporter" parent="." unique_id=1029120335 instance=ExtResource("7_uvkiy")]
 selected_variables = Array[String](["_ammo", "_reload_time_cooldown", "_current_state"])

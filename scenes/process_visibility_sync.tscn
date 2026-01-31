@@ -1,7 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://by5l67qs54kqb"]
+[gd_scene format=3 uid="uid://by5l67qs54kqb"]
 
 [ext_resource type="Script" uid="uid://dvjx30yuhu6k" path="res://scripts/process_visibility_sync.gd" id="1_3nvdt"]
 
-[node name="ProcessVisibilitySync" type="Node"]
+[node name="ProcessVisibilitySync" type="Node" unique_id=723559390]
 process_mode = 3
 script = ExtResource("1_3nvdt")

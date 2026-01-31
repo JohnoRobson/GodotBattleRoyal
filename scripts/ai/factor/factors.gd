@@ -51,7 +51,7 @@ static func evaluate_health_factor(factor_context: FactorContext) -> float:
 static func evaluate_loot_factor(factor_context: FactorContext) -> float:
 	var radius: float = 10.0
 	var world = factor_context.world
-	var items_in_area: Array = world.get_actors_and_gameitems_in_area(factor_context.target_position, radius).filter(func(a): return a is GameItem).filter(func(a): return a != null and !a.is_held and a.can_be_used)
+	var items_in_area: Array = world.get_actors_and_gameitems_in_area(factor_context.target_position, radius).filter(func(a): return a is GameItem).filter(func(a): return a != null and a.state != GameItem.ItemState.HELD and a.can_be_used)
 	
 	return clamp_result(items_in_area.size() * 0.2)
 
@@ -67,7 +67,7 @@ static func evaluate_nearby_explosives_factor(factor_context: FactorContext) -> 
 	if nearby_things.is_empty():
 		return 0.0
 	
-	var nearby_active_explosives: Array = nearby_things.filter(func(a): return a is GameItem).filter(func(a): return a.has_trait(GameItem.ItemTrait.EXPLOSIVE) and !a.can_be_used and !a.is_held)
+	var nearby_active_explosives: Array = nearby_things.filter(func(a): return a is GameItem).filter(func(a): return a.has_trait(GameItem.ItemTrait.EXPLOSIVE) and !a.can_be_used and a.state != GameItem.ItemState.HELD)
 	
 	var explosive_danger_score = 0.0
 	

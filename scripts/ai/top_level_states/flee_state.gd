@@ -15,7 +15,7 @@ func enter(controller: AiActorController) -> void:
 	
 	var nearby_things: Array = controller.world.get_actors_and_gameitems_in_area(current_position, distance_to_check_for_actors_and_items).filter(func(a): return a != controller.actor)
 	var nearby_actors: Array = nearby_things.filter(func(a): return a is Actor)
-	var nearby_active_explosives: Array = nearby_things.filter(func(a): return a is GameItem).filter(func(a): return a.has_trait(GameItem.ItemTrait.EXPLOSIVE) and !a.can_be_used and !a.is_held)
+	var nearby_active_explosives: Array = nearby_things.filter(func(a): return a is GameItem).filter(func(a): return a.has_trait(GameItem.ItemTrait.EXPLOSIVE) and !a.can_be_used and a.state != GameItem.ItemState.HELD)
 	
 	var average_danger_direction_local = Vector3()
 	for actor in nearby_actors:

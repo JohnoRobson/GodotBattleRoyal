@@ -156,7 +156,9 @@ func spawn_weapon(spawn_position: Vector2, weapon_type: Weapons) -> Weapon:
 	
 	#weapon.on_firing.connect(effect_manager._on_actor_shoot)
 	item_container.add_child(weapon)
-	weapon.set_global_position(Vector3(spawn_position.x, 5.0, spawn_position.y))
+	var ground_position: Vector3 = RaycastUtils.get_position_on_the_ground(self, Vector3(spawn_position.x, 5.0, spawn_position.y))
+	ground_position = ItemUtils.get_position_to_be_on_ground(weapon, ground_position)
+	weapon.set_global_position(ground_position)
 	weapon.set_global_rotation_degrees(Vector3(0, 90, 0))
 	return weapon
 
@@ -176,7 +178,9 @@ func spawn_ammo(spawn_position: Vector2, weapon_type: Weapons) -> Ammo:
 	
 	#weapon.on_firing.connect(effect_manager._on_actor_shoot)
 	item_container.add_child(ammo)
-	ammo.set_global_position(Vector3(spawn_position.x, 5.0, spawn_position.y))
+	var ground_position: Vector3 = RaycastUtils.get_position_on_the_ground(self, Vector3(spawn_position.x, 5.0, spawn_position.y))
+	ground_position = ItemUtils.get_position_to_be_on_ground(ammo, ground_position)
+	ammo.set_global_position(ground_position)
 	ammo.set_global_rotation_degrees(Vector3(0, 90, 0))
 	return ammo
 
@@ -240,7 +244,7 @@ func get_closest_available_health(from_position: Vector3) -> GameItem:
 	pickups.append_array(get_tree().get_nodes_in_group("healing"))
 	
 	# Filter returns the filtered array, but sort is in-place
-	pickups = pickups.filter(func(a): return a != null and !a.is_held and a.can_be_used)
+	pickups = pickups.filter(func(a): return a != null and !a.state == GameItem.ItemState.HELD and a.can_be_used)
 	#pickups = pickups.filter(func(a): return a.item_name == "Medkit")
 	pickups.sort_custom(func(a, b): return from_position.distance_to(a.global_transform.origin) < from_position.distance_to(b.global_transform.origin))
 	
@@ -251,7 +255,7 @@ func get_closest_available_weapon(from_position: Vector3) -> GameItem:
 	weapon_array.append_array(get_tree().get_nodes_in_group("weapons"))
 	
 	weapon_array.sort_custom(func(a, b): return from_position.distance_to(a.global_transform.origin) < from_position.distance_to(b.global_transform.origin))
-	weapon_array = weapon_array.filter(func(a): return !a.is_held && a.can_be_used)
+	weapon_array = weapon_array.filter(func(a): return !a.state == GameItem.ItemState.HELD && a.can_be_used)
 	
 	return weapon_array.front() if !weapon_array.is_empty() else null
 
@@ -260,7 +264,7 @@ func get_closest_item_with_traits(from_position: Vector3, item_traits: Array[Gam
 	
 	items.append_array(get_tree().get_nodes_in_group("healing"))
 	items.append_array(get_tree().get_nodes_in_group("weapons"))
-	items = items.filter(func(a): return a != null and !a.is_held and a.can_be_used)
+	items = items.filter(func(a): return a != null and !a.state == GameItem.ItemState.HELD and a.can_be_used)
 	items = items.filter(func(a): return item_traits.all(func(b): return b in a.traits))
 	items.sort_custom(func(a, b): return from_position.distance_to(a.global_transform.origin) < from_position.distance_to(b.global_transform.origin))
 	
@@ -271,7 +275,7 @@ func get_closest_ammo_of_category(from_position: Vector3, ammo_category: AmmoTyp
 	
 	items.append_array(get_tree().get_nodes_in_group("ammo"))
 	
-	items = items.filter(func(a): return a != null and !a.is_held and a.can_be_used)
+	items = items.filter(func(a): return a != null and !a.state == GameItem.ItemState.HELD and a.can_be_used)
 	items = items.filter(func(a): return a.traits.any(func(b): return b == GameItem.ItemTrait.AMMO))
 	items = items.filter(func(a: Ammo): return a.ammo_type.ammo_category == ammo_category)
 	
@@ -283,7 +287,7 @@ func get_closest_healing_aura(from_position: Vector3) -> GameItem:
 	var items = []
 	
 	items.append_array(get_tree().get_nodes_in_group("aoe"))
-	items = items.filter(func(a): return a != null and !a.is_held and !a.can_be_used)
+	items = items.filter(func(a): return a != null and !a.state == GameItem.ItemState.HELD and !a.can_be_used)
 	items = items.filter(func(a): return a.traits.has(GameItem.ItemTrait.HEALING))
 	items.sort_custom(func(a, b): return from_position.distance_to(a.global_transform.origin) < from_position.distance_to(b.global_transform.origin))
 	
@@ -296,12 +300,13 @@ func make_random_ai_camera_current() -> void:
 	else: # on no more ai actors, set camera to world
 		world_camera.make_current()
 
-func return_item_to_world(item: GameItem, global_position_to_place_item: Vector3, global_rotation_to_place_item: Vector3) -> void:
+func return_item_to_world(item: GameItem, global_position_to_place_item: Vector3, global_rotation_to_place_item: Vector3, state: GameItem.ItemState = GameItem.ItemState.IN_WORLD) -> void:
 	if item.get_parent() != null:
 		item.get_parent().remove_child(item)
 	item_container.add_child(item)
 	item.global_position = global_position_to_place_item
-	item.rotation = global_rotation_to_place_item
+	item.rotation_degrees = global_rotation_to_place_item
+	item.state = state
 
 func get_actors_and_gameitems_in_area(target_position: Vector3, distance: float) -> Array:
 	var things = player_actors + ai_actors + get_tree().get_nodes_in_group("items")

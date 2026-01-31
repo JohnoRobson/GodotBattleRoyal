@@ -1,7 +1,7 @@
 class_name GameItem
 extends RigidBody3D
 
-var is_held: bool
+@export var state: ItemState = ItemState.IN_WORLD
 var can_be_used: bool
 @export var item_name: String = "Example Name"
 @export var action: Action
@@ -26,8 +26,13 @@ enum ItemTrait {
 	AMMO
 }
 
+enum ItemState {
+	IN_WORLD,
+	HELD,
+	PHYSICS_ENABLED
+}
+
 func _init() -> void:
-	is_held = false
 	can_be_used = true
 
 # Called when the node enters the scene tree for the first time.
@@ -37,18 +42,18 @@ func _ready() -> void:
 	collision_layer = DEFAULT_COLLISION_LAYER
 	# collides with everything
 	collision_mask = DEFAULT_COLLISION_MASK
-	freeze = is_held
+	freeze = state != ItemState.PHYSICS_ENABLED
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta) -> void:
 	pass
 
 func _physics_process(_delta) -> void:
-	if is_held:
-		freeze = true
-		collision_layer = 0b0000
-	else:
+	if state == ItemState.PHYSICS_ENABLED:
 		freeze = false
+		collision_layer = DEFAULT_COLLISION_LAYER
+	else:
+		freeze = true
 		collision_layer = DEFAULT_COLLISION_LAYER
 
 func use_item(_actor: Actor) -> void:

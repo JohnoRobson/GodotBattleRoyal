@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://ccjq8nxyfnpl2"]
+[gd_scene format=3 uid="uid://ccjq8nxyfnpl2"]
 
 [ext_resource type="Script" uid="uid://ch7san5btxngu" path="res://scripts/win_menu.gd" id="1_hadx3"]
 
-[node name="WinScreen" type="Control"]
+[node name="WinScreen" type="Control" unique_id=765710624]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,7 +11,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_hadx3")
 
-[node name="Title" type="Label" parent="."]
+[node name="Title" type="Label" parent="." unique_id=841181477]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -26,7 +26,7 @@ text = "EMPTY_WIN_MESSAGE"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Restart Button" type="Button" parent="."]
+[node name="Restart Button" type="Button" parent="." unique_id=1296108655]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -42,7 +42,7 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 40
 text = "Restart"
 
-[node name="Return To Title Button" type="Button" parent="."]
+[node name="Return To Title Button" type="Button" parent="." unique_id=1634029037]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5

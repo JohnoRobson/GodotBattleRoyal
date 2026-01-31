@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://dtp6ge4k538q"]
+[gd_scene format=3 uid="uid://dtp6ge4k538q"]
 
 [ext_resource type="Script" uid="uid://dfinvqo4pu1ls" path="res://scripts/health_pickup.gd" id="1_hfjgn"]
 
@@ -13,23 +13,23 @@ emission_energy_multiplier = 3.46
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_y7so5"]
 
-[node name="HealthPickup" type="Node3D" node_paths=PackedStringArray("indicator", "area") groups=["health_pickups"]]
+[node name="HealthPickup" type="Node3D" unique_id=1483685086 node_paths=PackedStringArray("indicator", "area") groups=["health_pickups"]]
 script = ExtResource("1_hfjgn")
 indicator = NodePath("Indicator")
 area = NodePath("Area3D")
 
-[node name="Indicator" type="MeshInstance3D" parent="."]
+[node name="Indicator" type="MeshInstance3D" parent="." unique_id=1226307727]
 transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0.344639, 0)
 mesh = SubResource("BoxMesh_wbtdo")
 surface_material_override/0 = SubResource("StandardMaterial3D_ftijv")
 
-[node name="Base" type="MeshInstance3D" parent="."]
+[node name="Base" type="MeshInstance3D" parent="." unique_id=1621573600]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, -0.198596, 0)
 mesh = SubResource("BoxMesh_qjgot")
 
-[node name="Area3D" type="Area3D" parent="."]
+[node name="Area3D" type="Area3D" parent="." unique_id=77121169]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1658538011]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.304607, 0)
 shape = SubResource("BoxShape3D_y7so5")
 

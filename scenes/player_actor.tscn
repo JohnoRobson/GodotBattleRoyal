@@ -1,44 +1,44 @@
-[gd_scene load_steps=8 format=3 uid="uid://c1hehj1tb26v4"]
+[gd_scene format=3 uid="uid://c1hehj1tb26v4"]
 
 [ext_resource type="PackedScene" uid="uid://8ijx2rjjx2jg" path="res://scenes/actor.tscn" id="1_5pigh"]
 [ext_resource type="PackedScene" uid="uid://pciev3jsxk36" path="res://scenes/player_hud.tscn" id="2_5nlm8"]
 [ext_resource type="Shader" uid="uid://borfq5vp6inq0" path="res://outline.gdshader" id="3_nlbyy"]
 [ext_resource type="Shader" uid="uid://bswlomw8rgpyy" path="res://actor.gdshader" id="4_b4kdd"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_7cftg"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nlbyy"]
 resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("3_nlbyy")
 shader_parameter/outline_color = Color(1, 1, 1, 1)
 shader_parameter/outline_width = 2.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_kr6up"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_b4kdd"]
 resource_local_to_scene = true
 render_priority = 0
-next_pass = SubResource("ShaderMaterial_7cftg")
+next_pass = SubResource("ShaderMaterial_nlbyy")
 shader = ExtResource("4_b4kdd")
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_6ytb4"]
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_7cftg"]
 resource_local_to_scene = true
-material = SubResource("ShaderMaterial_kr6up")
+material = SubResource("ShaderMaterial_b4kdd")
 
-[node name="PlayerActor" instance=ExtResource("1_5pigh")]
+[node name="PlayerActor" unique_id=320288933 instance=ExtResource("1_5pigh")]
 collision_mask = 11
 collision_priority = 10.0
 
-[node name="ItemInteractionArea" parent="ActorCursor" index="0"]
+[node name="ItemInteractionArea" parent="ActorCursor" parent_id_path=PackedInt32Array(2050517233) index="0" unique_id=1744172435]
 show_pickup_text = false
 show_any_text = false
 
-[node name="Camera3D" type="Camera3D" parent="." index="4"]
+[node name="Camera3D" type="Camera3D" parent="." index="4" unique_id=874322706]
 transform = Transform3D(1, 0, 0, 0, 0.559193, 0.829038, 0, -0.829038, 0.559193, 0, 11.4105, 7.52074)
 
-[node name="PlayerHud" parent="." index="6" instance=ExtResource("2_5nlm8")]
+[node name="PlayerHud" parent="." index="6" unique_id=1360223791 instance=ExtResource("2_5nlm8")]
 
-[node name="ActorBody" parent="Rotator/Animatable" index="0"]
-mesh = SubResource("CapsuleMesh_6ytb4")
+[node name="ActorBody" parent="Rotator/Animatable" parent_id_path=PackedInt32Array(1842591485) index="0" unique_id=1631406986]
+mesh = SubResource("CapsuleMesh_7cftg")
 
-[node name="Hurtbox" parent="." index="10"]
+[node name="Hurtbox" parent="." index="10" unique_id=473221605]
 collision_layer = 3
 collision_mask = 3
 

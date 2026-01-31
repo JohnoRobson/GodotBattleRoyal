@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://6g0i5ehfdc2v"]
+[gd_scene format=3 uid="uid://6g0i5ehfdc2v"]
 
 [ext_resource type="Script" uid="uid://srjkes24un6g" path="res://scripts/world.gd" id="1_h7cyw"]
 [ext_resource type="PackedScene" uid="uid://biir0tlfdnimk" path="res://scenes/box.tscn" id="1_x50jp"]
@@ -44,7 +44,7 @@ plane = Plane(1, 0, 0, 0)
 [sub_resource type="LabelSettings" id="LabelSettings_jyuhe"]
 font_size = 31
 
-[node name="World" type="Node3D" node_paths=PackedStringArray("effect_manager", "nav_region", "action_system")]
+[node name="World" type="Node3D" unique_id=896266559 node_paths=PackedStringArray("effect_manager", "nav_region", "action_system")]
 script = ExtResource("1_h7cyw")
 effect_manager = NodePath("EffectManager")
 nav_region = NodePath("NavigationRegion3D")
@@ -53,138 +53,139 @@ camera_zoom_speed = 0.32
 camera_max_distance = 35.0
 camera_min_distance = 4.0
 
-[node name="ActorContainer" type="Node" parent="."]
+[node name="ActorContainer" type="Node" parent="." unique_id=2066504524]
 
-[node name="TeamContainer" type="Node" parent="."]
+[node name="TeamContainer" type="Node" parent="." unique_id=1418124096]
 
-[node name="ItemContainer" type="Node" parent="."]
+[node name="ItemContainer" type="Node" parent="." unique_id=2024048605]
 
-[node name="AoeHealGrenade" parent="ItemContainer" instance=ExtResource("10_j4gxa")]
+[node name="AoeHealGrenade" parent="ItemContainer" unique_id=2047858376 instance=ExtResource("10_j4gxa")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 5)
 
-[node name="Grenade" parent="ItemContainer" instance=ExtResource("9_kbf5b")]
+[node name="Grenade" parent="ItemContainer" unique_id=1804985699 instance=ExtResource("9_kbf5b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.51115, 0.567462, 2.2995)
 
-[node name="Grenade2" parent="ItemContainer" instance=ExtResource("9_kbf5b")]
+[node name="Grenade2" parent="ItemContainer" unique_id=1345510353 instance=ExtResource("9_kbf5b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.76988, 0.567462, 2.2995)
 
-[node name="Medkit" parent="ItemContainer" instance=ExtResource("5_q6hoj")]
+[node name="Medkit" parent="ItemContainer" unique_id=1789146953 instance=ExtResource("5_q6hoj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.59143, 0.460952, 4.25412)
 
-[node name="Medkit3" parent="ItemContainer" instance=ExtResource("9_egktd")]
+[node name="Medkit3" parent="ItemContainer" unique_id=142946057 instance=ExtResource("9_egktd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.1593, 0.773684, 3.77561)
 
-[node name="Cluster_Grenade" parent="ItemContainer" instance=ExtResource("10_h3423")]
+[node name="Cluster_Grenade" parent="ItemContainer" unique_id=2145583903 instance=ExtResource("10_h3423")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.618964, -0.679529)
 
-[node name="SniperAmmo" parent="ItemContainer" instance=ExtResource("15_r2e7w")]
+[node name="SniperAmmo" parent="ItemContainer" unique_id=195691016 instance=ExtResource("15_r2e7w")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.9565, 0.971509, -27.6475)
 
-[node name="SmgAmmo" parent="ItemContainer" instance=ExtResource("8_32ck4")]
+[node name="SmgAmmo" parent="ItemContainer" unique_id=2027625767 instance=ExtResource("8_32ck4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.806, 2.49666, 34.2098)
 
-[node name="ShotgunAmmo" parent="ItemContainer" instance=ExtResource("17_2v74y")]
+[node name="ShotgunAmmo" parent="ItemContainer" unique_id=1499716168 instance=ExtResource("17_2v74y")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.0422, 2.04115, 32.9364)
 
-[node name="CoolAmmo" parent="ItemContainer" instance=ExtResource("18_c7gmr")]
+[node name="CoolAmmo" parent="ItemContainer" unique_id=2024176848 instance=ExtResource("18_c7gmr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.1958, 1.60414, -35.1804)
 
-[node name="ShotgunAmmo2" parent="ItemContainer" instance=ExtResource("17_2v74y")]
+[node name="ShotgunAmmo2" parent="ItemContainer" unique_id=1440929861 instance=ExtResource("17_2v74y")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.26172, 2.3545, 36.6027)
 
-[node name="SmgAmmo2" parent="ItemContainer" instance=ExtResource("8_32ck4")]
+[node name="SmgAmmo2" parent="ItemContainer" unique_id=1244693185 instance=ExtResource("8_32ck4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.1093, 1.91131, -1.00589)
 
-[node name="SniperAmmo2" parent="ItemContainer" instance=ExtResource("15_r2e7w")]
+[node name="SniperAmmo2" parent="ItemContainer" unique_id=183809895 instance=ExtResource("15_r2e7w")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.1469, 1.72129, 1.27939)
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=599836387]
 transform = Transform3D(0.648744, -0.49609, -0.577084, 0, -0.758316, 0.651887, -0.761006, -0.422908, -0.491954, 0, 5.96035, -1.18983)
 
-[node name="EffectManager" type="Node3D" parent="."]
+[node name="EffectManager" type="Node3D" parent="." unique_id=575010409]
 script = ExtResource("2_dsm8f")
 
-[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=917183409]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00715828, 1.90735e-06, 0.0174103)
 navigation_mesh = SubResource("NavigationMesh_vvk85")
 
-[node name="Ground" type="Node3D" parent="NavigationRegion3D"]
+[node name="Ground" type="Node3D" parent="NavigationRegion3D" unique_id=1992241802]
 
-[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/Ground"]
+[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/Ground" unique_id=934656002]
 collision_mask = 3
 collision_priority = 100.0
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Ground/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Ground/StaticBody3D" unique_id=1236759153]
 shape = SubResource("HeightMapShape3D_0v8pg")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Ground/StaticBody3D/CollisionShape3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Ground/StaticBody3D/CollisionShape3D" unique_id=2003298241]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.76837e-07, 0)
 mesh = SubResource("PlaneMesh_b1mnb")
 skeleton = NodePath("../../..")
 
-[node name="Walls" type="StaticBody3D" parent="NavigationRegion3D/Ground"]
+[node name="Walls" type="StaticBody3D" parent="NavigationRegion3D/Ground" unique_id=189251151]
 collision_layer = 8
 collision_mask = 0
 
-[node name="Wall" type="CollisionShape3D" parent="NavigationRegion3D/Ground/Walls"]
+[node name="Wall" type="CollisionShape3D" parent="NavigationRegion3D/Ground/Walls" unique_id=1983357784]
 transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, -50, 0, 0)
 shape = SubResource("WorldBoundaryShape3D_w1usq")
 
-[node name="Wall2" type="CollisionShape3D" parent="NavigationRegion3D/Ground/Walls"]
+[node name="Wall2" type="CollisionShape3D" parent="NavigationRegion3D/Ground/Walls" unique_id=1831263070]
 transform = Transform3D(-5, 0, -4.37114e-07, 0, 5, 0, 4.37114e-07, 0, -5, 50, 0, 0)
 shape = SubResource("WorldBoundaryShape3D_w1usq")
 
-[node name="Wall3" type="CollisionShape3D" parent="NavigationRegion3D/Ground/Walls"]
+[node name="Wall3" type="CollisionShape3D" parent="NavigationRegion3D/Ground/Walls" unique_id=1094455823]
 transform = Transform3D(-2.18557e-07, 0, 5, 0, 5, 0, -5, 0, -2.18557e-07, 0, 0, 50)
 shape = SubResource("WorldBoundaryShape3D_w1usq")
 
-[node name="Wall4" type="CollisionShape3D" parent="NavigationRegion3D/Ground/Walls"]
+[node name="Wall4" type="CollisionShape3D" parent="NavigationRegion3D/Ground/Walls" unique_id=142198132]
 transform = Transform3D(-2.18557e-07, 0, -5, 0, 5, 0, 5, 0, -2.18557e-07, 0, 0, -50)
 shape = SubResource("WorldBoundaryShape3D_w1usq")
 
-[node name="Box1" parent="NavigationRegion3D" instance=ExtResource("1_x50jp")]
+[node name="Box1" parent="NavigationRegion3D" unique_id=489677501 instance=ExtResource("1_x50jp")]
 skeleton = NodePath("../..")
 
-[node name="Box2" parent="NavigationRegion3D" instance=ExtResource("1_x50jp")]
+[node name="Box2" parent="NavigationRegion3D" unique_id=2031080374 instance=ExtResource("1_x50jp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.5493, 0, 17.7447)
 skeleton = NodePath("../../..")
 
-[node name="Box3" parent="NavigationRegion3D" instance=ExtResource("1_x50jp")]
+[node name="Box3" parent="NavigationRegion3D" unique_id=173716403 instance=ExtResource("1_x50jp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.1906, 0, -5.67115)
 skeleton = NodePath("../../..")
 
-[node name="Box4" parent="NavigationRegion3D" instance=ExtResource("1_x50jp")]
+[node name="Box4" parent="NavigationRegion3D" unique_id=774871731 instance=ExtResource("1_x50jp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.1745, -9.53674e-07, -6.25163)
 skeleton = NodePath("../../..")
 
-[node name="Box5" parent="NavigationRegion3D" instance=ExtResource("1_x50jp")]
+[node name="Box5" parent="NavigationRegion3D" unique_id=2125271174 instance=ExtResource("1_x50jp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.5405, 0, 15.823)
 skeleton = NodePath("../../..")
 
-[node name="ActionSystem" type="Node" parent="." node_paths=PackedStringArray("effect_manager")]
+[node name="ActionSystem" type="Node" parent="." unique_id=1544158722 node_paths=PackedStringArray("effect_manager")]
 script = ExtResource("5_8ff1g")
 effect_manager = NodePath("../EffectManager")
 
-[node name="Camera3D" type="Camera3D" parent="."]
+[node name="Camera3D" type="Camera3D" parent="." unique_id=633155799]
 transform = Transform3D(1, 0, 0, 0, 0.559193, 0.829038, 0, -0.829038, 0.559193, 0, 13.4105, 10.5207)
 
-[node name="DebugUI" type="SplitContainer" parent="."]
+[node name="DebugUI" type="SplitContainer" parent="." unique_id=723217979]
 visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-split_offset = 35
+split_offsets = PackedInt32Array(35)
 dragger_visibility = 1
 vertical = true
+split_offset = 35
 script = ExtResource("12_hss2o")
 
-[node name="Header" type="Panel" parent="DebugUI"]
+[node name="Header" type="Panel" parent="DebugUI" unique_id=1949545350]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Label" type="Label" parent="DebugUI/Header"]
+[node name="Label" type="Label" parent="DebugUI/Header" unique_id=631088756]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -196,16 +197,16 @@ label_settings = SubResource("LabelSettings_jyuhe")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Debug" type="Control" parent="DebugUI"]
+[node name="Debug" type="Control" parent="DebugUI" unique_id=146532212]
 layout_mode = 2
 
-[node name="ReporterViewer" parent="DebugUI/Debug" node_paths=PackedStringArray("nodes_whose_children_to_check") instance=ExtResource("12_d7yvc")]
+[node name="ReporterViewer" parent="DebugUI/Debug" unique_id=2057982816 node_paths=PackedStringArray("nodes_whose_children_to_check") instance=ExtResource("12_d7yvc")]
 layout_mode = 1
 offset_left = -12.0
 offset_right = -12.0
 nodes_whose_children_to_check = [NodePath("../../../ActorContainer"), NodePath("../../../ItemContainer")]
 
-[node name="AiInspector" type="Control" parent="DebugUI/Debug" node_paths=PackedStringArray("world")]
+[node name="AiInspector" type="Control" parent="DebugUI/Debug" unique_id=1628045878 node_paths=PackedStringArray("world")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -217,7 +218,7 @@ grow_vertical = 2
 script = ExtResource("13_chado")
 world = NodePath("../../..")
 
-[node name="Panel" type="Panel" parent="DebugUI/Debug/AiInspector"]
+[node name="Panel" type="Panel" parent="DebugUI/Debug/AiInspector" unique_id=1131233407]
 layout_mode = 1
 anchors_preset = 11
 anchor_left = 1.0
@@ -227,7 +228,7 @@ offset_left = -280.0
 grow_horizontal = 0
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="DebugUI/Debug/AiInspector/Panel"]
+[node name="Label" type="Label" parent="DebugUI/Debug/AiInspector/Panel" unique_id=136769409]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -236,21 +237,21 @@ grow_horizontal = 2
 grow_vertical = 2
 clip_text = true
 
-[node name="GameHud" parent="." instance=ExtResource("2_nby8c")]
+[node name="GameHud" parent="." unique_id=172329568 instance=ExtResource("2_nby8c")]
 
-[node name="Spawn4" parent="." instance=ExtResource("18_r2e7w")]
+[node name="Spawn4" parent="." unique_id=1731258940 instance=ExtResource("18_r2e7w")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.67467, 2.76968, -7.92615)
 
-[node name="Spawn5" parent="." instance=ExtResource("18_r2e7w")]
+[node name="Spawn5" parent="." unique_id=1810583538 instance=ExtResource("18_r2e7w")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.48834, 2.95635, 2.73447)
 
-[node name="Spawn5" parent="Spawn5" instance=ExtResource("18_r2e7w")]
+[node name="Spawn5" parent="Spawn5" unique_id=909212662 instance=ExtResource("18_r2e7w")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.0138, 0.257373, 7.4597)
 
-[node name="Spawn8" parent="." instance=ExtResource("18_r2e7w")]
+[node name="Spawn8" parent="." unique_id=1359638713 instance=ExtResource("18_r2e7w")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.75668, 4.27303, 11.0349)
 
-[node name="Spawn6" parent="." instance=ExtResource("18_r2e7w")]
+[node name="Spawn6" parent="." unique_id=1578284438 instance=ExtResource("18_r2e7w")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.661, 3.53244, -6.52321)
 
 [connection signal="pause_button_pressed" from="GameHud" to="." method="_on_pause_button_pressed"]

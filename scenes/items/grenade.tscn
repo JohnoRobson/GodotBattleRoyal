@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://b7e2n7bieo85i"]
+[gd_scene format=3 uid="uid://b7e2n7bieo85i"]
 
 [ext_resource type="Script" uid="uid://cm6je8qb83lpt" path="res://scripts/items/game_item.gd" id="1_deal3"]
 [ext_resource type="Script" uid="uid://b4gq3cdvwyn3" path="res://scripts/action_system/actions/action.gd" id="2_fwbky"]
@@ -16,22 +16,18 @@
 [sub_resource type="Resource" id="Resource_3rtil"]
 script = ExtResource("3_3s1e7")
 damage = 40.0
-actions = Array[ExtResource("2_fwbky")]([])
 
 [sub_resource type="Resource" id="Resource_r3qq1"]
 script = ExtResource("2_lvbq1")
 radius = 2.0
 targeted_actions = Array[ExtResource("4_l534f")]([SubResource("Resource_3rtil")])
-actions = Array[ExtResource("2_fwbky")]([])
 
 [sub_resource type="Resource" id="Resource_co7if"]
 script = ExtResource("5_vtomp")
 scene_to_spawn = ExtResource("4_jc4rt")
-actions = Array[ExtResource("2_fwbky")]([])
 
 [sub_resource type="Resource" id="Resource_bwwfc"]
 script = ExtResource("6_6ji73")
-actions = Array[ExtResource("2_fwbky")]([])
 
 [sub_resource type="Resource" id="Resource_51wv8"]
 script = ExtResource("5_pf5dd")
@@ -51,15 +47,15 @@ projectile_velocity = 12.0
 [sub_resource type="BoxShape3D" id="BoxShape3D_1e27m"]
 size = Vector3(0.449902, 0.646793, 0.592482)
 
-[node name="Grenade" type="RigidBody3D" groups=["items", "weapons"]]
+[node name="Grenade" type="RigidBody3D" unique_id=383055687 groups=["items", "weapons"]]
 script = ExtResource("1_deal3")
 item_name = "Grenade"
 action = SubResource("Resource_vnnrj")
 aim_function = SubResource("Resource_y66wt")
 traits = Array[int]([1, 3])
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=317219033]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.102114, -0.0777727)
 shape = SubResource("BoxShape3D_1e27m")
 
-[node name="grenade" parent="." instance=ExtResource("9_yjes0")]
+[node name="grenade" parent="." unique_id=1471607488 instance=ExtResource("9_yjes0")]

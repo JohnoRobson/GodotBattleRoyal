@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://be4ixwniduwoc"]
+[gd_scene format=3 uid="uid://be4ixwniduwoc"]
 
 [ext_resource type="Script" uid="uid://d135t3c6tb101" path="res://scripts/effects/delete_after_time.gd" id="1_0t3nk"]
 [ext_resource type="Texture2D" uid="uid://dhjvlnmigxbli" path="res://sprites/whitePuff00.png" id="2_55axh"]
@@ -81,10 +81,10 @@ particles_anim_loop = false
 [sub_resource type="QuadMesh" id="QuadMesh_7ptmo"]
 material = SubResource("StandardMaterial3D_m8kbh")
 
-[node name="Explosion" type="Node3D"]
+[node name="Explosion" type="Node3D" unique_id=1606992539]
 script = ExtResource("1_0t3nk")
 
-[node name="Body" type="GPUParticles3D" parent="."]
+[node name="Body" type="GPUParticles3D" parent="." unique_id=412495954]
 amount = 50
 lifetime = 2.0
 explosiveness = 1.0
@@ -92,7 +92,7 @@ process_material = SubResource("ParticleProcessMaterial_df4de")
 draw_pass_1 = SubResource("QuadMesh_2anda")
 draw_skin = SubResource("Skin_dsjyo")
 
-[node name="Debris" type="GPUParticles3D" parent="."]
+[node name="Debris" type="GPUParticles3D" parent="." unique_id=191082253]
 amount = 50
 lifetime = 2.0
 explosiveness = 1.0
@@ -100,7 +100,7 @@ process_material = SubResource("ParticleProcessMaterial_j412q")
 draw_pass_1 = SubResource("QuadMesh_7ptmo")
 draw_skin = SubResource("Skin_dsjyo")
 
-[node name="OmniLight3D" type="OmniLight3D" parent="."]
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=1870932730]
 light_size = 1.0
 script = ExtResource("1_0t3nk")
 lifetime_seconds = 0.1

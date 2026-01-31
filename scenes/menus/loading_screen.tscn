@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://5jf6q7wspxek"]
 
-[node name="LoadingScreen" type="Control"]
+[node name="LoadingScreen" type="Control" unique_id=1878348408]
 layout_mode = 3
 anchors_preset = 0
 
-[node name="Title" type="Label" parent="."]
+[node name="Title" type="Label" parent="." unique_id=241896523]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5

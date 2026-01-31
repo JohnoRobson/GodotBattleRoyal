@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://cxtqrmnc7fwf"]
+[gd_scene format=3 uid="uid://cxtqrmnc7fwf"]
 
 [ext_resource type="Script" uid="uid://dchb8ybrke15n" path="res://scripts/title_menu.gd" id="1_6fkqe"]
 
-[node name="TitleScreen" type="Control"]
+[node name="TitleScreen" type="Control" unique_id=1925866624]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,7 +11,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_6fkqe")
 
-[node name="Title" type="Label" parent="."]
+[node name="Title" type="Label" parent="." unique_id=949620491]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.0965483
@@ -29,7 +29,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Start Classic Button" type="Button" parent="."]
+[node name="Start Classic Button" type="Button" parent="." unique_id=361401418]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.378681
@@ -46,7 +46,7 @@ theme_override_font_sizes/font_size = 40
 text = "Start Classic"
 metadata/_edit_use_anchors_ = true
 
-[node name="Start AI Only Button" type="Button" parent="."]
+[node name="Start AI Only Button" type="Button" parent="." unique_id=1108038477]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.657326
@@ -63,7 +63,7 @@ theme_override_font_sizes/font_size = 40
 text = "Start AI Only"
 metadata/_edit_use_anchors_ = true
 
-[node name="Start Sandbox Button" type="Button" parent="."]
+[node name="Start Sandbox Button" type="Button" parent="." unique_id=686908660]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.0991667
@@ -80,7 +80,7 @@ theme_override_font_sizes/font_size = 40
 text = "Start Sandbox"
 metadata/_edit_use_anchors_ = true
 
-[node name="Settings Button" type="Button" parent="."]
+[node name="Settings Button" type="Button" parent="." unique_id=2037957851]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.378076
@@ -96,7 +96,7 @@ text = "Settings
 "
 metadata/_edit_use_anchors_ = true
 
-[node name="Close Button" type="Button" parent="."]
+[node name="Close Button" type="Button" parent="." unique_id=1379331565]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.377153

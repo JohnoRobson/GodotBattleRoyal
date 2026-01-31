@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://dh6uydtmtwo02"]
+[gd_scene format=3 uid="uid://dh6uydtmtwo02"]
 
 [ext_resource type="PackedScene" uid="uid://bmkdhqo5v1fou" path="res://models/medkit.blend" id="1_d6ka3"]
 [ext_resource type="Script" uid="uid://cm6je8qb83lpt" path="res://scripts/items/game_item.gd" id="1_icxwt"]
@@ -14,11 +14,9 @@
 [sub_resource type="Resource" id="Resource_04dob"]
 script = ExtResource("3_085hd")
 scene_to_spawn = ExtResource("2_xx7u8")
-actions = Array[ExtResource("2_n8mcn")]([])
 
 [sub_resource type="Resource" id="Resource_kec32"]
 script = ExtResource("4_ysn67")
-actions = Array[ExtResource("2_n8mcn")]([])
 
 [sub_resource type="Resource" id="Resource_hkmx1"]
 script = ExtResource("4_f30rl")
@@ -37,14 +35,14 @@ script = ExtResource("7_xo5uo")
 [sub_resource type="BoxShape3D" id="BoxShape3D_1e27m"]
 size = Vector3(1.03257, 0.513558, 1.03219)
 
-[node name="Medkit" type="RigidBody3D" groups=["healing", "items"]]
+[node name="Medkit" type="RigidBody3D" unique_id=1255128376 groups=["healing", "items"]]
 script = ExtResource("1_icxwt")
 item_name = "Medkit"
 action = SubResource("Resource_bmy8g")
 aim_function = SubResource("Resource_irte7")
 traits = Array[int]([0, 4])
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=188711555]
 shape = SubResource("BoxShape3D_1e27m")
 
-[node name="medkit" parent="." instance=ExtResource("1_d6ka3")]
+[node name="medkit" parent="." unique_id=235962613 instance=ExtResource("1_d6ka3")]

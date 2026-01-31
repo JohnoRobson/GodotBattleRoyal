@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://bgv7vcf44b558"]
+[gd_scene format=3 uid="uid://bgv7vcf44b558"]
 
 [ext_resource type="Script" uid="uid://cm6je8qb83lpt" path="res://scripts/items/game_item.gd" id="1_rf4ni"]
 [ext_resource type="Script" uid="uid://c5ovami1fi5w0" path="res://scripts/action_system/actions/area.gd" id="2_54hln"]
@@ -15,22 +15,18 @@
 [sub_resource type="Resource" id="Resource_d0kh8"]
 script = ExtResource("3_ory47")
 damage = 10.0
-actions = Array[ExtResource("2_leveg")]([])
 
 [sub_resource type="Resource" id="Resource_n1606"]
 script = ExtResource("2_54hln")
 radius = 3.0
 targeted_actions = Array[ExtResource("4_u7hg4")]([SubResource("Resource_d0kh8")])
-actions = Array[ExtResource("2_leveg")]([])
 
 [sub_resource type="Resource" id="Resource_kn0tx"]
 script = ExtResource("5_4q3gh")
 scene_to_spawn = ExtResource("4_mfbt6")
-actions = Array[ExtResource("2_leveg")]([])
 
 [sub_resource type="Resource" id="Resource_8ks3o"]
 script = ExtResource("6_lk8ut")
-actions = Array[ExtResource("2_leveg")]([])
 
 [sub_resource type="Resource" id="Resource_51wv8"]
 script = ExtResource("7_emnfc")
@@ -46,7 +42,7 @@ actions = Array[ExtResource("2_leveg")]([SubResource("Resource_51wv8")])
 [sub_resource type="BoxShape3D" id="BoxShape3D_1e27m"]
 size = Vector3(0.124092, 0.19753, 0.181521)
 
-[node name="Bomblet" type="RigidBody3D"]
+[node name="Bomblet" type="RigidBody3D" unique_id=81807308]
 collision_layer = 0
 collision_mask = 0
 mass = 0.1
@@ -55,9 +51,9 @@ item_name = "Bomblet"
 action = SubResource("Resource_vnnrj")
 traits = Array[int]([1])
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2119106262]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0224871, -0.0310805)
 shape = SubResource("BoxShape3D_1e27m")
 
-[node name="grenade" parent="." instance=ExtResource("9_j3s3v")]
+[node name="grenade" parent="." unique_id=1660021533 instance=ExtResource("9_j3s3v")]
 transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)

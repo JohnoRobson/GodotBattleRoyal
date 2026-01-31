@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://calaly75s74jo"]
+[gd_scene format=3 uid="uid://calaly75s74jo"]
 
 [ext_resource type="Script" uid="uid://dqh04gedhv80c" path="res://scripts/components/reporter/reporter_viewer.gd" id="1_h1t2q"]
 
-[node name="ReporterViewer" type="Control" node_paths=PackedStringArray("nodes_whose_children_to_check")]
+[node name="ReporterViewer" type="Control" unique_id=982514571 node_paths=PackedStringArray("nodes_whose_children_to_check")]
 process_mode = 3
 layout_mode = 3
 anchors_preset = 15
@@ -11,4 +11,4 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_h1t2q")
-nodes_whose_children_to_check = [NodePath(""), NodePath("")]
+nodes_whose_children_to_check = [null, null]

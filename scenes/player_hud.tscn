@@ -1,10 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://pciev3jsxk36"]
+[gd_scene format=3 uid="uid://pciev3jsxk36"]
 
 [ext_resource type="Script" uid="uid://cqhyp5bsa8gda" path="res://scripts/player_hud.gd" id="1_ondyb"]
 [ext_resource type="Script" uid="uid://xgtvbokm7l8n" path="res://scripts/components/inventory/inventory_ui.gd" id="2_hfa3h"]
 [ext_resource type="PackedScene" uid="uid://by5l67qs54kqb" path="res://scenes/process_visibility_sync.tscn" id="3_ombiq"]
 
-[node name="PlayerHud" type="Control"]
+[node name="PlayerHud" type="Control" unique_id=657788083]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -13,7 +13,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ondyb")
 
-[node name="AmmoCount" type="Label" parent="."]
+[node name="AmmoCount" type="Label" parent="." unique_id=838125843]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -29,7 +29,7 @@ text = "Ammo:"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="Health" type="Label" parent="."]
+[node name="Health" type="Label" parent="." unique_id=1404618461]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -41,7 +41,7 @@ grow_vertical = 0
 text = "Health: 100"
 vertical_alignment = 1
 
-[node name="Inventory" type="GridContainer" parent="."]
+[node name="Inventory" type="GridContainer" parent="." unique_id=265810183]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -54,4 +54,4 @@ size_flags_horizontal = 3
 columns = 6
 script = ExtResource("2_hfa3h")
 
-[node name="ProcessVisibilitySync" parent="." instance=ExtResource("3_ombiq")]
+[node name="ProcessVisibilitySync" parent="." unique_id=281682942 instance=ExtResource("3_ombiq")]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bcp66a5dwpxmx"]
+[gd_scene format=3 uid="uid://bcp66a5dwpxmx"]
 
 [ext_resource type="Script" uid="uid://d135t3c6tb101" path="res://scripts/effects/delete_after_time.gd" id="1_qaw65"]
 [ext_resource type="Texture2D" uid="uid://d4jh1e63obb0x" path="res://sprites/cross.png" id="2_bl42n"]
@@ -38,15 +38,15 @@ particles_anim_loop = false
 [sub_resource type="QuadMesh" id="QuadMesh_tlunx"]
 material = SubResource("StandardMaterial3D_mxvsv")
 
-[node name="heal" type="Node3D"]
+[node name="heal" type="Node3D" unique_id=727007525]
 script = ExtResource("1_qaw65")
 lifetime_seconds = 1.0
 
-[node name="OmniLight3D" type="OmniLight3D" parent="."]
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=1516129738]
 visible = false
 light_color = Color(0.0392157, 0.92549, 0, 1)
 
-[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+[node name="GPUParticles3D" type="GPUParticles3D" parent="." unique_id=1336027358]
 amount = 10
 explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_4jsf1")

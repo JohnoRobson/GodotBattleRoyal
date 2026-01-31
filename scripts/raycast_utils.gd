@@ -11,8 +11,7 @@ static func raycast_in_direction(node: Node3D, start_position: Vector3, end_posi
 	var result = space_state.intersect_ray(query)
 	
 	if result.is_empty():
-		RoyalLogger.warn("Raycast failed")
-		return start_position
+		return end_position
 	else:
 		return result.position
 

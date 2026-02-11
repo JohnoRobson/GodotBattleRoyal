@@ -18,7 +18,7 @@ func _add_item_to_inventory_if_it_is_stackable_and_there_is_space(item: GameItem
 	var matching_slots_with_free_space: Array[InventorySlotData] = inventory_data.get_slots_matching(func(a): return a.contains(item) and a.number_of_items() < item.max_stack_size)
 	# sort these so when adding an item when the inventory already contains multiple matching
 	# but not full stacks, it will be added to the largest one
-	matching_slots_with_free_space.sort_custom(func(a, b): a.number_of_items() > b.number_of_items())
+	matching_slots_with_free_space.sort_custom(func(a, b): return a.number_of_items() > b.number_of_items())
 	
 	# add the item to the slot if you can
 	if !matching_slots_with_free_space.is_empty():

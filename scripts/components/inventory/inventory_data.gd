@@ -78,6 +78,9 @@ func get_slots_matching(filter: Callable) -> Array[InventorySlotData]:
 
 func subtract_item_matching(filter: Callable) -> GameItem:
 	var matching_slots: Array[InventorySlotData] = get_slots_matching(filter)
+	# sort the slots so that the slot with the fewest items in it is first
+	# this is so that smaller stacks get used up first
+	matching_slots.sort_custom(func(a, b): return a.number_of_items() < b.number_of_items())
 	
 	if matching_slots.is_empty():
 		return null

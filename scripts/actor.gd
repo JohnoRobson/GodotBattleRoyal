@@ -82,10 +82,7 @@ func _process(_delta) -> void:
 	
 	var held_weapon = inventory.get_one_item_in_selected_slot()
 	if (controller.is_shooting() && held_weapon != null):
-		if held_weapon is Weapon:
-			held_weapon.fire()
-		else:
-			held_weapon.use_item(self)
+		held_weapon.use_item(self)
 	if (controller.is_reloading() && held_weapon != null && held_weapon is Weapon):
 		held_weapon.reload(inventory)
 	if (held_weapon != null && held_weapon is Weapon):

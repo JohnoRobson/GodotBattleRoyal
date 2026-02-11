@@ -121,15 +121,7 @@ func _physics_process(delta) -> void:
 	move_and_slide()
 
 func _on_health_depleted() -> void:
-	var held_weapon = inventory.get_one_item_in_selected_slot()
-	if held_weapon != null:
-		var weapon_position = held_weapon.global_position
-		var weapon_rotation = held_weapon.global_rotation
-		held_weapon.get_parent().remove_child(held_weapon)
-		get_parent().add_child(held_weapon) # this seems like a bad way to do it
-		held_weapon.is_held = false
-		held_weapon.global_position = weapon_position
-		held_weapon.global_rotation = weapon_rotation
+	inventory.drop_all_items_into_world(global_position)
 	
 	actor_state = ActorState.DEAD
 	animation_player.play("dead")
@@ -151,7 +143,7 @@ func _try_to_exchange_weapon() -> void:
 	
 	# drop
 	if !did_pick_up_item && held_weapon != null && closest_weapon == null:
-		inventory.remove_item_from_inventory_to_world(held_weapon)
+		inventory.remove_item_from_inventory_to_world(held_weapon, held_weapon.global_position, Vector3(0, 90, 0))
 	
 	# swap
 	elif !did_pick_up_item && held_weapon != null && closest_weapon != null:
@@ -169,7 +161,7 @@ func equip_weapon(weapon: GameItem) -> void:
 	weapon_base.add_child(held_weapon)
 	held_weapon.position = Vector3.ZERO
 	held_weapon.rotation = Vector3.ZERO
-	held_weapon.is_held = true
+	held_weapon.state = GameItem.ItemState.HELD
 	if weapon is Weapon:
 		weapon_swap.emit(weapon)
 

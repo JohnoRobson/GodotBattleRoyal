@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://8mmjpgw85cax"]
+[gd_scene format=3 uid="uid://8mmjpgw85cax"]
 
-[ext_resource type="Script" uid="uid://bvd6wixururdq"  path="res://scripts/game_hud.gd" id="1_aqifp"]
+[ext_resource type="Script" uid="uid://bvd6wixururdq" path="res://scripts/game_hud.gd" id="1_aqifp"]
 [ext_resource type="PackedScene" uid="uid://by5l67qs54kqb" path="res://scenes/process_visibility_sync.tscn" id="2_y0kys"]
 
-[node name="GameHud" type="Control"]
+[node name="GameHud" type="Control" unique_id=957992646]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -14,7 +14,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_aqifp")
 
-[node name="PauseButton" type="Button" parent="."]
+[node name="PauseButton" type="Button" parent="." unique_id=21932982]
 layout_mode = 0
 offset_left = 15.0
 offset_top = 13.0
@@ -23,6 +23,6 @@ offset_bottom = 57.0
 action_mode = 0
 text = "|||"
 
-[node name="ProcessVisibilitySync" parent="." instance=ExtResource("2_y0kys")]
+[node name="ProcessVisibilitySync" parent="." unique_id=310048871 instance=ExtResource("2_y0kys")]
 
 [connection signal="pressed" from="PauseButton" to="." method="_on_pause_button_pressed"]

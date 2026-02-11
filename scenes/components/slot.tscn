@@ -1,25 +1,25 @@
-[gd_scene load_steps=2 format=3 uid="uid://2nvsph8flv5j"]
+[gd_scene format=3 uid="uid://2nvsph8flv5j"]
 
 [ext_resource type="Script" uid="uid://n3xakorn7dh1" path="res://scripts/components/inventory/inventory_slot_ui.gd" id="1_krtar"]
 
-[node name="InventorySlotUI" type="PanelContainer"]
+[node name="InventorySlotUI" type="PanelContainer" unique_id=300867173]
 custom_minimum_size = Vector2(64, 64)
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("1_krtar")
 
-[node name="Outline" type="ReferenceRect" parent="."]
+[node name="Outline" type="ReferenceRect" parent="." unique_id=1646937179]
 visible = false
 layout_mode = 2
 border_color = Color(1, 1, 0, 1)
 editor_only = false
 
-[node name="Label" type="Label" parent="."]
+[node name="Label" type="Label" parent="." unique_id=306677013]
 layout_mode = 2
 text = "Example Label"
 autowrap_mode = 2
 
-[node name="CountLabel" type="Label" parent="."]
+[node name="CountLabel" type="Label" parent="." unique_id=782547764]
 layout_mode = 2
 size_flags_vertical = 1
 text = "99"

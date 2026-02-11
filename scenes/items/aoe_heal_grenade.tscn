@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://duyn8iuxvvn4j"]
+[gd_scene format=3 uid="uid://duyn8iuxvvn4j"]
 
 [ext_resource type="Script" uid="uid://cm6je8qb83lpt" path="res://scripts/items/game_item.gd" id="1_prsue"]
 [ext_resource type="Script" uid="uid://b4gq3cdvwyn3" path="res://scripts/action_system/actions/action.gd" id="2_adjaq"]
@@ -16,23 +16,19 @@
 
 [sub_resource type="Resource" id="Resource_6lsvq"]
 script = ExtResource("4_pnr7i")
-actions = Array[ExtResource("2_adjaq")]([])
 
 [sub_resource type="Resource" id="Resource_hsjmk"]
 script = ExtResource("3_hvg2c")
 scene_to_spawn = ExtResource("3_sb8ic")
-actions = Array[ExtResource("2_adjaq")]([])
 
 [sub_resource type="Resource" id="Resource_fqrnx"]
 script = ExtResource("4_3s8ed")
 healing = 5.0
-actions = Array[ExtResource("2_adjaq")]([])
 
 [sub_resource type="Resource" id="Resource_vlb7b"]
 script = ExtResource("5_ycrsu")
 radius = 5.0
 targeted_actions = Array[ExtResource("7_8or6m")]([SubResource("Resource_fqrnx")])
-actions = Array[ExtResource("2_adjaq")]([])
 
 [sub_resource type="Resource" id="Resource_jokeo"]
 script = ExtResource("7_cbjcq")
@@ -43,7 +39,6 @@ actions = Array[ExtResource("2_adjaq")]([SubResource("Resource_6lsvq")])
 
 [sub_resource type="Resource" id="Resource_51wv8"]
 script = ExtResource("7_t23rv")
-countdown_in_seconds = 1.0
 actions = Array[ExtResource("2_adjaq")]([SubResource("Resource_jokeo")])
 
 [sub_resource type="Resource" id="Resource_vnnrj"]
@@ -59,7 +54,7 @@ projectile_velocity = 12.0
 [sub_resource type="BoxShape3D" id="BoxShape3D_1e27m"]
 size = Vector3(1.03257, 0.513558, 1.03219)
 
-[node name="AoeHealGrenade" type="RigidBody3D" groups=["aoe", "healing", "items"]]
+[node name="AoeHealGrenade" type="RigidBody3D" unique_id=563838614 groups=["aoe", "healing", "items"]]
 collision_layer = 2
 collision_mask = 15
 script = ExtResource("1_prsue")
@@ -68,7 +63,7 @@ action = SubResource("Resource_vnnrj")
 aim_function = SubResource("Resource_8y2xw")
 traits = Array[int]([0, 3])
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1026631388]
 shape = SubResource("BoxShape3D_1e27m")
 
-[node name="medkit" parent="." instance=ExtResource("9_h48xs")]
+[node name="medkit" parent="." unique_id=1910974348 instance=ExtResource("9_h48xs")]

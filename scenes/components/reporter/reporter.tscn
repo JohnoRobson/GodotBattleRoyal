@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://cc3xiyt074uge"]
+[gd_scene format=3 uid="uid://cc3xiyt074uge"]
 
 [ext_resource type="Script" uid="uid://dyw7cw4hwsruw" path="res://scripts/components/reporter/reporter.gd" id="1_a6wfl"]
 
-[node name="Reporter" type="Node" groups=["reporters"]]
+[node name="Reporter" type="Node" unique_id=132186940 groups=["reporters"]]
 script = ExtResource("1_a6wfl")

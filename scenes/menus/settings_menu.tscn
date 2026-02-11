@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://dcu6ldiv7dvu4"]
+[gd_scene format=3 uid="uid://dcu6ldiv7dvu4"]
 
 [ext_resource type="Script" uid="uid://cek56v2b5b1r0" path="res://scripts/settings_menu.gd" id="1_qr104"]
 
-[node name="SettingsScreen" type="Control"]
+[node name="SettingsScreen" type="Control" unique_id=2075465357]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,7 +11,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_qr104")
 
-[node name="Title" type="Label" parent="."]
+[node name="Title" type="Label" parent="." unique_id=1545512328]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -26,7 +26,7 @@ text = "Settings"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Back Button" type="Button" parent="."]
+[node name="Back Button" type="Button" parent="." unique_id=1951644204]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5

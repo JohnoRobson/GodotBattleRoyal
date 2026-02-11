@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bmyj2xa8k2yeo"]
+[gd_scene format=3 uid="uid://bmyj2xa8k2yeo"]
 
 [ext_resource type="Script" uid="uid://kr4n37rairkd" path="res://scripts/items/ammo.gd" id="1_t3j4s"]
 [ext_resource type="Script" uid="uid://d25cuua22s3ue" path="res://resources/ammo_type.gd" id="2_nnb88"]
@@ -18,16 +18,16 @@ size = Vector3(0.5, 0.5, 0.5)
 [sub_resource type="BoxShape3D" id="BoxShape3D_8wsgy"]
 size = Vector3(0.5, 0.5, 0.5)
 
-[node name="SmgAmmo" type="RigidBody3D" groups=["ammo"]]
+[node name="SmgAmmo" type="RigidBody3D" unique_id=1755066170 groups=["ammo"]]
 script = ExtResource("1_t3j4s")
 ammo_type = SubResource("Resource_3rxsa")
 item_name = "SMG Ammo"
 aim_function = SubResource("Resource_qsp6j")
 traits = Array[int]([5])
-max_stack_size = 2
+max_stack_size = 4
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1624998604]
 mesh = SubResource("BoxMesh_oxmlu")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=855561005]
 shape = SubResource("BoxShape3D_8wsgy")

@@ -15,7 +15,7 @@ const DEFAULT_COLLISION_MASK = 0b1111
 signal item_updated()
 signal item_used_up()
 signal action_triggered(action: Action, game_item: GameItem)
-signal remove_from_inventory_and_put_in_world(game_item: GameItem)
+signal remove_from_inventory_and_put_in_world(game_item: GameItem, global_position: Vector3, global_rotation_degrees: Vector3)
 
 enum ItemTrait {
 	HEALING,

@@ -315,9 +315,9 @@ func get_actors_and_gameitems_in_area(target_position: Vector3, distance: float)
 
 func setup_game(game_type: GameTypes) -> void:
 	spawn_weapon_and_ammo(Vector2(5,5), Weapons.SMG)
-	spawn_weapon_and_ammo(Vector2(-15,5), Weapons.SMG)
-	spawn_weapon_and_ammo(Vector2(25,-5), Weapons.SMG)
-	spawn_weapon_and_ammo(Vector2(1,13), Weapons.SMG)
+	spawn_weapon_and_ammo(Vector2(-15,5), Weapons.SHOTGUN)
+	spawn_weapon_and_ammo(Vector2(25,-5), Weapons.SNIPER)
+	spawn_weapon_and_ammo(Vector2(1,13), Weapons.COOL)
 	match game_type:
 		GameTypes.AI:
 			spawn_ai()

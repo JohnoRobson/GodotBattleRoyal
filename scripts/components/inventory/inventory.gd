@@ -109,6 +109,8 @@ func swap_item_from_world_to_inventory(world_item: GameItem, inventory_item: Gam
 	return true
 
 func drop_all_items_into_world(world_position: Vector3):
+	# add a little bit of height so that the raycasts don't clip through the ground
+	world_position = world_position + Vector3.UP * 0.1
 	var total_items: int = 0
 
 	for slot: InventorySlotData in inventory_data._slots:

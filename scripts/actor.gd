@@ -121,7 +121,7 @@ func _physics_process(delta) -> void:
 	move_and_slide()
 
 func _on_health_depleted() -> void:
-	inventory.drop_all_items_into_world(global_position + Vector3.UP * 1)
+	inventory.drop_all_items_into_world(global_position)
 	
 	actor_state = ActorState.DEAD
 	animation_player.play("dead")

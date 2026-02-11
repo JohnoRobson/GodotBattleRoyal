@@ -47,9 +47,14 @@ func add_item(item: GameItem) -> bool:
 	
 	return added_item
 
-func remove_item(item: GameItem) -> bool:
+func remove_item(item: GameItem, priority_slot_index: int) -> bool:
 	if !is_equivalent_item_in_inventory(item):
 		return false
+	
+	var first_slot_to_check = _slots[priority_slot_index]
+	if first_slot_to_check.contains(item):
+		first_slot_to_check.pop_item()
+		return true
 	
 	for i in _slots.size():
 		var slot = _slots[i]

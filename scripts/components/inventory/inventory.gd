@@ -16,6 +16,10 @@ func _add_item_to_inventory_if_it_is_stackable_and_there_is_space(item: GameItem
 	
 	# find slots with the item and free space
 	var matching_slots_with_free_space: Array[InventorySlotData] = inventory_data.get_slots_matching(func(a): return a.contains(item) and a.number_of_items() < item.max_stack_size)
+	# sort these so when adding an item when the inventory already contains multiple matching
+	# but not full stacks, it will be added to the largest one
+	matching_slots_with_free_space.sort_custom(func(a, b): a.number_of_items() > b.number_of_items())
+	
 	# add the item to the slot if you can
 	if !matching_slots_with_free_space.is_empty():
 		var slot = matching_slots_with_free_space[0]
@@ -59,7 +63,7 @@ func add_item_to_inventory_from_world(item: GameItem) -> bool:
 
 # This for removing one (1) item
 func remove_item_from_inventory_to_world(item: GameItem, item_global_position: Vector3, item_global_rotation: Vector3) -> bool:
-	if !inventory_data.remove_item(item):
+	if !inventory_data.remove_item(item, _selected_slot_index):
 		push_error("Failed to remove an item from an inventory")
 		return false
 	
@@ -90,7 +94,7 @@ func swap_item_from_world_to_inventory(world_item: GameItem, inventory_item: Gam
 		if slot.contains(inventory_item):
 			var points: Array[Vector3] = VectorUtils.get_radially_symmetrical_points(world_global_position, slot._items.size(), 1.5)
 			var index = 0;
-			while !slot.is_empty():
+			while !slot.is_empty() and index < points.size():
 				var new_item_position = RaycastUtils.get_position_on_the_ground(self, points[index] + Vector3.UP * 1)
 				new_item_position = ItemUtils.get_position_to_be_on_ground(slot.get_item(), new_item_position);
 				remove_item_from_inventory_to_world(slot.get_item(), new_item_position, Vector3(0, 90, 0))

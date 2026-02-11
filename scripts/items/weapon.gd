@@ -56,7 +56,7 @@ func reload(inventory: Inventory) -> bool:
 	return false
 
 # fires the weapon, if it can
-func fire() -> void:
+func use_item(_actor: Actor) -> void:
 	if _current_state == WeaponState.CAN_FIRE and _ammo != null:
 		_ammo.current_ammo_in_magazine -= 1
 		update_ammo_ui.emit(_ammo.current_ammo_in_magazine, _ammo.ammo_type.ammo_in_full_magazine)

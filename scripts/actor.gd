@@ -41,10 +41,6 @@ enum ActorState {
 	IDLE, WALKING, DEAD
 }
 
-# Remove these when proper inventory and item pickups are developed
-var _drop_weapon_cooldown_time: float = 0.5
-var _drop_weapon_cooldown_timer: float = 0
-
 var _velocity_to_add: Vector3 = Vector3.ZERO
 
 signal actor_killed(me: Actor)
@@ -72,11 +68,12 @@ func _process(_delta) -> void:
 		return
 	
 	cursor.global_position = controller.get_aim_position()
-	if (controller.is_exchanging_weapon()):
-		_try_to_exchange_weapon()
 	
-	if (_drop_weapon_cooldown_timer > 0.0):
-		_drop_weapon_cooldown_timer -= _delta
+	if controller.is_dropping_item():
+		_try_to_drop_item()
+	
+	if controller.is_picking_up_or_swapping_item():
+		_try_to_pick_up_or_swap_item()
 	
 	_aim_weapon()
 	
@@ -129,30 +126,22 @@ func _on_health_depleted() -> void:
 func _on_hurtbox_was_hit(amount, _hit_position_global, hit_normalized_direction) -> void:
 	_velocity_to_add += hit_normalized_direction * amount * 100.0 * Vector3(1,0,1)
 
-# this is for picking up, dropping, or swapping weapons
-func _try_to_exchange_weapon() -> void:
-	if (_drop_weapon_cooldown_timer > 0.0):
+func _try_to_pick_up_or_swap_item() -> void:
+	var closest_item: GameItem = _item_pickup_manager.get_item_that_cursor_is_over_and_is_in_interaction_range()
+	var did_pick_up_item = inventory.add_item_to_inventory_from_world(closest_item)
+	
+	if did_pick_up_item:
 		return
 	
-	var held_weapon = inventory.get_one_item_in_selected_slot()
-	
-	var closest_weapon: GameItem = _item_pickup_manager.get_item_that_cursor_is_over_and_is_in_interaction_range()
-	
-	# pick up
-	var did_pick_up_item = inventory.add_item_to_inventory_from_world(closest_weapon)
-	
-	# drop
-	if !did_pick_up_item && held_weapon != null && closest_weapon == null:
-		inventory.remove_item_from_inventory_to_world(held_weapon, held_weapon.global_position, Vector3(0, 90, 0))
-	
-	# swap
-	elif !did_pick_up_item && held_weapon != null && closest_weapon != null:
-		inventory.swap_item_from_world_to_inventory(closest_weapon, held_weapon)
-	
-	_drop_weapon_cooldown_timer = _drop_weapon_cooldown_time
-	
-	# not holding a weapon and there are no weapons nearby
-	return
+	# try for swap
+	var held_item = inventory.get_one_item_in_selected_slot()
+	if !did_pick_up_item && held_item != null && closest_item != null:
+		inventory.swap_item_from_world_to_inventory(closest_item, held_item)
+
+func _try_to_drop_item() -> void:
+	var held_item = inventory.get_one_item_in_selected_slot()
+	if held_item != null:
+		inventory.remove_item_from_inventory_to_world(held_item, held_item.global_position, Vector3(0, 90, 0))
 
 func equip_weapon(weapon: GameItem) -> void:
 	var held_weapon = inventory.get_one_item_in_selected_slot()

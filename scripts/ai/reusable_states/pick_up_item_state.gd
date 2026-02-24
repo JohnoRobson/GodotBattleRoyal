@@ -23,7 +23,7 @@ func execute(controller: AiActorController) -> void:
 func execute_physics(controller: AiActorController) -> void:
 	if picked_up_weapon_last_tick && _current_target.state == GameItem.ItemState.HELD:
 		picked_up_weapon_last_tick = false
-		controller.set_is_exchanging_weapon(false)
+		controller.set_is_picking_up_or_swapping_item(false)
 		controller.state_machine.change_state(DecisionMakingState.new())
 	elif _current_target != null && !_current_target.state == GameItem.ItemState.HELD:
 		var target_pos = _current_target.global_transform.origin
@@ -43,11 +43,11 @@ func execute_physics(controller: AiActorController) -> void:
 		if closest_item == _current_target:
 			if !InventoryUtils.switch_to_empty_slot(controller.actor.inventory):
 				controller.state_machine.change_state(DecisionMakingState.new()) # just a safety check
-			controller.set_is_exchanging_weapon(true)
+			controller.set_is_picking_up_or_swapping_item(true)
 			picked_up_weapon_last_tick = true
 
 func exit(controller: AiActorController) -> void:
-	controller.set_is_exchanging_weapon(false)
+	controller.set_is_picking_up_or_swapping_item(false)
 	controller.set_move_direction(Vector2.ZERO)
 	controller.nav_agent.velocity_computed.disconnect(_on_velocity_computed)
 

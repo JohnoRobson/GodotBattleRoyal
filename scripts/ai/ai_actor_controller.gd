@@ -11,7 +11,8 @@ var aim_position: Vector3 = Vector3.ZERO
 var move_direction: Vector2 = Vector2.ZERO
 var is_shooting_bool: bool = false
 var is_reloading_bool: bool = false
-var is_exchanging_weapon_bool: bool = false
+var is_picking_up_or_swapping_item_bool: bool = false
+var is_dropping_item_bool: bool = false
 
 func _ready() -> void:
 	process_priority = -99
@@ -50,8 +51,14 @@ func is_reloading() -> bool:
 func set_is_reloading(reload: bool) -> void:
 	is_reloading_bool = reload
 
-func is_exchanging_weapon() -> bool:
-	return is_exchanging_weapon_bool
+func is_picking_up_or_swapping_item() -> bool:
+	return is_picking_up_or_swapping_item_bool
 
-func set_is_exchanging_weapon(exchange: bool) -> void:
-	is_exchanging_weapon_bool = exchange
+func set_is_picking_up_or_swapping_item(pickup: bool) -> void:
+	is_picking_up_or_swapping_item_bool = pickup
+
+func is_dropping_item() -> bool:
+	return is_dropping_item_bool
+
+func set_is_dropping_item(drop: bool) -> void:
+	is_dropping_item_bool = drop

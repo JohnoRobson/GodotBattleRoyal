@@ -11,7 +11,7 @@ signal inventory_changed(inventory_data: InventoryData, selected_slot_index: int
 signal return_item_to_world(item: GameItem, global_position_to_place_item: Vector3)
 
 func _add_item_to_inventory_if_it_is_stackable_and_there_is_space(item: GameItem) -> bool:
-	if item == null or item.max_stack_size <= 1:
+	if item == null:
 		return false
 	
 	# find slots with the item and free space

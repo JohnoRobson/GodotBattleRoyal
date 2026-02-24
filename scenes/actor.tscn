@@ -16,7 +16,9 @@
 height = 2.6
 radius = 2.0
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_ndhlx"]
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_lu3a0"]
+height = 2.1
+radius = 0.6
 
 [sub_resource type="Animation" id="Animation_v1yfk"]
 resource_name = "dead"
@@ -130,7 +132,8 @@ show_pickup_text = true
 show_any_text = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ActorCursor/ItemInteractionArea" unique_id=731577566]
-shape = SubResource("SphereShape3D_ndhlx")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.98876953, 0)
+shape = SubResource("CylinderShape3D_lu3a0")
 
 [node name="ItemPickupManager" type="Node" parent="." unique_id=1049587795 node_paths=PackedStringArray("item_area_actor", "item_area_cursor")]
 script = ExtResource("8_6j5c1")

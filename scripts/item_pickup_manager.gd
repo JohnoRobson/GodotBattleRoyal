@@ -6,12 +6,17 @@ extends Node
 
 @export var item_area_actor: ItemInteractionArea
 @export var item_area_cursor: ItemInteractionArea
-var items_that_have_labels: Dictionary # GameItem to Label Dict
+@export var can_show_item_text: bool = true
+
+var items_that_have_labels: Dictionary[GameItem, ItemPickupText]
 
 func _ready() -> void:
 	items_that_have_labels = {}
 
 func _physics_process(_delta) -> void:
+	if !can_show_item_text:
+		return
+	
 	# check for items in area
 	var items_in_actor_area: Array[GameItem] = item_area_actor.get_items_in_area()
 	var items_in_cursor_area: Array[GameItem] = item_area_cursor.get_items_in_area()

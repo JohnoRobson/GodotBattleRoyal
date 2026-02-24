@@ -33,7 +33,7 @@ func execute_physics(controller: AiActorController) -> void:
 
 func exit(controller: AiActorController) -> void:
 	controller.set_move_direction(Vector2.ZERO)
-	controller.set_is_exchanging_weapon(false)
+	controller.set_is_picking_up_or_swapping_item(false)
 	controller.set_is_shooting(false)
 	pass
 

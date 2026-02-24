@@ -23,6 +23,8 @@ resource_local_to_scene = true
 material = SubResource("ShaderMaterial_dhvnc")
 
 [node name="AiActor" unique_id=71779919 node_paths=PackedStringArray("controller") instance=ExtResource("1_jfaud")]
+speed = 5.0
+JUMP_VELOCITY = 4.5
 controller = NodePath("AiActorController")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." index="4" unique_id=977445675]
@@ -36,6 +38,9 @@ max_speed = 20.0
 script = ExtResource("3_q60xr")
 actor = NodePath("..")
 nav_agent = NodePath("../NavigationAgent3D")
+
+[node name="ItemPickupManager" parent="." index="6" unique_id=1049587795]
+can_show_item_text = false
 
 [node name="ActorBody" parent="Rotator/Animatable" parent_id_path=PackedInt32Array(1842591485) index="0" unique_id=1631406986]
 mesh = SubResource("CapsuleMesh_eb4ia")

@@ -15,5 +15,8 @@ func is_shooting() -> bool:
 func is_reloading() -> bool:
 	return false
 
-func is_exchanging_weapon() -> bool:
+func is_picking_up_or_swapping_item() -> bool:
+	return false
+
+func is_dropping_item() -> bool:
 	return false

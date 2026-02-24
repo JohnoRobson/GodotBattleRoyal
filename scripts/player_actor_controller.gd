@@ -35,7 +35,10 @@ func is_shooting() -> bool:
 	return Input.is_action_pressed("fire")
 
 func is_reloading() -> bool:
-	return Input.is_action_pressed("reload")
+	return Input.is_action_just_pressed("reload")
 
-func is_exchanging_weapon() -> bool:
-	return Input.is_action_pressed("exchange_weapon")
+func is_picking_up_or_swapping_item() -> bool:
+	return Input.is_action_just_pressed("pick_up_or_swap_item")
+
+func is_dropping_item() -> bool:
+	return Input.is_action_just_pressed("drop_item")

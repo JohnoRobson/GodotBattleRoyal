@@ -47,9 +47,14 @@ func add_item(item: GameItem) -> bool:
 	
 	return added_item
 
-func remove_item(item: GameItem) -> bool:
+func remove_item(item: GameItem, priority_slot_index: int) -> bool:
 	if !is_equivalent_item_in_inventory(item):
 		return false
+	
+	var first_slot_to_check = _slots[priority_slot_index]
+	if first_slot_to_check.contains(item):
+		first_slot_to_check.pop_item()
+		return true
 	
 	for i in _slots.size():
 		var slot = _slots[i]
@@ -73,6 +78,9 @@ func get_slots_matching(filter: Callable) -> Array[InventorySlotData]:
 
 func subtract_item_matching(filter: Callable) -> GameItem:
 	var matching_slots: Array[InventorySlotData] = get_slots_matching(filter)
+	# sort the slots so that the slot with the fewest items in it is first
+	# this is so that smaller stacks get used up first
+	matching_slots.sort_custom(func(a, b): return a.number_of_items() < b.number_of_items())
 	
 	if matching_slots.is_empty():
 		return null

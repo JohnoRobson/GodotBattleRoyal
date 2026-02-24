@@ -8,7 +8,7 @@ extends Node
 @export var item_area_cursor: ItemInteractionArea
 @export var can_show_item_text: bool = true
 
-var items_that_have_labels: Dictionary # GameItem to Label Dict
+var items_that_have_labels: Dictionary[GameItem, ItemPickupText]
 
 func _ready() -> void:
 	items_that_have_labels = {}

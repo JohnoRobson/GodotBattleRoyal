@@ -3,11 +3,19 @@
 [ext_resource type="Script" uid="uid://kr4n37rairkd" path="res://scripts/items/ammo.gd" id="1_nk2gd"]
 [ext_resource type="Script" uid="uid://d25cuua22s3ue" path="res://resources/ammo_type.gd" id="2_tthy4"]
 [ext_resource type="Script" uid="uid://bxnfrlbrlvn8o" path="res://scripts/items/aim_function.gd" id="3_4w2rm"]
+[ext_resource type="Script" uid="uid://b4gq3cdvwyn3" path="res://scripts/action_system/actions/action.gd" id="3_c57dw"]
+[ext_resource type="PackedScene" uid="uid://dpngd0gfeouw0" path="res://scenes/weapons/shotgun.tscn" id="4_2g15l"]
+[ext_resource type="Script" uid="uid://bjmrmi340jux3" path="res://scripts/action_system/actions/create.gd" id="5_bgi8u"]
 
 [sub_resource type="Resource" id="Resource_3rxsa"]
 script = ExtResource("2_tthy4")
 ammo_in_full_magazine = 5
 ammo_category = 3
+
+[sub_resource type="Resource" id="Resource_76a0i"]
+script = ExtResource("5_bgi8u")
+game_item_to_create = ExtResource("4_2g15l")
+metadata/_custom_type_script = "uid://bjmrmi340jux3"
 
 [sub_resource type="Resource" id="Resource_3hixn"]
 script = ExtResource("3_4w2rm")
@@ -22,6 +30,7 @@ size = Vector3(0.5, 0.5, 0.5)
 script = ExtResource("1_nk2gd")
 ammo_type = SubResource("Resource_3rxsa")
 item_name = "Sniper Ammo"
+action = SubResource("Resource_76a0i")
 aim_function = SubResource("Resource_3hixn")
 traits = Array[int]([5])
 max_stack_size = 4

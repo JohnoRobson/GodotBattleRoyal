@@ -39,7 +39,7 @@ func execute_physics(controller: AiActorController) -> void:
 			controller.set_move_direction(Vector2(dir.x, dir.z))
 		controller.set_aim_position(_current_target.global_position)
 		
-		var closest_item = controller.actor._item_pickup_manager.get_item_that_cursor_is_over_and_is_in_interaction_range()
+		var closest_item = controller.actor._item_interaction_manager.get_item_that_cursor_is_over_and_is_in_interaction_range()
 		if closest_item == _current_target:
 			if !InventoryUtils.switch_to_empty_slot(controller.actor.inventory):
 				controller.state_machine.change_state(DecisionMakingState.new()) # just a safety check

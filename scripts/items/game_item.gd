@@ -6,6 +6,7 @@ var can_be_used: bool
 @export var item_name: String = "Example Name"
 @export var action: Action
 @export var aim_function: AimFunction = AimFunction.new() # use default aim function
+@export var interaction_type: InteractionType = InteractionType.PICK_UP
 @export var traits: Array[ItemTrait] = []
 @export_range(1, 64) var max_stack_size: int = 1
 
@@ -30,6 +31,11 @@ enum ItemState {
 	IN_WORLD,
 	HELD,
 	PHYSICS_ENABLED
+}
+
+enum InteractionType {
+	PICK_UP,
+	ACTIVATE
 }
 
 func _init() -> void:

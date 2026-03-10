@@ -46,6 +46,7 @@ script = ExtResource("1_7qq3y")
 item_name = "Cluster Grenade"
 action = SubResource("Resource_vnnrj")
 aim_function = SubResource("Resource_6m8ed")
+interaction_type = 1
 traits = Array[int]([1, 3])
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=588569768]

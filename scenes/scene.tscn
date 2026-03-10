@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://b7e2n7bieo85i" path="res://scenes/items/grenade.tscn" id="9_kbf5b"]
 [ext_resource type="PackedScene" uid="uid://b5pidhuj5uftx" path="res://scenes/items/cluster_grenade.tscn" id="10_h3423"]
 [ext_resource type="PackedScene" uid="uid://duyn8iuxvvn4j" path="res://scenes/items/aoe_heal_grenade.tscn" id="10_j4gxa"]
+[ext_resource type="PackedScene" uid="uid://cd3bjhrdxjl3y" path="res://scenes/items/item_box.tscn" id="11_2v74y"]
 [ext_resource type="PackedScene" uid="uid://calaly75s74jo" path="res://scenes/components/reporter/reporter_viewer.tscn" id="12_d7yvc"]
 [ext_resource type="Script" uid="uid://cyxyvsa1ohfaa" path="res://scripts/debug_ui.gd" id="12_hss2o"]
 [ext_resource type="Script" uid="uid://bhfff1eu8vy6p" path="res://scripts/ai/inspector/ai_inspector.gd" id="13_chado"]
@@ -97,6 +98,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.1093, 1.91131, -1.00589)
 
 [node name="SniperAmmo2" parent="ItemContainer" unique_id=183809895 instance=ExtResource("15_r2e7w")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.1469, 1.72129, 1.27939)
+
+[node name="ItemBox" parent="ItemContainer" unique_id=108856214 instance=ExtResource("11_2v74y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6255227, 0.2500019, 14.325224)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=599836387]
 transform = Transform3D(0.648744, -0.49609, -0.577084, 0, -0.758316, 0.651887, -0.761006, -0.422908, -0.491954, 0, 5.96035, -1.18983)

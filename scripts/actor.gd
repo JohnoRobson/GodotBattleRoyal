@@ -30,7 +30,7 @@ var actor_state: ActorState = ActorState.IDLE
 @onready var health: Health = get_node("Health")
 
 @onready var item_pickup_area: ItemInteractionArea = get_node("ItemPickupArea")
-@onready var _item_pickup_manager: ItemPickupManager = get_node("ItemPickupManager")
+@onready var _item_interaction_manager: ItemInteractionManager = get_node("ItemInteractionManager")
 @onready var inventory: Inventory = get_node("WeaponInventory")
 @onready var animation_player: AnimationPlayer = get_node("AnimationPlayer")
 @onready var camera: Camera3D = get_node("Camera3D")
@@ -73,7 +73,7 @@ func _process(_delta) -> void:
 		_try_to_drop_item()
 	
 	if controller.is_picking_up_or_swapping_item():
-		_try_to_pick_up_or_swap_item()
+		_try_to_interact_with_item()
 	
 	_aim_weapon()
 	
@@ -123,17 +123,14 @@ func _on_health_depleted() -> void:
 func _on_hurtbox_was_hit(amount, _hit_position_global, hit_normalized_direction) -> void:
 	_velocity_to_add += hit_normalized_direction * amount * 100.0 * Vector3(1,0,1)
 
-func _try_to_pick_up_or_swap_item() -> void:
-	var closest_item: GameItem = _item_pickup_manager.get_item_that_cursor_is_over_and_is_in_interaction_range()
-	var did_pick_up_item = inventory.add_item_to_inventory_from_world(closest_item)
+func _try_to_interact_with_item() -> void:
+	var closest_item: GameItem = _item_interaction_manager.get_item_that_cursor_is_over_and_is_in_interaction_range()
 	
-	if did_pick_up_item:
-		return
-	
-	# try for swap
-	var held_item = inventory.get_one_item_in_selected_slot()
-	if !did_pick_up_item && held_item != null && closest_item != null:
-		inventory.swap_item_from_world_to_inventory(closest_item, held_item)
+	match closest_item.interaction_type:
+		GameItem.InteractionType.PICK_UP:
+			inventory.add_or_swap_item_from_world_to_inventory(closest_item)
+		GameItem.InteractionType.ACTIVATE:
+			closest_item.use_item(self)
 
 func _try_to_drop_item() -> void:
 	var held_item = inventory.get_one_item_in_selected_slot()

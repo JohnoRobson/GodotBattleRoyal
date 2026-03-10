@@ -1,4 +1,4 @@
-class_name ItemPickupManager
+class_name ItemInteractionManager
 extends Node
 
 # This class is for both displaying the correct ItemPickupText and filtering which items in an

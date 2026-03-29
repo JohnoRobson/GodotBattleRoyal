@@ -22,7 +22,7 @@ func _get_inventory_slots_that_can_accept_item(item: GameItem) -> Array[Inventor
 func can_add_item_to_inventory(item: GameItem) -> bool:
 	return !_get_inventory_slots_that_can_accept_item(item).is_empty() or has_empty_slots()
 
-func _remove_item_from_parent_and_connect_signal(item: GameItem, slot: InventorySlotData):
+func _remove_item_from_parent_and_connect_signal(item: GameItem, slot: InventorySlotData) -> void:
 	_emit_updates(inventory_data.get_index_of_slot(slot))
 	
 	if item.get_parent() != null:
@@ -31,7 +31,7 @@ func _remove_item_from_parent_and_connect_signal(item: GameItem, slot: Inventory
 	item.state = GameItem.ItemState.HELD
 	connect_remove_signal(item)
 
-func _add_item_to_valid_inventory_slot(item: GameItem, valid_slot: InventorySlotData):
+func _add_item_to_valid_inventory_slot(item: GameItem, valid_slot: InventorySlotData) -> void:
 	valid_slot.push_item(item)
 	_remove_item_from_parent_and_connect_signal(item, valid_slot)
 

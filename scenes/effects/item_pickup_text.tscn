@@ -10,8 +10,14 @@ billboard = 1
 text = "Example"
 font_size = 64
 
-[node name="ItemInteractText" type="Label3D" parent="." unique_id=11625236]
+[node name="ItemPickupText" type="Label3D" parent="." unique_id=11625236]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.418421, 0)
 billboard = 1
 text = "Pickup (F)"
+font_size = 64
+
+[node name="ItemSwapText" type="Label3D" parent="." unique_id=938998285]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.418421, 0)
+billboard = 1
+text = "Swap (F)"
 font_size = 64

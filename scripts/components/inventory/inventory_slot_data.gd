@@ -3,12 +3,17 @@ extends Resource
 
 var _items: Array[GameItem]
 
-func push_item(item: GameItem) -> bool:
+func can_push_item(item: GameItem) -> bool:
 	if item == null:
 		return false
 	if _items.size() >= item.max_stack_size:
 		return false
 	if !_items.is_empty() and !contains(item):
+		return false
+	return true
+
+func push_item(item: GameItem) -> bool:
+	if !can_push_item(item):
 		return false
 	
 	item.item_used_up.connect(pop_item)

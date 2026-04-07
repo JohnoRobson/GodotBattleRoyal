@@ -7,6 +7,7 @@ extends Node
 @export var item_area_actor: ItemInteractionArea
 @export var item_area_cursor: ItemInteractionArea
 @export var can_show_item_text: bool = true
+@export var actor: Actor
 
 var items_that_have_labels: Dictionary[GameItem, ItemPickupText]
 
@@ -37,7 +38,7 @@ func _physics_process(_delta) -> void:
 			itemText.set_item(item)
 			items_that_have_labels[item] = itemText
 		else:
-			items_that_have_labels[item].set_show_interaction_text(false)
+			hide_interaction_text(items_that_have_labels[item])
 	
 	for item in items_in_cursor_area:
 		if !items_that_have_labels.has(item):
@@ -47,9 +48,21 @@ func _physics_process(_delta) -> void:
 			itemText.set_item(item)
 			items_that_have_labels[item] = itemText
 		if items_in_actor_area.has(item):
-			items_that_have_labels[item].set_show_interaction_text(true)
+			show_iteraction_text(item, items_that_have_labels[item])
 		else:
-			items_that_have_labels[item].set_show_interaction_text(false)
+			hide_interaction_text(items_that_have_labels[item])
+
+func show_iteraction_text(item: GameItem, item_text: ItemPickupText) -> void:
+	if _can_pick_up_item(item):
+		item_text.text_state = ItemPickupText.InteractionText.PICK_UP
+	else:
+		item_text.text_state = ItemPickupText.InteractionText.SWAP
+
+func hide_interaction_text(item_text: ItemPickupText) -> void:
+	item_text.text_state = ItemPickupText.InteractionText.NONE
+
+func _can_pick_up_item(item: GameItem) -> bool:
+	return actor.can_pick_up_item(item)
 
 func get_item_that_cursor_is_over_and_is_in_interaction_range() -> GameItem:
 	# check for items in area

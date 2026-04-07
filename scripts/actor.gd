@@ -123,17 +123,18 @@ func _on_health_depleted() -> void:
 func _on_hurtbox_was_hit(amount, _hit_position_global, hit_normalized_direction) -> void:
 	_velocity_to_add += hit_normalized_direction * amount * 100.0 * Vector3(1,0,1)
 
+func can_pick_up_item(item: GameItem) -> bool:
+	return inventory.can_add_item_to_inventory(item)
+
 func _try_to_pick_up_or_swap_item() -> void:
 	var closest_item: GameItem = _item_pickup_manager.get_item_that_cursor_is_over_and_is_in_interaction_range()
-	var did_pick_up_item = inventory.add_item_to_inventory_from_world(closest_item)
-	
-	if did_pick_up_item:
-		return
-	
-	# try for swap
-	var held_item = inventory.get_one_item_in_selected_slot()
-	if !did_pick_up_item && held_item != null && closest_item != null:
-		inventory.swap_item_from_world_to_inventory(closest_item, held_item)
+	if can_pick_up_item(closest_item):
+		inventory.add_item_to_inventory_from_world(closest_item)
+	else:
+		# try for swap
+		var held_item = inventory.get_one_item_in_selected_slot()
+		if held_item != null && closest_item != null:
+			inventory.swap_item_from_world_to_inventory(closest_item, held_item)
 
 func _try_to_drop_item() -> void:
 	var held_item = inventory.get_one_item_in_selected_slot()

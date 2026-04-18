@@ -34,6 +34,7 @@ func _remove_item_from_parent_and_connect_signal(item: GameItem, slot: Inventory
 func _add_item_to_valid_inventory_slot(item: GameItem, valid_slot: InventorySlotData) -> void:
 	valid_slot.push_item(item)
 	_remove_item_from_parent_and_connect_signal(item, valid_slot)
+	_emit_updates(inventory_data.get_index_of_slot(valid_slot))
 
 ## Either adds the item to the selected slot, or if it's stackable and another slot has an instance of the item in it with free space then it adds the item to that slot
 func add_item_to_inventory_from_world(item: GameItem) -> bool:
@@ -46,6 +47,7 @@ func add_item_to_inventory_from_world(item: GameItem) -> bool:
 	# try to add to selected slot
 	if inventory_data.add_item_at_index(item, _selected_slot_index):
 		_remove_item_from_parent_and_connect_signal(item, inventory_data._slots[_selected_slot_index])
+		_emit_updates(_selected_slot_index)
 		return true
 	
 	# Try to add as a stackable

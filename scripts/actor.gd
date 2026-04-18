@@ -126,6 +126,9 @@ func _on_hurtbox_was_hit(amount, _hit_position_global, hit_normalized_direction)
 func _try_to_interact_with_item() -> void:
 	var closest_item: GameItem = _item_interaction_manager.get_item_that_cursor_is_over_and_is_in_interaction_range()
 	
+	if closest_item == null:
+		return
+	
 	match closest_item.interaction_type:
 		GameItem.InteractionType.PICK_UP:
 			inventory.add_or_swap_item_from_world_to_inventory(closest_item)

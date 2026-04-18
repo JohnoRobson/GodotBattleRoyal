@@ -33,6 +33,9 @@ func get_all_items_at_index(index: int) -> Array[GameItem]:
 	
 	return _slots[index]._items
 
+func can_add_item_at_index(item: GameItem, slot_index: int) -> bool:
+	return _slots[slot_index].can_push_item(item)
+
 func add_item_at_index(item: GameItem, slot_index: int) -> bool:
 	return _slots[slot_index].push_item(item)
 

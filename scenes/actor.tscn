@@ -135,10 +135,11 @@ show_any_text = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.98876953, 0)
 shape = SubResource("CylinderShape3D_lu3a0")
 
-[node name="ItemInteractionManager" type="Node" parent="." unique_id=1049587795 node_paths=PackedStringArray("item_area_actor", "item_area_cursor")]
+[node name="ItemInteractionManager" type="Node" parent="." unique_id=1049587795 node_paths=PackedStringArray("item_area_actor", "item_area_cursor", "actor")]
 script = ExtResource("8_6j5c1")
 item_area_actor = NodePath("../ItemPickupArea")
 item_area_cursor = NodePath("../ActorCursor/ItemInteractionArea")
+actor = NodePath("..")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1635603863]
 libraries/ = SubResource("AnimationLibrary_b1yqc")

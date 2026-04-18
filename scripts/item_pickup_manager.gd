@@ -53,16 +53,13 @@ func _physics_process(_delta) -> void:
 			hide_interaction_text(items_that_have_labels[item])
 
 func show_iteraction_text(item: GameItem, item_text: ItemPickupText) -> void:
-	if _can_pick_up_item(item):
+	if actor.inventory.can_add_item_to_inventory(item):
 		item_text.text_state = ItemPickupText.InteractionText.PICK_UP
 	else:
 		item_text.text_state = ItemPickupText.InteractionText.SWAP
 
 func hide_interaction_text(item_text: ItemPickupText) -> void:
 	item_text.text_state = ItemPickupText.InteractionText.NONE
-
-func _can_pick_up_item(item: GameItem) -> bool:
-	return actor.can_pick_up_item(item)
 
 func get_item_that_cursor_is_over_and_is_in_interaction_range() -> GameItem:
 	# check for items in area

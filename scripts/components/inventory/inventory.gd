@@ -113,16 +113,13 @@ func swap_item_from_world_to_inventory(world_item: GameItem, inventory_item: Gam
 	return true
 
 func add_or_swap_item_from_world_to_inventory(world_item: GameItem) -> void:
-	# inventory, closest_item
-	var did_pick_up_item = add_item_to_inventory_from_world(world_item)
-	
-	if did_pick_up_item:
-		return
-	
-	# try for swap
-	var held_item = get_one_item_in_selected_slot()
-	if !did_pick_up_item && held_item != null && world_item != null:
-		swap_item_from_world_to_inventory(world_item, held_item)
+	if can_add_item_to_inventory(world_item):
+		add_item_to_inventory_from_world(world_item)
+	else:
+		# try for swap
+		var held_item = get_one_item_in_selected_slot()
+		if held_item != null && world_item != null:
+			swap_item_from_world_to_inventory(world_item, held_item)
 
 func drop_all_items_into_world(world_position: Vector3) -> void:
 	# add a little bit of height so that the raycasts don't clip through the ground

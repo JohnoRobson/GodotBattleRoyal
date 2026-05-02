@@ -42,7 +42,6 @@ func _on_weapon_swap(game_item: GameItem) -> void:
 				on_update_ammo(-1, -1, false)
 		else:
 			on_update_ammo(-1, -1, false)
-			weapon_name.text = ""
 	else:
 		on_update_ammo(-1, -1, false)
 		weapon_name.text = ""

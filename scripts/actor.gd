@@ -148,8 +148,7 @@ func equip_weapon(weapon: GameItem) -> void:
 	held_weapon.position = Vector3.ZERO
 	held_weapon.rotation = Vector3.ZERO
 	held_weapon.state = GameItem.ItemState.HELD
-	if weapon is Weapon:
-		weapon_swap.emit(weapon)
+	weapon_swap.emit(weapon)
 
 func unequip_weapon(slot_index: int) -> void:
 	var items = inventory.get_all_items_in_slot(slot_index)

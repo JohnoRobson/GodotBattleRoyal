@@ -99,7 +99,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.1093, 1.91131, -1.00589)
 [node name="SniperAmmo2" parent="ItemContainer" unique_id=183809895 instance=ExtResource("15_r2e7w")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.1469, 1.72129, 1.27939)
 
-[node name="ItemBox" parent="ItemContainer" unique_id=108856214 instance=ExtResource("11_2v74y")]
+[node name="ItemBox" parent="ItemContainer" unique_id=108856214 groups=["items"] instance=ExtResource("11_2v74y")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6255227, 0.2500019, 14.325224)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=599836387]

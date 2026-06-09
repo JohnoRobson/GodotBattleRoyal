@@ -29,7 +29,6 @@ func _physics_process(_delta) -> void:
 			# remove label
 			var label = item_ids_that_have_labels.get(item_id)
 			item_ids_that_have_labels.erase(item_id)
-			print(item == null)
 			label.queue_free()
 	
 	for item in items_in_actor_area:

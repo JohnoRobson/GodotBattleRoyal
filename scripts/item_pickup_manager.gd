@@ -9,10 +9,10 @@ extends Node
 @export var can_show_item_text: bool = true
 @export var actor: Actor
 
-var items_that_have_labels: Dictionary[GameItem, ItemPickupText]
+var item_ids_that_have_labels: Dictionary[int, ItemPickupText]
 
 func _ready() -> void:
-	items_that_have_labels = {}
+	item_ids_that_have_labels = {}
 
 func _physics_process(_delta) -> void:
 	if !can_show_item_text:
@@ -23,34 +23,38 @@ func _physics_process(_delta) -> void:
 	var items_in_cursor_area: Array[GameItem] = item_area_cursor.get_items_in_area()
 	
 	# remove labels
-	for item in items_that_have_labels.keys():
-		var label = items_that_have_labels.get(item)
+	for item_id in item_ids_that_have_labels.keys():
+		var item = instance_from_id(item_id)
 		if item == null or (!items_in_actor_area.has(item) and !items_in_cursor_area.has(item)):
 			# remove label
-			items_that_have_labels.erase(item)
+			var label = item_ids_that_have_labels.get(item_id)
+			item_ids_that_have_labels.erase(item_id)
+			print(item == null)
 			label.queue_free()
 	
 	for item in items_in_actor_area:
-		if !items_that_have_labels.has(item):
+		var item_id = item.get_instance_id()
+		if !item_ids_that_have_labels.has(item_id):
 			# add a label
 			var itemText: ItemPickupText = preload("res://scenes/effects/item_pickup_text.tscn").instantiate()
 			add_child(itemText)
 			itemText.set_item(item)
-			items_that_have_labels[item] = itemText
+			item_ids_that_have_labels[item_id] = itemText
 		else:
-			hide_interaction_text(items_that_have_labels[item])
+			hide_interaction_text(item_ids_that_have_labels[item_id])
 	
 	for item in items_in_cursor_area:
-		if !items_that_have_labels.has(item):
+		var item_id = item.get_instance_id()
+		if !item_ids_that_have_labels.has(item_id):
 			# add a label
 			var itemText: ItemPickupText = preload("res://scenes/effects/item_pickup_text.tscn").instantiate()
 			add_child(itemText)
 			itemText.set_item(item)
-			items_that_have_labels[item] = itemText
+			item_ids_that_have_labels[item_id] = itemText
 		if items_in_actor_area.has(item):
-			show_iteraction_text(item, items_that_have_labels[item])
+			show_iteraction_text(item, item_ids_that_have_labels[item_id])
 		else:
-			hide_interaction_text(items_that_have_labels[item])
+			hide_interaction_text(item_ids_that_have_labels[item_id])
 
 func show_iteraction_text(item: GameItem, item_text: ItemPickupText) -> void:
 	if _can_pick_up_item(item):

@@ -22,8 +22,8 @@ func change_state(new_state: State) -> void:
 	current_state = new_state
 	current_state.enter(owner)
 
-func _physics_process(_delta) -> void:
-	current_state.execute_physics(owner)
+func _physics_process(delta) -> void:
+	current_state.execute_physics(owner, delta)
 
 func _process(delta) -> void:
 	if _decision_seconds_count >= _decision_seconds_check:

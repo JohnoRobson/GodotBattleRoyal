@@ -12,7 +12,7 @@ func execute(controller: AiActorController) -> void:
 	if closest_aura == null or controller.actor.health.is_max_health():
 		controller.state_machine.change_state(DecisionMakingState.new())
 
-func execute_physics(controller: AiActorController) -> void:
+func execute_physics(controller: AiActorController, _delta: float) -> void:
 	if !is_instance_valid(closest_aura) or !is_instance_valid(controller.actor) or controller.actor.health.is_max_health():
 		controller.state_machine.change_state(DecisionMakingState.new())
 		return

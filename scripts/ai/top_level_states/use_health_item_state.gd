@@ -21,7 +21,7 @@ func execute(controller: AiActorController) -> void:
 		# do nothing, you are holding a medkit
 		return
 
-func execute_physics(controller: AiActorController) -> void:
+func execute_physics(controller: AiActorController, _delta: float) -> void:
 	if medkit_pickup_routine_started and medkit_pickup_countdown > 0:
 		medkit_pickup_countdown -= 1
 		# health has been picked up

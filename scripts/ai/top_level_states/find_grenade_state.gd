@@ -8,7 +8,7 @@ func execute(controller: AiActorController) -> void:
 	var find_item_state := FindItemState.new([GameItem.ItemTrait.EXPLOSIVE, GameItem.ItemTrait.THROWABLE])
 	controller.state_machine.change_state(find_item_state)
 
-func execute_physics(_controller: AiActorController) -> void:
+func execute_physics(_controller: AiActorController, _delta: float) -> void:
 	pass
 
 func exit(_controller: AiActorController) -> void:

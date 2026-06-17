@@ -38,7 +38,7 @@ func enter(controller: AiActorController) -> void:
 func execute(_controller: AiActorController) -> void:
 	pass
 
-func execute_physics(controller: AiActorController) -> void:
+func execute_physics(controller: AiActorController, _delta: float) -> void:
 	#move
 	var current_location = controller.actor.global_transform.origin
 	var next_location = controller.nav_agent.get_next_path_position()

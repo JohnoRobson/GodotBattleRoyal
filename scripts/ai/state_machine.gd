@@ -31,7 +31,6 @@ func _process(delta) -> void:
 	if _decision_seconds_count >= _decision_seconds_check:
 		_decision_seconds_count = 0.0
 		_decision_seconds_check = randf_range(_decisions_seconds_check_lower_limit, _decisions_seconds_check_upper_limit)
-		print(_decision_seconds_check)
 		
 		var states: Array[StateEvaluation] = DecisionMaker.get_states_to_do(owner)
 		previous_state_evaluations.push_evaluations(states)

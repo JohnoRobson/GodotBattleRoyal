@@ -66,4 +66,6 @@ func can_be_interrupted_by(state: State) -> bool:
 		return false
 	elif state is FindHealthState and _current_target.has_trait(GameItem.ItemTrait.HEALING):
 		return false
+	elif state is FindAmmoState and _current_target.has_trait(GameItem.ItemTrait.AMMO):
+		return false
 	return true

@@ -47,7 +47,7 @@ func execute(controller: AiActorController) -> void:
 		return
 
 
-func execute_physics(_controller: AiActorController) -> void:
+func execute_physics(_controller: AiActorController, _delta: float) -> void:
 	pass
 
 func exit(_controller: AiActorController) -> void:

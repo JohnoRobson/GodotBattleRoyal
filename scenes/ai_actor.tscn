@@ -23,27 +23,31 @@ resource_local_to_scene = true
 material = SubResource("ShaderMaterial_dhvnc")
 
 [node name="AiActor" unique_id=71779919 node_paths=PackedStringArray("controller") instance=ExtResource("1_jfaud")]
-speed = 5.0
-JUMP_VELOCITY = 4.5
 controller = NodePath("AiActorController")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." index="4" unique_id=977445675]
 avoidance_enabled = true
 height = 2.0
 radius = 0.7
-neighbor_distance = 10.0
 max_speed = 20.0
 
-[node name="AiActorController" type="Node3D" parent="." index="5" unique_id=1639792229 node_paths=PackedStringArray("actor", "nav_agent")]
+[node name="AiActorController" type="Node3D" parent="." index="5" unique_id=1639792229 node_paths=PackedStringArray("actor", "nav_agent", "item_raycast")]
 script = ExtResource("3_q60xr")
 actor = NodePath("..")
 nav_agent = NodePath("../NavigationAgent3D")
+item_raycast = NodePath("../Rotator/Animatable/RayCast3D")
 
 [node name="ItemPickupManager" parent="." index="6" unique_id=1049587795]
 can_show_item_text = false
 
 [node name="ActorBody" parent="Rotator/Animatable" parent_id_path=PackedInt32Array(1842591485) index="0" unique_id=1631406986]
 mesh = SubResource("CapsuleMesh_eb4ia")
+
+[node name="RayCast3D" type="RayCast3D" parent="Rotator/Animatable" parent_id_path=PackedInt32Array(1842591485) index="1" unique_id=1205867347]
+transform = Transform3D(0.997564, 0.0697565, 0, -0.0697565, 0.997564, 0, 0, 0, 1, 0.0751962, 1.07536, -0.803629)
+target_position = Vector3(0, 0, -500)
+collision_mask = 3
+collide_with_areas = true
 
 [node name="Camera3D" type="Camera3D" parent="." index="11" unique_id=1493429382]
 transform = Transform3D(1, 0, 0, 0, 0.559193, 0.829038, 0, -0.829038, 0.559193, 0, 11.4105, 7.52074)

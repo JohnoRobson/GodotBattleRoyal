@@ -6,7 +6,7 @@ func enter(_controller: AiActorController) -> void:
 func execute(_controller: AiActorController) -> void:
 	pass
 
-func execute_physics(_controller: AiActorController) -> void:
+func execute_physics(_controller: AiActorController, _delta: float) -> void:
 	pass
 
 func exit(_controller: AiActorController) -> void:

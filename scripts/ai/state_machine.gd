@@ -6,8 +6,10 @@ var owner: AiActorController
 
 var previous_state_evaluations: StateEvaluationMemory
 
-const _decision_seconds_check: float = 0.5
+var _decision_seconds_check: float = 0.0
 var _decision_seconds_count: float = 0.0
+const _decisions_seconds_check_lower_limit: float = 0.5
+const _decisions_seconds_check_upper_limit: float = 1.0
 const _how_long_until_state_switchback_is_allowed: float = 4.0
 var _state_switchback_count: float = 0.0
 const _number_of_memory_frames_to_keep: int = 5
@@ -28,6 +30,9 @@ func _physics_process(delta) -> void:
 func _process(delta) -> void:
 	if _decision_seconds_count >= _decision_seconds_check:
 		_decision_seconds_count = 0.0
+		_decision_seconds_check = randf_range(_decisions_seconds_check_lower_limit, _decisions_seconds_check_upper_limit)
+		print(_decision_seconds_check)
+		
 		var states: Array[StateEvaluation] = DecisionMaker.get_states_to_do(owner)
 		previous_state_evaluations.push_evaluations(states)
 		var best_state = states[0].state

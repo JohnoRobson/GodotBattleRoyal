@@ -53,12 +53,12 @@ func enter(controller: AiActorController) -> void:
 	
 	
 	_nav_agent_for_target = nav_agent.duplicate()
-	current_controller.actor.add_child(_nav_agent_for_target)
 	
 	# MUST DISABLE SO THAT WE DON'T HAVE TWO NAV AGENTS WITH AVOIDANCE OCCUPYING THE SAME SPACE
 	_nav_agent_for_target.avoidance_enabled = false 
-	
 	_nav_agent_for_target.velocity_computed.connect(_on_target_path_computed)
+	
+	current_controller.actor.add_child(_nav_agent_for_target)
 	
 	# if movement is MOVING_TOWARDS_MOVEMENT_OVERRIDE, then the current_movement_target must be set
 	# otherwise throw
@@ -212,9 +212,8 @@ func _score_weapon_in_current_context(game_item: GameItem, this_actor: Actor) ->
 		if !weapon_has_ammo_in_magazine and ammo_for_weapon_in_inventory.size() == 0:
 			return 0.0
 	
-	var target_distance: float = _target_distance()
 	# clamp target_distance between 0 and 100 so that we have a known range to work with
-	target_distance = clampf(target_distance, 0.0, 100.0)
+	var target_distance: float = clampf(_target_distance(), 0.0, 100.0)
 	
 	var desired_distance: float = clampf(ItemEvaluator.get_item_range(game_item, false), 0, MAX_WEAPON_RANGE_TO_CONSIDER)
 	

@@ -20,7 +20,7 @@ func execute(controller: AiActorController) -> void:
 	if _current_target.state == GameItem.ItemState.HELD:
 		controller.state_machine.change_state(DecisionMakingState.new())
 
-func execute_physics(controller: AiActorController) -> void:
+func execute_physics(controller: AiActorController, _delta: float) -> void:
 	if picked_up_weapon_last_tick && _current_target.state == GameItem.ItemState.HELD:
 		picked_up_weapon_last_tick = false
 		controller.set_is_picking_up_or_swapping_item(false)
@@ -65,5 +65,7 @@ func can_be_interrupted_by(state: State) -> bool:
 	elif state is FindGrenadeState and _current_target.has_trait(GameItem.ItemTrait.EXPLOSIVE):
 		return false
 	elif state is FindHealthState and _current_target.has_trait(GameItem.ItemTrait.HEALING):
+		return false
+	elif state is FindAmmoState and _current_target.has_trait(GameItem.ItemTrait.AMMO):
 		return false
 	return true

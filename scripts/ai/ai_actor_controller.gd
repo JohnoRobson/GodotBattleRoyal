@@ -5,6 +5,7 @@ extends ActorController
 @export var nav_agent: NavigationAgent3D
 @export var world_navmesh: NavigationRegion3D
 @export var world: World
+@export var item_raycast: RayCast3D
 
 var state_machine: StateMachine
 var aim_position: Vector3 = Vector3.ZERO

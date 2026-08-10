@@ -2,7 +2,7 @@ class_name ActionEffect
 extends Action
 # Creates a scene at the current location. This is intended for instantiating effects that will clean themselves up
 
-@export var scene_to_spawn: Resource
+@export var scene_to_spawn: PackedScene
 
 func _init() -> void:
 	action_name = self.Name.EFFECT

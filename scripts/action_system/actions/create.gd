@@ -1,8 +1,10 @@
 class_name ActionCreate
 extends Action
-# Creates a new game item and triggers its first action
+## Creates a new game item
 
 @export var game_item_to_create: PackedScene
+## Trigger the first action of the new game item
+@export var cascade_action: bool = true
 
 func _init() -> void:
 	action_name = self.Name.CREATE
@@ -18,6 +20,7 @@ func perform(_delta: float, item_node: ActionStack.ItemNode) -> bool:
 	var action_system: ActionSystem = item_node.data[Action.Keys.ACTION_SYSTEM]
 	new_game_item.action_triggered.connect(action_system.action_triggered)
 	
-	item_node.child_nodes.append(ActionStack.ItemNode.new(new_game_item.action, new_game_item, item_node))
+	if (cascade_action):
+		item_node.child_nodes.append(ActionStack.ItemNode.new(new_game_item.action, new_game_item, item_node))
 	
 	return true

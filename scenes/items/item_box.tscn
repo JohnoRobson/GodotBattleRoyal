@@ -2,13 +2,14 @@
 
 [ext_resource type="Script" uid="uid://cm6je8qb83lpt" path="res://scripts/items/game_item.gd" id="1_88ees"]
 [ext_resource type="Script" uid="uid://b4gq3cdvwyn3" path="res://scripts/action_system/actions/action.gd" id="2_8sdir"]
-[ext_resource type="PackedScene" uid="uid://ctf3x6yunrqua" path="res://scenes/items/sniper_ammo.tscn" id="3_8sdir"]
-[ext_resource type="Script" uid="uid://bjmrmi340jux3" path="res://scripts/action_system/actions/create.gd" id="4_3qx17"]
+[ext_resource type="Script" uid="uid://so3erbkfrfds" path="res://scripts/action_system/actions/replace.gd" id="4_8sdir"]
+[ext_resource type="PackedScene" uid="uid://b5pidhuj5uftx" path="res://scenes/items/cluster_grenade.tscn" id="4_fuy1v"]
 
-[sub_resource type="Resource" id="Resource_sfxuy"]
-script = ExtResource("4_3qx17")
-game_item_to_create = ExtResource("3_8sdir")
-metadata/_custom_type_script = "uid://bjmrmi340jux3"
+[sub_resource type="Resource" id="Resource_oyu65"]
+script = ExtResource("4_8sdir")
+replacement_game_item = ExtResource("4_fuy1v")
+cascade_action = false
+metadata/_custom_type_script = "uid://so3erbkfrfds"
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_88ees"]
 albedo_color = Color(1, 0.3647059, 0.35686275, 1)
@@ -23,7 +24,7 @@ size = Vector3(0.5, 0.5, 0.5)
 [node name="ItemBox" type="RigidBody3D" unique_id=108856214]
 script = ExtResource("1_88ees")
 item_name = "Item Box"
-action = SubResource("Resource_sfxuy")
+action = SubResource("Resource_oyu65")
 interaction_type = 1
 metadata/_custom_type_script = "uid://cm6je8qb83lpt"
 

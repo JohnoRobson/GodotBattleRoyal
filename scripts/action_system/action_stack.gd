@@ -1,7 +1,7 @@
 class_name ActionStack
 extends Node
-# This represents a tree of actions. Each individual instance of an action tree being performed is represented by an ActionStack.
-# The ActionStack handles action tree state along with keeping track of the game item the action is linked to.
+## This represents a tree of actions. Each individual instance of an action tree being performed is represented by an ActionStack.
+## The ActionStack handles action tree state along with keeping track of the game item the action is linked to.
 
 var uncompleted_top_level_nodes: Array[ItemNode] = []
 var root_game_item: GameItem
@@ -36,6 +36,7 @@ func perform(delta: float) -> void:
 		if current_action_is_completed:
 			uncompleted_top_level_nodes.remove_at(uncompleted_node_index)
 			
+			# zzz add property to create action that halts cascading action triggering, reference effect action
 			if current_node.action.has_children() or !current_node.child_nodes.is_empty():
 				# add the current_action's children to the actions to complete and set up ItemNodes for them
 				# reverse ordered for loop so that the insert puts the new nodes in the order as viewed in the editor
@@ -75,10 +76,10 @@ func stack_is_completed() -> bool:
 func cancel_stack() -> void:
 	is_canceled = true
 
-# The ActionStack makes a tree of ItemNodes that matches the Action tree. Each action gets an ItemNode to store state in.
-# Additionaly, Actions can add new ItemNodes as child nodes or change the fields of the ItemNode that they're linked to,
-# For example, ActionReplace makes a new instance of a GameItem and replaces its ItemNode's game_item value with the new object and
-# adds the new GameItem's Actions as children to the ItemNode so that they are executed by the current ActionStack. 
+## The ActionStack makes a tree of ItemNodes that matches the Action tree. Each action gets an ItemNode to store state in.
+## Additionaly, Actions can add new ItemNodes as child nodes or change the fields of the ItemNode that they're linked to,
+## For example, ActionReplace makes a new instance of a GameItem and replaces its ItemNode's game_item value with the new object and
+## adds the new GameItem's Actions as children to the ItemNode so that they are executed by the current ActionStack. 
 class ItemNode:
 	var action: Action
 	var game_item: GameItem

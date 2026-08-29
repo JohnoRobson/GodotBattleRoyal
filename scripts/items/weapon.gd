@@ -1,5 +1,4 @@
-class_name Weapon
-extends GameItem
+class_name Weapon extends GameItem
 
 @export var stats: WeaponType
 @onready var _fire_rate_per_second = stats.fire_rate_per_minute / 60
@@ -14,7 +13,7 @@ enum WeaponState { CAN_FIRE, NO_AMMO, COOLDOWN, RELOADING }
 var _current_state: WeaponState = WeaponState.NO_AMMO
 
 signal update_ammo_ui(current_ammo: int, max_ammo: int)
-#signal on_firing(start_position: Vector3, end_position: Vector3)
+# signal on_firing(start_position: Vector3, end_position: Vector3)
 
 func _ready() -> void:
 	# big hack, but it works for now
@@ -40,7 +39,7 @@ func does_slot_contain_compatible_ammo(slot: InventorySlotData) -> bool:
 		return false
 	return (item_in_slot as Ammo).ammo_type.ammo_category == stats.ammo_category
 
-# attempts to start the reload process. returns false if there is no ammo to reload with
+## attempts to start the reload process. returns false if there is no ammo to reload with
 func reload(inventory: Inventory) -> bool:
 	# return if we are already in the process of reloading
 	if _current_state == WeaponState.RELOADING:
@@ -55,7 +54,7 @@ func reload(inventory: Inventory) -> bool:
 		return true
 	return false
 
-# fires the weapon, if it can
+## fires the weapon, if it can
 func use_item(_actor: Actor) -> void:
 	if _current_state == WeaponState.CAN_FIRE and _ammo != null:
 		_ammo.current_ammo_in_magazine -= 1
@@ -86,10 +85,10 @@ func _apply_weapon_reload(delta: float) -> void:
 		update_ammo_ui.emit(_ammo.current_ammo_in_magazine, _ammo.ammo_type.ammo_in_full_magazine)
 		_current_state = WeaponState.CAN_FIRE
 
-# used for ai checking if the weapon should be reloaded
+## used for ai checking if the weapon should be reloaded
 func empty_and_can_reload() -> bool:
 	return _current_state == WeaponState.NO_AMMO
 
-# used by the actor holding the weapon to toggle the movement penalty for accuracy
+## used by the actor holding the weapon to toggle the movement penalty for accuracy
 func set_is_moving(is_moving: bool) -> void:
 	_is_moving = is_moving

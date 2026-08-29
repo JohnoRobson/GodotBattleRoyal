@@ -1,5 +1,4 @@
-class_name DecisionMakingState
-extends State
+class_name DecisionMakingState extends State
 
 func enter(controller: AiActorController) -> void:
 	controller.state_machine.change_state(DecisionMaker.get_state_to_do(controller))

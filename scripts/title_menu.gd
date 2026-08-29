@@ -1,5 +1,4 @@
-class_name TitleMenu
-extends Menu
+class_name TitleMenu extends Menu
 
 func _ready() -> void:
 	var start_classic_button:Button = self.get_node("Start Classic Button")

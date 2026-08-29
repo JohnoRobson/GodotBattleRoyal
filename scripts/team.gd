@@ -1,5 +1,4 @@
-class_name Team
-extends Node
+class_name Team extends Node
 
 @onready var members: Array[Actor] = []
 

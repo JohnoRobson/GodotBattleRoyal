@@ -1,5 +1,4 @@
-class_name FightState
-extends State
+class_name FightState extends State
 ## This state has a few goals:
 ## 1.  if the movement_override_target is set, then the state will make the actor
 ##     move towards it, ignoring other behaviour and set the movement_state to MOVING_TOWARDS_MOVEMENT_OVERRIDE
@@ -255,7 +254,7 @@ func _determine_direction_to_move(this_actor: Actor) -> DirectionToMove:
 		# should I close? (moving range)
 		return DirectionToMove.TOWARDS_TARGET
 
-# used for nav agent collision avoidance
+## used for nav agent collision avoidance
 func _on_velocity_computed(safe_velocity: Vector3) -> void:
 	var dir = safe_velocity.normalized()
 	if is_instance_valid(current_controller):

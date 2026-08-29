@@ -1,5 +1,4 @@
-class_name FindAmmoState
-extends State
+class_name FindAmmoState extends State
 
 const acceptable_number_of_reloads_for_a_weapon: int = 1
 

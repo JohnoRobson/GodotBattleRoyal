@@ -1,7 +1,7 @@
 class_name LoggerInterface
 extends Node
 
-# red, yellow, white, green
+## red, yellow, white, green
 enum LoggingLevel {ERROR, WARN, INFO, TRACE}
 
 var logging_level: LoggingLevel = LoggingLevel.INFO

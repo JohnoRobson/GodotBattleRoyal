@@ -1,5 +1,4 @@
-class_name Menu
-extends Control
+class_name Menu extends Control
 
 signal start_game_button_pressed(game_type: World.GameTypes)
 signal restart_game_button_pressed()

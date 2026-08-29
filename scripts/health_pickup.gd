@@ -1,5 +1,4 @@
-class_name HealthPickup
-extends Node3D
+class_name HealthPickup extends Node3D
 
 @export var indicator: MeshInstance3D
 @export var area: Area3D
@@ -11,7 +10,7 @@ var health_is_available: bool
 func _ready() -> void:
 	health_is_available = true
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+## Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta) -> void:
 	if (!health_is_available):
 		seconds_until_respawn -= delta

@@ -1,5 +1,4 @@
-class_name ReporterPanelContainer
-extends PanelContainer
+class_name ReporterPanelContainer extends PanelContainer
 ## Holds ReporterContainers within itself to align them vertically
 ## Handles turning the name of a node and the Dictionary returned by its Reporter into a visible ReporterContainer
 

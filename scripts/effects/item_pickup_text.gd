@@ -1,5 +1,4 @@
-class_name ItemPickupText
-extends Node3D
+class_name ItemPickupText extends Node3D
 
 var game_item: GameItem
 var text_state: InteractionText

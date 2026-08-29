@@ -1,5 +1,4 @@
-class_name ReporterContainer
-extends VBoxContainer
+class_name ReporterContainer extends VBoxContainer
 ## Displays a group of values returned by a Reporter
 
 @onready var _title: Label = $Title

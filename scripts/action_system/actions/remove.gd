@@ -1,6 +1,5 @@
-class_name ActionRemove
-extends Action
-# Removes the parent game item
+class_name ActionRemove extends Action
+## Removes the parent game item
 
 func _init() -> void:
 	action_name = self.Name.REMOVE

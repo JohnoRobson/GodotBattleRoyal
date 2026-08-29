@@ -1,5 +1,4 @@
-class_name RaycastUtils
-extends Object
+class_name RaycastUtils extends Object
 
 static func raycast_in_direction(node: Node3D, start_position: Vector3, end_position: Vector3) -> Vector3:
 	var cast_collision_mask: int = 0b0001 # 0001 world, 0010 actor

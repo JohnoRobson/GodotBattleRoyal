@@ -1,5 +1,4 @@
-class_name Ammo
-extends GameItem
+class_name Ammo extends GameItem
 
 @export var ammo_type: AmmoType
 var current_ammo_in_magazine: int:

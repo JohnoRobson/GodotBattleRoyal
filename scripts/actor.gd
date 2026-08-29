@@ -1,5 +1,4 @@
-class_name Actor
-extends CharacterBody3D
+class_name Actor extends CharacterBody3D
 
 static func init_player_actor() -> Actor:
 	var actor: Actor = load("res://scenes/player_actor.tscn").instantiate()
@@ -18,7 +17,7 @@ static func init_player_actor() -> Actor:
 @export var JUMP_VELOCITY = 4.5
 @export var controller: ActorController = ActorController.new()
 
-# Get the gravity from the project settings to be synced with RigidBody nodes.
+## Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 var actor_state: ActorState = ActorState.IDLE
@@ -157,7 +156,7 @@ func unequip_weapon(slot_index: int) -> void:
 		if item != null and item.get_parent() != null:
 			item.get_parent().remove_child(item)
 
-# Called by the inventory when it changes, for example, when switching slots or picking up/dropping items
+## Called by the inventory when it changes, for example, when switching slots or picking up/dropping items
 func _on_weapon_inventory_inventory_changed(inventory_data: InventoryData, selected_slot_index: int, changed_slot_index: int) -> void:
 	var item_in_selected_slot: GameItem = inventory_data.get_item_at_index(selected_slot_index)
 	var item_in_previous_slot: GameItem = inventory_data.get_item_at_index(changed_slot_index)

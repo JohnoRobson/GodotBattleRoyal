@@ -1,5 +1,4 @@
-class_name BulletEffect
-extends MeshInstance3D
+class_name BulletEffect extends MeshInstance3D
 
 @export var start: Vector3 = Vector3.ZERO
 @export var end: Vector3 = Vector3(0.0,0.0,-50.0)

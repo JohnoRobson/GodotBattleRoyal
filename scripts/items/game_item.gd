@@ -1,5 +1,4 @@
-class_name GameItem
-extends RigidBody3D
+class_name GameItem extends RigidBody3D
 
 @export var state: ItemState = ItemState.IN_WORLD
 var can_be_used: bool
@@ -35,7 +34,7 @@ enum ItemState {
 func _init() -> void:
 	can_be_used = true
 
-# Called when the node enters the scene tree for the first time.
+## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	freeze_mode = RigidBody3D.FREEZE_MODE_STATIC
 	# exists on the "Items" layer
@@ -44,7 +43,7 @@ func _ready() -> void:
 	collision_mask = DEFAULT_COLLISION_MASK
 	freeze = state != ItemState.PHYSICS_ENABLED
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+## Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta) -> void:
 	pass
 
@@ -65,7 +64,7 @@ func dispose_of_item() -> void:
 	item_used_up.emit()
 	queue_free()
 
-# returns a vector in local space that points from the weapon to where the weapon should be pointing to hit the target
+## returns a vector in local space that points from the weapon to where the weapon should be pointing to hit the target
 func get_aim_vector(target_global_position: Vector3) -> Vector3:
 	return aim_function.aim_angle(target_global_position, global_position)
 

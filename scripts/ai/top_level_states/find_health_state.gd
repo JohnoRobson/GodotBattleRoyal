@@ -1,5 +1,4 @@
-class_name FindHealthState
-extends State
+class_name FindHealthState extends State
 
 func enter(_controller: AiActorController) -> void:
 	pass

@@ -1,5 +1,4 @@
-class_name StandInHealingAuraState
-extends State
+class_name StandInHealingAuraState extends State
 
 var is_standing_in_healing_aura: bool = false
 var closest_aura: GameItem = null

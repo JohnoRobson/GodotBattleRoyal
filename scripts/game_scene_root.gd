@@ -1,7 +1,6 @@
-class_name GameSceneRoot
-extends Node
+class_name GameSceneRoot extends Node
 
-# Treat CLASSIC as the default game mode from the perspective of the game scene root
+## Treat CLASSIC as the default game mode from the perspective of the game scene root
 var current_game_type:World.GameTypes  = World.GameTypes.CLASSIC
 
 var world_script = preload("res://scripts/world.gd")
@@ -18,7 +17,7 @@ func _notification(what) -> void:
 		# We can add on-close behaviour here - MW 2024-05-15
 		get_tree().quit()
 
-# Load a new game scene, hide the UI, and unpause
+## Load a new game scene, hide the UI, and unpause
 func start_game_scene(new_game_scene:PackedScene, game_type: World.GameTypes) -> void:
 	var new_instantiated_game_scene = new_game_scene.instantiate()
 	new_instantiated_game_scene.game_lost.connect(_on_game_scene_game_lost)
@@ -33,7 +32,7 @@ func start_game_scene(new_game_scene:PackedScene, game_type: World.GameTypes) ->
 	
 	get_tree().paused = false
 
-# Clear all current game scenes from the game scene root
+## Clear all current game scenes from the game scene root
 func clear_game_scenes() -> void:
 	var game_scenes:Node = $GameScenes
 	for game_scene in game_scenes.get_children():

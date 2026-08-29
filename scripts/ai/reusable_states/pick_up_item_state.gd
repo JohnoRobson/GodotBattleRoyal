@@ -1,5 +1,4 @@
-class_name PickUpItemState
-extends State
+class_name PickUpItemState extends State
 
 var _current_target: GameItem
 var picked_up_weapon_last_tick: bool = false
@@ -54,7 +53,7 @@ func exit(controller: AiActorController) -> void:
 func get_name() -> String:
 	return "PickUpItemState"
 
-# used for nav agent collision avoidance
+## used for nav agent collision avoidance
 func _on_velocity_computed(safe_velocity: Vector3) -> void:
 	var dir = safe_velocity.normalized()
 	current_controller.set_move_direction(Vector2(dir.x, dir.z))

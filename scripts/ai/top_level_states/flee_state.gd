@@ -1,5 +1,4 @@
-class_name FleeState
-extends State
+class_name FleeState extends State
 
 var position_to_flee_to: Vector3
 var current_controller: AiActorController
@@ -63,7 +62,7 @@ func exit(controller: AiActorController) -> void:
 func get_name() -> String:
 	return "FleeState"
 
-# used for nav agent collision avoidance
+## used for nav agent collision avoidance
 func _on_velocity_computed(safe_velocity: Vector3) -> void:
 	var dir = safe_velocity.normalized()
 	current_controller.set_move_direction(Vector2(dir.x, dir.z))

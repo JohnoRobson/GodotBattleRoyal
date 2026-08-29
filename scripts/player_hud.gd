@@ -1,5 +1,4 @@
-class_name PlayerHud
-extends Control
+class_name PlayerHud extends Control
 
 @onready var ammo_count: Label = get_node("AmmoPanel/VBoxContainer/AmmoCount")
 @onready var weapon_name: Label = get_node("AmmoPanel/VBoxContainer/WeaponName")

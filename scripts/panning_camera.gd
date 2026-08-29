@@ -56,13 +56,13 @@ func _get_dist_from_center_of_camera() -> float:
 	var mag = (mouse_position - middle_of_screen).length()
 	var screen_mag = viewport_rect.y / 2# assuming that y is smaller than x
 	var ratio = mag / screen_mag
-	if ratio <= 0.3:
-		return 0
+	#if ratio <= 0.3:
+		#return 0
 	return clampf(ratio, 0, 1)
 
 func _easeIn(x: float) -> float:
-	#return x # linear
-	return 1 - cos((x * PI) / 2) # sine
+	return x # linear
+	#return 1 - cos((x * PI) / 2) # sine
 	#return -(cos(PI * x) - 1) / 2 # inoutsine
 	#return 1 - pow(1 - x, 3)
 
@@ -83,7 +83,8 @@ func _process(_delta: float) -> void:
 	
 	var multiplied_mouse_position = Vector2(width, height) * normalized_mouse_pos
 	var mag = multiplied_mouse_position.length()
-	var easing = clampf(_easeIn(_get_dist_from_center_of_camera()), 0, 1)
+	#var easing = clampf(_easeIn(_get_dist_from_center_of_camera()), 0, 1)
+	var easing = _easeIn(clampf(_get_dist_from_center_of_camera(), 0.2, 1))
 	print(easing)
 	var clamped_multiplied_mouse_position = multiplied_mouse_position.normalized() * mag * easing
 	

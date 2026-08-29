@@ -198,7 +198,7 @@ func _on_actor_killed(actor: Actor) -> void:
 		ai_actors.erase(actor)
 	
 	var current_camera = get_viewport().get_camera_3d()
-	if actor == current_camera.get_parent():
+	if actor == current_camera.get_parent() or actor == current_camera.get_parent().get_parent():
 		make_random_ai_camera_current()
 	
 	# check for win condition

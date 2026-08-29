@@ -112,20 +112,11 @@ func swap_item_from_world_to_inventory(world_item: GameItem, inventory_item: Gam
 	_remove_item_from_parent_and_connect_signal(world_item, inventory_data._slots[_selected_slot_index])
 	return true
 
-func add_or_swap_item_from_world_to_inventory(world_item: GameItem) -> void:
-	if can_add_item_to_inventory(world_item):
-		add_item_to_inventory_from_world(world_item)
-	else:
-		# try for swap
-		var held_item = get_one_item_in_selected_slot()
-		if held_item != null && world_item != null:
-			swap_item_from_world_to_inventory(world_item, held_item)
-
 func drop_all_items_into_world(world_position: Vector3) -> void:
 	# add a little bit of height so that the raycasts don't clip through the ground
 	world_position = world_position + Vector3.UP * 0.1
 	var total_items: int = 0
-
+	
 	for slot: InventorySlotData in inventory_data._slots:
 		total_items += slot.number_of_items()
 	
@@ -138,6 +129,15 @@ func drop_all_items_into_world(world_position: Vector3) -> void:
 			new_item_position = ItemUtils.get_position_to_be_on_ground(slot.get_item(), new_item_position);
 			remove_item_from_inventory_to_world(slot.get_item(), new_item_position, Vector3(0, 90, 0))
 			current_index += 1
+
+func add_or_swap_item_from_world_to_inventory(world_item: GameItem) -> void:
+	if can_add_item_to_inventory(world_item):
+		add_item_to_inventory_from_world(world_item)
+	else:
+		# try for swap
+		var held_item = get_one_item_in_selected_slot()
+		if held_item != null && world_item != null:
+			swap_item_from_world_to_inventory(world_item, held_item)
 
 func number_of_filled_slots() -> int:
 	return inventory_data.number_of_filled_slots()

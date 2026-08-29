@@ -1,5 +1,4 @@
-class_name World
-extends Node3D
+class_name World extends Node3D
 
 @onready var player_actors: Array[Actor] = []
 @onready var ai_actors: Array[Actor] = []
@@ -45,7 +44,7 @@ func _process(_delta) -> void:
 func _physics_process(_delta) -> void:
 	pass
 
-# Common actor initializations (player and AI)
+## Common actor initializations (player and AI)
 func _init_actor(actor: Actor, spawn_position: Vector3) -> void:
 	# TODO: fix incorrect spawn location bug when spawning at (0,0)
 	actor.actor_killed.connect(_on_actor_killed)
@@ -57,7 +56,7 @@ func _init_actor(actor: Actor, spawn_position: Vector3) -> void:
 	for i in actor_inventory_size:
 		actor.inventory.inventory_data._slots.append(InventorySlotData.new())
 
-# To be run after a game setup function has been called
+## To be run after a game setup function has been called
 func conclude_loading() -> void:
 	# move this somewhere else
 	for item in get_tree().get_nodes_in_group("items"):
@@ -100,7 +99,7 @@ func get_random_unused_actor_spawn_location() -> Vector3:
 	
 	return random_unused_actor_spawner.global_spawn_position
 
-# Spawn player actor and create new player controller
+## Spawn player actor and create new player controller
 func spawn_player() -> Actor:
 	assert(player_actors.size() == 0, "Only one player supported")
 	
@@ -122,7 +121,7 @@ func spawn_player() -> Actor:
 	
 	return actor;
 
-# Spawn AI actor and configure existing AI controller
+## Spawn AI actor and configure existing AI controller
 func spawn_ai() -> Actor:
 	var actor: Actor = preload("res://scenes/ai_actor.tscn").instantiate()
 	
@@ -282,7 +281,7 @@ func get_closest_ammo_of_category(from_position: Vector3, ammo_category: AmmoTyp
 	items.sort_custom(func(a, b): return from_position.distance_to(a.global_transform.origin) < from_position.distance_to(b.global_transform.origin))
 	return items.front() if !items.is_empty() else null
 
-# this is not good
+## this is not good
 func get_closest_healing_aura(from_position: Vector3) -> GameItem:
 	var items = []
 	

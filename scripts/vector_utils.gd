@@ -1,5 +1,4 @@
-class_name VectorUtils
-extends Object
+class_name VectorUtils extends Object
 
 static func make_local_inaccuracy_vector(degrees_of_inaccuracy: float) -> Vector3:
 	# set up the inaccuracy and aim vector for the raycast

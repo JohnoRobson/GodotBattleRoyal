@@ -1,5 +1,4 @@
-class_name InventorySlotData
-extends Resource
+class_name InventorySlotData extends Resource
 
 var _items: Array[GameItem]
 

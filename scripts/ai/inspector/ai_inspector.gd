@@ -1,5 +1,4 @@
-class_name AiInspector
-extends Control
+class_name AiInspector extends Control
 
 @export var world: World
 @onready var panel: Panel = get_node("Panel")

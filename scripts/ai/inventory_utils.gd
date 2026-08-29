@@ -1,6 +1,6 @@
 class_name InventoryUtils
 
-# Checks the contents of the InventoryData and returns a list of ItemTraits from GameItems in it
+## Checks the contents of the InventoryData and returns a list of ItemTraits from GameItems in it
 static func get_traits(inventory_data: InventoryData) -> Array[GameItem.ItemTrait]:
 	# throw the traits into a dict acting as a set
 	var traits_in_inventory = {}
@@ -14,7 +14,7 @@ static func get_traits(inventory_data: InventoryData) -> Array[GameItem.ItemTrai
 	trait_array.append_array(traits_in_inventory.keys())
 	return trait_array
 
-# Checks the contents of the InventoryData and returns a list of ItemTraits from GameItems in it
+## Checks the contents of the InventoryData and returns a list of ItemTraits from GameItems in it
 static func contains_traits(inventory_data: InventoryData, desired_traits: Array[GameItem.ItemTrait]) -> bool:
 	return inventory_data._slots.any(func(a): return _item_slot_has_traits(a, desired_traits))
 

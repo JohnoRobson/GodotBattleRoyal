@@ -1,5 +1,4 @@
-class_name UseHealthItemState
-extends State
+class_name UseHealthItemState extends State
 
 var medkit_pickup_countdown: int = -1
 var medkit_pickup_routine_started: bool = false

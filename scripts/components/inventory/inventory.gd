@@ -1,8 +1,7 @@
-class_name Inventory
-extends Node3D
-# An inventory can hold a number of GameItems.
-# It has methods for adding them to the inventory from the world
-# and removing them from the inventory, placing them back in the world.
+class_name Inventory extends Node3D
+## An inventory can hold a number of GameItems.
+## It has methods for adding them to the inventory from the world
+## and removing them from the inventory, placing them back in the world.
 
 @export var inventory_data: InventoryData
 var _selected_slot_index: int = 0
@@ -68,7 +67,7 @@ func add_item_to_inventory_from_world(item: GameItem) -> bool:
 	
 	return false
 
-# This for removing one (1) item
+## This for removing one (1) item
 func remove_item_from_inventory_to_world(item: GameItem, item_global_position: Vector3, item_global_rotation: Vector3) -> bool:
 	if !inventory_data.remove_item(item, _selected_slot_index):
 		push_error("Failed to remove an item from an inventory")
@@ -87,7 +86,7 @@ func remove_item_from_inventory_to_world(item: GameItem, item_global_position: V
 	disconnect_remove_signal(item)
 	return true
 
-# this swaps one item in the world with one item in the inventory (and any others in the slot) 
+## this swaps one item in the world with one item in the inventory (and any others in the slot) 
 func swap_item_from_world_to_inventory(world_item: GameItem, inventory_item: GameItem) -> bool:
 	var is_inventory_item_inside_inventory: bool = inventory_data.is_equivalent_item_in_inventory(inventory_item)
 	

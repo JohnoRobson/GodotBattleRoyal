@@ -55,7 +55,7 @@ static func evaluate_loot_factor(factor_context: FactorContext) -> float:
 	
 	return clamp_result(items_in_area.size() * 0.2)
 
-# returns 0.0 to 1.0 based on how dangerous this actor's position is based off grenade proximity. 0.0 is safe, 1.0 is unsafe
+## returns 0.0 to 1.0 based on how dangerous this actor's position is based off grenade proximity. 0.0 is safe, 1.0 is unsafe
 static func evaluate_nearby_explosives_factor(factor_context: FactorContext) -> float:
 	const danger_radius: float = 5.0
 	const explosive_weight = 4.0

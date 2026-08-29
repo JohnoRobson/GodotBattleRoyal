@@ -1,5 +1,4 @@
-class_name Reporter
-extends Node
+class_name Reporter extends Node
 ## Returns a Dictionary of values from its parent node's variables whose names match its selected_variables values
 ## Also handles transforming certain objects into informative string values, such as a Health node into 90/100
 ## if 90 is the current health and 100 is the max health.
@@ -29,7 +28,7 @@ func get_report() -> Dictionary:
 	
 	return new_list
 
-# Converts a variant into a string, formatted where appropriate
+## Converts a variant into a string, formatted where appropriate
 func _get_value_for_node(variant) -> String:
 	if variant == null:
 		return ""

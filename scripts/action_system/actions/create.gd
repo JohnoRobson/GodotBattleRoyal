@@ -1,5 +1,4 @@
-class_name ActionCreate
-extends Action
+class_name ActionCreate extends Action
 ## Creates a new game item
 
 @export var game_item_to_create: PackedScene

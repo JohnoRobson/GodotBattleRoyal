@@ -1,5 +1,4 @@
-class_name AiActorController
-extends ActorController
+class_name AiActorController extends ActorController
 
 @export var actor: Actor
 @export var nav_agent: NavigationAgent3D

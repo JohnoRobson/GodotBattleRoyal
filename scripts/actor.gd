@@ -32,7 +32,8 @@ var actor_state: ActorState = ActorState.IDLE
 @onready var _item_interaction_manager: ItemInteractionManager = get_node("ItemInteractionManager")
 @onready var inventory: Inventory = get_node("WeaponInventory")
 @onready var animation_player: AnimationPlayer = get_node("AnimationPlayer")
-@onready var camera: Camera3D = get_node("Camera3D")
+@export var camera: PlayerCamera
+
 
 @export var team: Team
 

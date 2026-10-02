@@ -4,26 +4,28 @@
 [ext_resource type="Script" uid="uid://cw0yjvsnkeqwe" path="res://scripts/ai/ai_actor_controller.gd" id="3_q60xr"]
 [ext_resource type="Shader" uid="uid://borfq5vp6inq0" path="res://outline.gdshader" id="3_v03im"]
 [ext_resource type="Shader" uid="uid://bswlomw8rgpyy" path="res://actor.gdshader" id="4_dhvnc"]
+[ext_resource type="PackedScene" uid="uid://c47pwy6uocgyf" path="res://scenes/panning_camera.tscn" id="5_dhvnc"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_v03im"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_eb4ia"]
 resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("3_v03im")
 shader_parameter/outline_color = Color(1, 1, 1, 1)
 shader_parameter/outline_width = 2.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_dhvnc"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vthd2"]
 resource_local_to_scene = true
 render_priority = 0
-next_pass = SubResource("ShaderMaterial_v03im")
+next_pass = SubResource("ShaderMaterial_eb4ia")
 shader = ExtResource("4_dhvnc")
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_eb4ia"]
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_8lh2m"]
 resource_local_to_scene = true
-material = SubResource("ShaderMaterial_dhvnc")
+material = SubResource("ShaderMaterial_vthd2")
 
-[node name="AiActor" unique_id=71779919 node_paths=PackedStringArray("controller") instance=ExtResource("1_jfaud")]
+[node name="AiActor" unique_id=71779919 node_paths=PackedStringArray("controller", "camera") instance=ExtResource("1_jfaud")]
 controller = NodePath("AiActorController")
+camera = NodePath("PanningCamera")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." index="4" unique_id=977445675]
 avoidance_enabled = true
@@ -41,7 +43,7 @@ item_raycast = NodePath("../Rotator/Animatable/RayCast3D")
 can_show_item_text = false
 
 [node name="ActorBody" parent="Rotator/Animatable" parent_id_path=PackedInt32Array(1842591485) index="0" unique_id=1631406986]
-mesh = SubResource("CapsuleMesh_eb4ia")
+mesh = SubResource("CapsuleMesh_8lh2m")
 
 [node name="RayCast3D" type="RayCast3D" parent="Rotator/Animatable" parent_id_path=PackedInt32Array(1842591485) index="1" unique_id=1205867347]
 transform = Transform3D(0.997564, 0.0697565, 0, -0.0697565, 0.997564, 0, 0, 0, 1, 0.0751962, 1.07536, -0.803629)
@@ -49,8 +51,7 @@ target_position = Vector3(0, 0, -500)
 collision_mask = 3
 collide_with_areas = true
 
-[node name="Camera3D" type="Camera3D" parent="." index="11" unique_id=1493429382]
-transform = Transform3D(1, 0, 0, 0, 0.559193, 0.829038, 0, -0.829038, 0.559193, 0, 11.4105, 7.52074)
+[node name="PanningCamera" parent="." index="11" unique_id=1742724344 instance=ExtResource("5_dhvnc")]
 
 [node name="Reporter" parent="." index="12" unique_id=638539368]
 selected_variables = Array[String](["health", "controller"])

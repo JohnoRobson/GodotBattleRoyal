@@ -37,10 +37,7 @@ func _ready() -> void:
 	world_camera.make_current()
 
 func _process(_delta) -> void:
-	if Input.is_action_pressed("zoom_out"):
-		move_camera(camera_zoom_speed)
-	if Input.is_action_pressed("zoom_in"):
-		move_camera(-camera_zoom_speed)
+	pass
 
 func _physics_process(_delta) -> void:
 	pass
@@ -66,23 +63,6 @@ func conclude_loading() -> void:
 	_init_outlines()
 	
 	game_loaded.emit()
-
-func move_camera(distance) -> void:
-	var camera: Camera3D = get_viewport().get_camera_3d()
-	var forward_vector = -camera.transform.basis.z
-	var new_position = camera.transform.origin + forward_vector * distance
-
-	var distance_from_origin = new_position.length()
-	if distance_from_origin > camera_max_distance:
-		var excess_distance = camera_max_distance - distance_from_origin
-		var adjusted_distance = distance - excess_distance
-		new_position = camera.transform.origin + forward_vector * adjusted_distance
-	if distance_from_origin < camera_min_distance:
-		var excess_distance = distance_from_origin - camera_min_distance
-		var adjusted_distance = distance + excess_distance
-		new_position = camera.transform.origin + forward_vector * adjusted_distance
-	
-	camera.transform.origin = new_position
 
 func create_team() -> Team:
 	var team: Team = Team.new()

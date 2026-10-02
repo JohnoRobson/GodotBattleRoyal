@@ -1,4 +1,5 @@
-class_name PlayerCamera extends Node3D
+class_name PlayerCamera
+extends Node3D
 
 ## The origin of this node is assumed to be at ground level
 ## The purpose of this node is to pan the camera around to follow the player's

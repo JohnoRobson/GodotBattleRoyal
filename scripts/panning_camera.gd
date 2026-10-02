@@ -51,34 +51,34 @@ func _ready() -> void:
 
 ## 0 to 1
 func _get_dist_from_center_of_camera() -> float:
-	var viewport_rect = get_viewport().get_visible_rect().size
-	var mouse_position = get_viewport().get_mouse_position()
-	var middle_of_screen = Vector2(viewport_rect.x / 2, viewport_rect.y / 2)
-	var mag = (mouse_position - middle_of_screen).length()
-	var screen_mag = viewport_rect.y / 2# assuming that y is smaller than x
-	var ratio = mag / screen_mag
+	var viewport_rect := get_viewport().get_visible_rect().size
+	var mouse_position := get_viewport().get_mouse_position()
+	var middle_of_screen := Vector2(viewport_rect.x / 2, viewport_rect.y / 2)
+	var mag := (mouse_position - middle_of_screen).length()
+	var screen_mag := viewport_rect.y / 2# assuming that y is smaller than x
+	var ratio := mag / screen_mag
 	
 	return clampf(ratio, 0, 1)
 
 func _process(_delta: float) -> void:
-	var viewport = get_viewport()
-	var mouse_position = viewport.get_mouse_position() # zzz making this not directly call the viewport
+	var viewport := get_viewport()
+	var mouse_position := viewport.get_mouse_position() # zzz making this not directly call the viewport
 	
-	var clamped_mouse_pos = Vector2(clampf(mouse_position.x, 0, viewport.get_visible_rect().size.x), clampf(mouse_position.y, 0, viewport.get_visible_rect().size.y))
+	var clamped_mouse_pos := Vector2(clampf(mouse_position.x, 0, viewport.get_visible_rect().size.x), clampf(mouse_position.y, 0, viewport.get_visible_rect().size.y))
 	
-	var centered_mouse_pos =  clamped_mouse_pos - (viewport.get_visible_rect().size / 2)
+	var centered_mouse_pos :=  clamped_mouse_pos - (viewport.get_visible_rect().size / 2)
 	# assume the shortest side of the screen to be the height
-	var normalized_mouse_pos = centered_mouse_pos * 2 / viewport.get_visible_rect().size.x
+	var normalized_mouse_pos := centered_mouse_pos * 2 / viewport.get_visible_rect().size.x
 	
 	# rect in rect
 	# get margins
-	var width = (_bounding_rect.size.x - _panning_rect.size.x) / 2
-	var height = (_bounding_rect.size.y - _panning_rect.size.y) / 2
+	var width := (_bounding_rect.size.x - _panning_rect.size.x) / 2
+	var height := (_bounding_rect.size.y - _panning_rect.size.y) / 2
 	
-	var multiplied_mouse_position = Vector2(width, height) * normalized_mouse_pos
-	var mag = multiplied_mouse_position.length()
-	var easing = clampf(_get_dist_from_center_of_camera(), 0.6, 1)
-	var clamped_multiplied_mouse_position = multiplied_mouse_position.normalized() * mag * easing
+	var multiplied_mouse_position := Vector2(width, height) * normalized_mouse_pos
+	var mag := multiplied_mouse_position.length()
+	var easing := clampf(_get_dist_from_center_of_camera(), 0.6, 1)
+	var clamped_multiplied_mouse_position := multiplied_mouse_position.normalized() * mag * easing
 	
 	pan_to(clamped_multiplied_mouse_position)
 	pass

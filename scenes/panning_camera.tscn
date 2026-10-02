@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://c47pwy6uocgyf"]
+
+[ext_resource type="Script" uid="uid://bvofrnwssexuy" path="res://scripts/panning_camera.gd" id="1_l45x2"]
+
+[node name="PanningCamera" type="Node3D" unique_id=1742724344 node_paths=PackedStringArray("camera")]
+script = ExtResource("1_l45x2")
+camera = NodePath("Camera3D")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=823926800]
+transform = Transform3D(1, 0, 0, 0, 0.55919284, 0.8290377, 0, -0.8290377, 0.55919284, 0, 11.4105, 7.52074)

@@ -16,16 +16,11 @@ func _init() -> void:
 func perform(_delta: float, item_node: ActionStack.ItemNode) -> bool:
 	var current_game_item: GameItem = item_node.game_item
 	
-	var points: Array[Vector3] = VectorUtils.get_radially_symmetrical_points(current_game_item.position, game_items_to_create.size(), 1)
-	var current_index = 0
+	var spawn_points: Array[Vector3] = VectorUtils.get_radially_symmetrical_points(current_game_item.position, game_items_to_create.size(), 1)
 	
 	for game_item_to_create: PackedScene in game_items_to_create:
 		var new_game_item = game_item_to_create.instantiate()
-		
-		var next_spawn_point = points[current_index]
-		current_index += 1
-		
-		item_node.data[Action.Keys.WORLD].return_item_to_world(new_game_item, next_spawn_point, current_game_item.rotation)
+		item_node.data[Action.Keys.WORLD].return_item_to_world(new_game_item, spawn_points.pop_back(), current_game_item.rotation)
 		
 		new_game_item.linear_velocity = current_game_item.linear_velocity
 		new_game_item.angular_velocity = current_game_item.angular_velocity

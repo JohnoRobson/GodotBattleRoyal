@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://cd3bjhrdxjl3y"]
+
+[ext_resource type="Script" uid="uid://cm6je8qb83lpt" path="res://scripts/items/game_item.gd" id="1_88ees"]
+[ext_resource type="Script" uid="uid://b4gq3cdvwyn3" path="res://scripts/action_system/actions/action.gd" id="2_8sdir"]
+[ext_resource type="PackedScene" uid="uid://cvwfiql117y18" path="res://scenes/items/surprise_medkit.tscn" id="3_3qx17"]
+[ext_resource type="Script" uid="uid://bsda1l7y1x07u" path="res://scripts/action_system/actions/remove.gd" id="3_sfxuy"]
+[ext_resource type="PackedScene" uid="uid://b5pidhuj5uftx" path="res://scenes/items/cluster_grenade.tscn" id="4_fuy1v"]
+[ext_resource type="PackedScene" uid="uid://ctf3x6yunrqua" path="res://scenes/items/sniper_ammo.tscn" id="5_sfxuy"]
+[ext_resource type="Script" uid="uid://bjmrmi340jux3" path="res://scripts/action_system/actions/create.gd" id="6_16nom"]
+
+[sub_resource type="Resource" id="Resource_mtqmo"]
+script = ExtResource("3_sfxuy")
+metadata/_custom_type_script = "uid://bsda1l7y1x07u"
+
+[sub_resource type="Resource" id="Resource_8sdir"]
+script = ExtResource("6_16nom")
+game_items_to_create = Array[PackedScene]([ExtResource("3_3qx17"), ExtResource("4_fuy1v"), ExtResource("5_sfxuy")])
+cascade_action = false
+actions = Array[ExtResource("2_8sdir")]([SubResource("Resource_mtqmo")])
+metadata/_custom_type_script = "uid://bjmrmi340jux3"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_88ees"]
+albedo_color = Color(1, 0.3647059, 0.35686275, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_88ees"]
+material = SubResource("StandardMaterial3D_88ees")
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_grgn7"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[node name="ItemBox" type="RigidBody3D" unique_id=108856214]
+script = ExtResource("1_88ees")
+item_name = "Item Box"
+action = SubResource("Resource_8sdir")
+interaction_type = 1
+metadata/_custom_type_script = "uid://cm6je8qb83lpt"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=38504910]
+mesh = SubResource("BoxMesh_88ees")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1854853561]
+shape = SubResource("BoxShape3D_grgn7")

@@ -39,7 +39,7 @@ actor = NodePath("..")
 nav_agent = NodePath("../NavigationAgent3D")
 item_raycast = NodePath("../Rotator/Animatable/RayCast3D")
 
-[node name="ItemPickupManager" parent="." index="6" unique_id=1049587795]
+[node name="ItemInteractionManager" parent="." index="6" unique_id=1049587795]
 can_show_item_text = false
 
 [node name="ActorBody" parent="Rotator/Animatable" parent_id_path=PackedInt32Array(1842591485) index="0" unique_id=1631406986]

@@ -74,10 +74,10 @@ func stack_is_completed() -> bool:
 func cancel_stack() -> void:
 	is_canceled = true
 
-# The ActionStack makes a tree of ItemNodes that matches the Action tree. Each action gets an ItemNode to store state in.
-# Additionaly, Actions can add new ItemNodes as child nodes or change the fields of the ItemNode that they're linked to,
-# For example, ActionReplace makes a new instance of a GameItem and replaces its ItemNode's game_item value with the new object and
-# adds the new GameItem's Actions as children to the ItemNode so that they are executed by the current ActionStack. 
+## The ActionStack makes a tree of ItemNodes that matches the Action tree. Each action gets an ItemNode to store state in.
+## Additionaly, Actions can add new ItemNodes as child nodes or change the fields of the ItemNode that they're linked to,
+## For example, ActionReplace makes a new instance of a GameItem and replaces its ItemNode's game_item value with the new object and
+## adds the new GameItem's Actions as children to the ItemNode so that they are executed by the current ActionStack. 
 class ItemNode:
 	var action: Action
 	var game_item: GameItem

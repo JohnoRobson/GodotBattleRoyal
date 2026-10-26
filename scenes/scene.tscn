@@ -103,6 +103,20 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.1469, 1.72129, 1.27939)
 [node name="ItemBox" parent="ItemContainer" unique_id=108856214 groups=["items"] instance=ExtResource("11_2v74y")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.189848, 0.2500019, 19.81952)
 
+[node name="SpawnerContainer" type="Node" parent="." unique_id=1094155545]
+
+[node name="Spawn1" parent="SpawnerContainer" unique_id=1731258940 instance=ExtResource("18_r2e7w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.6628065, 4.438465, 19.02341)
+
+[node name="Spawn2" parent="SpawnerContainer" unique_id=909212662 instance=ExtResource("18_r2e7w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.50214, 4.388534, 10.19417)
+
+[node name="Spawn3" parent="SpawnerContainer" unique_id=1359638713 instance=ExtResource("18_r2e7w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.75668, 5.252913, 2.6351233)
+
+[node name="Spawn4" parent="SpawnerContainer" unique_id=1578284438 instance=ExtResource("18_r2e7w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.337895, 4.8399734, -10.750965)
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=599836387]
 transform = Transform3D(0.648744, -0.49609, -0.577084, 0, -0.758316, 0.651887, -0.761006, -0.422908, -0.491954, 0, 5.96035, -1.18983)
 
@@ -263,20 +277,5 @@ grow_vertical = 2
 clip_text = true
 
 [node name="GameHud" parent="." unique_id=172329568 instance=ExtResource("2_nby8c")]
-
-[node name="Spawn4" parent="." unique_id=1731258940 instance=ExtResource("18_r2e7w")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.67467, 2.76968, -7.92615)
-
-[node name="Spawn5" parent="." unique_id=1810583538 instance=ExtResource("18_r2e7w")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.48834, 2.95635, 2.73447)
-
-[node name="Spawn5" parent="Spawn5" unique_id=909212662 instance=ExtResource("18_r2e7w")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.0138, 0.257373, 7.4597)
-
-[node name="Spawn8" parent="." unique_id=1359638713 instance=ExtResource("18_r2e7w")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.75668, 4.27303, 9.0349)
-
-[node name="Spawn6" parent="." unique_id=1578284438 instance=ExtResource("18_r2e7w")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.661, 3.53244, -6.52321)
 
 [connection signal="pause_button_pressed" from="GameHud" to="." method="_on_pause_button_pressed"]

@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dumh7vbmxg6lo" path="res://scenes/components/item_interaction_area.tscn" id="4_yx5h3"]
 [ext_resource type="Script" uid="uid://bld0rwrbr4cm3" path="res://scripts/item_interaction_area.gd" id="6_neovh"]
 [ext_resource type="Script" uid="uid://c567rghna6k0l" path="res://scripts/actor_cursor.gd" id="6_wh5i0"]
-[ext_resource type="Script" uid="uid://bkegb4hh0yxgj" path="res://scripts/item_pickup_manager.gd" id="8_6j5c1"]
+[ext_resource type="Script" uid="uid://bkegb4hh0yxgj" path="res://scripts/item_interaction_manager.gd" id="8_6j5c1"]
 [ext_resource type="Shader" uid="uid://borfq5vp6inq0" path="res://outline.gdshader" id="8_d7xh7"]
 [ext_resource type="PackedScene" uid="uid://cc3xiyt074uge" path="res://scenes/components/reporter/reporter.tscn" id="9_6wcgv"]
 [ext_resource type="Shader" uid="uid://bswlomw8rgpyy" path="res://actor.gdshader" id="9_gi2lv"]

@@ -42,12 +42,12 @@ func _physics_process(_delta) -> void:
 	pass
 
 ## Common actor initializations (player and AI)
-func _init_actor(actor: Actor, spawn_position: Vector3) -> void:
+func _init_actor(actor: Actor) -> void:
 	# TODO: fix incorrect spawn location bug when spawning at (0,0)
 	actor.actor_killed.connect(_on_actor_killed)
 	
 	actor_container.add_child(actor)
-	actor.set_global_position(spawn_position)
+	# actor.set_global_position(spawn_position)
 	actor.inventory.return_item_to_world.connect(return_item_to_world)
 	actor.inventory.inventory_data = InventoryData.new()
 	for i in actor_inventory_size:
@@ -63,31 +63,25 @@ func conclude_loading() -> void:
 	
 	game_loaded.emit()
 
-func create_team() -> Team:
-	var team: Team = Team.new()
-	team_container.add_child(team)
-	return team
-
-func get_random_unused_actor_spawn_location() -> Vector3:
+func get_random_unused_actor_spawner() -> Spawner:
 	var actor_spawners: Array[Node] = get_tree().get_nodes_in_group("spawners")
-	var unused_actor_spawners = actor_spawners.filter(func(s): return !s.used)
+	var unused_spawners = actor_spawners.filter(func(s): return !s.used)
 	
-	assert(unused_actor_spawners.size() >= 1, "Insufficient actor spawners")
+	assert(unused_spawners.size() >= 1, "Insufficient actor spawners")
 	
-	var random_unused_actor_spawner = unused_actor_spawners.pick_random()
-	random_unused_actor_spawner.used = true
+	var spawner = unused_spawners.pick_random()
+	spawner.used = true
 	
-	return random_unused_actor_spawner.global_spawn_position
+	return spawner
 
 ## Spawn player actor and create new player controller
-func spawn_player() -> Actor:
+func create_player() -> Actor:
 	assert(player_actors.size() == 0, "Only one player supported")
 	
 	var actor: Actor = Actor.init_player_actor()
 	player_actors.append(actor)
 	
-	var spawn_position = get_random_unused_actor_spawn_location()
-	_init_actor(actor, spawn_position)
+	_init_actor(actor)
 	
 	actor.make_camera_current()
 	
@@ -102,13 +96,12 @@ func spawn_player() -> Actor:
 	return actor;
 
 ## Spawn AI actor and configure existing AI controller
-func spawn_ai() -> Actor:
+func create_ai() -> Actor:
 	var actor: Actor = preload("res://scenes/ai_actor.tscn").instantiate()
 	
-	var spawn_position = get_random_unused_actor_spawn_location()
-	_init_actor(actor, spawn_position)
-	
 	ai_actors.append(actor)
+	
+	_init_actor(actor)
 	
 	# Configure AI controller
 	var controller: AiActorController = actor.controller
@@ -116,6 +109,29 @@ func spawn_ai() -> Actor:
 	controller.world = self
 	controller.world_navmesh = nav_region
 	controller.state_machine = StateMachine.new(DecisionMakingState.new(), controller)
+	
+	return actor
+
+func spawn_team(actors: Array[Actor]) -> Team:
+	var team := Team.new()
+	team_container.add_child(team)
+	
+	for actor in actors:
+		team.add_member(actor)
+	
+	var spawner := get_random_unused_actor_spawner()
+	var spawn_positions := spawner.calculate_spawn_positions(team.get_size())
+	
+	for actor in team.get_members():
+		actor.set_global_position(spawn_positions.pop_front())
+	
+	return team
+
+func spawn_actor(actor: Actor) -> Actor:
+	var spawner := get_random_unused_actor_spawner()
+	var spawn_position := spawner.calculate_spawn_positions(1)[0]
+	
+	actor.set_global_position(spawn_position)
 	
 	return actor
 
@@ -297,22 +313,28 @@ func setup_game(game_type: GameTypes) -> void:
 	spawn_weapon_and_ammo(Vector2(-15,5), Weapons.SHOTGUN)
 	spawn_weapon_and_ammo(Vector2(25,-5), Weapons.SNIPER)
 	spawn_weapon_and_ammo(Vector2(1,13), Weapons.COOL)
+
 	match game_type:
 		GameTypes.AI:
-			spawn_ai()
-			spawn_ai()
-			spawn_ai()
+			spawn_actor(create_ai())
+			spawn_actor(create_ai())
+			spawn_actor(create_ai())
 			make_random_ai_camera_current()
 		GameTypes.SANDBOX:
-			spawn_player()
+			spawn_actor(create_player())
 		GameTypes.CLASSIC, _:
-			var player_team: Team = create_team()
-			player_team.add_member(spawn_player())
-			player_team.add_member(spawn_ai())
-			var ai_team: Team = create_team()
-			ai_team.add_member(spawn_ai())
-			ai_team.add_member(spawn_ai())
-			ai_team.add_member(spawn_ai())
+			spawn_team([
+				create_player(),
+				create_ai(),
+			])
+			spawn_team([
+				create_ai(),
+				create_ai(),
+			])
+			spawn_team([
+				create_ai(),
+				create_ai(),
+			])
 	
 	conclude_loading()
 
@@ -327,7 +349,7 @@ func _init_outlines() -> void:
 		player.set_outline_color(Color(255, 255, 255, 1))
 	
 	for ai_actor in ai_actors:
-		if (ai_actor.team == null or ai_actor.team != player.team):
+		if (ai_actor.team == null or player.team == null or ai_actor.team != player.team):
 			ai_actor.set_outline_color(Color(255, 0, 0))
 		else:
 			ai_actor.set_outline_color(Color(0, 255, 0))

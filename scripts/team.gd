@@ -22,6 +22,10 @@ func remove_member(member:Actor) -> void:
 func get_members() -> Array[Actor]:
 	return members
 
+## Get the number of members in the team
+func get_size() -> int:
+	return members.size()
+
 func get_average_location() -> Vector3:
 	if members.size() == 0:
 		return Vector3.ZERO

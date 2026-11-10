@@ -47,7 +47,7 @@ func _init_actor(actor: Actor) -> void:
 	actor.actor_killed.connect(_on_actor_killed)
 	
 	actor_container.add_child(actor)
-	# actor.set_global_position(spawn_position)
+	
 	actor.inventory.return_item_to_world.connect(return_item_to_world)
 	actor.inventory.inventory_data = InventoryData.new()
 	for i in actor_inventory_size:
